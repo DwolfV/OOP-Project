@@ -11,7 +11,7 @@ Add your own name (do not add the names for others!) to the section below.
 | 📸 | Name | Email |
 |---|---|---|
 | ![](https://i.imgur.com/8grMntD.jpg) | Iulia Dinu | I.Dinu@student.tudelft.nl |
-
+| ![](https://secure.gravatar.com/avatar/82124a47694f17516db3b1827918e446?s=800&d=identicon&length=4&size=50) | Andrei Mija | A.Mija@student.tudelft.nl |
 
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
