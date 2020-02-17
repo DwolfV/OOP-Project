@@ -13,8 +13,8 @@ Add your own name (do not add the names for others!) to the section below.
 | ![](https://i.imgur.com/8grMntD.jpg) | Iulia Dinu | I.Dinu@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/82124a47694f17516db3b1827918e446?s=800&d=identicon&length=4&size=50) | Andrei Mija | A.Mija@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/f3d66b3e971824f31e66891ac173b1e3?s=800&d=identicon&length=4&size=50) | Bogdan Pietroianu | b.pietroianu@student.tudelft.nl|
-| ![](https://secure.gravatar.com/avatar/f635ccbcd154fa24e22bed4804e6b59e?s=800&d=identicon&length=4&size=50) | Steph Nützel | S.D.Nutzel@student.tudelft.nl|s
-
+| ![](https://secure.gravatar.com/avatar/f635ccbcd154fa24e22bed4804e6b59e?s=800&d=identicon&length=4&size=50) | Steph Nützel | S.D.Nutzel@student.tudelft.nl|
+| ![](https://secure.gravatar.com/avatar/c81c0f527815098681c77ec3b5b5e860?s=800&d=identicon&length=4&size=50) | Daniel Volpin | d.volpin@student.tudelft.nl |
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
 <!-- - Mention your *student* email address -->
