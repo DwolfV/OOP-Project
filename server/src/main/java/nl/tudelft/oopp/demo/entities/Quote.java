@@ -35,7 +35,7 @@ public class Quote {
         this.quote = quote;
         this.author = author;
     }
-    //@JsonIgnore
+
     public String getQuote() {
         return quote;
     }

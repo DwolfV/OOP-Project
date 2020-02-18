@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class QuoteController {
+
+    @Autowired
+    QuoteRepository rep;
+
     /**
      * GET Endpoint to retrieve a random quote.
      *
      * @return randomly selected {@link Quote}.
      */
-
-    @Autowired
-    QuoteRepository rep;
-
     @GetMapping("quote")
     @ResponseBody
     public Quote getRandomQuote() {
