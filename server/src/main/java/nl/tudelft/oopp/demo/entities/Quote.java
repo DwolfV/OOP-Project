@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class Quote {
         this.quote = quote;
         this.author = author;
     }
-
+    //@JsonIgnore
     public String getQuote() {
         return quote;
     }
