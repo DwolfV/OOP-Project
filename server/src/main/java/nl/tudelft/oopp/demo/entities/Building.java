@@ -92,6 +92,14 @@ public class Building {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return Objects.equals(getBuildingId(), building.getBuildingId());
+    }
+
+    @Override
     public String toString() {
         return "Building{" +
                 "buildingId='" + buildingId + '\'' +
@@ -101,18 +109,5 @@ public class Building {
                 ", zipCode='" + zipCode + '\'' +
                 ", city='" + city + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Building building = (Building) o;
-        return Objects.equals(getBuildingId(), building.getBuildingId()) &&
-                Objects.equals(getName(), building.getName()) &&
-                Objects.equals(getStreet(), building.getStreet()) &&
-                Objects.equals(getStreetNumber(), building.getStreetNumber()) &&
-                Objects.equals(getZipCode(), building.getZipCode()) &&
-                Objects.equals(getCity(), building.getCity());
     }
 }

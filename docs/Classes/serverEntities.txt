@@ -1,0 +1,143 @@
+Server Entities
+template:
+
+//Note	[column names] and [property name] should be the same
+// 	[table name] should be plural
+//	[class name] should NOT be plural
+
+@Entity
+@Table(name = "[table name]")
+public class [class name] {
+
+	@Id					// Id specifies that this is the unique id of the database/class
+	@Column(name = "[column name]")		// meaning this [column name] is the key property
+	private [type] [property name];
+
+	@Column(name = "[column name]")		// Since no id, this is not a key property
+	private [type] [property name];
+
+	public [class name]() {			// Default constructor
+	}					// Might wanna check if this is needed and should be used
+
+	public [class name]([type] [property name], [type] [property name]) {
+		this.[property name] = [property name];
+		this.[property name] = [property name];
+		
+	}
+
+	- Getters
+	- Setters
+	
+	@Override
+	- equals
+	@Override
+	- toString
+
+}
+
+-----------------
+
+class name	Building
+table name	buildings
+
+@Columns
+buildingId	- String @Id
+buildingName	- String
+street		- String
+streetNumber	- String
+zipCode		- String
+city		- String
+
+-----------------
+
+class name	Room
+table name	rooms
+
+@Columns
+buildingId	- String @Id
+roomName	- String
+capacity	- int
+
+-----------------
+
+class name	Restaurant
+table name	restaurants
+
+@Columns
+restaurantName	- String @Id
+buildingName	- String
+openTime	- Time
+closeTime	- Time
+
+-----------------
+
+class name	Menu
+table name	menus
+
+@Columns
+restaurantName	- String @Id
+dishName 	- String @Id
+price 		- int
+vegetarian 	- bit/boolean
+
+-----------------
+
+to check if facility is open, if openTime.equals(closeTime) then not open
+
+class name	OpeningTime
+table name	openingTimes
+
+--OPTION 1:--	// This will have on list per database
+@Columns
+facilityName 	- String @Id	// Could be building or restaurant, look through both names
+mondayOpen	- Time
+mondayClose	- Time
+tuesdayOpen	- Time
+tuesdayClose	- Time
+wednesdayOpen	- Time
+wednesdayClose	- Time
+thursdayOpen	- Time
+thursdayClose	- Time
+fridayOpen	- Time
+fridayClose	- Time
+saturdayOpen	- Time
+saturdayClose	- Time
+sundayOpen	- Time
+sundayClose	- Time
+
+--OPTION 2:--	// this will need 7 lists per database
+@Columns
+facilityName 	- String @Id
+day		- String
+openTime 	- Time
+closeTime 	- Time
+
+
+// I think OPTION 1 would actually be better, it is more space efficient for one and you can easily search up:
+// "getFridayOpen", instead looping through the whole list until "getDay".equals("friday") and then "getOpenTime"
+
+-----------------
+
+class name	User
+table name	users
+
+@Columns
+userId 		- String @Id
+username	- String
+email		- String
+role		- String
+firstName	- String
+lastName	- String
+birthDate	- Date
+
+-----------------
+
+
+
+-----------------
+
+
+
+-----------------
+
+
