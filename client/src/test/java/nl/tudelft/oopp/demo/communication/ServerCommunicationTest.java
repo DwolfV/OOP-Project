@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class ServerCommunicationTest {
 
     @Test
-    public void testRandomQuote() {
-        assertNotNull(ServerCommunication.getQuote());
+    public void testBuildings() {
+        assertNotNull(ServerCommunication.getBuildings());
     }
 }
