@@ -1,11 +1,11 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.sql.Time;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Time;
-import java.util.Objects;
 
 @Entity
 @Table(name = "restaurants")
@@ -27,6 +27,15 @@ public class Restaurant {
     public Restaurant() {
 
     }
+
+    /**
+     * Create a new Restaurant instance.
+     *
+     * @param restaurantName The name of the Restaurant.
+     * @param buildingName The name of the building in which the Restaurant is located.
+     * @param openTime The time when the Restaurant opens.
+     * @param closeTime The time when the Restaurant closes.
+     */
 
     public Restaurant(String restaurantName, String buildingName, Time openTime, Time closeTime) {
         this.restaurantName = restaurantName;
@@ -69,20 +78,24 @@ public class Restaurant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Restaurant that = (Restaurant) o;
-        return Objects.equals(getRestaurantName(), that.getRestaurantName()) &&
-                Objects.equals(getBuildingName(), that.getBuildingName());
+        return Objects.equals(getRestaurantName(), that.getRestaurantName())
+                && Objects.equals(getBuildingName(), that.getBuildingName());
     }
 
     @Override
     public String toString() {
-        return "Restaurant{" +
-                "restaurantName='" + restaurantName + '\'' +
-                ", buildingName='" + buildingName + '\'' +
-                ", openTime=" + openTime +
-                ", closeTime=" + closeTime +
-                '}';
+        return "Restaurant{"
+                + "restaurantName='" + restaurantName + '\''
+                + ", buildingName='" + buildingName + '\''
+                + ", openTime=" + openTime
+                + ", closeTime=" + closeTime
+                + '}';
     }
 }

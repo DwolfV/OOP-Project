@@ -1,11 +1,11 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -35,8 +35,25 @@ public class User {
 
     public User() {
     }
+    /**
+     * Create a new User instance.
+     *
+     * @param userId A unique ID for the User.
+     * @param username The name of the User.
+     * @param email The email of the User.
+     * @param role The role of the User, like student, employee, admin.
+     * @param firstName The first name of the User.
+     * @param lastName The last name of the User.
+     * @param birthDate The birsth date of the User.
+     */
 
-    public User(String userId, String username, String email, String role, String firstName, String lastName, Date birthDate) {
+    public User(String userId,
+                String username,
+                String email,
+                String role,
+                String firstName,
+                String lastName,
+                Date birthDate) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -104,22 +121,26 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return Objects.equals(getUserId(), user.getUserId());
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
+        return "User{"
+                + "userId='" + userId + '\''
+                + ", username='" + username + '\''
+                + ", email='" + email + '\''
+                + ", role='" + role + '\''
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", birthDate=" + birthDate
+                + '}';
     }
 }
