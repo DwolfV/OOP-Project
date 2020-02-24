@@ -1,10 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "menus")
@@ -26,6 +26,15 @@ public class Menu {
     public Menu() {
 
     }
+
+    /**
+     * Create a new Equipment instance.
+     *
+     * @param pc A counter for available pc.
+     * @param whiteboard A counter for available whiteboards.
+     * @param beamer A counter for available beamers.
+     * @param microphone A counter for available microphones.
+     */
 
     public Menu(String restaurantName, String dishName, int price, boolean vegetarian) {
         this.restaurantName = restaurantName;

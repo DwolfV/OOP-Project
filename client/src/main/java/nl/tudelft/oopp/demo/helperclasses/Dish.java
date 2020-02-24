@@ -2,8 +2,19 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 public class Dish {
 
-    String name, description, type;
+    String name;
+    String description;
+    String type;
     float price;
+
+    /**
+     * Create a new Dish instance.
+     *
+     * @param name A name of the Dish.
+     * @param description A short description of the dish and its contents.
+     * @param type Type of the dish, like fish, meat, drink, etc. or something more specific.
+     * @param price The price of that Dish.
+     */
 
     public Dish(String name, String description, String type, float price) {
         this.name = name;
