@@ -1,10 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "rooms")
@@ -19,6 +19,14 @@ public class Room {
 
     @Column(name = "capacity")
     private int capacity;
+
+    /**
+     * Create a new Room instance.
+     *
+     * @param buildingId The ID of the Building in which the Room is.
+     * @param roomName The name of the Room.
+     * @param capacity The capacity of the room.
+     */
 
     public Room(String buildingId, String roomName, int capacity) {
         this.buildingId = buildingId;
@@ -52,12 +60,16 @@ public class Room {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Room room = (Room) o;
-        return getCapacity() == room.getCapacity() &&
-                Objects.equals(getBuildingId(), room.getBuildingId()) &&
-                Objects.equals(getRoomName(), room.getRoomName());
+        return getCapacity() == room.getCapacity()
+                && Objects.equals(getBuildingId(), room.getBuildingId())
+                && Objects.equals(getRoomName(), room.getRoomName());
     }
 
 }

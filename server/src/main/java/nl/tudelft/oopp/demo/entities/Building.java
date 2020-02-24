@@ -1,11 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
-
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "buildings")
@@ -34,7 +33,23 @@ public class Building {
 
     }
 
-    public Building(String buildingId, String buildingName, String street, String streetNumber, String zipCode, String city) {
+    /**
+     * Create a new Building instance.
+     *
+     * @param buildingId Unique identifier as to be used in the database.
+     * @param buildingName Actual name of the Building.
+     * @param street The street on which the Building is located.
+     * @param streetNumber The street number on which the Building is located.
+     * @param zipCode The zip code of the Building.
+     * @param city The city in which the Building is located.
+     */
+
+    public Building(String buildingId,
+                    String buildingName,
+                    String street,
+                    String streetNumber,
+                    String zipCode,
+                    String city) {
         this.buildingId = buildingId;
         this.buildingName = buildingName;
         this.street = street;
@@ -93,21 +108,25 @@ public class Building {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Building building = (Building) o;
         return Objects.equals(getBuildingId(), building.getBuildingId());
     }
 
     @Override
     public String toString() {
-        return "Building{" +
-                "buildingId='" + buildingId + '\'' +
-                ", buildingName='" + buildingName + '\'' +
-                ", street='" + street + '\'' +
-                ", streetNumber='" + streetNumber + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", city='" + city + '\'' +
-                '}';
+        return "Building{"
+                + "buildingId='" + buildingId + '\''
+                + ", buildingName='" + buildingName + '\''
+                + ", street='" + street + '\''
+                + ", streetNumber='" + streetNumber + '\''
+                + ", zipCode='" + zipCode + '\''
+                + ", city='" + city + '\''
+                + '}';
     }
 }

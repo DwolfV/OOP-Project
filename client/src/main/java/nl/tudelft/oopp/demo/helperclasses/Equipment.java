@@ -2,13 +2,25 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 public class Equipment {
 
-    int pc, whiteboard, beamer, microhpone;
+    int pc;
+    int whiteboard;
+    int beamer;
+    int microphone;
 
-    public Equipment(int pc, int whiteboard, int beamer, int microhpone) {
+    /**
+     * Create a new Equipment instance.
+     *
+     * @param pc A counter for available pc.
+     * @param whiteboard A counter for available whiteboards.
+     * @param beamer A counter for available beamers.
+     * @param microphone A counter for available microphones.
+     */
+
+    public Equipment(int pc, int whiteboard, int beamer, int microphone) {
         this.pc = pc;
         this.whiteboard = whiteboard;
         this.beamer = beamer;
-        this.microhpone = microhpone;
+        this.microphone = microphone;
     }
 
     public int getPc() {
@@ -35,11 +47,11 @@ public class Equipment {
         this.beamer = beamer;
     }
 
-    public int getMicrohpone() {
-        return microhpone;
+    public int getMicrophone() {
+        return microphone;
     }
 
-    public void setMicrohpone(int microhpone) {
-        this.microhpone = microhpone;
+    public void setMicrophone(int microphone) {
+        this.microphone = microphone;
     }
 }

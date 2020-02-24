@@ -6,6 +6,14 @@ public class Room {
     int capacity;
     Equipment equipment;
 
+    /**
+     * Create a new Room instance.
+     *
+     * @param name The name of the Room.
+     * @param capacity The capacity of the room.
+     * @param equipment The equipment that is available in the Room.
+     */
+
     public Room(String name, int capacity, Equipment equipment) {
         this.name = name;
         this.capacity = capacity;

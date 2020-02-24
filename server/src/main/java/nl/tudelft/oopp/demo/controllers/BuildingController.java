@@ -23,7 +23,7 @@ public class BuildingController {
      * @return randomly selected {@link Building}.
      */
     @GetMapping("building")
-    public @ResponseBody List<Building> getBuildingById(){
+    public @ResponseBody List<Building> getBuildingById() {
         Building dw = new Building(
                 "35",
                 "Drebbelweg",

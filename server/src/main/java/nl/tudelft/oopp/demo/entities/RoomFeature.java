@@ -1,11 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
-
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "roomfeatures")
@@ -28,6 +27,14 @@ public class RoomFeature {
 
     }
 
+    /**
+     * Create a new RoomFeature instance.
+     *
+     * @param buildingId The id of the Building in which the Room is located
+     * @param roomName The name of the room
+     * @param objectName The object that is located in the room.
+     * @param quantity The amount of such objects there are in the room.
+     */
     public RoomFeature(String buildingId, String roomName, String objectName, String quantity) {
         this.buildingId = buildingId;
         this.roomName  = roomName;
@@ -69,14 +76,18 @@ public class RoomFeature {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
+        if (this == o) {
+            return true;
+        }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         RoomFeature feature = (RoomFeature) o;
 
-        return buildingId == feature.buildingId && roomName == feature.roomName && objectName == feature.objectName;
+        return buildingId == feature.buildingId
+                && roomName == feature.roomName
+                && objectName == feature.objectName;
     }
 }
 
