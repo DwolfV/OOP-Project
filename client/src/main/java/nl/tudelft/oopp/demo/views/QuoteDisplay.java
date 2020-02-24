@@ -28,6 +28,7 @@ public class QuoteDisplay extends Application {
         primaryStage.setTitle("Log In");
         primaryStage.setScene(mainScene);
         primaryStage.show();
+
     }
 
 
