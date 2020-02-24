@@ -14,7 +14,6 @@ public class Menu {
     @Column(name = "restaurantName")
     private String restaurantName;
 
-    @Id
     @Column(name = "dishName")
     private String dishName;
 
