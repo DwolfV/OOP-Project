@@ -27,13 +27,15 @@ public class Menu {
 
     }
 
+    // TODO rethink the Menu object.
+
     /**
-     * Create a new Equipment instance.
+     * Create a new Menu instance.
      *
-     * @param pc A counter for available pc.
-     * @param whiteboard A counter for available whiteboards.
-     * @param beamer A counter for available beamers.
-     * @param microphone A counter for available microphones.
+     * @param restaurantName The name of the restaurant that has this Menu.
+     * @param dishName A name of the dish in that Menu.
+     * @param price A price for the Dish.
+     * @param vegetarian A flag that shows if the dish is vegetarian.
      */
 
     public Menu(String restaurantName, String dishName, int price, boolean vegetarian) {
@@ -77,20 +79,24 @@ public class Menu {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Menu menu = (Menu) o;
-        return Objects.equals(getRestaurantName(), menu.getRestaurantName()) &&
-                Objects.equals(getDishName(), menu.getDishName());
+        return Objects.equals(getRestaurantName(), menu.getRestaurantName())
+                && Objects.equals(getDishName(), menu.getDishName());
     }
 
     @Override
     public String toString() {
-        return "Menu{" +
-                "restaurantName='" + restaurantName + '\'' +
-                ", dishName='" + dishName + '\'' +
-                ", price=" + price +
-                ", vegetarian=" + vegetarian +
-                '}';
+        return "Menu{"
+                + "restaurantName='" + restaurantName + '\''
+                + ", dishName='" + dishName + '\''
+                + ", price=" + price
+                + ", vegetarian=" + vegetarian
+                + '}';
     }
 }
