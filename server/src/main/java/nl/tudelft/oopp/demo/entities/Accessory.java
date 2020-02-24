@@ -1,10 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "accessories")
@@ -22,6 +22,13 @@ public class Accessory {
 
     public Accessory() {
     }
+    /**
+     * Create a new Accessory instance.
+     *
+     * @param buildingId Unique identifier as to be used in the database.
+     * @param accessoryType Type of the accessory
+     * @param stock How much of the accessory we have.
+     */
 
     public Accessory(String buildingId, String accessoryType, int stock) {
         this.buildingId = buildingId;
@@ -55,19 +62,24 @@ public class Accessory {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Accessory accessory = (Accessory) o;
-        return Objects.equals(getBuildingId(), accessory.getBuildingId()) &&
-                Objects.equals(getAccessoryType(), accessory.getAccessoryType());
+        return Objects.equals(getBuildingId(), accessory.getBuildingId())
+                && Objects.equals(getAccessoryType(), accessory.getAccessoryType());
     }
 
     @Override
     public String toString() {
-        return "Accessory{" +
-                "buildingId='" + buildingId + '\'' +
-                ", accessoryType='" + accessoryType + '\'' +
-                ", stock=" + stock +
-                '}';
+        return "Accessory{"
+                + "buildingId='" + buildingId + '\''
+                + ", accessoryType='"
+                + accessoryType + '\''
+                + ", stock=" + stock
+                + '}';
     }
 }
