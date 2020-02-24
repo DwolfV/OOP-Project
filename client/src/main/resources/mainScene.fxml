@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
-    <Label text="Hello world!"/>
-    <Label text="This is a simple demo application."/>
-    <Button fx:id="button" text="Click me!" onAction="#buttonClicked"/>
-</VBox>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+    <bottom>
+        <HBox style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="BASELINE_CENTER" text="Group 62" textFill="WHITE" />
+            </children>
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            </padding>
+        </HBox>
+    </bottom>
+    <top>
+        <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+            <children>
+                <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu" HBox.hgrow="ALWAYS">
+                    <items>
+                        <MenuItem onAction="#handleHomeButton" mnemonicParsing="false" text="Home" />
+                        <MenuItem onAction="#handleReservationButton" mnemonicParsing="false" text="Reservations" />
+                        <MenuItem onAction="#handleRestaurantsButton" mnemonicParsing="false" text="Restaurants" />
+                        <MenuItem onAction="#handleFriendsButton" mnemonicParsing="false" text="Friends" />
+                        <MenuItem onAction="#handleSettingsButton" mnemonicParsing="false" text="Settings" />
+                    </items>
+                    <HBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                    </HBox.margin>
+                </MenuButton>
+                <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/TU_Delft_logo_White.png" />
+                    </image>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </ImageView>
+            </children></HBox>
+    </top>
+    <left>
+        <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
+    </left>
+    <center>
+        <GridPane gridLinesVisible="true" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+    </center>
+</BorderPane>
