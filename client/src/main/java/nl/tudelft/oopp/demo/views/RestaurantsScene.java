@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.controllers;
+package nl.tudelft.oopp.demo.views;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class RestaurantsSceneController extends Application {
+public class RestaurantsScene extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
