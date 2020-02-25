@@ -1,28 +1,36 @@
 package nl.tudelft.oopp.demo.views;
 
 import java.io.IOException;
-import java.net.URL;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import nl.tudelft.oopp.demo.controllers.MainSceneController;
 
 public class QuoteDisplay extends Application {
 
+    public static Stage stg;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+        this.stg = primaryStage;
+
         FXMLLoader loader = new FXMLLoader();
-        URL xmlUrl = getClass().getResource("/mainScene.fxml");
-        loader.setLocation(xmlUrl);
-        Parent root = loader.load();
+        Parent firstPane = loader.load(getClass().getResource("/loginScene.fxml"));
+        Scene mainScene = new Scene(firstPane);
 
-        primaryStage.setScene(new Scene(root));
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setTitle("Log In");
+        primaryStage.setScene(mainScene);
         primaryStage.show();
+
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
+    public static void main(String[] args) { launch(args); }
 }
