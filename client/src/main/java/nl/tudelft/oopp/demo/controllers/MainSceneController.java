@@ -126,6 +126,21 @@ public class MainSceneController implements Initializable {
 
 
     @FXML
+    public void handleAdminButton (ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Admin");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void handlePopUp(MouseEvent event) throws Exception {
         try {
             Tooltip details1 = new Tooltip();
