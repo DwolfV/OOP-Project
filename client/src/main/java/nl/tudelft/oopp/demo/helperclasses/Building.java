@@ -5,14 +5,33 @@ import java.util.List;
 
 public class Building {
 
-    String name, location;
+    String name;
+    String location;
     List<Room> roomList;
     List<Restaurant> restaurantList;
     List<Accessory> accessoryList;
-    Time openT, closeT;
-    boolean isOpen;
+    Time openT;
+    Time closeT;
 
-    public Building(String name, String location, List<Room> roomList, List<Restaurant> restaurantList, List<Accessory> accessoryList, Time openT, Time closeT, boolean isOpen) {
+    /**
+     * Create a new Building instance.
+     *
+     * @param name Name of the Building.
+     * @param location The address of the building.
+     * @param roomList A List of all Rooms in that Building.
+     * @param restaurantList A List of all Restaurants in that Building.
+     * @param accessoryList A List of all Accessories that the Building has.
+     * @param openT Time at which the Building opens.
+     * @param closeT Time at which the Building closes.
+     */
+
+    public Building(String name,
+                    String location,
+                    List<Room> roomList,
+                    List<Restaurant> restaurantList,
+                    List<Accessory> accessoryList,
+                    Time openT,
+                    Time closeT) {
         this.name = name;
         this.location = location;
         this.roomList = roomList;
@@ -20,7 +39,6 @@ public class Building {
         this.accessoryList = accessoryList;
         this.openT = openT;
         this.closeT = closeT;
-        this.isOpen = isOpen;
     }
 
     public String getName() {
@@ -80,10 +98,8 @@ public class Building {
     }
 
     public boolean isOpen() {
-        return isOpen;
+        // TODO calculate if the Building is open at that time.
+        return false;
     }
 
-    public void setOpen(boolean open) {
-        isOpen = open;
-    }
 }
