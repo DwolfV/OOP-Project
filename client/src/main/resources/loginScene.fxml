@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.effect.DropShadow?>
+
+<AnchorPane prefHeight="480.0" prefWidth="760.0" style="-fx-background-color: #007BA1;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController" stylesheets="@/LoginStyle.css">
+   <children>
+      <AnchorPane layoutX="360.0" layoutY="73.0" prefHeight="334.0" prefWidth="326.0" style="-fx-background-color: #00A6D6;">
+         <children>
+            <TextField layoutX="47.0" layoutY="102.0" prefHeight="31.0" prefWidth="233.0" promptText="Username" style="-fx-background-color: #929292; -fx-prompt-text-fill: white; -fx-text-inner-color:white" />
+            <PasswordField layoutX="47.0" layoutY="171.0" prefHeight="31.0" prefWidth="233.0" promptText="Password" style="-fx-background-color: #929292; -fx-prompt-text-fill: white; -fx-text-inner-color:white" />
+            <Button layoutX="47.0" layoutY="241.0" mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="31.0" prefWidth="233.0" style="-fx-background-color: #00C1FC; -fx-font-weight: bold" text="Log In" textFill="WHITE">
+            </Button>
+            <Text fill="WHITE" layoutX="127.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="154.0" fitWidth="299.0" layoutX="22.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@TU_Delft_logo_White.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="71.0" layoutY="255.0" prefHeight="63.0" prefWidth="201.0" text="Welcome to TU Delft Room Reservations" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="closeButton" alignment="CENTER" layoutX="731.0" layoutY="4.0" onMouseClicked="#handleCloseButtonAction" prefHeight="35.0" prefWidth="23.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
