@@ -13,15 +13,12 @@ import javafx.event.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.views.QuoteDisplay;
+import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
-
-    @FXML
-    private Label closeButton;
 
 //    @FXML
 //    private JFXHamburger menu;
@@ -37,6 +34,9 @@ public class MainSceneController implements Initializable {
 //    }
 
     @FXML
+    private Label closeButton;
+
+    @FXML
     public void handleCloseButtonAction(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
@@ -44,18 +44,18 @@ public class MainSceneController implements Initializable {
 //        System.exit(0);
     }
 
-    // handles for now both home and login buttons
+//     handles for now both home and login buttons
     @FXML
     public void handleHomeButton(ActionEvent event) throws Exception {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mainScene.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
+            Parent calendarParent = (Parent) fxmlLoader.load();
+            Stage calendarStage = new Stage();
 
-            stage.setScene(new Scene(root));
-            stage.setTitle("Home");
-            stage.show();
-            QuoteDisplay.stg.close();
+            calendarStage.setScene(new Scene(calendarParent));
+            calendarStage.setTitle("Home");
+            calendarStage.show();
+            MainDisplay.stg.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -65,12 +65,12 @@ public class MainSceneController implements Initializable {
     public void handleReservationButton(ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/reservationsScene.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
+            Parent reservationParent = (Parent) fxmlLoader.load();
+            Stage reservationsStage = new Stage();
 
-            stage.setScene(new Scene(root));
-            stage.setTitle("Reservations");
-            stage.show();
+            reservationsStage.setScene(new Scene(reservationParent));
+            reservationsStage.setTitle("Reservations");
+            reservationsStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -80,12 +80,12 @@ public class MainSceneController implements Initializable {
     public void handleRestaurantsButton(ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
+            Parent restaurantsParent = (Parent) fxmlLoader.load();
+            Stage restaurantsStage = new Stage();
 
-            stage.setScene(new Scene(root));
-            stage.setTitle("Restaurants");
-            stage.show();
+            restaurantsStage.setScene(new Scene(restaurantsParent));
+            restaurantsStage.setTitle("Restaurants");
+            restaurantsStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -95,12 +95,12 @@ public class MainSceneController implements Initializable {
     public void handleFriendsButton(ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
+            Parent friendsParent = (Parent) fxmlLoader.load();
+            Stage friendsStage = new Stage();
 
-            stage.setScene(new Scene(root));
-            stage.setTitle("Friends");
-            stage.show();
+            friendsStage.setScene(new Scene(friendsParent));
+            friendsStage.setTitle("Friends");
+            friendsStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -109,13 +109,14 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleSettingsButton(ActionEvent event) throws Exception {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settingsScene.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
+            URL location = getClass().getResource("/settingsScene.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(location);
+            Parent settingsParent = (Parent) fxmlLoader.load();
+            Stage settingsStage = new Stage();
 
-            stage.setScene(new Scene(root));
-            stage.setTitle("Settings");
-            stage.show();
+            settingsStage.setScene(new Scene(settingsParent));
+            settingsStage.setTitle("Settings");
+            settingsStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -123,12 +124,7 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Loading User Data");
     }
-
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Quote for you");
-//        alert.setHeaderText(null);
-//        alert.setContentText(ServerCommunication.getQuote());
-//        alert.showAndWait();
 
 }
