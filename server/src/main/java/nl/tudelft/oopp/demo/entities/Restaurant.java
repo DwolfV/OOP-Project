@@ -2,100 +2,100 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.sql.Time;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "Restaurant")
 public class Restaurant {
 
     @Id
-    @Column(name = "restaurantName")
-    private String restaurantName;
+    @Column(name = "id", updatable = false, nullable = false)
+    private long id;
 
-    @Column(name = "buildingName")
-    private String buildingName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "openTime")
-    private Time openTime;
+    @ManyToOne
+    @JoinColumn(name = "building_id", referencedColumnName = "id")
+    private Building building;
 
-    @Column(name = "closeTime")
-    private Time closeTime;
+    private long buildingId;
+
+    @Column(name = "t_close")
+    private Time tClose;
+
+    @Column(name = "t_open")
+    private Time tOpen;
 
     public Restaurant() {
 
     }
 
-    /**
-     * Create a new Restaurant instance.
-     *
-     * @param restaurantName The name of the Restaurant.
-     * @param buildingName The name of the building in which the Restaurant is located.
-     * @param openTime The time when the Restaurant opens.
-     * @param closeTime The time when the Restaurant closes.
-     */
-
-    public Restaurant(String restaurantName, String buildingName, Time openTime, Time closeTime) {
-        this.restaurantName = restaurantName;
-        this.buildingName = buildingName;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
+    public Restaurant(long id, String name, long buildingId, Time tClose, Time tOpen) {
+        this.id = id;
+        this.name = name;
+        this.buildingId = buildingId;
+        this.tClose = tClose;
+        this.tOpen = tOpen;
     }
 
-    public String getRestaurantName() {
-        return restaurantName;
+    public long getId() {
+        return id;
     }
 
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getBuildingName() {
-        return buildingName;
+    public String getName() {
+        return name;
     }
 
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Time getOpenTime() {
-        return openTime;
+    public long getBuildingId() {
+        return buildingId;
     }
 
-    public void setOpenTime(Time openTime) {
-        this.openTime = openTime;
+    public void setBuildingId(long buildingId) {
+        this.buildingId = buildingId;
     }
 
-    public Time getCloseTime() {
-        return closeTime;
+    public Time gettClose() {
+        return tClose;
     }
 
-    public void setCloseTime(Time closeTime) {
-        this.closeTime = closeTime;
+    public void settClose(Time tClose) {
+        this.tClose = tClose;
+    }
+
+    public Time gettOpen() {
+        return tOpen;
+    }
+
+    public void settOpen(Time tOpen) {
+        this.tOpen = tOpen;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return Objects.equals(getRestaurantName(), that.getRestaurantName())
-                && Objects.equals(getBuildingName(), that.getBuildingName());
+        return getId() == that.getId();
     }
 
     @Override
     public String toString() {
-        return "Restaurant{"
-                + "restaurantName='" + restaurantName + '\''
-                + ", buildingName='" + buildingName + '\''
-                + ", openTime=" + openTime
-                + ", closeTime=" + closeTime
-                + '}';
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", building=" + building +
+                ", buildingId=" + buildingId +
+                ", tClose=" + tClose +
+                ", tOpen=" + tOpen +
+                '}';
     }
 }
