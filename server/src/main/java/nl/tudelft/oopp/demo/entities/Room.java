@@ -1,61 +1,88 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "Room")
 public class Room {
 
     @Id
-    @Column(name = "buildingId")
-    private String buildingId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
 
-    @Column(name = "roomName")
-    private String roomName;
+    @NotNull
+    @Column(name = "name", length = 32)
+    private String name;
 
+    @NotNull
     @Column(name = "capacity")
     private int capacity;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "building_id", referencedColumnName = "id")
+    private Building building;
 
     /**
      * Create a new Room instance.
      *
-     * @param buildingId The ID of the Building in which the Room is.
-     * @param roomName The name of the Room.
+     * @param id The unique ID of the Room that is used to identify it.
+     * @param name The name of the Room.
      * @param capacity The capacity of the room.
+     * @param building The building, in which the room is located.
      */
 
-    public Room(String buildingId, String roomName, int capacity) {
-        this.buildingId = buildingId;
-        this.roomName = roomName;
+    public Room(long id, String name, int capacity, Building building) {
+        this.id = id;
+        this.name = name;
         this.capacity = capacity;
+        this.building = building;
     }
 
-    public String getBuildingId() {
-        return buildingId;
+    @JsonIgnore
+    public long getId() {
+        return id;
     }
 
-    public String getRoomName() {
-        return roomName;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public void setBuildingId(String buildingId) {
-        this.buildingId = buildingId;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     @Override
@@ -67,9 +94,10 @@ public class Room {
             return false;
         }
         Room room = (Room) o;
-        return getCapacity() == room.getCapacity()
-                && Objects.equals(getBuildingId(), room.getBuildingId())
-                && Objects.equals(getRoomName(), room.getRoomName());
+        return id == room.id
+                && capacity == room.capacity
+                && Objects.equals(name, room.name)
+                && Objects.equals(building, room.building);
     }
 
 }
