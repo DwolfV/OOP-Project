@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:client/src/main/resources/calendarScene.fxml
->>>>>>> alena_branch
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -29,32 +25,21 @@
             <children>
                 <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu" HBox.hgrow="ALWAYS">
                     <items>
-<<<<<<< HEAD
-                        <MenuItem onAction="#handleHomeButton" mnemonicParsing="false" text="Home" />
-                        <MenuItem onAction="#handleReservationButton" mnemonicParsing="false" text="Reservations" />
-                        <MenuItem onAction="#handleRestaurantsButton" mnemonicParsing="false" text="Restaurants" />
-                        <MenuItem onAction="#handleFriendsButton" mnemonicParsing="false" text="Friends" />
-                        <MenuItem onAction="#handleSettingsButton" mnemonicParsing="false" text="Settings" />
-=======
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeButton" text="Home" />
                         <MenuItem mnemonicParsing="false" onAction="#handleReservationButton" text="Reservations" />
                         <MenuItem mnemonicParsing="false" onAction="#handleRestaurantsButton" text="Restaurants" />
                         <MenuItem mnemonicParsing="false" onAction="#handleFriendsButton" text="Friends" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings" />
->>>>>>> alena_branch
                     </items>
                     <HBox.margin>
                         <Insets left="5.0" top="20.0" />
                     </HBox.margin>
                 </MenuButton>
-<<<<<<< HEAD
-=======
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Button layoutX="43.0" onAction="#handleAdminButton" layoutY="36.0" mnemonicParsing="false" text="Admin" />
                </children>
             </Pane>
->>>>>>> alena_branch
                 <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
                 <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -89,16 +74,3 @@
         </GridPane>
     </center>
 </BorderPane>
-<<<<<<< HEAD
-=======
-========
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
-    <Label text="Welcome to our application" />
-    <Label text="Press the button below to see a list of all the buildings" />
-    <Button fx:id="button" text="Click me!" />
-</VBox>
->>>>>>>> alena_branch:client/src/main/resources/mainScene.fxml
->>>>>>> alena_branch
