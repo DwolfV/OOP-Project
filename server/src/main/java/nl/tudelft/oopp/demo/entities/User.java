@@ -8,15 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "User")
 public class User {
 
     @Id
-    @Column(name = "userId")
-    private String userId;
-
-    @Column(name = "username")
-    private String username;
+    @Column(name = "id", updatable = false, nullable = false)
+    private long id;
 
     @Column(name = "email")
     private String email;
@@ -24,59 +21,43 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "firstName")
-    private String firstName;
+    @Column(name = "first_name")
+    private String first_name;
 
-    @Column(name = "lastName")
-    private String lastName;
+    @Column(name = "last_name")
+    private String last_name;
 
-    @Column(name = "birthDate")
-    private Date birthDate;
+    @Column(name = "birth_date")
+    private Date birth_date;
 
     public User() {
     }
     /**
      * Create a new User instance.
      *
-     * @param userId A unique ID for the User.
-     * @param username The name of the User.
+     * @param id A unique ID for the User.
      * @param email The email of the User.
      * @param role The role of the User, like student, employee, admin.
-     * @param firstName The first name of the User.
-     * @param lastName The last name of the User.
-     * @param birthDate The birsth date of the User.
+     * @param first_name The first name of the User.
+     * @param last_name The last name of the User.
+     * @param birth_date The birth date of the User.
      */
 
-    public User(String userId,
-                String username,
-                String email,
-                String role,
-                String firstName,
-                String lastName,
-                Date birthDate) {
-        this.userId = userId;
-        this.username = username;
+    public User(long id, String email, String role, String first_name, String last_name, Date birth_date) {
+        this.id = id;
         this.email = email;
         this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birth_date = birth_date;
     }
 
-    public String getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -95,52 +76,41 @@ public class User {
         this.role = role;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Date getBirth_date() {
+        return birth_date;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirth_date(Date birth_date) {
+        this.birth_date = birth_date;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(getUserId(), user.getUserId());
+        return getId() == user.getId() &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getRole(), user.getRole()) &&
+                Objects.equals(getFirst_name(), user.getFirst_name()) &&
+                Objects.equals(getLast_name(), user.getLast_name()) &&
+                Objects.equals(getBirth_date(), user.getBirth_date());
     }
 
-    @Override
-    public String toString() {
-        return "User{"
-                + "userId='" + userId + '\''
-                + ", username='" + username + '\''
-                + ", email='" + email + '\''
-                + ", role='" + role + '\''
-                + ", firstName='" + firstName + '\''
-                + ", lastName='" + lastName + '\''
-                + ", birthDate=" + birthDate
-                + '}';
-    }
 }
