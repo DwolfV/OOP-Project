@@ -36,7 +36,7 @@ public class Supply {
     private String name;
 
     @NotBlank
-    @OneToMany(mappedBy = "supply_reservation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "supply", cascade = CascadeType.ALL)
     private Set<SupplyReservation> reservations;
 
     @NotBlank
