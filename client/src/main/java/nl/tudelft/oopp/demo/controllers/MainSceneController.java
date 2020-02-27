@@ -15,6 +15,7 @@ import javafx.event.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
@@ -203,6 +204,17 @@ public class MainSceneController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void buttonClicked() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("A list of all buildings");
+        alert.setHeaderText("A list of all buildings:");
+        alert.setResizable(true);
+        alert.getDialogPane().setContent(new Label(ServerCommunication.getBuildings()));
+        alert.showAndWait();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
