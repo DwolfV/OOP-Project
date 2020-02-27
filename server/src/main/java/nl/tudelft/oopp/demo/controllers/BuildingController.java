@@ -59,7 +59,7 @@ public class BuildingController {
      *
      * @return message
      */
-    @PostMapping(value = "/building", consumes = {"application.json"})
+    @PostMapping(value = "/building", consumes = {"application/json"})
     public Building createNewActivity(@Valid @RequestBody Building building) {
         return rep.save(building);
     }

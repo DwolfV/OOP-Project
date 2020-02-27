@@ -14,10 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Room")
 public class Room {
+    // TODO nullable = false
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,17 +27,23 @@ public class Room {
     private long id;
 
     @NotBlank
-    @Column(name = "name", length = 32)
+    @Column(name = "name", length = 32, nullable = false)
     private String name;
 
-    @NotBlank
-    @Column(name = "capacity")
+
+    @NotNull
+    @Column(name = "capacity", nullable = false)
     private int capacity;
 
-    @NotBlank
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
+
+    public Room() {
+
+    }
 
     /**
      * Create a new Room instance.
