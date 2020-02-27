@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 
 import java.sql.Time;
 import java.util.Date;
@@ -19,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Room_Reservation")
-public class RoomReservations {
+public class RoomReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,12 +58,12 @@ public class RoomReservations {
      * @param user The user that has reserved the room.
      */
 
-    public RoomReservations(long id,
-                            Date date,
-                            Room room,
-                            Time startTime,
-                            Time endTime,
-                            User user) {
+    public RoomReservation(long id,
+                           Date date,
+                           Room room,
+                           Time startTime,
+                           Time endTime,
+                           User user) {
         this.id = id;
         this.date = date;
         this.room = room;
@@ -130,7 +129,7 @@ public class RoomReservations {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RoomReservations that = (RoomReservations) o;
+        RoomReservation that = (RoomReservation) o;
         return id == that.id
                 && Objects.equals(date, that.date)
                 && Objects.equals(room, that.room)
