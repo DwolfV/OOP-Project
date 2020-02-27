@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table (name = "Open_Time")
-public class Open_Time {
+public class OpenTime {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
@@ -37,7 +37,7 @@ public class Open_Time {
 
 
 
-    public Open_Time(long id, String day, Time t_open, Time t_close, Building building, long building_id) {
+    public OpenTime(long id, String day, Time t_open, Time t_close, Building building, long building_id) {
         this.id = id;
         this.day = day;
         this.t_open = t_open;
@@ -91,7 +91,7 @@ public class Open_Time {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Open_Time open_time = (Open_Time) o;
+        OpenTime open_time = (OpenTime) o;
         return getId() == open_time.getId() &&
 
                 Objects.equals(getDay(), open_time.getDay()) &&
