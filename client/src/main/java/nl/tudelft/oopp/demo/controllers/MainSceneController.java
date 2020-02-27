@@ -173,9 +173,9 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleBuildingButton(ActionEvent event) throws Exception {
+    public void handleAddBuildingButton(ActionEvent event) throws Exception {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/buildingFormScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addBuildingScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
 
@@ -188,9 +188,9 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleRoomButton(ActionEvent event) throws Exception {
+    public void handleAddRoomButton(ActionEvent event) throws Exception {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/roomFormScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addRoomScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
 
