@@ -141,19 +141,79 @@
             </Text>
             <Accordion>
               <panes>
-                <TitledPane animated="false" text="Building 1">
+                <TitledPane animated="false" text="Education building 35">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane fx:id="Details_1" onMouseMoved="#handlePopUp" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-color: darkgray; -fx-border-radius: 15;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instraction hall 1" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="909.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="Details_2" onMouseMoved="#handlePopUp" layoutY="49.0" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-radius: 15; -fx-border-color: darkgray;" AnchorPane.topAnchor="46.0">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instraction hall 2" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="908.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="Details_3" onMouseMoved="#handlePopUp" layoutY="98.0" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-color: darkgray; -fx-border-radius: 15;" AnchorPane.topAnchor="105.0">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project room 5" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="908.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                           </children></AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Building 2">
+                <TitledPane animated="false" text="Mathematics &amp; Computer Science (EEMCS)">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane fx:id="Details_4" onMouseMoved="#handlePopUp" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-color: darkgray; -fx-border-radius: 15;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instraction hall 1" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="909.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="Details_5" onMouseMoved="#handlePopUp" layoutY="57.0" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-radius: 15; -fx-border-color: darkgray;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instraction hall 3" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="908.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="Details_6" onMouseMoved="#handlePopUp" layoutY="117.0" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-color: darkgray; -fx-border-radius: 15;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instraction hall 4" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="908.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                           </children></AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Building 3">
+                <TitledPane animated="false" text="Pulse">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane fx:id="Details_7" onMouseMoved="#handlePopUp" layoutY="59.0" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-color: darkgray; -fx-border-radius: 15;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project room 6" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="908.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="Details_8" onMouseMoved="#handlePopUp" layoutY="123.0" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-radius: 15; -fx-border-color: darkgray;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instraction hall 2" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="908.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="Details_9" onMouseMoved="#handlePopUp" prefHeight="49.0" prefWidth="1106.0" style="-fx-border-color: darkgray; -fx-border-radius: 15;">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project room 4" wrappingWidth="131.2646484375" />
+                                    <Button layoutX="909.0" layoutY="5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="122.0" style="-fx-background-color: #00C1FC;" text="Reserve" />
+                                 </children>
+                              </Pane>
+                           </children></AnchorPane>
                   </content>
                 </TitledPane>
               </panes>
