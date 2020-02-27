@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Restaurant")
@@ -24,18 +25,19 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    @NotBlank
+    @NotNull
     @Column(name = "t_close")
     private Time tClose;
 
-    @NotBlank
+    @NotNull
     @Column(name = "t_open")
     private Time tOpen;
+
+    public Restaurant() {}
 
     public Restaurant(long id, String name, Building building, Time tClose, Time tOpen) {
         this.id = id;

@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.util.Objects;
 
@@ -22,11 +23,11 @@ public class OpenTime {
     @Column(name = "day")
     private String day;
 
-    @NotBlank
+    @NotNull
     @Column ( name = "t_open" )
     private Time t_open;
 
-    @NotBlank
+    @NotNull
     @Column ( name = "t_close" )
     private Time t_close;
 

@@ -27,23 +27,23 @@ public class Building {
     @Column(name = "id")
     private long id;
 
-    @NotBlank
+    @NotBlank(message = "This field cannot be blank")
     @Column(name = "name")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "This field cannot be blank")
     @Column(name = "street_name")
     private String streetName;
 
-    @NotBlank
+    @NotBlank(message = "This field cannot be blank")
     @Column(name = "street_number")
     private String streetNumber;
 
-    @NotBlank
+    @NotBlank(message = "This field cannot be blank")
     @Column(name = "zip_code")
     private String zipCode;
 
-    @NotBlank
+    @NotBlank(message = "This field cannot be blank")
     @Column(name = "city")
     private String city;
 
