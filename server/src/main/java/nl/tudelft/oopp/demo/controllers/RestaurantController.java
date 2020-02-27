@@ -4,6 +4,7 @@ import java.util.List;
 
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Restaurant;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class RestaurantController {
 
     /**
      * List of all restaurants.
+     *
      * @return List of restaurants
      */
     @GetMapping("/api/restaurants")
@@ -31,6 +33,7 @@ public class RestaurantController {
 
     /**
      * Get list of restaurants by building.
+     *
      * @param building building
      * @return List of buildings
      */

@@ -14,6 +14,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     /**
      * Find all the restaurants in a specific building.
+     *
      * @param buildingName name of building
      * @return List of restaurants
      */

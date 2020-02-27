@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.repositories;
+package nl.tudelft.oopp.demo;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -8,12 +8,14 @@ import java.util.List;
 
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Restaurant;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
+import nl.tudelft.oopp.demo.repositories.RestaurantRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-public class RestaurantRepositoryTest {
+public class RestaurantTest {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
@@ -44,7 +46,7 @@ public class RestaurantRepositoryTest {
     }
 
     @Test
-    public void testFindRestaurantsByBuilding(){
+    public void testFindRestaurantsByBuilding() {
         List<Restaurant> list = new ArrayList<Restaurant>();
         Building b1 = new Building(0, "bName1", "bStreet1", "bNum1", "bZip1", "bCity");
         Building b2 = new Building(1, "bName2", "bStreet2", "bNum2", "bZip2", "bCity");
