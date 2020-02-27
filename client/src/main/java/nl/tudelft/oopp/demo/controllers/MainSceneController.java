@@ -1,12 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
-<<<<<<< HEAD
 //import com.jfoenix.controls.JFXHamburger;
 //import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-=======
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
->>>>>>> alena_branch
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,24 +16,17 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.views.MainDisplay;
-<<<<<<< HEAD
-=======
-
->>>>>>> alena_branch
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
-<<<<<<< HEAD
-=======
     @FXML
     private Label closeButton;
     @FXML
     private Pane Details_1, Details_2, Details_3, Details_4, Details_5, Details_6, Details_7, Details_8, Details_9;
 
->>>>>>> alena_branch
 //    @FXML
 //    private JFXHamburger menu;
 //
@@ -51,9 +41,6 @@ public class MainSceneController implements Initializable {
 //    }
 
     @FXML
-    private Label closeButton;
-
-    @FXML
     public void handleCloseButtonAction(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
@@ -66,21 +53,12 @@ public class MainSceneController implements Initializable {
     public void handleHomeButton(ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-<<<<<<< HEAD
             Parent calendarParent = (Parent) fxmlLoader.load();
             Stage calendarStage = new Stage();
 
             calendarStage.setScene(new Scene(calendarParent));
             calendarStage.setTitle("Home");
             calendarStage.show();
-=======
-            Parent root = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("Home");
-            stage.show();
->>>>>>> alena_branch
             MainDisplay.stg.close();
         } catch(Exception e) {
             e.printStackTrace();
