@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -39,7 +37,7 @@
                 </MenuButton>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="52.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
+                  <Button layoutX="43.0" onAction="#handleAdminButton" layoutY="36.0" mnemonicParsing="false" text="Admin" />
                </children>
             </Pane>
                 <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />

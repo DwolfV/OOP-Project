@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nl.tudelft.oopp.demo.controllers.MainSceneController;
 
-public class QuoteDisplay extends Application {
+public class MainDisplay extends Application {
 
     public static Stage stg;
 

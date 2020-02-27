@@ -13,7 +13,7 @@ import javafx.event.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.views.QuoteDisplay;
+import nl.tudelft.oopp.demo.views.MainDisplay;
 
 
 import java.net.URL;
@@ -51,14 +51,14 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleHomeButton(ActionEvent event) throws Exception {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mainScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
 
             stage.setScene(new Scene(root));
             stage.setTitle("Home");
             stage.show();
-            QuoteDisplay.stg.close();
+            MainDisplay.stg.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -170,6 +170,36 @@ public class MainSceneController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    public void handleBuildingButton(ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/buildingFormScene.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("New Building");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleRoomButton(ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/roomFormScene.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("New Room");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
