@@ -2,6 +2,8 @@ package nl.tudelft.oopp.demo.controllers;
 
 //import com.jfoenix.controls.JFXHamburger;
 //import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +22,11 @@ import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
+    @FXML
+    private Label closeButton;
+    @FXML
+    private Pane Details_1, Details_2, Details_3, Details_4, Details_5, Details_6, Details_7, Details_8, Details_9;
+
 //    @FXML
 //    private JFXHamburger menu;
 //
@@ -32,9 +39,6 @@ public class MainSceneController implements Initializable {
 //            transition.play();
 //        });
 //    }
-
-    @FXML
-    private Label closeButton;
 
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
@@ -117,6 +121,84 @@ public class MainSceneController implements Initializable {
             settingsStage.setScene(new Scene(settingsParent));
             settingsStage.setTitle("Settings");
             settingsStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    public void handleAdminButton (ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Admin");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handlePopUp(MouseEvent event) throws Exception {
+        try {
+            Tooltip details1 = new Tooltip();
+            Tooltip details2 = new Tooltip();
+            Tooltip details3 = new Tooltip();
+
+            details1.setText("Facilities:\n - chairs \n - tables \n - couch \n - table");
+            details1.setStyle("-fx-font-size: 15");
+
+            details2.setText("Facilities:\n - chairs \n - blackboard \n - table");
+            details2.setStyle("-fx-font-size: 15");
+
+            details3.setText("Facilities:\n - chairs \n - table");
+            details3.setStyle("-fx-font-size: 15");
+
+            Tooltip.install(Details_1, details1);
+            Tooltip.install(Details_2, details2);
+            Tooltip.install(Details_3, details3);
+            Tooltip.install(Details_4, details1);
+            Tooltip.install(Details_5, details2);
+            Tooltip.install(Details_6, details3);
+            Tooltip.install(Details_7, details1);
+            Tooltip.install(Details_8, details2);
+            Tooltip.install(Details_9, details3);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    public void handleBuildingButton(ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/buildingFormScene.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("New Building");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleRoomButton(ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/roomFormScene.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("New Room");
+            stage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
