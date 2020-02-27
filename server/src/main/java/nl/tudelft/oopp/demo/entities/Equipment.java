@@ -10,7 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Equipment")
@@ -21,20 +24,34 @@ public class Equipment {
     @Column(name = "id")
     private long id;
 
-    @NotNull
+    @NotBlank
+    @ManyToOne
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    private Room room;
+
+    @NotBlank
     @Column(name = "name", length = 32)
     private String name;
 
-    /**
-     * Create a new Equipment instance.
-     *
-     * @param id A unique identifier for Equipment.
-     * @param name The name of that equipment, ex. Whiteboard, monitor, desk, etc.
-     */
+    @NotBlank
+    @Column(name = "amount")
+    private int amount;
 
-    public Equipment(long id, String name) {
+
+    /**
+     * Create a new RoomEquipment instance.
+     * It is going to connect the Rooms to different Equipments.
+     *
+     * @param id The unique identifier for RoomEquipment.
+     * @param room The room to which the RoomEquipment belongs.
+     * @param name The Equipment like whi.
+     * @param amount How much of the Equipment there is in the Room.
+     */
+    public Equipment(long id, Room room, String name, int amount) {
         this.id = id;
+        this.room = room;
         this.name = name;
+        this.amount = amount;
     }
 
     @JsonIgnore
@@ -46,12 +63,26 @@ public class Equipment {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setName(String name) {
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public String getName() { return name; }
+
+    public void setEquipment(String name) {
         this.name = name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override
@@ -62,9 +93,11 @@ public class Equipment {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Equipment equipment = (Equipment) o;
-        return id == equipment.id
-                && Objects.equals(name, equipment.name);
+        Equipment that = (Equipment) o;
+        return id == that.id
+                && amount == that.amount
+                && Objects.equals(room, that.room)
+                && Objects.equals(name, that.name);
     }
 
 }

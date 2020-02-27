@@ -1,8 +1,16 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Time;
 import java.util.Objects;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Restaurant")
@@ -12,33 +20,32 @@ public class Restaurant {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
+    @NotBlank
     @Column(name = "name")
     private String name;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    private long buildingId;
-
+    @NotBlank
     @Column(name = "t_close")
     private Time tClose;
 
+    @NotBlank
     @Column(name = "t_open")
     private Time tOpen;
 
-    public Restaurant() {
-
-    }
-
-    public Restaurant(long id, String name, long buildingId, Time tClose, Time tOpen) {
+    public Restaurant(long id, String name, Building building, Time tClose, Time tOpen) {
         this.id = id;
         this.name = name;
-        this.buildingId = buildingId;
+        this.building = building;
         this.tClose = tClose;
         this.tOpen = tOpen;
     }
 
+    @JsonIgnore
     public long getId() {
         return id;
     }
@@ -55,12 +62,12 @@ public class Restaurant {
         this.name = name;
     }
 
-    public long getBuildingId() {
-        return buildingId;
+    public Building getBuilding() {
+        return building;
     }
 
-    public void setBuildingId(long buildingId) {
-        this.buildingId = buildingId;
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     public Time gettClose() {
@@ -81,21 +88,18 @@ public class Restaurant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Restaurant that = (Restaurant) o;
-        return getId() == that.getId();
+        return id == that.id
+                && Objects.equals(name, that.name)
+                && Objects.equals(building, that.building)
+                && Objects.equals(tClose, that.tClose)
+                && Objects.equals(tOpen, that.tOpen);
     }
 
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", building=" + building +
-                ", buildingId=" + buildingId +
-                ", tClose=" + tClose +
-                ", tOpen=" + tOpen +
-                '}';
-    }
 }

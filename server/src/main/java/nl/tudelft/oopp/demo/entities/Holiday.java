@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.crypto.Data;
 import java.sql.Time;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -20,7 +20,7 @@ public class Holiday {
     private String name;
 
     @Column ( name = "date" )
-    private Data date;
+    private Date date;
 
     @Column ( name = "t_open" )
     private Time t_open;
@@ -38,7 +38,7 @@ public class Holiday {
      * @param t_open The opening time of a building during a Holiday.
      */
 
-    public Holiday(long id, String name, Data date, Time t_open, Time t_close) {
+    public Holiday(long id, String name, Date date, Time t_open, Time t_close) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -62,11 +62,11 @@ public class Holiday {
         this.name = name;
     }
 
-    public Data getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Data date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

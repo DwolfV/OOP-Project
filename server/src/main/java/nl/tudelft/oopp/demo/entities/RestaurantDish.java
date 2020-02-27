@@ -1,7 +1,15 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Restaurant_Dish")
@@ -11,20 +19,23 @@ public class RestaurantDish {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private long restaurantId;
+    private Restaurant restaurant;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
-    private long buildingId;
+    private Building building;
 
-    public RestaurantDish(long id, long restaurantId, long buildingId) {
+    public RestaurantDish(long id, Restaurant restaurant, Building building) {
         this.id = id;
-        this.restaurantId = restaurantId;
-        this.buildingId = buildingId;
+        this.restaurant = restaurant;
+        this.building = building;
     }
 
+    @JsonIgnore
     public long getId() {
         return id;
     }
@@ -33,36 +44,34 @@ public class RestaurantDish {
         this.id = id;
     }
 
-    public long getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurantId(long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
-    public long getBuildingId() {
-        return buildingId;
+    public Building getBuilding() {
+        return building;
     }
 
-    public void setBuildingId(long buildingId) {
-        this.buildingId = buildingId;
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         RestaurantDish that = (RestaurantDish) o;
-        return getId() == that.getId();
+        return id == that.id
+                && Objects.equals(restaurant, that.restaurant)
+                && Objects.equals(building, that.building);
     }
 
-    @Override
-    public String toString() {
-        return "RestaurantDish{" +
-                "id=" + id +
-                ", restaurantId=" + restaurantId +
-                ", buildingId=" + buildingId +
-                '}';
-    }
 }

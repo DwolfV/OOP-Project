@@ -1,6 +1,12 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import java.sql.Time;
 import java.util.Objects;
 
@@ -12,20 +18,24 @@ public class Open_Time {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
+    @NotBlank
     @Column(name = "day")
     private String day;
 
+    @NotBlank
     @Column ( name = "t_open" )
     private Time t_open;
 
+    @NotBlank
     @Column ( name = "t_close" )
     private Time t_close;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    private long building_id;
+
 
     public Open_Time(long id, String day, Time t_open, Time t_close, Building building, long building_id) {
         this.id = id;
@@ -33,7 +43,7 @@ public class Open_Time {
         this.t_open = t_open;
         this.t_close = t_close;
         this.building = building;
-        this.building_id = building_id;
+
     }
 
     public long getId() {
@@ -76,13 +86,6 @@ public class Open_Time {
         this.building = building;
     }
 
-    public long getBuilding_id() {
-        return building_id;
-    }
-
-    public void setBuilding_id(long building_id) {
-        this.building_id = building_id;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,7 +93,7 @@ public class Open_Time {
         if (o == null || getClass() != o.getClass()) return false;
         Open_Time open_time = (Open_Time) o;
         return getId() == open_time.getId() &&
-                getBuilding_id() == open_time.getBuilding_id() &&
+
                 Objects.equals(getDay(), open_time.getDay()) &&
                 Objects.equals(getT_open(), open_time.getT_open()) &&
                 Objects.equals(getT_close(), open_time.getT_close()) &&

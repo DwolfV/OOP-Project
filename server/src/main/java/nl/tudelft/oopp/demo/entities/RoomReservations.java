@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Room_Reservation")
@@ -25,24 +26,24 @@ public class RoomReservations {
     @Column(name = "id")
     private long id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "date")
     private Date date;
 
-    @NotNull
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
-    @NotNull
+    @NotBlank
     @Column(name = "start_time")
     private Time startTime;
 
-    @NotNull
+    @NotBlank
     @Column(name = "end_time")
     private Time endTime;
 
-    @NotNull
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

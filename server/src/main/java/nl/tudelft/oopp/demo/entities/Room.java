@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Room")
@@ -23,15 +24,15 @@ public class Room {
     @Column(name = "id")
     private long id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "name", length = 32)
     private String name;
 
-    @NotNull
+    @NotBlank
     @Column(name = "capacity")
     private int capacity;
 
-    @NotNull
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
