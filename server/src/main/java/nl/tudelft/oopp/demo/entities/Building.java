@@ -1,33 +1,67 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import org.springframework.lang.Nullable;
 
 @Entity
-@Table(name = "buildings")
+@Table(name = "Building",
+    uniqueConstraints = {
+            @UniqueConstraint(
+                    columnNames = {"street_name", "street_number", "zip_code", "city"},
+                    name = "unique_address_constraint"
+            )
+    })
 public class Building {
 
     @Id
-    @Column(name = "buildingId")
-    private String buildingId;
+    @Column(name = "id")
+    private long id;
 
-    @Column(name = "buildingName")
-    private String buildingName;
+    @NotBlank
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "street")
-    private String street;
+    @NotBlank
+    @Column(name = "street_name")
+    private String streetName;
 
-    @Column(name = "streetNumber")
+    @NotBlank
+    @Column(name = "street_number")
     private String streetNumber;
 
-    @Column(name = "zipCode")
+    @NotBlank
+    @Column(name = "zip_code")
     private String zipCode;
 
+    @NotBlank
     @Column(name = "city")
     private String city;
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<Supply> supplies = new HashSet<>();
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<Room> rooms = new HashSet<>();
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<OpenTime> openTimes = new HashSet<>();
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<Restaurant> restaurants = new HashSet<>();
 
     public Building() {
 
@@ -36,50 +70,50 @@ public class Building {
     /**
      * Create a new Building instance.
      *
-     * @param buildingId Unique identifier as to be used in the database.
-     * @param buildingName Actual name of the Building.
-     * @param street The street on which the Building is located.
+     * @param id Unique identifier as to be used in the database.
+     * @param name Actual name of the Building.
+     * @param streetName The street on which the Building is located.
      * @param streetNumber The street number on which the Building is located.
      * @param zipCode The zip code of the Building.
      * @param city The city in which the Building is located.
      */
 
-    public Building(String buildingId,
-                    String buildingName,
-                    String street,
+    public Building(long id,
+                    String name,
+                    String streetName,
                     String streetNumber,
                     String zipCode,
                     String city) {
-        this.buildingId = buildingId;
-        this.buildingName = buildingName;
-        this.street = street;
+        this.id = id;
+        this.name = name;
+        this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.zipCode = zipCode;
         this.city = city;
     }
 
-    public String getBuildingId() {
-        return buildingId;
+    public long getId() {
+        return id;
     }
 
-    public void setBuildingId(String buildingId) {
-        this.buildingId = buildingId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
-        return buildingName;
+        return name;
     }
 
-    public void setName(String buildingName) {
-        this.buildingName = buildingName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getStreet() {
-        return street;
+    public String getStreetName() {
+        return streetName;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public String getStreetNumber() {
@@ -115,15 +149,15 @@ public class Building {
             return false;
         }
         Building building = (Building) o;
-        return Objects.equals(getBuildingId(), building.getBuildingId());
+        return Objects.equals(id, building.getId());
     }
 
     @Override
     public String toString() {
         return "Building{"
-                + "buildingId='" + buildingId + '\''
-                + ", buildingName='" + buildingName + '\''
-                + ", street='" + street + '\''
+                + "buildingId='" + id + '\''
+                + ", buildingName='" + name + '\''
+                + ", street='" + streetName + '\''
                 + ", streetNumber='" + streetNumber + '\''
                 + ", zipCode='" + zipCode + '\''
                 + ", city='" + city + '\''

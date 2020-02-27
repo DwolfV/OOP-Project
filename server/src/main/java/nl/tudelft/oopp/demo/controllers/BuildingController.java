@@ -25,7 +25,7 @@ public class BuildingController {
     @GetMapping("building")
     public @ResponseBody List<Building> getBuildingById() {
         Building dw = new Building(
-                "35",
+                35,
                 "Drebbelweg",
                 "Cornelis Drebbelweg",
                 "5",
@@ -34,7 +34,7 @@ public class BuildingController {
         );
 
         Building ewi = new Building(
-                "36",
+                36,
                 "EWI",
                 "Mekelweg",
                 "4",
