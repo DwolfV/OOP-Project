@@ -29,7 +29,7 @@ public class Supply {
     @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
-    private Building buildingId;
+    private Building building;
 
     @NotBlank
     @Column(name = "name")
@@ -51,17 +51,17 @@ public class Supply {
      * Create a new Supply instance.
      *
      * @param id Unique identifier as to be used in the database.
-     * @param buildingId Reference to the Building class.
+     * @param building Reference to the Building class.
      * @param name The actual name of the supply.
      * @param stock The amount of supplies of a certain type that are available at the moment.
      */
 
     public Supply(long id,
-                  Building buildingId,
+                  Building building,
                   String name,
                   int stock) {
         this.id = id;
-        this.buildingId = buildingId;
+        this.building = building;
         this.name = name;
         this.stock = stock;
     }
@@ -75,11 +75,11 @@ public class Supply {
     }
 
     public Building getBuildingId() {
-        return buildingId;
+        return building;
     }
 
     public void setBuildingId(Building buildingId) {
-        this.buildingId = buildingId;
+        this.building = buildingId;
     }
 
     public String getName() {
@@ -122,7 +122,7 @@ public class Supply {
     public String toString() {
         return "BuildingSupply{"
                 + "id=" + id
-                + ", buildingId=" + buildingId
+                + ", buildingId=" + building
                 + ", name=" + name
                 + ", stock=" + stock
                 + '}';
