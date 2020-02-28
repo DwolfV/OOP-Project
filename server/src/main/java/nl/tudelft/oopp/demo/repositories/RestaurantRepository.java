@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Restaurant;
@@ -20,4 +21,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
      */
     List<Restaurant> findAllByBuildingName(String buildingName);
 
+    Optional<Restaurant> findByName(String name);
+
+    Optional<Restaurant> findById(long id);
 }

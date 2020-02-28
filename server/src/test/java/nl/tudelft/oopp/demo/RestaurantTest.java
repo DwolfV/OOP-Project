@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Time;
@@ -47,7 +48,8 @@ public class RestaurantTest {
 
     @Test
     public void testFindRestaurantsByBuilding() {
-        List<Restaurant> list = new ArrayList<Restaurant>();
+        List<Restaurant> list1 = new ArrayList<Restaurant>();
+        List<Restaurant> list2 = new ArrayList<Restaurant>();
         Building b1 = new Building(0, "bName1", "bStreet1", "bNum1", "bZip1", "bCity");
         Building b2 = new Building(1, "bName2", "bStreet2", "bNum2", "bZip2", "bCity");
         Restaurant r1 = new Restaurant(0, "name1", b1, new Time(1000), new Time(2000));
@@ -60,10 +62,15 @@ public class RestaurantTest {
         restaurantRepository.save(r2);
         restaurantRepository.save(r3);
         restaurantRepository.save(r4);
-        list.add(r1);
-        list.add(r2);
-        list.add(r3);
+        list1.add(r1);
+        list1.add(r2);
+        list1.add(r3);
+        list2.add(r4);
         List<Restaurant> tList = restaurantRepository.findAllByBuildingName("bName1");
-        assertTrue(tList.equals(list));
+        assertTrue(tList.equals(list1));
+        assertFalse(tList.equals(list2));
+        tList = restaurantRepository.findAllByBuildingName("bName2");
+        assertTrue(tList.equals(list2));
+        assertFalse(tList.equals(list1));
     }
 }
