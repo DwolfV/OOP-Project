@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Room_Reservation")
@@ -25,27 +26,29 @@ public class RoomReservation {
     @Column(name = "id")
     private long id;
 
-    @NotBlank
-    @Column(name = "date")
+    @NotNull
+    @Column(name = "date", nullable = false)
     private Date date;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
     private Room room;
 
-    @NotBlank
-    @Column(name = "start_time")
+    @NotNull
+    @Column(name = "start_time", nullable = false)
     private Time startTime;
 
-    @NotBlank
-    @Column(name = "end_time")
+    @NotNull
+    @Column(name = "end_time", nullable = false)
     private Time endTime;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    public RoomReservation() {}
 
     /**
      * Create a new RoomReservation instance.
@@ -72,7 +75,6 @@ public class RoomReservation {
         this.user = user;
     }
 
-    @JsonIgnore
     public long getId() {
         return id;
     }
