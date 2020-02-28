@@ -24,19 +24,22 @@ public class Equipment {
     @Column(name = "id")
     private long id;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 
-    @NotBlank
+    @NotNull
     @Column(name = "name", length = 32)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Column(name = "amount")
     private int amount;
 
+    public Equipment() {
+
+    }
 
     /**
      * Create a new RoomEquipment instance.
@@ -73,7 +76,7 @@ public class Equipment {
 
     public String getName() { return name; }
 
-    public void setEquipment(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
