@@ -26,7 +26,7 @@ public class Room {
     @Column(name = "id")
     private long id;
 
-    @NotBlank
+    @NotNull
     @Column(name = "name", length = 32, nullable = false)
     private String name;
 
@@ -61,7 +61,6 @@ public class Room {
         this.building = building;
     }
 
-    @JsonIgnore
     public long getId() {
         return id;
     }
