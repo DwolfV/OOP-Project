@@ -34,6 +34,28 @@ public class Building {
     /**
      * Create a new Building instance.
      *
+     * @param name Actual name of the Building.
+     * @param streetName The street on which the Building is located.
+     * @param streetNumber The street number on which the Building is located.
+     * @param zipCode The zip code of the Building.
+     * @param city The city in which the Building is located.
+     */
+
+    public Building(String name,
+                    String streetName,
+                    String streetNumber,
+                    String zipCode,
+                    String city) {
+        this.name = name;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
+    /**
+     * Create a new Building instance.
+     *
      * @param id Unique identifier as to be used in the database.
      * @param name Actual name of the Building.
      * @param streetName The street on which the Building is located.
