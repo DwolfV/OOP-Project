@@ -220,21 +220,6 @@ public class MainSceneController implements Initializable {
         alert.showAndWait();
     }
 
-    @FXML
-    private TableView ViewBuildings;
-
-    @FXML
-    public void setTableContent(List<Building> buildingList) {
-        ObservableList<Building> data = FXCollections.<Building>observableArrayList(new Building("36",
-                "EWI",
-                "Mekelweg",
-                "4",
-                "2628 CD",
-                "Delft"));
-        data.addAll(buildingList);
-        ViewBuildings.setItems(data);
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
