@@ -1,83 +1,120 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
 import java.sql.Time;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class Building {
 
-    String BuildingID;
-    String BuildingName;
-    String StreetName;
-    String StreetNumber;
-    String ZipCode;
-    String City;
+    private long id;
+    private String name;
+    private String streetName;
+    private String streetNumber;
+    private String zipCode;
+    private String city;
+//
+//    private Set<Supply> supplies = new HashSet<>();
+//    private Set<Room> rooms = new HashSet<>();
+//    private Set<OpenTime> openTimes = new HashSet<>();
+//    private Set<Restaurant> restaurants = new HashSet<>();
 
     /**
      * Create a new Building instance.
      *
-     * @param BuildingID ID of the Building.
-     * @param BuildingName Name of the Building.
-     * @param StreetName Street Name of the Building.
-     * @param StreetNumber Street Number of the Building.
-     * @param ZipCode Zip Code of the building.
-     * @param City City of the building.
+     * @param id           Unique identifier as to be used in the database.
+     * @param name         Actual name of the Building.
+     * @param streetName   The street on which the Building is located.
+     * @param streetNumber The street number on which the Building is located.
+     * @param zipCode      The zip code of the Building.
+     * @param city         The city in which the Building is located.
      */
 
-    public Building(String BuildingID, String BuildingName, String StreetName, String StreetNumber, String ZipCode, String City) {
-        this.BuildingID = BuildingID;
-        this.BuildingName = BuildingName;
-        this.StreetName = StreetName;
-        this.StreetNumber = StreetNumber;
-        this.ZipCode = ZipCode;
-        this.City = City;
+    public Building(long id,
+                    String name,
+                    String streetName,
+                    String streetNumber,
+                    String zipCode,
+                    String city) {
+        this.id = id;
+        this.name = name;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.zipCode = zipCode;
+        this.city = city;
     }
 
-    public String getBuildingID() {
-        return BuildingID;
+    public long getId() {
+        return id;
     }
 
-    public void setBuildingID(String buildingID) {
-        this.BuildingID = BuildingID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getBuildingName() {
-        return BuildingName;
+    public String getName() {
+        return name;
     }
 
-    public void setBuildingName(String buildingName) {
-        this.BuildingName = BuildingName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getStreetName() {
-        return StreetName;
+        return streetName;
     }
 
     public void setStreetName(String streetName) {
-        this.StreetName = StreetName;
+        this.streetName = streetName;
     }
 
     public String getStreetNumber() {
-        return StreetNumber;
+        return streetNumber;
     }
 
     public void setStreetNumber(String streetNumber) {
-        this.StreetNumber = StreetNumber;
+        this.streetNumber = streetNumber;
     }
 
     public String getZipCode() {
-        return ZipCode;
+        return zipCode;
     }
 
     public void setZipCode(String zipCode) {
-        this.ZipCode = ZipCode;
+        this.zipCode = zipCode;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        this.City = City;
+        this.city = city;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Building building = (Building) o;
+        return Objects.equals(id, building.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Building{"
+                + "buildingId='" + id + '\''
+                + ", buildingName='" + name + '\''
+                + ", street='" + streetName + '\''
+                + ", streetNumber='" + streetNumber + '\''
+                + ", zipCode='" + zipCode + '\''
+                + ", city='" + city + '\''
+                + '}';
     }
 
 }
