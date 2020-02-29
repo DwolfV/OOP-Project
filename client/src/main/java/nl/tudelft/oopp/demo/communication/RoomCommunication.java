@@ -59,7 +59,7 @@ public class RoomCommunication {
      */
     public static void addRoom(String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
-        Room newRoom = new Room(roomName, capacity, new Building(buildingId));
+        Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
         String JSONRoom = "";
         try {
             JSONRoom = mapper.writeValueAsString(newRoom);
@@ -87,7 +87,7 @@ public class RoomCommunication {
      */
     public static void updateRoom(long id, String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
-        Room newRoom = new Room(roomName, capacity, new Building(buildingId));
+        Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
         String JSONRoom = "";
         try {
             JSONRoom = mapper.writeValueAsString(newRoom);
