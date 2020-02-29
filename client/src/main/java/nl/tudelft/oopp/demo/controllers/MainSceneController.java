@@ -2,6 +2,9 @@ package nl.tudelft.oopp.demo.controllers;
 
 //import com.jfoenix.controls.JFXHamburger;
 //import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import com.sun.javafx.charts.Legend;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
@@ -16,9 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
@@ -215,10 +220,24 @@ public class MainSceneController implements Initializable {
         alert.showAndWait();
     }
 
+    @FXML
+    private TableView ViewBuildings;
+
+    @FXML
+    public void setTableContent(List<Building> buildingList) {
+        ObservableList<Building> data = FXCollections.<Building>observableArrayList(new Building("36",
+                "EWI",
+                "Mekelweg",
+                "4",
+                "2628 CD",
+                "Delft"));
+        data.addAll(buildingList);
+        ViewBuildings.setItems(data);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Loading User Data");
+
     }
 
 }

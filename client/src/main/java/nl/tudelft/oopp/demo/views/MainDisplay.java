@@ -15,6 +15,7 @@ public class MainDisplay extends Application {
 
     @Override
     public void start(Stage loginStage) throws IOException {
+
         this.stg = loginStage;
 
         FXMLLoader loader = new FXMLLoader();
@@ -25,7 +26,6 @@ public class MainDisplay extends Application {
         loginStage.setTitle("Log In");
         loginStage.setScene(loginScene);
         loginStage.show();
-
     }
 
 

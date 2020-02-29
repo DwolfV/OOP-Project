@@ -5,101 +5,79 @@ import java.util.List;
 
 public class Building {
 
-    String name;
-    String location;
-    List<Room> roomList;
-    List<Restaurant> restaurantList;
-    List<Accessory> accessoryList;
-    Time openT;
-    Time closeT;
+    String BuildingID;
+    String BuildingName;
+    String StreetName;
+    String StreetNumber;
+    String ZipCode;
+    String City;
 
     /**
      * Create a new Building instance.
      *
-     * @param name Name of the Building.
-     * @param location The address of the building.
-     * @param roomList A List of all Rooms in that Building.
-     * @param restaurantList A List of all Restaurants in that Building.
-     * @param accessoryList A List of all Accessories that the Building has.
-     * @param openT Time at which the Building opens.
-     * @param closeT Time at which the Building closes.
+     * @param BuildingID ID of the Building.
+     * @param BuildingName Name of the Building.
+     * @param StreetName Street Name of the Building.
+     * @param StreetNumber Street Number of the Building.
+     * @param ZipCode Zip Code of the building.
+     * @param City City of the building.
      */
 
-    public Building(String name,
-                    String location,
-                    List<Room> roomList,
-                    List<Restaurant> restaurantList,
-                    List<Accessory> accessoryList,
-                    Time openT,
-                    Time closeT) {
-        this.name = name;
-        this.location = location;
-        this.roomList = roomList;
-        this.restaurantList = restaurantList;
-        this.accessoryList = accessoryList;
-        this.openT = openT;
-        this.closeT = closeT;
+    public Building(String BuildingID, String BuildingName, String StreetName, String StreetNumber, String ZipCode, String City) {
+        this.BuildingID = BuildingID;
+        this.BuildingName = BuildingName;
+        this.StreetName = StreetName;
+        this.StreetNumber = StreetNumber;
+        this.ZipCode = ZipCode;
+        this.City = City;
     }
 
-    public String getName() {
-        return name;
+    public String getBuildingID() {
+        return BuildingID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBuildingID(String buildingID) {
+        this.BuildingID = BuildingID;
     }
 
-    public String getLocation() {
-        return location;
+    public String getBuildingName() {
+        return BuildingName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setBuildingName(String buildingName) {
+        this.BuildingName = BuildingName;
     }
 
-    public List<Room> getRoomList() {
-        return roomList;
+    public String getStreetName() {
+        return StreetName;
     }
 
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
+    public void setStreetName(String streetName) {
+        this.StreetName = StreetName;
     }
 
-    public List<Restaurant> getRestaurantList() {
-        return restaurantList;
+    public String getStreetNumber() {
+        return StreetNumber;
     }
 
-    public void setRestaurantList(List<Restaurant> restaurantList) {
-        this.restaurantList = restaurantList;
+    public void setStreetNumber(String streetNumber) {
+        this.StreetNumber = StreetNumber;
     }
 
-    public List<Accessory> getAccessoryList() {
-        return accessoryList;
+    public String getZipCode() {
+        return ZipCode;
     }
 
-    public void setAccessoryList(List<Accessory> accessoryList) {
-        this.accessoryList = accessoryList;
+    public void setZipCode(String zipCode) {
+        this.ZipCode = ZipCode;
     }
 
-    public Time getOpenT() {
-        return openT;
+    public String getCity() {
+        return City;
     }
 
-    public void setOpenT(Time openT) {
-        this.openT = openT;
-    }
-
-    public Time getCloseT() {
-        return closeT;
-    }
-
-    public void setCloseT(Time closeT) {
-        this.closeT = closeT;
-    }
-
-    public boolean isOpen() {
-        // TODO calculate if the Building is open at that time.
-        return false;
+    public void setCity(String city) {
+        this.City = City;
     }
 
 }
