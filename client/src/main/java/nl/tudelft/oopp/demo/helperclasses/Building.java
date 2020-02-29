@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Building {
 
-    private long id;
+    private String id;
     private String name;
     private String streetName;
     private String streetNumber;
@@ -31,7 +31,7 @@ public class Building {
      * @param city         The city in which the Building is located.
      */
 
-    public Building(long id,
+    public Building(String id,
                     String name,
                     String streetName,
                     String streetNumber,
@@ -45,11 +45,9 @@ public class Building {
         this.city = city;
     }
 
-    public long getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
