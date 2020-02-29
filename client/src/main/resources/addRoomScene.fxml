@@ -11,45 +11,36 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
-   <left>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+   <top>
+      <AnchorPane prefHeight="700.0" prefWidth="377.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="84.0" layoutY="622.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="334.0" text="Add a room" />
-            <Text layoutX="47.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+            <Button layoutX="8.0" layoutY="383.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="334.0" text="Add a room" />
+            <Text layoutX="122.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="47.0" layoutY="71.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="47.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building name">
+            <TextField layoutX="69.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="141.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room ID">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="47.0" layoutY="209.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="47.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacity">
+            <TextField layoutX="69.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="141.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacity">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="47.0" layoutY="337.0" prefHeight="39.0" prefWidth="113.0" />
-            <CheckBox layoutX="47.0" layoutY="411.0" mnemonicParsing="false" text="Whiteboard">
+            <TextField layoutX="69.0" layoutY="228.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField layoutX="69.0" layoutY="318.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="108.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuildingName">
                <font>
                   <Font size="24.0" />
                </font>
-            </CheckBox>
-            <CheckBox layoutX="48.0" layoutY="471.0" mnemonicParsing="false" text="PC">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </CheckBox>
-            <CheckBox layoutX="49.0" layoutY="527.0" mnemonicParsing="false" text="Beamer">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </CheckBox>
+            </Text>
          </children>
       </AnchorPane>
-   </left>
+   </top>
 </BorderPane>
