@@ -206,7 +206,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void buttonClicked() {
+    public void handleViewButtonClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("A list of all buildings");
         alert.setHeaderText("A list of all buildings:");

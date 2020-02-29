@@ -17,7 +17,7 @@
          <children>
             <Button layoutX="237.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleAddBuildingButton" prefHeight="39.0" prefWidth="150.0" text="Add a building" />
             <Button layoutX="240.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleAddRoomButton" prefHeight="39.0" prefWidth="144.0" text="Add a room" />
-            <Button layoutX="8.0" layoutY="62.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="207.0" text="View buildings/rooms" />
+            <Button layoutX="8.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleViewButtonClicked" prefHeight="55.0" prefWidth="207.0" text="View buildings/rooms" />
             <Button layoutX="418.0" layoutY="101.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="190.0" text="Update a room" />
             <Button layoutX="421.0" layoutY="42.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="188.0" text="Update a building" />
             <Button layoutX="644.0" layoutY="42.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="183.0" text="Delete a building" />
