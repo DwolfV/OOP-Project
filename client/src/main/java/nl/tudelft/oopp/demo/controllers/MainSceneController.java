@@ -2,9 +2,6 @@ package nl.tudelft.oopp.demo.controllers;
 
 //import com.jfoenix.controls.JFXHamburger;
 //import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import com.sun.javafx.charts.Legend;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
@@ -19,11 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
@@ -32,6 +27,19 @@ public class MainSceneController implements Initializable {
     private Label closeButton;
     @FXML
     private Pane Details_1, Details_2, Details_3, Details_4, Details_5, Details_6, Details_7, Details_8, Details_9;
+
+//    @FXML
+//    private JFXHamburger menu;
+//
+//    @FXML
+//    public void handleMenu(MouseEvent event) {
+//        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(menu);
+//        transition.setRate(-1);
+//        menu.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+//            transition.setRate(transition.getRate()*-1);
+//            transition.play();
+//        });
+//    }
 
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
@@ -209,7 +217,7 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        System.out.println("Loading User Data");
     }
 
 }
