@@ -1,15 +1,30 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.sql.Time;
 import java.util.List;
 
 public class Restaurant {
 
-    String name;
-    List<Dish> dishList;
+    private long id;
+    private String name;
+    private Building building;
+    private Time tClose;
+    private Time tOpen;
 
-    public Restaurant(String name, List<Dish> dishList) {
+    public Restaurant(long id, String name, Building building, Time tClose, Time tOpen) {
+        this.id = id;
         this.name = name;
-        this.dishList = dishList;
+        this.building = building;
+        this.tClose = tClose;
+        this.tOpen = tOpen;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -20,11 +35,27 @@ public class Restaurant {
         this.name = name;
     }
 
-    public List<Dish> getDishList() {
-        return dishList;
+    public Building getBuilding() {
+        return building;
     }
 
-    public void setDishList(List<Dish> dishList) {
-        this.dishList = dishList;
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public Time gettClose() {
+        return tClose;
+    }
+
+    public void settClose(Time tClose) {
+        this.tClose = tClose;
+    }
+
+    public Time gettOpen() {
+        return tOpen;
+    }
+
+    public void settOpen(Time tOpen) {
+        this.tOpen = tOpen;
     }
 }
