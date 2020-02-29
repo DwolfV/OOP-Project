@@ -27,19 +27,6 @@ public class MainSceneController implements Initializable {
     @FXML
     private Pane Details_1, Details_2, Details_3, Details_4, Details_5, Details_6, Details_7, Details_8, Details_9;
 
-//    @FXML
-//    private JFXHamburger menu;
-//
-//    @FXML
-//    public void handleMenu(MouseEvent event) {
-//        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(menu);
-//        transition.setRate(-1);
-//        menu.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-//            transition.setRate(transition.getRate()*-1);
-//            transition.play();
-//        });
-//    }
-
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
