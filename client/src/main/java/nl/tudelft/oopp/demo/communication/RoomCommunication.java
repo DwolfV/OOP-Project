@@ -24,12 +24,43 @@ public class RoomCommunication {
 
     /**
      * Retrieves a list of rooms.
-     * @return A list of all buildings.
+     * @return A list of all rooms.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static List<Room> getRooms() {
 
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/rooms")).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Room> room = null;
+        // TODO handle exception
+        try {
+            room = mapper.readValue(response.body(), new TypeReference<List<Room>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return room;
+    }
+
+    /**
+     * Retrieves a list of rooms that are located in a certain building.
+     * @return A list of all rooms.
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+    public static List<Room> getRoomsByBuildingId(long buildingId) {
+
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/rooms/%s", buildingId))).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
