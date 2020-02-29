@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.sql.Time;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,40 +10,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Restaurant")
-public class Restaurant {
+@Table(name = "Restaurant_Dish")
+public class RestaurantDish {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
     @NotBlank
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    private Restaurant restaurant;
 
+    @NotBlank
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    @NotNull
-    @Column(name = "t_close")
-    private Time tClose;
-
-    @NotNull
-    @Column(name = "t_open")
-    private Time tOpen;
-
-    public Restaurant() {}
-
-    public Restaurant(long id, String name, Building building, Time tClose, Time tOpen) {
+    public RestaurantDish(long id, Restaurant restaurant, Building building) {
         this.id = id;
-        this.name = name;
+        this.restaurant = restaurant;
         this.building = building;
-        this.tClose = tClose;
-        this.tOpen = tOpen;
     }
 
     @JsonIgnore
@@ -56,12 +44,12 @@ public class Restaurant {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public Building getBuilding() {
@@ -72,22 +60,6 @@ public class Restaurant {
         this.building = building;
     }
 
-    public Time gettClose() {
-        return tClose;
-    }
-
-    public void settClose(Time tClose) {
-        this.tClose = tClose;
-    }
-
-    public Time gettOpen() {
-        return tOpen;
-    }
-
-    public void settOpen(Time tOpen) {
-        this.tOpen = tOpen;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -96,12 +68,10 @@ public class Restaurant {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Restaurant that = (Restaurant) o;
+        RestaurantDish that = (RestaurantDish) o;
         return id == that.id
-                && Objects.equals(name, that.name)
-                && Objects.equals(building, that.building)
-                && Objects.equals(tClose, that.tClose)
-                && Objects.equals(tOpen, that.tOpen);
+                && Objects.equals(restaurant, that.restaurant)
+                && Objects.equals(building, that.building);
     }
 
 }
