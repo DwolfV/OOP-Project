@@ -19,6 +19,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 
 import javax.swing.*;
@@ -184,14 +185,14 @@ public class AdminSceneController implements Initializable {
 
     @FXML
     private void handleTextFieldData(ActionEvent event){
-        String buildingId = BuildingID.getText();
+        Long buildingId = Long.parseLong(BuildingID.getText());
         String buildingName = BuildingName.getText();
         String streetName = StreetName.getText();
         String streetNumber = StreetNumber.getText();
         String zipCode = ZipCode.getText();
         String city = City.getText();
 
-        Building building = new Building(buildingId, buildingName, streetName, streetNumber, zipCode, city);
+        BuildingCommunication.addBuilding(buildingId, buildingName, streetName, streetNumber, zipCode, city);
     }
 
 

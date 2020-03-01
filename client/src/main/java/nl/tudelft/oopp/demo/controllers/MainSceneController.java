@@ -13,9 +13,12 @@ import javafx.event.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
@@ -163,6 +166,11 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+//        List<Building> buildingList = BuildingCommunication.getBuildings();
+//
+//        for(Building building: buildingList) {
+//            System.out.print(building.toString());
+//        }
     }
 
 }
