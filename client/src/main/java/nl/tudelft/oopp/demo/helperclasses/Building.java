@@ -1,50 +1,44 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.util.Objects;
+import java.sql.Time;
+import java.util.List;
 
 public class Building {
 
-    private String id;
-    private String name;
-    private String streetName;
-    private String streetNumber;
-    private String zipCode;
-    private String city;
-//
-//    private Set<Supply> supplies = new HashSet<>();
-//    private Set<Room> rooms = new HashSet<>();
-//    private Set<OpenTime> openTimes = new HashSet<>();
-//    private Set<Restaurant> restaurants = new HashSet<>();
+    String name;
+    String location;
+    List<Room> roomList;
+    List<Restaurant> restaurantList;
+    List<Accessory> accessoryList;
+    Time openT;
+    Time closeT;
 
     /**
      * Create a new Building instance.
      *
-     * @param id           Unique identifier as to be used in the database.
-     * @param name         Actual name of the Building.
-     * @param streetName   The street on which the Building is located.
-     * @param streetNumber The street number on which the Building is located.
-     * @param zipCode      The zip code of the Building.
-     * @param city         The city in which the Building is located.
+     * @param name Name of the Building.
+     * @param location The address of the building.
+     * @param roomList A List of all Rooms in that Building.
+     * @param restaurantList A List of all Restaurants in that Building.
+     * @param accessoryList A List of all Accessories that the Building has.
+     * @param openT Time at which the Building opens.
+     * @param closeT Time at which the Building closes.
      */
 
-    public Building(String id,
-                    String name,
-                    String streetName,
-                    String streetNumber,
-                    String zipCode,
-                    String city) {
-        this.id = id;
+    public Building(String name,
+                    String location,
+                    List<Room> roomList,
+                    List<Restaurant> restaurantList,
+                    List<Accessory> accessoryList,
+                    Time openT,
+                    Time closeT) {
         this.name = name;
-        this.streetName = streetName;
-        this.streetNumber = streetNumber;
-        this.zipCode = zipCode;
-        this.city = city;
-    }
-
-    public String getId() { return id; }
-
-    public void setId(String id) {
-        this.id = id;
+        this.location = location;
+        this.roomList = roomList;
+        this.restaurantList = restaurantList;
+        this.accessoryList = accessoryList;
+        this.openT = openT;
+        this.closeT = closeT;
     }
 
     public String getName() {
@@ -55,68 +49,57 @@ public class Building {
         this.name = name;
     }
 
-//    public String getBuildingNumber() {
-//        return buildingNumber;
-//    }
-//
-//    public void setBuildingNumber(String buildingNumber) {
-//        this.name = buildingNumber;
-//    }
-
-    public String getStreetName() {
-        return streetName;
+    public String getLocation() {
+        return location;
     }
 
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public List<Room> getRoomList() {
+        return roomList;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public List<Restaurant> getRestaurantList() {
+        return restaurantList;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setRestaurantList(List<Restaurant> restaurantList) {
+        this.restaurantList = restaurantList;
     }
 
-    public String getCity() {
-        return city;
+    public List<Accessory> getAccessoryList() {
+        return accessoryList;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAccessoryList(List<Accessory> accessoryList) {
+        this.accessoryList = accessoryList;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Building building = (Building) o;
-        return Objects.equals(id, building.getId());
+    public Time getOpenT() {
+        return openT;
     }
 
-    @Override
-    public String toString() {
-        return "Building{"
-                + "buildingId='" + id + '\''
-                + ", buildingName='" + name + '\''
-                + ", street='" + streetName + '\''
-                + ", streetNumber='" + streetNumber + '\''
-                + ", zipCode='" + zipCode + '\''
-                + ", city='" + city + '\''
-                + '}';
+    public void setOpenT(Time openT) {
+        this.openT = openT;
+    }
+
+    public Time getCloseT() {
+        return closeT;
+    }
+
+    public void setCloseT(Time closeT) {
+        this.closeT = closeT;
+    }
+
+    public boolean isOpen() {
+        // TODO calculate if the Building is open at that time.
+        return false;
     }
 
 }

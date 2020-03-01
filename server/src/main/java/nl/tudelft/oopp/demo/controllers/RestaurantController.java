@@ -39,17 +39,17 @@ public class RestaurantController {
      * @return List of restaurants in that building
      */
     @GetMapping("/{building}/restaurant")
-    public List<Restaurant> getRestaurantByBuilding(@PathVariable String buildingName) {
+    public List<Restaurant> getRestaurantByBuilding(@PathVariable(value = "building") String buildingName) {
         return restaurantRepository.findAllByBuildingName(buildingName);
     }
 
     /**
-     * Find building by id
+     * Find restaurant by id
      *
      * @param id - The id of the building that is to be found
-     * @return the building and 200 status code if the building is found, 404 status code otherwise
+     * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
      */
-    @GetMapping("/restaurant/{id}")
+    @GetMapping("/restaurant/id/{id}")
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable long id) {
         return restaurantRepository.findById(id).map(restaurant -> ResponseEntity.ok(restaurant)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -61,7 +61,7 @@ public class RestaurantController {
      * @param name - The name of the restaurant that is to be found
      * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
      */
-    @GetMapping("/restaurant/{name}")
+    @GetMapping("/restaurant/id/{name}")
     public ResponseEntity<Restaurant> getRestaurantByName(@PathVariable String name) {
         return restaurantRepository.findByName(name).map(restaurant -> ResponseEntity.ok(restaurant)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -86,7 +86,7 @@ public class RestaurantController {
      * @param newRestaurant - The restaurant instance that has the modified parameters
      * @return a response: the updated restaurant and the status 200 if the update was successful, 404 if the restaurant was not found
      */
-    @PutMapping("/restaurant/{id}")
+    @PutMapping("/restaurant/id/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id,
                                                    @RequestBody Restaurant newRestaurant) {
         return restaurantRepository.findById(id).map(restaurant -> {
@@ -105,7 +105,7 @@ public class RestaurantController {
      * @param id - The id of the restaurant that is to be deleted
      * @return a response status: 200 if the restaurant has been deleted successfully, 404 if the restaurant was not found
      */
-    @DeleteMapping("/restaurant/{id}")
+    @DeleteMapping("/restaurant/name/{id}")
     public ResponseEntity deleteRestaurant(@PathVariable long id) {
         return restaurantRepository.findById(id).map(restaurant -> {
             restaurantRepository.delete(restaurant);
