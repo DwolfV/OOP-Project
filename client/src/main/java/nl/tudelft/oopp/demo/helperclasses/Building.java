@@ -1,10 +1,6 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class Building {
 
@@ -58,6 +54,14 @@ public class Building {
     public void setName(String name) {
         this.name = name;
     }
+
+//    public String getBuildingNumber() {
+//        return buildingNumber;
+//    }
+//
+//    public void setBuildingNumber(String buildingNumber) {
+//        this.name = buildingNumber;
+//    }
 
     public String getStreetName() {
         return streetName;

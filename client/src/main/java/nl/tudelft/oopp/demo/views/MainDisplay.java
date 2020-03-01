@@ -33,10 +33,10 @@ public class MainDisplay extends Application {
         Parent loginParent = loader.load(getClass().getResource("/loginScene.fxml"));
         Scene loginScene = new Scene(loginParent);
 
-        loginStage.initStyle(StageStyle.UNDECORATED);
-        loginStage.setTitle("Log In");
-        loginStage.setScene(loginScene);
-        loginStage.show();
+        stg.initStyle(StageStyle.UNDECORATED);
+        stg.setTitle("Log In");
+        stg.setScene(loginScene);
+        stg.show();
     }
 
     public static void main(String[] args) { launch(args); }

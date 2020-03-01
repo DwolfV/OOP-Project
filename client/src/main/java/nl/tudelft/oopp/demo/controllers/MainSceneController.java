@@ -1,12 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +12,7 @@ import javafx.event.*;
 
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.ServerCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
@@ -34,19 +24,6 @@ public class MainSceneController implements Initializable {
     private Label closeButton;
     @FXML
     private Pane Details_1, Details_2, Details_3, Details_4, Details_5, Details_6, Details_7, Details_8, Details_9;
-
-//    @FXML
-//    private JFXHamburger menu;
-//
-//    @FXML
-//    public void handleMenu(MouseEvent event) {
-//        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(menu);
-//        transition.setRate(-1);
-//        menu.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-//            transition.setRate(transition.getRate()*-1);
-//            transition.play();
-//        });
-//    }
 
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
@@ -64,6 +41,7 @@ public class MainSceneController implements Initializable {
             Parent calendarParent = (Parent) fxmlLoader.load();
             Stage calendarStage = new Stage();
 
+            calendarStage.setResizable(true);
             calendarStage.setScene(new Scene(calendarParent));
             calendarStage.setTitle("Home");
             calendarStage.show();
@@ -139,10 +117,11 @@ public class MainSceneController implements Initializable {
     public void handleAdminButton (ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            Parent adminParent = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
 
-            stage.setScene(new Scene(root));
+            stage.isResizable();
+            stage.setScene(new Scene(adminParent));
             stage.setTitle("Admin");
             stage.show();
         } catch(Exception e) {

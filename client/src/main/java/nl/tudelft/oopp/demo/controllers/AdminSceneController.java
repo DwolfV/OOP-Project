@@ -21,10 +21,23 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 
+import javax.swing.*;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminSceneController implements Initializable {
+
+    private TextField BuildingID;
+    private TextField BuildingName;
+    private TextField BuildingNumber;
+    private TextField StreetName;
+    private TextField StreetNumber;
+    private TextField ZipCode;
+    private TextField City;
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -61,9 +74,8 @@ public class AdminSceneController implements Initializable {
         }
     }
 
-    private final TableView<Building> table = new TableView<>();
-    private final ObservableList<Building> data =
-            FXCollections.observableArrayList(
+    private TableView<Building> table = new TableView<>();
+    private ObservableList<Building> data = FXCollections.observableArrayList(
                     new Building("10", "Daniel", "Daniel", "29", "2828", "Delft"),
                     new Building("11", "Daniel", "Daniel", "29", "2828", "Delft"),
                     new Building("12", "Daniel", "Daniel", "29", "2828", "Delft"),
@@ -85,18 +97,11 @@ public class AdminSceneController implements Initializable {
 
         table.setEditable(true);
 
-        TableColumn<Building, String> idCol =
+        TableColumn<Building, Long> idCol =
                 new TableColumn<>("id");
         idCol.setMinWidth(100);
         idCol.setCellValueFactory(
                 new PropertyValueFactory<>("id"));
-//        idCol.setCellFactory(TextFieldTableCell.<Building>forTableColumn());
-//        idCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<Building, String> t) -> {
-//                    ((Building) t.getTableView().getItems().get(
-//                            t.getTablePosition().getRow())
-//                    ).setId(t.getNewValue());
-//                });
 
         TableColumn<Building, String> buildingCol =
                 new TableColumn<>("Building Name");
@@ -175,7 +180,21 @@ public class AdminSceneController implements Initializable {
 
         secondStage.setScene(scene);
         secondStage.show();
-
     }
+
+    @FXML
+    private void handleTextFieldData(MouseEvent event){
+        String buildingId = BuildingID.getText();
+        String buildingName = BuildingName.getText();
+//        String buildingNumber = BuildingNumber.getText();
+        String streetName = StreetName.getText();
+        String streetNumber = StreetNumber.getText();
+        String zipCode = ZipCode.getText();
+        String city = City.getText();
+
+        Building building = new Building(buildingId, buildingName, streetName, streetNumber, zipCode, city);
+    }
+
+
 
 }
