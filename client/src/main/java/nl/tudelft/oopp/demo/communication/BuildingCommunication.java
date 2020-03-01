@@ -112,7 +112,7 @@ public class BuildingCommunication {
      */
     public static void updateBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(id, name, streetName, streetNumber, zipCode, city);
         String JSONBuilding = "";
         try {
             JSONBuilding = mapper.writeValueAsString(newBuilding);
