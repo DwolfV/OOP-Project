@@ -76,11 +76,11 @@ public class AdminSceneController implements Initializable {
 
     private TableView<Building> table = new TableView<>();
     private ObservableList<Building> data = FXCollections.observableArrayList(
-                    new Building("10", "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building("11", "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building("12", "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building("13", "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building("14", "Daniel", "Daniel", "29", "2828", "Delft"));
+                    new Building((long) 10, "Daniel", "Daniel", "29", "2828", "Delft"),
+                    new Building((long) 11, "Daniel", "Daniel", "29", "2828", "Delft"),
+                    new Building((long) 12, "Daniel", "Daniel", "29", "2828", "Delft"),
+                    new Building((long) 13, "Daniel", "Daniel", "29", "2828", "Delft"),
+                    new Building((long) 14, "Daniel", "Daniel", "29", "2828", "Delft"));
     final HBox hb = new HBox();
 
     @FXML
@@ -113,7 +113,7 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Building, String> t) -> {
                     ((Building) t.getTableView().getItems().get(
                             t.getTablePosition().getRow())
-                    ).setId(t.getNewValue());
+                    ).setName(t.getNewValue());
                 });
 
         TableColumn<Building, String> streetNameCol =
@@ -126,7 +126,7 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Building, String> t) -> {
                     ((Building) t.getTableView().getItems().get(
                             t.getTablePosition().getRow())
-                    ).setId(t.getNewValue());
+                    ).setStreetName(t.getNewValue());
                 });
 
         TableColumn<Building, String> streetNumCol =
@@ -139,7 +139,7 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Building, String> t) -> {
                     ((Building) t.getTableView().getItems().get(
                             t.getTablePosition().getRow())
-                    ).setId(t.getNewValue());
+                    ).setStreetNumber(t.getNewValue());
                 });
 
         TableColumn<Building, String> zipCodeCol =
@@ -152,7 +152,7 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Building, String> t) -> {
                     ((Building) t.getTableView().getItems().get(
                             t.getTablePosition().getRow())
-                    ).setId(t.getNewValue());
+                    ).setZipCode(t.getNewValue());
                 });
 
         TableColumn<Building, String> cityCol =
@@ -165,7 +165,7 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Building, String> t) -> {
                     ((Building) t.getTableView().getItems().get(
                             t.getTablePosition().getRow())
-                    ).setId(t.getNewValue());
+                    ).setCity(t.getNewValue());
                 });
 
         table.setItems(data);
@@ -183,10 +183,9 @@ public class AdminSceneController implements Initializable {
     }
 
     @FXML
-    private void handleTextFieldData(MouseEvent event){
+    private void handleTextFieldData(ActionEvent event){
         String buildingId = BuildingID.getText();
         String buildingName = BuildingName.getText();
-//        String buildingNumber = BuildingNumber.getText();
         String streetName = StreetName.getText();
         String streetNumber = StreetNumber.getText();
         String zipCode = ZipCode.getText();

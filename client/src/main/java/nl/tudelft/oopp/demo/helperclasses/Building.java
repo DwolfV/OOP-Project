@@ -2,14 +2,14 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 public class Building {
 
-    private long id;
+    private Long id;
     private String name;
     private String streetName;
     private String streetNumber;
     private String zipCode;
     private String city;
 
-    public Building(String id,
+    public Building(Long id,
                     String name,
                     String streetName,
                     String streetNumber,
@@ -23,11 +23,11 @@ public class Building {
         this.city = city;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,6 +69,18 @@ public class Building {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "Building{"
+                + "buildingId='" + id + '\''
+                + ", buildingName='" + name + '\''
+                + ", street='" + streetName + '\''
+                + ", streetNumber='" + streetNumber + '\''
+                + ", zipCode='" + zipCode + '\''
+                + ", city='" + city + '\''
+                + '}';
     }
 
 }

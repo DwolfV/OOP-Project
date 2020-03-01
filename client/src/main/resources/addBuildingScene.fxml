@@ -15,7 +15,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Button onMouseClicked="#handleTextFieldData" layoutX="82.0" layoutY="633.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="334.0" text="Add a building" />
+            <Button onAction="#handleTextFieldData" layoutX="82.0" layoutY="633.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="334.0" text="Add a building" />
             <Text layoutX="170.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building Name">
                <font>
                   <Font size="24.0" />
