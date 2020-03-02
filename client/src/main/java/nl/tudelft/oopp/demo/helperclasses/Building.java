@@ -18,6 +18,17 @@ public class Building {
 
     }
 
+    /**
+     * Create a new Building instance.
+     *
+     * @param id The unique identifier for Building
+     * @param name The name of the Building.
+     * @param streetName The name of the street for the Building
+     * @param streetNumber The number of the street for the Building
+     * @param zipCode The zip code for the Building
+     * @param city The city of the Building
+     */
+
     public Building(Long id,
                     String name,
                     String streetName,

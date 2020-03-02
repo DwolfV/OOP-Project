@@ -25,6 +25,17 @@ public class Dish {
     @Column(name = "price")
     private float price;
 
+    /**
+     * Create a new Dish instance.
+     *
+     * @param id A unique identifier for the Dish.
+     * @param name The name of the Dish.
+     * @param description The description of the Dish; for example: the ingredients.
+     * @param price The price of the Dish.
+     * @param type The type of the Dish; for example: vegan, vegetarian etc.
+     */
+
+
     public Dish(long id, String name, String description, String type, float price) {
         this.id = id;
         this.name = name;
@@ -75,20 +86,32 @@ public class Dish {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Dish dish = (Dish) o;
         return getId() == dish.getId();
     }
 
     @Override
     public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                '}';
+        return "Dish{"
+                + "id="
+                + id
+                + ", name='"
+                + name
+                + '\''
+                + ", description='"
+                + description
+                + '\''
+                + ", type='"
+                + type
+                + '\''
+                + ", price="
+                + price
+                + '}';
     }
 }
