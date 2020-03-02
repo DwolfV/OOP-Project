@@ -21,37 +21,37 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField id="#BuildingName" layoutX="139.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="BuildingName" layoutX="139.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
             <Text layoutX="179.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField id="#StreetName" layoutX="139.0" layoutY="226.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="StreetName" layoutX="139.0" layoutY="226.0" prefHeight="17.0" prefWidth="224.0" />
             <Text layoutX="222.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField id="#City" layoutX="139.0" layoutY="459.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="City" layoutX="139.0" layoutY="459.0" prefHeight="17.0" prefWidth="224.0" />
             <Text layoutX="199.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zip Code">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField id="#StreetNumber" layoutX="139.0" layoutY="306.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="StreetNumber" layoutX="139.0" layoutY="306.0" prefHeight="17.0" prefWidth="224.0" />
             <Text layoutX="169.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street Number">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField id="#ZipCode" layoutX="139.0" layoutY="379.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="ZipCode" layoutX="139.0" layoutY="379.0" prefHeight="17.0" prefWidth="224.0" />
             <Text layoutX="189.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building ID">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField id="#buildingID" layoutX="139.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="BuildingID" layoutX="139.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
          </children>
       </AnchorPane>
    </center>

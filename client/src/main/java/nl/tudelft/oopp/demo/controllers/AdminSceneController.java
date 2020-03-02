@@ -31,11 +31,15 @@ public class AdminSceneController implements Initializable {
 
     @FXML
     private TextField BuildingID;
+    @FXML
     private TextField BuildingName;
-    private TextField BuildingNumber;
+    @FXML
     private TextField StreetName;
+    @FXML
     private TextField StreetNumber;
+    @FXML
     private TextField ZipCode;
+    @FXML
     private TextField City;
 
     public AdminSceneController() {
