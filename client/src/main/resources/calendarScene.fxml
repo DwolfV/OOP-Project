@@ -21,7 +21,7 @@
         </HBox>
     </bottom>
     <top>
-        <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+            <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
                 <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu" HBox.hgrow="ALWAYS">
                     <items>

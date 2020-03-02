@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Building {
 
     private Long id;
@@ -8,6 +11,12 @@ public class Building {
     private String streetNumber;
     private String zipCode;
     private String city;
+
+    private Set<Room> rooms = new HashSet<>();
+
+    public Building() {
+
+    }
 
     public Building(Long id,
                     String name,

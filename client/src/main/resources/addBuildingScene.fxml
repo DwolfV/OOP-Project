@@ -11,53 +11,47 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Button onAction="#handleTextFieldData" layoutX="82.0" layoutY="633.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="334.0" text="Add a building" />
+            <Button layoutX="82.0" layoutY="523.0" mnemonicParsing="false" onAction="#handleTextFieldData" prefHeight="39.0" prefWidth="334.0" text="Add a building" />
             <Text layoutX="170.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="139.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="179.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street Name">
+            <TextField id="#BuildingName" layoutX="139.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="179.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="139.0" layoutY="306.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="222.0" layoutY="526.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City">
+            <TextField id="#StreetName" layoutX="139.0" layoutY="226.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="222.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="139.0" layoutY="539.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="199.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zip Code">
+            <TextField id="#City" layoutX="139.0" layoutY="459.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="199.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zip Code">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="139.0" layoutY="386.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="169.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street Number">
+            <TextField id="#StreetNumber" layoutX="139.0" layoutY="306.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="169.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street Number">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="139.0" layoutY="459.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField id="#ZipCode" layoutX="139.0" layoutY="379.0" prefHeight="17.0" prefWidth="224.0" />
             <Text layoutX="189.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building ID">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField layoutX="139.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="158.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building Number">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <TextField layoutX="139.0" layoutY="228.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField id="#buildingID" layoutX="139.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
          </children>
       </AnchorPane>
    </center>

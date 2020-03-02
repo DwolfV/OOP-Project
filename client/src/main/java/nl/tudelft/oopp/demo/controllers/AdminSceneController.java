@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 
 public class AdminSceneController implements Initializable {
 
+    @FXML
     private TextField BuildingID;
     private TextField BuildingName;
     private TextField BuildingNumber;
@@ -37,8 +38,8 @@ public class AdminSceneController implements Initializable {
     private TextField ZipCode;
     private TextField City;
 
-
-
+    public AdminSceneController() {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,16 +77,11 @@ public class AdminSceneController implements Initializable {
     }
 
     private TableView<Building> table = new TableView<>();
-    private ObservableList<Building> data = FXCollections.observableArrayList(
-                    new Building((long) 10, "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building((long) 11, "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building((long) 12, "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building((long) 13, "Daniel", "Daniel", "29", "2828", "Delft"),
-                    new Building((long) 14, "Daniel", "Daniel", "29", "2828", "Delft"));
+    private ObservableList<Building> data = FXCollections.observableArrayList();
     final HBox hb = new HBox();
 
     @FXML
-    public void handleViewButtonClicked() {
+    public void handleViewBuildingButtonClicked() {
         Stage secondStage = new Stage();
         Scene scene = new Scene(new Group());
 
@@ -160,7 +156,7 @@ public class AdminSceneController implements Initializable {
                 new TableColumn<>("City");
         cityCol.setMinWidth(100);
         cityCol.setCellValueFactory(
-                new PropertyValueFactory<>("city"));
+                new PropertyValueFactory<>("City"));
         cityCol.setCellFactory(TextFieldTableCell.<Building>forTableColumn());
         cityCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> {
@@ -169,18 +165,33 @@ public class AdminSceneController implements Initializable {
                     ).setCity(t.getNewValue());
                 });
 
+        data = FXCollections.observableList(BuildingCommunication.getBuildings());
         table.setItems(data);
         table.getColumns().addAll(idCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
+
+        //delete button
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(e -> {
+            deleteButtonClicked();
+        });
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table);
+        vbox.getChildren().addAll(label, table, deleteButton);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
         secondStage.setScene(scene);
         secondStage.show();
+    }
+
+    public void deleteButtonClicked() {
+        ObservableList<Building> buildingSelected, allBuildings;
+        allBuildings = table.getItems();
+        buildingSelected = table.getSelectionModel().getSelectedItems();
+
+        buildingSelected.forEach(allBuildings::remove);
     }
 
     @FXML
