@@ -1,35 +1,29 @@
 package nl.tudelft.oopp.demo.communication;
 
-
-
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class RoomCommunication {
+public class BuildingCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
-     * Retrieves a list of rooms.
-     * @return A list of all rooms.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * Retrieves a list of buildings from the server.
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
      */
-    public static List<Room> getRooms() {
+    public static List<Building> getBuildings() {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/rooms")).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/building")).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -42,25 +36,25 @@ public class RoomCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        List<Room> room = null;
+        List<Building> buildings = null;
         // TODO handle exception
         try {
-            room = mapper.readValue(response.body(), new TypeReference<List<Room>>(){});
+            buildings = mapper.readValue(response.body(), new TypeReference<List<Building>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return room;
+        return buildings;
     }
 
     /**
-     * Retrieves a list of rooms that are located in a certain building.
-     * @return A list of all rooms.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * Retrieves a list of buildings from the server.
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
      */
-    public static List<Room> getRoomsByBuildingId(long buildingId) {
+    public static Building getBuildingById(long id) {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/rooms/%s", buildingId))).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -73,33 +67,33 @@ public class RoomCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        List<Room> room = null;
+        Building building = null;
         // TODO handle exception
         try {
-            room = mapper.readValue(response.body(), new TypeReference<List<Room>>(){});
+            building = mapper.readValue(response.body(), new TypeReference<Building>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return room;
+        return building;
     }
 
     /**
-     * Adds a room.
+     * Adds a building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addRoom(String roomName, int capacity, long buildingId) {
+    public static void addBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
-        String JSONRoom = "";
+        Building newBuilding = new Building(id, name, streetName, streetNumber, zipCode, city);
+        String JSONBuilding = "";
         try {
-            JSONRoom = mapper.writeValueAsString(newRoom);
-            System.out.println(JSONRoom);
+            JSONBuilding = mapper.writeValueAsString(newBuilding);
+            System.out.println(JSONBuilding);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONRoom)).uri(URI.create("http://localhost:8080/rooms")).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONBuilding)).uri(URI.create("http://localhost:8080/building")).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -113,21 +107,21 @@ public class RoomCommunication {
     }
 
     /**
-     * Updates a room.
+     * Updates a Building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoom(long id, String roomName, int capacity, long buildingId) {
+    public static void updateBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
-        String JSONRoom = "";
+        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
+        String JSONBuilding = "";
         try {
-            JSONRoom = mapper.writeValueAsString(newRoom);
-            System.out.println(JSONRoom);
+            JSONBuilding = mapper.writeValueAsString(newBuilding);
+            System.out.println(JSONBuilding);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONRoom)).uri(URI.create(String.format("http://localhost:8080/rooms/%s", id))).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONBuilding)).uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -141,11 +135,11 @@ public class RoomCommunication {
     }
 
     /**
-     * Removes a room.
+     * Removes a building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static void removeRoom(long id) {
-        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/rooms/%s", id))).build();
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -158,3 +152,4 @@ public class RoomCommunication {
         }
     }
 }
+
