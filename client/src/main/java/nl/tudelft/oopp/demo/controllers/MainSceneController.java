@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
-//import com.jfoenix.controls.JFXHamburger;
-//import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,28 +13,20 @@ import javafx.event.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
-//    @FXML
-//    private JFXHamburger menu;
-//
-//    @FXML
-//    public void handleMenu(MouseEvent event) {
-//        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(menu);
-//        transition.setRate(-1);
-//        menu.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-//            transition.setRate(transition.getRate()*-1);
-//            transition.play();
-//        });
-//    }
-
     @FXML
     private Label closeButton;
+    @FXML
+    private Pane Details_1, Details_2, Details_3, Details_4, Details_5, Details_6, Details_7, Details_8, Details_9;
 
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
@@ -52,6 +44,7 @@ public class MainSceneController implements Initializable {
             Parent calendarParent = (Parent) fxmlLoader.load();
             Stage calendarStage = new Stage();
 
+            calendarStage.setResizable(true);
             calendarStage.setScene(new Scene(calendarParent));
             calendarStage.setTitle("Home");
             calendarStage.show();
@@ -122,9 +115,62 @@ public class MainSceneController implements Initializable {
         }
     }
 
+
+    @FXML
+    public void handleAdminButton (ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
+            Parent adminParent = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.isResizable();
+            stage.setScene(new Scene(adminParent));
+            stage.setTitle("Admin");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handlePopUp(MouseEvent event) throws Exception {
+        try {
+            Tooltip details1 = new Tooltip();
+            Tooltip details2 = new Tooltip();
+            Tooltip details3 = new Tooltip();
+
+            details1.setText("Facilities:\n - chairs \n - tables \n - couch \n - table");
+            details1.setStyle("-fx-font-size: 15");
+
+            details2.setText("Facilities:\n - chairs \n - blackboard \n - table");
+            details2.setStyle("-fx-font-size: 15");
+
+            details3.setText("Facilities:\n - chairs \n - table");
+            details3.setStyle("-fx-font-size: 15");
+
+            Tooltip.install(Details_1, details1);
+            Tooltip.install(Details_2, details2);
+            Tooltip.install(Details_3, details3);
+            Tooltip.install(Details_4, details1);
+            Tooltip.install(Details_5, details2);
+            Tooltip.install(Details_6, details3);
+            Tooltip.install(Details_7, details1);
+            Tooltip.install(Details_8, details2);
+            Tooltip.install(Details_9, details3);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Loading User Data");
+//        List<Building> buildingList = BuildingCommunication.getBuildings();
+//
+//        for(Building building: buildingList) {
+//            System.out.print(building.toString());
+//        }
     }
 
 }

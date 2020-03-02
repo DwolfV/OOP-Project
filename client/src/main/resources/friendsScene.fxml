@@ -35,7 +35,7 @@
                         <Insets left="5.0" top="20.0" />
                     </HBox.margin>
                 </MenuButton>
-                <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
+                <Region prefHeight="103.0" prefWidth="407.0" style="-fx-background-color: #00A6D6;" HBox.hgrow="ALWAYS" />
                 <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="/TU_Delft_logo_White.png" />
@@ -57,7 +57,7 @@
                      </font>
                   </Text>
                   <Region prefHeight="77.0" prefWidth="735.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="177.0" style="-fx-background-color: #73b504; -fx-background-radius: 10px;" text="Add Friends" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="177.0" style="-fx-background-color: #73b504; -fx-background-radius: 10px; -fx-cursor: hand;" text="Add Friends" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -67,11 +67,30 @@
                   </Button>
                </children>
             </HBox>
-            <TableView prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-              </columns>
-            </TableView>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <AnchorPane prefHeight="69.0" prefWidth="1180.0" style="-fx-background-color: #00A6D6; -fx-background-radius: 10px; -fx-max-height: 40;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Daniel Volpin">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                        <Label alignment="CENTER" layoutX="1115.0" layoutY="4.0" mnemonicParsing="true" prefHeight="24.0" prefWidth="31.0" style="-fx-background-color: Red; -fx-background-radius: 8px; -fx-cursor: hand;" text="X" textAlignment="CENTER" AnchorPane.rightAnchor="5.0">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </opaqueInsets>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="20.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+               </children>
+            </VBox>
          </children>
          <BorderPane.margin>
             <Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />

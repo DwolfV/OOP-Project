@@ -1,44 +1,43 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Building {
 
-    String name;
-    String location;
-    List<Room> roomList;
-    List<Restaurant> restaurantList;
-    List<Accessory> accessoryList;
-    Time openT;
-    Time closeT;
+    private Long id;
+    private String name;
+    private String streetName;
+    private String streetNumber;
+    private String zipCode;
+    private String city;
 
-    /**
-     * Create a new Building instance.
-     *
-     * @param name Name of the Building.
-     * @param location The address of the building.
-     * @param roomList A List of all Rooms in that Building.
-     * @param restaurantList A List of all Restaurants in that Building.
-     * @param accessoryList A List of all Accessories that the Building has.
-     * @param openT Time at which the Building opens.
-     * @param closeT Time at which the Building closes.
-     */
+    private Set<Room> rooms = new HashSet<>();
 
-    public Building(String name,
-                    String location,
-                    List<Room> roomList,
-                    List<Restaurant> restaurantList,
-                    List<Accessory> accessoryList,
-                    Time openT,
-                    Time closeT) {
+    public Building() {
+
+    }
+
+    public Building(Long id,
+                    String name,
+                    String streetName,
+                    String streetNumber,
+                    String zipCode,
+                    String city) {
+        this.id = id;
         this.name = name;
-        this.location = location;
-        this.roomList = roomList;
-        this.restaurantList = restaurantList;
-        this.accessoryList = accessoryList;
-        this.openT = openT;
-        this.closeT = closeT;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -49,57 +48,48 @@ public class Building {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getStreetName() {
+        return streetName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
-    public List<Room> getRoomList() {
-        return roomList;
+    public String getStreetNumber() {
+        return streetNumber;
     }
 
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
-    public List<Restaurant> getRestaurantList() {
-        return restaurantList;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setRestaurantList(List<Restaurant> restaurantList) {
-        this.restaurantList = restaurantList;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public List<Accessory> getAccessoryList() {
-        return accessoryList;
+    public String getCity() {
+        return city;
     }
 
-    public void setAccessoryList(List<Accessory> accessoryList) {
-        this.accessoryList = accessoryList;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Time getOpenT() {
-        return openT;
-    }
-
-    public void setOpenT(Time openT) {
-        this.openT = openT;
-    }
-
-    public Time getCloseT() {
-        return closeT;
-    }
-
-    public void setCloseT(Time closeT) {
-        this.closeT = closeT;
-    }
-
-    public boolean isOpen() {
-        // TODO calculate if the Building is open at that time.
-        return false;
+    @Override
+    public String toString() {
+        return "Building{"
+                + "buildingId='" + id + '\''
+                + ", buildingName='" + name + '\''
+                + ", street='" + streetName + '\''
+                + ", streetNumber='" + streetNumber + '\''
+                + ", zipCode='" + zipCode + '\''
+                + ", city='" + city + '\''
+                + '}';
     }
 
 }
