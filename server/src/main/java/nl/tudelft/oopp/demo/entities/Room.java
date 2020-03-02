@@ -54,7 +54,7 @@ public class Room {
      * @param building The building, in which the room is located.
      */
 
-    public Room(long id, String name, int capacity, Building building) {
+    public Room(long id, String name, Integer capacity, Building building) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;

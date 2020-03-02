@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Room {
 
-    private long id;
+    private Long id;
 
     private String name;
 
-    private int capacity;
+    private Integer capacity;
 
     private Building building;
 
@@ -25,24 +25,24 @@ public class Room {
      * @param building The building, in which the room is located.
      */
 
-    public Room(long id, String name, int capacity, Building building) {
+    public Room(Long id, String name, Integer capacity, Building building) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
         this.building = building;
     }
 
-    public Room(String name, int capacity, Building building) {
+    public Room(String name, Integer capacity, Building building) {
         this.name = name;
         this.capacity = capacity;
         this.building = building;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,11 +54,11 @@ public class Room {
         this.name = name;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
