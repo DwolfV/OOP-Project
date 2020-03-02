@@ -193,7 +193,7 @@ public class AdminSceneController implements Initializable {
             deleteBuildingButtonClicked();
         });
 
-        //delete button
+        //update button
         Button updateButton = new Button("Update");
         updateButton.setOnAction(e -> {
             updateBuildingButtonClicked();
@@ -292,7 +292,7 @@ public class AdminSceneController implements Initializable {
                 new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("buildingName"));
+                new PropertyValueFactory<>("name"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Room>forTableColumn());
         buildingNameCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Room, String> t) -> {
@@ -311,10 +311,16 @@ public class AdminSceneController implements Initializable {
             deleteRoomButtonClicked();
         });
 
+        //update button
+        Button updateButton = new Button("Update");
+        updateButton.setOnAction(e -> {
+            updateRoomButtonClicked();
+        });
+
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, tableRoom, deleteButtonRoom);
+        vbox.getChildren().addAll(label, tableRoom, deleteButtonRoom, updateButton);
 
         ((Group) viewRoomScene.getRoot()).getChildren().addAll(vbox);
 
@@ -325,9 +331,15 @@ public class AdminSceneController implements Initializable {
     public void deleteRoomButtonClicked() {
         ObservableList<Room> roomSelected, allRooms;
         allRooms = tableRoom.getItems();
-        roomSelected = tableRoom.getSelectionModel().getSelectedItems();
+        Room room = tableRoom.getSelectionModel().getSelectedItem();
 
-        roomSelected.forEach(allRooms::remove);
+        allRooms.remove(room);
+        RoomCommunication.removeRoom(room.getId());
+    }
+
+    private void updateRoomButtonClicked() {
+        Room room = tableRoom.getSelectionModel().getSelectedItem();
+        RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
     }
 
     @FXML
