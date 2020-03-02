@@ -19,6 +19,13 @@ public class Restaurant {
         this.tOpen = tOpen;
     }
 
+    public Restaurant(String name, Building building, Time tClose, Time tOpen) {
+        this.name = name;
+        this.building = building;
+        this.tClose = tClose;
+        this.tOpen = tOpen;
+    }
+
     public long getId() {
         return id;
     }
