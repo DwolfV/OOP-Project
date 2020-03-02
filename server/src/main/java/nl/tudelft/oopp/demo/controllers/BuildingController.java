@@ -49,9 +49,8 @@ public class BuildingController {
      * @return the building and 200 status code if the building is found, 404 status code otherwise
      */
     @GetMapping("/building/name/{name}")
-    public ResponseEntity<Building> getBuildingByName(@PathVariable String name) {
-        return rep.findByName(name).map(building -> ResponseEntity.ok(building)
-        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public List<Building> getBuildingByName(@PathVariable String name) {
+        return rep.findByName(name);
     }
 
     /**
