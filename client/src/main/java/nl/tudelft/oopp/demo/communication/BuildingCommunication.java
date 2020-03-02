@@ -138,7 +138,7 @@ public class BuildingCommunication {
      * Removes a building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void removeRoom(long id) {
+    public static void removeBuilding(long id) {
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
         HttpResponse<String> response = null;
         try {

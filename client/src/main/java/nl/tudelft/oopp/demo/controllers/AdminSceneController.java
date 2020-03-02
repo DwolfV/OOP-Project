@@ -3,7 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,15 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 
-import javax.swing.*;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -179,10 +175,16 @@ public class AdminSceneController implements Initializable {
             deleteButtonClicked();
         });
 
+        //delete button
+        Button updateButton = new Button("Update");
+        updateButton.setOnAction(e -> {
+            updateButtonClicked();
+        });
+
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, deleteButton);
+        vbox.getChildren().addAll(label, table, deleteButton, updateButton);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
@@ -190,12 +192,23 @@ public class AdminSceneController implements Initializable {
         secondStage.show();
     }
 
+    private void updateButtonClicked() {
+        Building building = table.getSelectionModel().getSelectedItem();
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(),building.getZipCode(), building.getCity());
+    }
+
     public void deleteButtonClicked() {
         ObservableList<Building> buildingSelected, allBuildings;
         allBuildings = table.getItems();
-        buildingSelected = table.getSelectionModel().getSelectedItems();
+        Building building = table.getSelectionModel().getSelectedItem();
 
-        buildingSelected.forEach(allBuildings::remove);
+        //buildingSelected.forEach(allBuildings::remove);
+//        buildingSelected.forEach(building -> {
+//            System.out.println(building.getId());
+//            BuildingCommunication.removeBuilding(building.getId());
+//        } );
+        allBuildings.remove(building);
+        BuildingCommunication.removeBuilding(building.getId());
     }
 
     @FXML
