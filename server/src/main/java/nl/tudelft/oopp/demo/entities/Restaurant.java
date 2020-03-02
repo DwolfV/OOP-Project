@@ -37,7 +37,19 @@ public class Restaurant {
     @Column(name = "t_open")
     private Time tOpen;
 
-    public Restaurant() {}
+    public Restaurant() {
+
+    }
+
+    /**
+     * Create a new Restaurant instance.
+     *
+     * @param id A unique identifier for the Restaurant.
+     * @param name The name of the Holiday.
+     * @param building The name of the building that the Restaurant is located in.
+     * @param tClose The closing time of the Restaurant.
+     * @param tOpen The opening time of the Restaurant.
+     */
 
     public Restaurant(long id, String name, Building building, Time tClose, Time tOpen) {
         this.id = id;
