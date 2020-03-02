@@ -11,6 +11,7 @@ dependencies {
     compile group: 'com.fasterxml', name: 'jackson-module-json-org', version: '0.9.1'
 }
 
+
 javafx {
     version = "13"
     modules = [ 'javafx.controls', 'javafx.fxml' ]

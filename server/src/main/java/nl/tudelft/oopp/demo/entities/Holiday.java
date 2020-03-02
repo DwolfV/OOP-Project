@@ -1,31 +1,31 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.sql.Time;
+import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Time;
-import java.util.Date;
-import java.util.Objects;
 
 @Entity
-@Table( name = "Holiday")
+@Table(name = "Holiday")
 public class Holiday {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    @Column ( name = "name" )
+    @Column (name = "name")
     private String name;
 
-    @Column ( name = "date" )
+    @Column (name = "date")
     private Date date;
 
-    @Column ( name = "t_open" )
+    @Column (name = "t_open")
     private Time t_open;
 
-    @Column ( name = "t_close" )
+    @Column (name = "t_close")
     private Time t_close;
 
     /**
@@ -33,7 +33,7 @@ public class Holiday {
      *
      * @param id A unique ID for the Holiday.
      * @param date The date of the Holiday.
-     * @param name The first name of the Holiday.
+     * @param name The name of the Holiday.
      * @param t_close The closing time of a building during a Holiday.
      * @param t_open The opening time of a building during a Holiday.
      */
@@ -88,14 +88,18 @@ public class Holiday {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Holiday holiday = (Holiday) o;
-        return getId() == holiday.getId() &&
-                Objects.equals(getName(), holiday.getName()) &&
-                Objects.equals(getDate(), holiday.getDate()) &&
-                Objects.equals(getT_open(), holiday.getT_open()) &&
-                Objects.equals(getT_close(), holiday.getT_close());
+        return getId() == holiday.getId()
+                && Objects.equals(getName(), holiday.getName())
+                && Objects.equals(getDate(), holiday.getDate())
+                && Objects.equals(getT_open(), holiday.getT_open())
+                && Objects.equals(getT_close(), holiday.getT_close());
     }
 
 }

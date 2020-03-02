@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
@@ -49,9 +47,8 @@ public class BuildingController {
      * @return the building and 200 status code if the building is found, 404 status code otherwise
      */
     @GetMapping("/building/name/{name}")
-    public ResponseEntity<Building> getBuildingByName(@PathVariable String name) {
-        return rep.findByName(name).map(building -> ResponseEntity.ok(building)
-        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public List<Building> getBuildingByName(@PathVariable String name) {
+        return rep.findByName(name);
     }
 
     /**

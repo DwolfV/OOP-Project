@@ -62,9 +62,8 @@ public class RestaurantController {
      * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
      */
     @GetMapping("/restaurant/id/{name}")
-    public ResponseEntity<Restaurant> getRestaurantByName(@PathVariable String name) {
-        return restaurantRepository.findByName(name).map(restaurant -> ResponseEntity.ok(restaurant)
-        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public List<Restaurant> getRestaurantByName(@PathVariable String name) {
+        return restaurantRepository.findByName(name);
     }
 
 
