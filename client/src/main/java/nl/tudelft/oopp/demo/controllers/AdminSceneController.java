@@ -19,8 +19,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.Room;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -41,6 +44,22 @@ public class AdminSceneController implements Initializable {
     private TextField ZipCode;
     @FXML
     private TextField City;
+
+
+    @FXML
+    private TextField RoomID;
+    @FXML
+    private TextField RoomName;
+    @FXML
+    private TextField Capacity;
+    @FXML
+    private TextField Building;
+
+
+    private TableView<Building> tableBuilding = new TableView<>();
+    private TableView<Room> tableRoom = new TableView<>();
+    private ObservableList<Building> buildingData = FXCollections.observableArrayList();
+    private ObservableList<Room> roomData = FXCollections.observableArrayList();
 
     public AdminSceneController() {
     }
@@ -80,10 +99,9 @@ public class AdminSceneController implements Initializable {
         }
     }
 
-    private TableView<Building> table = new TableView<>();
-    private ObservableList<Building> data = FXCollections.observableArrayList();
     final HBox hb = new HBox();
 
+    // View Building and Add a Building
     @FXML
     public void handleViewBuildingButtonClicked() {
         Stage secondStage = new Stage();
@@ -96,7 +114,7 @@ public class AdminSceneController implements Initializable {
         final Label label = new Label("Buildings");
         label.setFont(new Font("Arial", 20));
 
-        table.setEditable(true);
+        tableBuilding.setEditable(true);
 
         TableColumn<Building, Long> idCol =
                 new TableColumn<>("id");
@@ -169,20 +187,20 @@ public class AdminSceneController implements Initializable {
                     ).setCity(t.getNewValue());
                 });
 
-        data = FXCollections.observableList(BuildingCommunication.getBuildings());
-        table.setItems(data);
-        table.getColumns().addAll(idCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
+        buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+        tableBuilding.setItems(buildingData);
+        tableBuilding.getColumns().addAll(idCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
 
         //delete button
-        Button deleteButton = new Button("Delete");
-        deleteButton.setOnAction(e -> {
-            deleteButtonClicked();
+        Button deleteButtonBuilding = new Button("Delete");
+        deleteButtonBuilding.setOnAction(e -> {
+            deleteBuildingButtonClicked();
         });
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table, deleteButton);
+        vbox.getChildren().addAll(label, tableBuilding, deleteButtonBuilding);
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
@@ -190,10 +208,10 @@ public class AdminSceneController implements Initializable {
         secondStage.show();
     }
 
-    public void deleteButtonClicked() {
+    public void deleteBuildingButtonClicked() {
         ObservableList<Building> buildingSelected, allBuildings;
-        allBuildings = table.getItems();
-        buildingSelected = table.getSelectionModel().getSelectedItems();
+        allBuildings = tableBuilding.getItems();
+        buildingSelected = tableBuilding.getSelectionModel().getSelectedItems();
 
         buildingSelected.forEach(allBuildings::remove);
     }
@@ -210,6 +228,102 @@ public class AdminSceneController implements Initializable {
         BuildingCommunication.addBuilding(buildingId, buildingName, streetName, streetNumber, zipCode, city);
     }
 
+    // View Room and Add a Room
+    @FXML
+    public void handleViewRoomButtonClicked() {
+        Stage thirdStage = new Stage();
+        Scene viewRoomScene = new Scene(new Group());
 
+        thirdStage.setTitle("Table View");
+        thirdStage.setWidth(450);
+        thirdStage.setHeight(550);
+
+        final Label label = new Label("Rooms");
+        label.setFont(new Font("Arial", 20));
+
+        tableRoom.setEditable(true);
+
+        TableColumn<Room, Long> idCol =
+                new TableColumn<>("id");
+        idCol.setMinWidth(100);
+        idCol.setCellValueFactory(
+                new PropertyValueFactory<>("id"));
+
+        TableColumn<Room, String> roomCol =
+                new TableColumn<>("Room Name");
+        roomCol.setMinWidth(100);
+        roomCol.setCellValueFactory(
+                new PropertyValueFactory<>("name"));
+        roomCol.setCellFactory(TextFieldTableCell.<Room>forTableColumn());
+        roomCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Room, String> t) -> {
+                    ((Room) t.getTableView().getItems().get(
+                            t.getTablePosition().getRow())
+                    ).setName(t.getNewValue());
+                });
+
+        TableColumn<Room, Integer> capacityCol =
+                new TableColumn<>("Capacity");
+        capacityCol.setMinWidth(100);
+        capacityCol.setCellValueFactory(
+                new PropertyValueFactory<>("capacity"));
+        capacityCol.setCellFactory(TextFieldTableCell.<Room, Integer>forTableColumn(new IntegerStringConverter()));
+        capacityCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Room, Integer> t) -> {
+                    ((Room) t.getTableView().getItems().get(
+                            t.getTablePosition().getRow())
+                    ).setCapacity(t.getNewValue());
+                });
+
+        TableColumn<Room, String> buildingNameCol =
+                new TableColumn<>("Building Name");
+        buildingNameCol.setMinWidth(100);
+        buildingNameCol.setCellValueFactory(
+                new PropertyValueFactory<>("buildingName"));
+        buildingNameCol.setCellFactory(TextFieldTableCell.<Room>forTableColumn());
+        buildingNameCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Room, String> t) -> {
+                    ((Room) t.getTableView().getItems().get(
+                            t.getTablePosition().getRow())
+                    ).setName(t.getNewValue());
+                });
+
+        roomData = FXCollections.observableList(RoomCommunication.getRooms());
+        tableRoom.setItems(roomData);
+        tableRoom.getColumns().addAll(idCol, roomCol, capacityCol, buildingNameCol);
+
+        //delete button
+        Button deleteButtonRoom = new Button("Delete");
+        deleteButtonRoom.setOnAction(e -> {
+            deleteRoomButtonClicked();
+        });
+
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(10, 0, 0, 10));
+        vbox.getChildren().addAll(label, tableRoom, deleteButtonRoom);
+
+        ((Group) viewRoomScene.getRoot()).getChildren().addAll(vbox);
+
+        thirdStage.setScene(viewRoomScene);
+        thirdStage.show();
+    }
+
+    public void deleteRoomButtonClicked() {
+        ObservableList<Room> roomSelected, allRooms;
+        allRooms = tableRoom.getItems();
+        roomSelected = tableRoom.getSelectionModel().getSelectedItems();
+
+        roomSelected.forEach(allRooms::remove);
+    }
+
+    @FXML
+    private void handleTextFieldDataRoom(ActionEvent event){
+        long roomID = Long.parseLong(BuildingID.getText());
+        String roomName = RoomName.getText();
+        Integer capacity = Integer.parseInt(Capacity.getText());
+
+        RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
+    }
 
 }

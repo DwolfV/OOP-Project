@@ -47,7 +47,7 @@ public class RoomCommunication {
         try {
             room = mapper.readValue(response.body(), new TypeReference<List<Room>>(){});
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(response.body());
         }
 
         return room;
