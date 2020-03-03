@@ -17,6 +17,7 @@ import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -164,13 +165,27 @@ public class MainSceneController implements Initializable {
 
     }
 
+    @FXML
+    public static Stage registerStage;
+
+    @FXML
+    public void handleSignUpClick(ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
+            Parent registerParent = (Parent) fxmlLoader.load();
+            registerStage = new Stage();
+
+            registerStage.setResizable(true);
+            registerStage.setScene(new Scene(registerParent));
+            registerStage.setTitle("Register");
+            registerStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        List<Building> buildingList = BuildingCommunication.getBuildings();
-//
-//        for(Building building: buildingList) {
-//            System.out.print(building.toString());
-//        }
     }
 
 }
