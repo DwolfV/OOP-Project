@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -11,5 +13,9 @@ public class RegisterSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-
+    @FXML
+    public void handleSignUpButton(ActionEvent event) throws Exception{
+        // have a sign up method on the server communication side
+        MainSceneController.registerStage.close();
+    }
 }

@@ -24,7 +24,7 @@
             <Font name="Verdana" size="36.0" />
          </font>
       </Text>
-      <Button layoutX="136.0" layoutY="268.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #00C1FC;" text="Sign Up" textFill="WHITE">
+      <Button layoutX="136.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleSignUpButton" prefWidth="200.0" style="-fx-background-color: #00C1FC;" text="Sign Up" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
