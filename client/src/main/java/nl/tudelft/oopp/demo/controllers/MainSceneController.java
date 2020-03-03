@@ -37,17 +37,21 @@ public class MainSceneController implements Initializable {
     }
 
 //     handles for now both home and login buttons
+
+    @FXML
+    private static Stage secondaryStage;
+
     @FXML
     public void handleHomeButton(ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent calendarParent = (Parent) fxmlLoader.load();
-            Stage calendarStage = new Stage();
+            secondaryStage = new Stage();
 
-            calendarStage.setResizable(true);
-            calendarStage.setScene(new Scene(calendarParent));
-            calendarStage.setTitle("Home");
-            calendarStage.show();
+            secondaryStage.setResizable(true);
+            secondaryStage.setScene(new Scene(calendarParent));
+            secondaryStage.setTitle("Home");
+            secondaryStage.show();
             MainDisplay.stg.close();
         } catch(Exception e) {
             e.printStackTrace();
@@ -59,11 +63,10 @@ public class MainSceneController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/reservationsScene.fxml"));
             Parent reservationParent = (Parent) fxmlLoader.load();
-            Stage reservationsStage = new Stage();
 
-            reservationsStage.setScene(new Scene(reservationParent));
-            reservationsStage.setTitle("Reservations");
-            reservationsStage.show();
+            secondaryStage.setScene(new Scene(reservationParent));
+            secondaryStage.setTitle("Reservations");
+            secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -74,11 +77,10 @@ public class MainSceneController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
             Parent restaurantsParent = (Parent) fxmlLoader.load();
-            Stage restaurantsStage = new Stage();
 
-            restaurantsStage.setScene(new Scene(restaurantsParent));
-            restaurantsStage.setTitle("Restaurants");
-            restaurantsStage.show();
+            secondaryStage.setScene(new Scene(restaurantsParent));
+            secondaryStage.setTitle("Restaurants");
+            secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -89,11 +91,10 @@ public class MainSceneController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
             Parent friendsParent = (Parent) fxmlLoader.load();
-            Stage friendsStage = new Stage();
 
-            friendsStage.setScene(new Scene(friendsParent));
-            friendsStage.setTitle("Friends");
-            friendsStage.show();
+            secondaryStage.setScene(new Scene(friendsParent));
+            secondaryStage.setTitle("Friends");
+            secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -105,11 +106,10 @@ public class MainSceneController implements Initializable {
             URL location = getClass().getResource("/settingsScene.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(location);
             Parent settingsParent = (Parent) fxmlLoader.load();
-            Stage settingsStage = new Stage();
 
-            settingsStage.setScene(new Scene(settingsParent));
-            settingsStage.setTitle("Settings");
-            settingsStage.show();
+            secondaryStage.setScene(new Scene(settingsParent));
+            secondaryStage.setTitle("Settings");
+            secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -121,12 +121,12 @@ public class MainSceneController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
             Parent adminParent = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
+            Stage adminStage = new Stage();
 
-            stage.isResizable();
-            stage.setScene(new Scene(adminParent));
-            stage.setTitle("Admin");
-            stage.show();
+            adminStage.isResizable();
+            adminStage.setScene(new Scene(adminParent));
+            adminStage.setTitle("Admin");
+            adminStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
