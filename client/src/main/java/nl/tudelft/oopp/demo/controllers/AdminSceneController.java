@@ -345,7 +345,7 @@ public class AdminSceneController implements Initializable {
 
     @FXML
     private void handleTextFieldDataRoom(ActionEvent event){
-        long roomID = Long.parseLong(BuildingID.getText());
+        long roomID = Long.parseLong(Building.getText());
         String roomName = RoomName.getText();
         Integer capacity = Integer.parseInt(Capacity.getText());
 
