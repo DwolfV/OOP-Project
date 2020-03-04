@@ -100,6 +100,9 @@ public class AdminSceneController implements Initializable {
     // View Building and Add a Building
     @FXML
     public void handleViewBuildingButtonClicked() {
+
+        tableBuilding.getColumns().clear();
+
         Stage secondStage = new Stage();
         Scene scene = new Scene(new Group());
 
@@ -244,6 +247,9 @@ public class AdminSceneController implements Initializable {
     // View Room and Add a Room
     @FXML
     public void handleViewRoomButtonClicked() {
+
+        tableRoom.getColumns().clear();
+
         Stage thirdStage = new Stage();
         Scene viewRoomScene = new Scene(new Group());
 
