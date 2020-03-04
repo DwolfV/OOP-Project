@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import nl.tudelft.oopp.demo.entities.Holiday;
 import nl.tudelft.oopp.demo.repositories.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -40,6 +41,18 @@ public class HolidayController {
         UriComponents uri= b.path("/holidays/{id}").buildAndExpand(newHoliday.getId());
         return ResponseEntity.created(uri.toUri()).body(newHoliday);
     }
+
+     /**
+         * GET Endpoint to retrieve holiday by ID.
+         *
+         * @param holiday_id Unique identifier of the equipment.
+         * @return The requested equipment {@link Holiday}.
+         */
+        @GetMapping("holidays/{holiday_id}")
+        public @ResponseBody ResponseEntity<Holiday> getHolidayById(@PathVariable long holiday_id ) {
+            Holiday toReturn = holidays.findById(holiday_id).orElseGet(() -> null);
+            return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(toReturn, HttpStatus.OK);
+        }
 
     /**
      * PUT Endpoint to update the entry of a given holiday
