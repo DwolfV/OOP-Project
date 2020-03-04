@@ -43,17 +43,32 @@ public class MainSceneController implements Initializable {
     private static Stage secondaryStage;
 
     @FXML
+    public void handleLoginButton(ActionEvent event) throws Exception {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
+            Parent loginParent = (Parent) fxmlLoader.load();
+            secondaryStage = new Stage();
+
+            secondaryStage.setResizable(true);
+            secondaryStage.setScene(new Scene(loginParent));
+            secondaryStage.setTitle("Home");
+            secondaryStage.show();
+            MainDisplay.stg.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void handleHomeButton(ActionEvent event) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent calendarParent = (Parent) fxmlLoader.load();
-            secondaryStage = new Stage();
 
             secondaryStage.setResizable(true);
             secondaryStage.setScene(new Scene(calendarParent));
             secondaryStage.setTitle("Home");
             secondaryStage.show();
-            MainDisplay.stg.close();
         } catch(Exception e) {
             e.printStackTrace();
         }

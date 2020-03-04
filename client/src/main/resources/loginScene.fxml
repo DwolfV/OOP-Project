@@ -15,7 +15,7 @@
          <children>
             <TextField layoutX="47.0" layoutY="102.0" prefHeight="31.0" prefWidth="233.0" promptText="Username" style="-fx-background-color: #929292; -fx-prompt-text-fill: white; -fx-text-inner-color:white" />
             <PasswordField layoutX="47.0" layoutY="141.0" prefHeight="31.0" prefWidth="233.0" promptText="Password" style="-fx-background-color: #929292; -fx-prompt-text-fill: white; -fx-text-inner-color:white" />
-            <Button layoutX="47.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleHomeButton" prefHeight="31.0" prefWidth="233.0" style="-fx-background-color: #00C1FC; -fx-effect: dropShadow(gaussian ,  #00C1FC , 10 , 0 , 0 , 0) ; -fx-font-weight: bold" text="Log In" textFill="WHITE">
+            <Button layoutX="47.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="31.0" prefWidth="233.0" style="-fx-background-color: #00C1FC; -fx-effect: dropShadow(gaussian ,  #00C1FC , 10 , 0 , 0 , 0) ; -fx-font-weight: bold" text="Log In" textFill="WHITE">
             </Button>
             <Text fill="WHITE" layoutX="104.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
                <font>
