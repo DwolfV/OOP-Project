@@ -37,10 +37,14 @@ public class Authentication extends WebSecurityConfigurerAdapter {
         http
                 //HTTP Basic authentication
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/rooms/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/rooms").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/rooms/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/rooms/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/building/**", "/equipment/**", "/holidays/**",
+                        "/openTimes/**", "/restaurant/**", "/rooms/**",
+                        "/room_reservations/**", "/supply/**")
+                        .hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
