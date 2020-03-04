@@ -29,6 +29,6 @@
 - **Tip:** Improve the distribution of work, improve the definition of tasks.
 
 ###Steph
-- **Top:**
+- **Top:** I think we made big steps this week. We have a working API and are starting to make tests for all the classes. Our communication is really good and we meet a lot to work on the project.
 
-- **Tip:**
+- **Tip:** Branching is still not very well orginized and we should add more comments to our commits and merges. Not per se for our communication but so we also know why we did certain things when we look back a few weeks later
