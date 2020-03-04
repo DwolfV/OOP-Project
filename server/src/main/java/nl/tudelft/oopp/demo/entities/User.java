@@ -113,4 +113,14 @@ public class User {
                 Objects.equals(getBirth_date(), user.getBirth_date());
     }
 
+    @Override
+    public String toString() {
+        return "User{"
+                + "id=" + id
+                + ", email='" + email + '\''
+                + ", role='" + role + '\''
+                + ", first_name='" + first_name + '\''
+                + ", last_name='" + last_name + '\''
+                + '}';
+    }
 }
