@@ -1,16 +1,23 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
-
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Supply;
 import nl.tudelft.oopp.demo.repositories.SupplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 public class SupplyController {
@@ -68,11 +75,13 @@ public class SupplyController {
      * Create a new supply
      * @return message
      */
-    @PostMapping(value = "/supply", consumes = {"application/json"})
-    public Supply createNewActivity(@Valid @RequestBody Supply supply) {
-        return rep.save(supply);
-    }
 
+    @PostMapping(value = "/supply", consumes = {"application/json"})
+    public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b){
+        rep.save(newSupply);
+        UriComponents uri = b.path("/supply/{id}").buildAndExpand(newSupply.getId());
+        return ResponseEntity.created(uri.toUri()).body(newSupply);
+    }
     /**
      * Update a supply
      *
