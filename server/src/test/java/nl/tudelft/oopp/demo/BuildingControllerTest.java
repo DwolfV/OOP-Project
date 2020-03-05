@@ -10,6 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -21,7 +24,11 @@ import static org.mockito.Mockito.when;
 
 @DataJpaTest
 public class BuildingControllerTest {
-    private Building b1, b2, b3, b4, b5;
+    private Building b1;
+    private Building b2;
+    private Building b3;
+    private Building b4;
+    private Building b5;
 
     @Mock
     private BuildingRepository buildingRepository;
@@ -101,5 +108,27 @@ public class BuildingControllerTest {
         assertEquals(building, buildingController.newBuilding(building, uriComponentsBuilder).getBody());
 
     }
+
+    @Test
+    public void deleteB() {
+        List<Building> actualList = new ArrayList<Building>(List.of(b1,b2,b4, b5));
+        List<Building> expectedList =  new ArrayList<Building>(List.of(b1,b2,b3,b4,b5));
+
+        Optional<Building> optionalBuilding = Optional.of(b3);
+        ResponseEntity<Building> buildingResponseEntity = ResponseEntity.of(optionalBuilding);
+
+        buildingController.deleteBuilding(2L);
+
+        Mockito.doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) {
+                actualList.remove(2);
+                return null;
+            }
+        }).when(buildingRepository).deleteById(2L);
+
+        when(buildingRepository.findAll()).thenReturn(expectedList);
+        assertEquals(expectedList, buildingController.getAllBuildings());
+     }
 }
 
