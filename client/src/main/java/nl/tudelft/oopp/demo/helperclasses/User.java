@@ -5,8 +5,8 @@ public class User {
     private long id;
     private String email;
     private String role;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
 
     public User(){
 
@@ -18,19 +18,19 @@ public class User {
      * @param id A unique ID for the User.
      * @param email The email of the User.
      * @param role The role of the User, like student, employee, admin.
-     * @param first_name The first name of the User.
-     * @param last_name The last name of the User.
+     * @param firstName The first name of the User.
+     * @param lastName The last name of the User.
      */
     public User(long id,
                 String email,
                 String role,
-                String first_name,
-                String last_name) {
+                String firstName,
+                String lastName) {
         this.id = id;
         this.email = email;
         this.role = role;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public long getId() {
@@ -57,26 +57,30 @@ public class User {
         this.role = role;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return getId() == user.getId();
     }
@@ -87,8 +91,8 @@ public class User {
                 + "id=" + id
                 + ", email='" + email + '\''
                 + ", role='" + role + '\''
-                + ", first_name='" + first_name + '\''
-                + ", last_name='" + last_name + '\''
+                + ", first_name='" + firstName + '\''
+                + ", last_name='" + lastName + '\''
                 + '}';
     }
 }

@@ -1,10 +1,5 @@
 package nl.tudelft.oopp.demo.communication;
 
-import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
-import nl.tudelft.oopp.demo.helperclasses.User;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -13,6 +8,12 @@ import java.net.http.HttpResponse;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
+import nl.tudelft.oopp.demo.helperclasses.User;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+
+
 
 /**
  * Note before:
@@ -49,7 +50,8 @@ public class RoomReservationCommunication {
         List<RoomReservation> roomReservations = null;
         // TODO handle exception
         try {
-            roomReservations = mapper.readValue(response.body(), new TypeReference<List<RoomReservation>>(){});
+            roomReservations = mapper.readValue(response.body(),
+                               new TypeReference<List<RoomReservation>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,9 +61,14 @@ public class RoomReservationCommunication {
 
     /**
      * Adds a new room reservation.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @throws Exception if communication with the server fails
+     *         or if the response is not proper json.
      */
-    public static void addRoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
+    public static void addRoomReservation(long id,
+                                          Date date,
+                                          Time startTime,
+                                          Time endTime,
+                                          User user) {
         ObjectMapper mapper = new ObjectMapper();
         RoomReservation newRoomReservation = new RoomReservation(id, date, startTime, endTime, user);
         String JSONRoomReservation = "";
