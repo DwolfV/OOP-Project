@@ -42,8 +42,7 @@ public class RoomController {
      * @return a list of the rooms in the building {@link Room}.
      */
     @GetMapping("rooms/{building_id}")
-    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value="building_id") long id /*,
-                                                       @RequestParam String parameter*/) {
+    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value="building_id") long id) {
         return rooms.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rooms.findByBuildingId(id), HttpStatus.OK);
     }
 

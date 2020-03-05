@@ -2,16 +2,14 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
@@ -31,6 +29,14 @@ public class User {
     private Date birth_date;
 
     public User() {
+    }
+
+    public User(String email, String role, String first_name, String last_name, Date birth_date) {
+        this.email = email;
+        this.role = role;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birth_date = birth_date;
     }
     /**
      * Create a new User instance.

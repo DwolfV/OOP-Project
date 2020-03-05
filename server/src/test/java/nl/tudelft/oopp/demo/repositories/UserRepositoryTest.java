@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -31,15 +32,15 @@ public class UserRepositoryTest {
     @BeforeEach
     public void save() {
         u1 = new ArrayList<User>(List.of(
-                new User(1, "user1@email.com", "student", "fn1", "ln1", new Date(1000))));
+                new User("user1@email.com", "student", "fn1", "ln1", new Date(1000))));
         u2 = new ArrayList<User>(List.of(
-                new User(2, "user2@email.com", "student", "fn2", "ln2", new Date(2000))));
+                new User("user2@email.com", "student", "fn2", "ln2", new Date(2000))));
         u3 = new ArrayList<User>(List.of(
-                new User(3, "user3@email.com", "student", "fn3", "ln3", new Date(3000))));
+                new User("user3@email.com", "student", "fn3", "ln3", new Date(3000))));
         u4 = new ArrayList<User>(List.of(
-                new User(4, "user4@email.com", "employee", "fn4", "ln4", new Date(4000))));
+                new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000))));
         u5 = new ArrayList<User>(List.of(
-                new User(5, "user5@email.com", "employee", "fn5", "ln5", new Date(5000))));
+                new User("user5@email.com", "employee", "fn5", "ln5", new Date(5000))));
         userRep.saveAll(u1);
         userRep.saveAll(u2);
         userRep.saveAll(u3);
@@ -47,8 +48,22 @@ public class UserRepositoryTest {
         userRep.saveAll(u5);
     }
 
+    /**
+     * Test if the repositories loads correctly and isn't null.
+     *
+     * @throws Exception exception
+     */
     @Test
-    public void getUserByEmail() {
+    public void testLoadController() throws Exception {
+        assertThat(userRep).isNotNull();
+    }
+
+    /**
+     * Checks whether findByEmail() in the repository
+     * finds all the users with a certain email.
+     */
+    @Test
+    public void testFindByEmail() {
         assertEquals(u1, userRep.findByEmail("user1@email.com"));
         assertEquals(u2, userRep.findByEmail("user2@email.com"));
         assertEquals(u3, userRep.findByEmail("user3@email.com"));
@@ -61,8 +76,12 @@ public class UserRepositoryTest {
         assertNotEquals(null, userRep.findByEmail("user1@email.com"));
     }
 
+    /**
+     * Checks whether findByRole() in the repository
+     * finds all the users with a certain role.
+     */
     @Test
-    public void findUserByRole() {
+    public void testFindByRole() {
         List<User> slist = new ArrayList<User>();
         slist.addAll(u1);
         slist.addAll(u2);
