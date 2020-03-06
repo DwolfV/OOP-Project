@@ -21,7 +21,6 @@ public class Building {
     /**
      * Create a new Building instance.
      *
-     * @param id The unique identifier for Building
      * @param name The name of the Building.
      * @param streetName The name of the street for the Building
      * @param streetNumber The number of the street for the Building
@@ -34,7 +33,6 @@ public class Building {
                     String streetNumber,
                     String zipCode,
                     String city) {
-        this.id = id;
         this.name = name;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
