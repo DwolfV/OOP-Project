@@ -243,6 +243,13 @@ public class AdminSceneController implements Initializable {
         String city = City.getText();
 
         BuildingCommunication.addBuilding(buildingName, streetName, streetNumber, zipCode, city);
+
+        BuildingID.setText(null);
+        BuildingName.setText(null);
+        StreetName.setText(null);
+        StreetNumber.setText(null);
+        ZipCode.setText(null);
+        City.setText(null);
     }
 
     // View Room and Add a Room
@@ -350,6 +357,10 @@ public class AdminSceneController implements Initializable {
         Integer capacity = Integer.parseInt(Capacity.getText());
 
         RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
+
+        Building.setText(null);
+        RoomName.setText(null);
+        Capacity.setText(null);
     }
 
 }
