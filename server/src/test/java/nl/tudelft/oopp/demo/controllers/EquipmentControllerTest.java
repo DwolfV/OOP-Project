@@ -1,5 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,16 +22,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-
 @DataJpaTest
 class EquipmentControllerTest {
     private Equipment e1;
     private Equipment e2;
     private Equipment e3;
+
+    private Room r1;
+    private Building b1;
 
     @Mock
     private EquipmentRepository equipmentRepository;
@@ -38,30 +40,28 @@ class EquipmentControllerTest {
     /**
      * Creates all equipments before each test.
      */
-
     @BeforeEach
-    public void save(){
+    public void save() {
         //constructor long id, Room room, String name, int amount for building
         //constructor long id, String name, Integer capacity, Building building) for room
-        Building b1 = new Building(1, "b1", "s1", "sNo1", "z1", "c1");
-        Room r1 = new Room(1, "name", 11, b1);
-        e1 = new Equipment(1, r1, "e1", 15);
-        e2 = new Equipment(2, r1, "e2", 22);
-        e3 = new Equipment(3, r1, "e3", 45);
+        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        r1 = new Room("name", 11, b1);
+        e1 = new Equipment(r1, "e1", 15);
+        e2 = new Equipment(r1, "e2", 22);
+        e3 = new Equipment(r1, "e3", 45);
     }
 
     /**
      * test if the controllers were loaded correctly and if they are not null.
      * Otherwise, @throws Exception
      */
-
     @Test
-    public void controllerLoads() throws Exception {
+    public void testLoadController() throws Exception {
         assertThat(equipmentController).isNotNull();
     }
 
     @Test
-    void getEquipment() {
+    void testGetEquipment() {
         List<Equipment> expectedList = new ArrayList<Equipment>(List.of(e1,e2,e3));
         when(equipmentRepository.findAll()).thenReturn(expectedList);
         List<Equipment> actualList = equipmentController.getEquipment();
@@ -70,47 +70,56 @@ class EquipmentControllerTest {
     }
 
     @Test
-    void getEquipmentById() {
+    void testGetEquipmentById() {
         Optional<Equipment> optionalEquipment = Optional.of(e1);
         ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
 
-        when(equipmentRepository.findById(1L)).thenReturn(optionalEquipment);
-        assertEquals(entity, equipmentController.getEquipmentById(1L));
+        when(equipmentRepository.findById(e1.getId())).thenReturn(optionalEquipment);
+        assertEquals(entity, equipmentController.getEquipmentById(e1.getId()));
     }
 
-//    @Test
-//    void getEquipmentByName() {
-//        Optional<Equipment> optionalEquipment = Optional.of(e1);
-//        ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
-//
-//       // when(equipmentRepository.findByName("e1")).thenReturn(optionalEquipment);
-//        Mockito.when(equipmentRepository.findByName("e1")).thenAnswer(invocationOnMock -> optionalEquipment);
-//        assertEquals(entity, equipmentController.getEquipmentByName("e1"));
-//    }
-//
-//    @Test
-//    void getEquipmentByRoomId() {
-//    }
+    @Test
+    void testGetEquipmentByName() {
+        Optional<Equipment> optionalEquipment = Optional.of(e1);
+        ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
+
+        Mockito.when(equipmentRepository.findByName(
+                "e1")).thenAnswer(invocationOnMock -> List.of(e1));
+        assertEquals(List.of(entity.getBody()),
+                equipmentController.getEquipmentByName("e1").getBody());
+    }
 
     @Test
-    void addNewEquipment() {
+    void testGetEquipmentByRoomId() {
+        Optional<Equipment> optionalEquipment = Optional.of(e1);
+        ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
+
+        Mockito.when(equipmentRepository.findByRoomId(
+                r1.getId())).thenAnswer(invocationOnMock -> List.of(e1));
+        assertEquals(List.of(entity.getBody()),
+                equipmentController.getEquipmentByRoomId(r1.getId()).getBody());
+    }
+
+    @Test
+    void testAddNewEquipment() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building(1, "b1", "s1", "sNo1", "z1", "c1");
-        Room r1 = new Room(1, "name", 11, b1);
-        Equipment equipment = new Equipment(1, r1, "e1", 15);
+        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Room r1 = new Room("name", 11, b1);
+        Equipment equipment = new Equipment(r1, "e1", 15);
         Optional<Equipment> optionalEquipment = Optional.of(equipment);
         ResponseEntity<Equipment> responseEntity = ResponseEntity.of(optionalEquipment);
 
         when(equipmentRepository.save(equipment)).thenReturn(equipment);
 
-        assertEquals(equipment, equipmentController.addNewEquipment(equipment, uriComponentsBuilder).getBody());
+        assertEquals(equipment,
+                equipmentController.addNewEquipment(equipment, uriComponentsBuilder).getBody());
     }
 
     @Test
-    void replaceEquipment() {
-        Building b1 = new Building(1, "b1", "s1", "sNo1", "z1", "c1");
-        Room r1 = new Room(1, "name", 11, b1);
-        Equipment equipment = new Equipment(1, r1, "e1", 15);
+    void testReplaceEquipment() {
+        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Room r1 = new Room("name", 11, b1);
+        Equipment equipment = new Equipment(r1, "e1", 15);
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
         Optional<Equipment> optionalEquipment = Optional.of(e1);
 
@@ -119,27 +128,28 @@ class EquipmentControllerTest {
         ResponseEntity<Equipment> responseEntity = ResponseEntity.of(newE);
 
         when(equipmentRepository.save(equipment)).thenReturn(equipment);
-        when(equipmentRepository.findById(1L)).thenReturn(optionalEquipment);
+        when(equipmentRepository.findById(e1.getId())).thenReturn(optionalEquipment);
 
-        assertEquals(responseEntity.getBody(), equipmentController.replaceEquipment(equipment, 1, uriComponentsBuilder).getBody());
+        assertEquals(responseEntity.getBody(),equipmentController.replaceEquipment(
+                equipment, e1.getId(), uriComponentsBuilder).getBody());
     }
 
     @Test
-    void deleteEquipment() {
+    void testDeleteEquipment() {
         List<Equipment> actualList = new ArrayList<Equipment>(List.of(e1,e3));
         List<Equipment> expectedList = new ArrayList<Equipment>(List.of(e1,e2,e3));
 
         Optional<Equipment> optionalEquipment = Optional.of(e2);
         ResponseEntity<Equipment> equipmentResponseEntity = ResponseEntity.of(optionalEquipment);
 
-        equipmentController.deleteEquipment(2L);
+        equipmentController.deleteEquipment(e2.getId());
         Mockito.doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) {
                 actualList.remove(1);
                 return null;
             }
-        }).when(equipmentRepository).deleteById(2L);
+        }).when(equipmentRepository).deleteById(e2.getId());
         when(equipmentRepository.findAll()).thenReturn(expectedList);
         assertEquals(expectedList, equipmentController.getEquipment());
     }
