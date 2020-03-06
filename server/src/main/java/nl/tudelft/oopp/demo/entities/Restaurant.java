@@ -4,12 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Time;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Restaurant {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
@@ -39,6 +35,13 @@ public class Restaurant {
 
     public Restaurant() {
 
+    }
+
+    public Restaurant(String name, Building building, Time tClose, Time tOpen) {
+        this.name = name;
+        this.building = building;
+        this.tClose = tClose;
+        this.tOpen = tOpen;
     }
 
     /**

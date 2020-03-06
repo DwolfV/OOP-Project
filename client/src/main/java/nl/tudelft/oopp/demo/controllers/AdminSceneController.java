@@ -242,7 +242,7 @@ public class AdminSceneController implements Initializable {
         String zipCode = ZipCode.getText();
         String city = City.getText();
 
-        BuildingCommunication.addBuilding(buildingId, buildingName, streetName, streetNumber, zipCode, city);
+        BuildingCommunication.addBuilding(buildingName, streetName, streetNumber, zipCode, city);
     }
 
     // View Room and Add a Room

@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 public class SupplyController {
+
     @Autowired
     SupplyRepository rep;
 
@@ -31,25 +32,24 @@ public class SupplyController {
      * Find supply by building and name
      *
      * @param name - The name of the supply that is to be found
-     * @param building - The building of which the supply is part of
+     * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building")
-    public ResponseEntity<Supply> getSupplyByBuildingAndName(@RequestParam String name, @RequestParam long building) {
-        return rep.findByBuildingAndName(building, name).map(supply -> ResponseEntity.ok(supply)
+    public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value="building_id") long id) {
+        return rep.findByBuildingIdAndName(id, name).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
      * Find supply by building and name
      *
-     * @param building - The building of which the supply is part of
+     * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
-    @GetMapping("/supply/building/{building}")
-    public ResponseEntity<List<Supply>> getSupplyByBuilding(@PathVariable long building) {
-        return rep.findByBuilding(building).map(supply -> ResponseEntity.ok(supply)
-        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/supply/building/{building_id}")
+    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value="building_id") long id) {
+        return rep.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rep.findByBuildingId(id), HttpStatus.OK);
     }
 
     /**

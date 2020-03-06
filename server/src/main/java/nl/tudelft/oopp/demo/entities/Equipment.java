@@ -41,6 +41,12 @@ public class Equipment {
 
     }
 
+    public Equipment(Room room, String name, int amount) {
+        this.room = room;
+        this.name = name;
+        this.amount = amount;
+    }
+
     /**
      * Create a new Equipment instance.
      *

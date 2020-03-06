@@ -2,12 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.sql.Time;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +11,7 @@ import javax.validation.constraints.NotNull;
 public class OpenTime {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
@@ -31,11 +27,18 @@ public class OpenTime {
     @Column (name = "t_close")
     private Time t_close;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
+    public OpenTime(String day, Time t_open, Time t_close, Building building) {
+        this.day = day;
+        this.t_open = t_open;
+        this.t_close = t_close;
+        this.building = building;
+
+    }
     /**
      * Create a new OpenTime instance.
      *
@@ -46,8 +49,7 @@ public class OpenTime {
      * @param building_id The building's ID for the OpenTime.
      */
 
-    public OpenTime(long id, String day, Time t_open, Time t_close, Building building,
-                    long building_id) {
+    public OpenTime(long id, String day, Time t_open, Time t_close, Building building) {
         this.id = id;
         this.day = day;
         this.t_open = t_open;

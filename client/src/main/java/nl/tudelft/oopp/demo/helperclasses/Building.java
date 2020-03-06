@@ -29,8 +29,7 @@ public class Building {
      * @param city The city of the Building
      */
 
-    public Building(Long id,
-                    String name,
+    public Building(String name,
                     String streetName,
                     String streetNumber,
                     String zipCode,
