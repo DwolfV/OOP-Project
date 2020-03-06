@@ -111,7 +111,7 @@ public class MainSceneController implements Initializable {
                 grid.setVgap(4);
                 grid.setPadding(new Insets(5, 5, 5, 5));
 
-                ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(1));
+                ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(12));
                 for(int j = 0; j < rooms.size(); j++){
                     grid.add(new Label(rooms.get(j).getName()), 0, j);
                     grid.add(new Button("Reserve"), 1, j);
