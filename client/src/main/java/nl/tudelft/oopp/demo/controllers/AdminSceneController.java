@@ -7,12 +7,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -30,8 +32,6 @@ import java.util.ResourceBundle;
 public class AdminSceneController implements Initializable {
 
     @FXML
-    private TextField BuildingID;
-    @FXML
     private TextField BuildingName;
     @FXML
     private TextField StreetName;
@@ -44,14 +44,16 @@ public class AdminSceneController implements Initializable {
 
 
     @FXML
-    private TextField RoomID;
-    @FXML
     private TextField RoomName;
     @FXML
     private TextField Capacity;
     @FXML
     private TextField Building;
 
+    Button addButton = new Button("Add");
+    Button updateButton = new Button("Update");
+    Button deleteButton = new Button("Update");
+    final BorderPane borderPane = new BorderPane();
 
     private TableView<Building> tableBuilding = new TableView<>();
     private TableView<Room> tableRoom = new TableView<>();
@@ -67,7 +69,7 @@ public class AdminSceneController implements Initializable {
     }
 
     @FXML
-    public void handleAddBuildingButton(ActionEvent event) throws Exception {
+    public void handleAddBuildingButton() throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addBuildingScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -82,7 +84,7 @@ public class AdminSceneController implements Initializable {
     }
 
     @FXML
-    public void handleAddRoomButton(ActionEvent event) throws Exception {
+    public void handleAddRoomButton() throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addRoomScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -108,7 +110,7 @@ public class AdminSceneController implements Initializable {
         Scene scene = new Scene(new Group());
 
         secondStage.setTitle("Table View");
-        secondStage.setWidth(450);
+        secondStage.setWidth(640);
         secondStage.setHeight(550);
 
         final Label label = new Label("Buildings");
@@ -192,23 +194,35 @@ public class AdminSceneController implements Initializable {
         tableBuilding.getColumns().addAll(idCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
 
         //delete button
-        Button deleteButtonBuilding = new Button("Delete");
-        deleteButtonBuilding.setOnAction(e -> {
+        deleteButton.setOnAction(e -> {
             deleteBuildingButtonClicked();
         });
 
         //update button
-        Button updateButton = new Button("Update");
         updateButton.setOnAction(e -> {
             updateBuildingButtonClicked();
         });
 
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, tableBuilding, deleteButtonBuilding, updateButton);
+        // add button
+        addButton.setOnAction(e -> {
+            try {
+                handleAddBuildingButton();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        borderPane.setPadding(new Insets(10,10,10,10));
+
+        final HBox hBox = new HBox(deleteButton, updateButton, addButton);
+        hBox.setSpacing(5);
+        hBox.setPadding(new Insets(10, 10, 0, 10));
+
+        borderPane.setTop(label);
+        borderPane.setCenter(tableBuilding);
+        borderPane.setBottom(hBox);
+
+        ((Group) scene.getRoot()).getChildren().addAll(borderPane);
 
         secondStage.setScene(scene);
         secondStage.show();
@@ -224,11 +238,6 @@ public class AdminSceneController implements Initializable {
         allBuildings = tableBuilding.getItems();
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
 
-        //buildingSelected.forEach(allBuildings::remove);
-//        buildingSelected.forEach(building -> {
-//            System.out.println(building.getId());
-//            BuildingCommunication.removeBuilding(building.getId());
-//        } );
         allBuildings.remove(building);
         BuildingCommunication.removeBuilding(building.getId());
     }
@@ -260,7 +269,7 @@ public class AdminSceneController implements Initializable {
         Scene viewRoomScene = new Scene(new Group());
 
         thirdStage.setTitle("Table View");
-        thirdStage.setWidth(450);
+        thirdStage.setWidth(440);
         thirdStage.setHeight(550);
 
         final Label label = new Label("Rooms");
@@ -312,23 +321,35 @@ public class AdminSceneController implements Initializable {
         tableRoom.getColumns().addAll(idCol, roomCol, capacityCol, buildingNameCol);
 
         //delete button
-        Button deleteButtonRoom = new Button("Delete");
-        deleteButtonRoom.setOnAction(e -> {
+        deleteButton.setOnAction(e -> {
             deleteRoomButtonClicked();
         });
 
         //update button
-        Button updateButton = new Button("Update");
         updateButton.setOnAction(e -> {
             updateRoomButtonClicked();
         });
 
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, tableRoom, deleteButtonRoom, updateButton);
+        // add button
+        addButton.setOnAction(e -> {
+            try {
+                handleAddRoomButton();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
-        ((Group) viewRoomScene.getRoot()).getChildren().addAll(vbox);
+        borderPane.setPadding(new Insets(10,10,10,10));
+
+        final HBox hBox = new HBox(deleteButton, updateButton, addButton);
+        hBox.setSpacing(5);
+        hBox.setPadding(new Insets(10, 10, 0, 10));
+
+        borderPane.setTop(label);
+        borderPane.setCenter(tableRoom);
+        borderPane.setBottom(hBox);
+
+        ((Group) viewRoomScene.getRoot()).getChildren().addAll(borderPane);
 
         thirdStage.setScene(viewRoomScene);
         thirdStage.show();
