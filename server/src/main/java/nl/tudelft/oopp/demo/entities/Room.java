@@ -34,7 +34,7 @@ public class Room {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "building_id", referencedColumnName = "id")
+    @JoinColumn(name = "building_id", referencedColumnName = "id", nullable = false)
     private Building building;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
