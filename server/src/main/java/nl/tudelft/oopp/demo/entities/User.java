@@ -31,7 +31,7 @@ public class User {
     @Column(name = "birth_date")
     private Date birth_date;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @Nullable
     private Set<Event> events = new HashSet<>();
 
