@@ -66,8 +66,6 @@ public class MainSceneController implements Initializable {
             secondaryStage.setTitle("Home");
             secondaryStage.show();
             MainDisplay.stg.close();
-
-//            initDrawer();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -99,6 +97,7 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        initDrawer();
     }
 
     @FXML
@@ -205,9 +204,16 @@ public class MainSceneController implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
+    private VBox vbox;
+
+    @FXML
     private JFXDrawer drawer;
 
     public void initDrawer() throws IOException {
+//        Parent contentNode = null;
+//        contentNode = FXMLLoader.load(getClass().getResource("/drawerMenuContent.FXML"));
+//        vbox.getChildren().clear();
+//        vbox.getChildren().add(contentNode);
 //        VBox vBox = new VBox(FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml")));
 //        drawer.setSidePane(vBox);
 
@@ -225,11 +231,7 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            initDrawer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 }
