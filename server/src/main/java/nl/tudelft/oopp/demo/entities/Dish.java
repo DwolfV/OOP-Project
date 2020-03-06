@@ -1,9 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Dish")
@@ -25,10 +24,16 @@ public class Dish {
     @Column(name = "price")
     private float price;
 
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    private Set<RestaurantDish> restaurantDishes = new HashSet<>();
+
+    public Dish() {
+
+    }
+
     /**
      * Create a new Dish instance.
      *
-     * @param id A unique identifier for the Dish.
      * @param name The name of the Dish.
      * @param description The description of the Dish; for example: the ingredients.
      * @param price The price of the Dish.
@@ -36,7 +41,7 @@ public class Dish {
      */
 
 
-    public Dish(long id, String name, String description, String type, float price) {
+    public Dish(String name, String description, String type, float price) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -82,6 +87,14 @@ public class Dish {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public Set<RestaurantDish> getRestaurantDishes() {
+        return restaurantDishes;
+    }
+
+    public void setRestaurantDishes(Set<RestaurantDish> restaurantDishes) {
+        this.restaurantDishes = restaurantDishes;
     }
 
     @Override
