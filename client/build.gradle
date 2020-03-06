@@ -12,6 +12,7 @@ dependencies {
     compile group: 'com.sun.faces', name: 'jsf-api', version: '2.2.20'
 
     compile 'com.jfoenix:jfoenix:9.0.8'
+
 }
 
 
