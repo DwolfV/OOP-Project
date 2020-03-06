@@ -9,6 +9,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
     <bottom>
         <HBox style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
@@ -21,8 +23,9 @@
         </HBox>
     </bottom>
     <top>
-            <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+        <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
+                <JFXHamburger fx:id="hamburger" layoutX="12.0" layoutY="20.0" prefHeight="64.0" prefWidth="98.0" stylesheets="@HamburgerStyle.css" />
                 <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu" HBox.hgrow="ALWAYS">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleHomeButton" text="Home" />
@@ -49,28 +52,18 @@
                         <Insets />
                     </HBox.margin>
                 </ImageView>
-            </children></HBox>
+            </children>
+        </HBox>
     </top>
     <left>
-        <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
+        <VBox fx:id="vBox" prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;">
+            <children>
+                <JFXDrawer fx:id="drawer" defaultDrawerSize="120.0" prefHeight="594.0" prefWidth="158.0" />
+            </children>
+        </VBox>
     </left>
     <center>
-        <GridPane gridLinesVisible="true" BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-            </rowConstraints>
+        <GridPane BorderPane.alignment="CENTER">
         </GridPane>
     </center>
 </BorderPane>

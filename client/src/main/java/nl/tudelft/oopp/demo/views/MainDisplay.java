@@ -2,7 +2,9 @@ package nl.tudelft.oopp.demo.views;
 
 import java.io.IOException;
 
+import com.jfoenix.controls.JFXDrawer;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +15,9 @@ import javafx.stage.StageStyle;
 public class MainDisplay extends Application {
 
     public static Stage stg;
+
+    @FXML
+    private JFXDrawer drawer;
 
     @Override
     public void start(Stage loginStage) throws IOException { //change loginstage to stage

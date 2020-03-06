@@ -1,6 +1,15 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +21,10 @@ import javafx.event.*;
 
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.views.MainDisplay;
@@ -21,6 +33,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainSceneController implements Initializable {
 
@@ -37,8 +51,6 @@ public class MainSceneController implements Initializable {
 //        System.exit(0);
     }
 
-//     handles for now both home and login buttons
-
     @FXML
     private static Stage secondaryStage;
 
@@ -54,6 +66,8 @@ public class MainSceneController implements Initializable {
             secondaryStage.setTitle("Home");
             secondaryStage.show();
             MainDisplay.stg.close();
+
+//            initDrawer();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -184,8 +198,38 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    @FXML
+    private JFXHamburger hamburger;
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private JFXDrawer drawer;
+
+    public void initDrawer() throws IOException {
+//        VBox vBox = new VBox(FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml")));
+//        drawer.setSidePane(vBox);
+
+        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+            if (drawer.isClosed()) {
+                drawer.open();
+            } else {
+                drawer.close(); }
+        });
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            initDrawer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

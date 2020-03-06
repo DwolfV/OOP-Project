@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="388.0" prefWidth="120.0" stylesheets="@drawerStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+   <children>
+      <JFXButton accessibleText="Material_One" buttonType="RAISED" layoutX="5.0" layoutY="6.0" prefHeight="54.0" prefWidth="110.0" ripplerFill="#68c8ff" text="Home" />
+      <JFXButton accessibleText="Material_Two" buttonType="RAISED" layoutX="5.0" layoutY="70.0" prefHeight="54.0" prefWidth="110.0" ripplerFill="#68c8ff" text="Reservations" />
+      <JFXButton accessibleText="Material_Three" buttonType="RAISED" layoutX="5.0" layoutY="134.0" prefHeight="54.0" prefWidth="110.0" ripplerFill="#68c8ff" text="Restaurants" />
+      <JFXButton accessibleText="Material_Four" buttonType="RAISED" layoutX="5.0" layoutY="198.0" prefHeight="54.0" prefWidth="110.0" ripplerFill="#68c8ff" text="Supplies" />
+      <JFXButton accessibleText="Material_Five" buttonType="RAISED" layoutX="5.0" layoutY="262.0" prefHeight="54.0" prefWidth="110.0" ripplerFill="#68c8ff" text="Friends" />
+      <JFXButton accessibleText="Material_Six" buttonType="RAISED" layoutX="5.0" layoutY="326.0" prefHeight="54.0" prefWidth="110.0" ripplerFill="#68c8ff" text="Settings" />
+   </children>
+</AnchorPane>
