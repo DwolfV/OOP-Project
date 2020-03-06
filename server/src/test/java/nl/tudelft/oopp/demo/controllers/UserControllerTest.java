@@ -42,11 +42,11 @@ public class UserControllerTest {
      */
     @BeforeEach
     public void save() {
-        u1 = new User(1, "user1@email.com", "student", "fn1", "ln1", new Date(1000));
-        u2 = new User(2, "user2@email.com", "student", "fn2", "ln2", new Date(2000));
-        u3 = new User(3, "user3@email.com", "student", "fn3", "ln3", new Date(3000));
-        u4 = new User(4, "user4@email.com", "employee", "fn4", "ln4", new Date(4000));
-        u5 = new User(5, "user5@email.com", "employee", "fn5", "ln5", new Date(5000));
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000));
+        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000));
+        u4 = new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000));
+        u5 = new User("user5@email.com", "employee", "fn5", "ln5", new Date(5000));
     }
 
     /**
@@ -55,7 +55,7 @@ public class UserControllerTest {
      * @throws Exception exception
      */
     @Test
-    public void controllerLoads() throws Exception {
+    public void testLoadController() throws Exception {
         assertThat(userCon).isNotNull();
     }
 
@@ -66,11 +66,8 @@ public class UserControllerTest {
     public void getAllUsersTest() {
         List<User> expectList = new ArrayList<User>(List.of(u1, u2, u3, u4, u5));
 
-        // Specify what the repository should return when you call the
-        // findAll() method which is done in the userController for the method we are testing
         when(userRep.findAll()).thenReturn(expectList);
 
-        // now call that method in the userController and put it into the actualList
         List<User> actualList = userCon.getAllUsers();
 
         assertEquals(expectList, actualList);
@@ -81,12 +78,9 @@ public class UserControllerTest {
      */
     @Test
     public void getUserById() {
-        // User object to Optional and to ResponseEntity
         Optional<User> optionalU1 = Optional.of(u1);
         ResponseEntity<User> entityU1 = ResponseEntity.of(optionalU1);
 
-        // If findById(1l) method is called from userRep
-        // return the optional for u1 (since u1 has the id 1l)
         when(userRep.findById(1L)).thenReturn(optionalU1);
 
         assertEquals(entityU1, userCon.getUserById(1L));

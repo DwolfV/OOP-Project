@@ -20,8 +20,7 @@ public class RoomReservation {
      * @param endTime The time when the reservation ends
      * @param user The user who owns the reservation
      */
-    public RoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
-        this.id = id;
+    public RoomReservation(Date date, Time startTime, Time endTime, User user) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

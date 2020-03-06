@@ -21,12 +21,10 @@ public class User {
      * @param firstName The first name of the User.
      * @param lastName The last name of the User.
      */
-    public User(long id,
-                String email,
+    public User(String email,
                 String role,
                 String firstName,
                 String lastName) {
-        this.id = id;
         this.email = email;
         this.role = role;
         this.firstName = firstName;

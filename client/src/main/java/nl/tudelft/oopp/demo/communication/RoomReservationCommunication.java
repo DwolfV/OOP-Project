@@ -64,13 +64,12 @@ public class RoomReservationCommunication {
      * @throws Exception if communication with the server fails
      *         or if the response is not proper json.
      */
-    public static void addRoomReservation(long id,
-                                          Date date,
+    public static void addRoomReservation(Date date,
                                           Time startTime,
                                           Time endTime,
                                           User user) {
         ObjectMapper mapper = new ObjectMapper();
-        RoomReservation newRoomReservation = new RoomReservation(id, date, startTime, endTime, user);
+        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String JSONRoomReservation = "";
         try {
             JSONRoomReservation = mapper.writeValueAsString(newRoomReservation);
@@ -98,7 +97,7 @@ public class RoomReservationCommunication {
      */
     public static void updateRoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
-        RoomReservation newRoomReservation = new RoomReservation(id, date, startTime, endTime, user);
+        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String JSONRoomReservation = "";
         try {
             JSONRoomReservation = mapper.writeValueAsString(newRoomReservation);
