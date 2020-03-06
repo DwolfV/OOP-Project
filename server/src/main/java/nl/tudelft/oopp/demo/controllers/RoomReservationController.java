@@ -6,6 +6,7 @@ import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -26,7 +27,8 @@ public class RoomReservationController {
      * @return a list of the room reservations for the given user {@link RoomReservation}.
      */
     @GetMapping("room_reservations/{user_id}")
-    public @ResponseBody List<RoomReservation> getRoomReservationsByUser(@PathVariable(value="user_id") long userId) {
+    public @ResponseBody List<RoomReservation> getRoomReservationsByUser(@PathVariable(value="user_id") long userId, Authentication authentication) {
+        System.out.println(authentication.getName());
         return reservations.findByUserId(userId);
     }
 
