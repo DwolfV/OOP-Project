@@ -1,13 +1,19 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javax.validation.Valid;
 import java.util.List;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.OpenTime;
 import nl.tudelft.oopp.demo.repositories.OpenTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -43,6 +49,19 @@ public class OpenTimeController {
                 : new ResponseEntity<>(openTimes.findByBuildingId(id), HttpStatus.OK);
     }
 
+    /**
+     * GET Endpoint to retrieve holiday by ID.
+     *
+     * @param openTime_id Unique identifier of the equipment.
+     * @return The requested equipment {@link OpenTime}.
+     */
+
+    @GetMapping(value = "/openTimes", consumes = {"application/json"})
+    public @ResponseBody ResponseEntity<OpenTime> getOpenTimeById(@PathVariable long openTime_id) {
+        OpenTime toReturn = openTimes.findById(openTime_id).orElseGet(() -> null);
+        return (toReturn == null ) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
 
     /**
      * POST Endpoint to add a new OpenTime.
