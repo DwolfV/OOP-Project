@@ -21,6 +21,7 @@ import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
 import java.net.URL;
@@ -100,6 +101,9 @@ public class AdminSceneController implements Initializable {
     // View Building and Add a Building
     @FXML
     public void handleViewBuildingButtonClicked() {
+
+        tableBuilding.getColumns().clear();
+
         Stage secondStage = new Stage();
         Scene scene = new Scene(new Group());
 
@@ -244,6 +248,9 @@ public class AdminSceneController implements Initializable {
     // View Room and Add a Room
     @FXML
     public void handleViewRoomButtonClicked() {
+
+        tableRoom.getColumns().clear();
+
         Stage thirdStage = new Stage();
         Scene viewRoomScene = new Scene(new Group());
 
@@ -292,14 +299,8 @@ public class AdminSceneController implements Initializable {
                 new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
-        buildingNameCol.setCellFactory(TextFieldTableCell.<Room>forTableColumn());
-        buildingNameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, String> t) -> {
-                    ((Room) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                    ).setName(t.getNewValue());
-                });
+                new PropertyValueFactory<>("building"));
+        buildingNameCol.setCellFactory(TextFieldTableCell.<Room, String>forTableColumn(new BuildingToStringConvertor()));
 
         roomData = FXCollections.observableList(RoomCommunication.getRooms());
         tableRoom.setItems(roomData);
