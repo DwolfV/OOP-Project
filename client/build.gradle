@@ -11,6 +11,8 @@ dependencies {
     compile group: 'com.fasterxml', name: 'jackson-module-json-org', version: '0.9.1'
     compile group: 'com.sun.faces', name: 'jsf-api', version: '2.2.20'
 
+    compile 'com.jfoenix:jfoenix:9.0.8'
+
 }
 
 
