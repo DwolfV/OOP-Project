@@ -1,24 +1,39 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.List;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
-import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 public class RoomReservationController {
 
     @Autowired
     RoomReservationRepository reservations;
+
+    /**
+     * GET Endpoint to retrieve a list of all room reservations.
+     *
+     * @return a list of the rooms {@link RoomReservation}.
+     */
+    @GetMapping("room_reservations")
+    public @ResponseBody
+    List<RoomReservation> getRoomReservations() {
+        return reservations.findAll();
+    }
 
     /**
      * GET Endpoint to retrieve a list of all room reservations for a user.
@@ -29,6 +44,20 @@ public class RoomReservationController {
     public @ResponseBody List<RoomReservation> getRoomReservationsByUser(@PathVariable(value="user_id") long userId) {
         return reservations.findByUserId(userId);
     }
+
+     /**
+         * GET Endpoint to retrieve the reservation for a room by ID.
+         *
+         * @param room_reservation_id Unique identifier of the equipment.
+         * @return The requested equipment {@link RoomReservation}.
+         */
+        @GetMapping("room_reservations/{room_reservation_id}")
+        public @ResponseBody ResponseEntity<RoomReservation>
+                getRoomReservationById(@PathVariable(value = "id") long room_reservation_id) {
+            RoomReservation toReturn = reservations.findById(room_reservation_id).orElseGet(() -> null);
+            return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                    new ResponseEntity<>(toReturn, HttpStatus.OK);
+        }
 
     /**
      * GET Endpoint to retrieve a list of all rooms reservations of a user in a given room.
