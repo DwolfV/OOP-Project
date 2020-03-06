@@ -16,11 +16,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @DataJpaTest
 public class BuildingRepositoryTest {
 
-    List<Building> b1;
-    List<Building> b2;
-    List<Building> b3;
-    List<Building> b4;
-    List<Building> b5;
+    private Building b1;
+    private Building b2;
+    private Building b3;
+    private Building b4;
+    private Building b5;
 
     @Autowired
     private BuildingRepository buildRep;
@@ -31,21 +31,16 @@ public class BuildingRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new ArrayList<Building>();
-        b2 = new ArrayList<Building>();
-        b3 = new ArrayList<Building>();
-        b4 = new ArrayList<Building>();
-        b5 = new ArrayList<Building>();
-        b1.add(new Building(1, "name1", "s1", "sNo1", "z1", "c1"));
-        b2.add(new Building(2, "name2", "s2", "sNo2", "z2", "c2"));
-        b3.add(new Building(3, "name3", "s3", "sNo3", "z3", "c3"));
-        b4.add(new Building(4, "name4", "s4", "sNo4", "z4", "c4"));
-        b5.add(new Building(5, "name5", "s5", "sNo5", "z5", "c5"));
-        buildRep.save(b1.get(0));
-        buildRep.save(b2.get(0));
-        buildRep.save(b3.get(0));
-        buildRep.save(b4.get(0));
-        buildRep.save(b5.get(0));
+        b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
+        b2 = new Building("name2", "s2", "sNo2", "z2", "c2");
+        b3 = new Building("name3", "s3", "sNo3", "z3", "c3");
+        b4 = new Building("name4", "s4", "sNo4", "z4", "c4");
+        b5 = new Building("name5", "s5", "sNo5", "z5", "c5");
+        buildRep.save(b1);
+        buildRep.save(b2);
+        buildRep.save(b3);
+        buildRep.save(b4);
+        buildRep.save(b5);
     }
 
     /**
@@ -63,12 +58,7 @@ public class BuildingRepositoryTest {
      */
     @Test
     public void findFindAll() {
-        List<Building> fullList = new ArrayList<Building>();
-        fullList.addAll(b1);
-        fullList.addAll(b2);
-        fullList.addAll(b3);
-        fullList.addAll(b4);
-        fullList.addAll(b5);
+        List<Building> fullList = new ArrayList<Building>(List.of(b1, b2, b3, b4, b5));
         assertEquals(fullList, buildRep.findAll());
     }
 
@@ -77,10 +67,10 @@ public class BuildingRepositoryTest {
      */
     @Test
     public void testFindByName() {
-        assertEquals(b1, buildRep.findByName("name1"));
-        assertEquals(b2, buildRep.findByName("name2"));
-        assertEquals(b3, buildRep.findByName("name3"));
-        assertEquals(b4, buildRep.findByName("name4"));
-        assertEquals(b5, buildRep.findByName("name5"));
+        assertEquals(List.of(b1), buildRep.findByName("name1"));
+        assertEquals(List.of(b2), buildRep.findByName("name2"));
+        assertEquals(List.of(b3), buildRep.findByName("name3"));
+        assertEquals(List.of(b4), buildRep.findByName("name4"));
+        assertEquals(List.of(b5), buildRep.findByName("name5"));
     }
 }

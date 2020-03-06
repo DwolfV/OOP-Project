@@ -235,7 +235,6 @@ public class AdminSceneController implements Initializable {
 
     @FXML
     private void handleTextFieldData(ActionEvent event){
-        Long buildingId = Long.parseLong(BuildingID.getText());
         String buildingName = BuildingName.getText();
         String streetName = StreetName.getText();
         String streetNumber = StreetNumber.getText();
@@ -244,7 +243,6 @@ public class AdminSceneController implements Initializable {
 
         BuildingCommunication.addBuilding(buildingName, streetName, streetNumber, zipCode, city);
 
-        BuildingID.setText(null);
         BuildingName.setText(null);
         StreetName.setText(null);
         StreetNumber.setText(null);
@@ -352,7 +350,6 @@ public class AdminSceneController implements Initializable {
 
     @FXML
     private void handleTextFieldDataRoom(ActionEvent event){
-        long roomID = Long.parseLong(Building.getText());
         String roomName = RoomName.getText();
         Integer capacity = Integer.parseInt(Capacity.getText());
 
