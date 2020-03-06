@@ -1,12 +1,15 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -17,6 +20,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class UserController {
     @Autowired
     UserRepository rep;
+
+    @Autowired
+    JdbcUserDetailsManager jdbcUserDetailsManager;
 
     /**
      * GET Endpoint to retrieve a list of all users.
@@ -102,7 +108,7 @@ public class UserController {
     }
 
     @GetMapping(value = "login")
-    public ResponseEntity<?> logIn() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> logIn(Authentication authentication) {
+        return new ResponseEntity<>(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), HttpStatus.OK);
     }
 }

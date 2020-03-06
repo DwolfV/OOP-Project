@@ -1,10 +1,17 @@
 package nl.tudelft.oopp.demo.communication;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
+import java.util.List;
 
 public class UserCommunication {
 
@@ -32,16 +39,19 @@ public class UserCommunication {
         }
 
 //        ObjectMapper mapper = new ObjectMapper();
-//        List<Room> room = null;
-//        // TODO handle exception
+//        String role = null;
 //        try {
-//            room = mapper.readValue(response.body(), new TypeReference<List<Room>>(){});
+//            role = mapper.readValue(response.body(), new TypeReference<ArrayList<String>>(){});
 //        } catch (IOException e) {
+//            e.printStackTrace();
 //            System.out.println(response.body());
 //        }
 
         // set received cookie
         Authenticator.SESSION_COOKIE = response.headers().allValues(("Set-cookie")).get(0).split("; ")[0];
+        // set user's role
+        Authenticator.ROLE = response.body().substring(1, response.body().length()-1);
+        System.out.println(Authenticator.ROLE + "; IS ADMIN - " + Authenticator.isAdmin());
         return true;
     }
 
