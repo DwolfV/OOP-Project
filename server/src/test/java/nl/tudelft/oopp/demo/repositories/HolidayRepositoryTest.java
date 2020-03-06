@@ -74,6 +74,7 @@ public class HolidayRepositoryTest {
 
         Holiday h4SameName = new Holiday("holiday4",
                 new Date(6000), new Time(7000), new Time(8500));
+        holidayRep.save(h4SameName);
         List<Holiday> h4List = new ArrayList<Holiday>(List.of(h4, h4SameName));
         assertEquals(h4List, holidayRep.findByName(h4.getName()));
     }
