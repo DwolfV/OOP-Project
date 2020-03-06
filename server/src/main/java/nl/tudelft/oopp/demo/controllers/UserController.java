@@ -100,4 +100,9 @@ public class UserController {
         UriComponents uri = b.path("users/{id}").buildAndExpand(newUser.getId());
         return ResponseEntity.created(uri.toUri()).body(newUser);
     }
+
+    @GetMapping(value = "login")
+    public ResponseEntity<?> logIn() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
