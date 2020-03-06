@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
->>>>>>> server_test_controller_classes
 
 @Entity
 @Table(name = "User")
