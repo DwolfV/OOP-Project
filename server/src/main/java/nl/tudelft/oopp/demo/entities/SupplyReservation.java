@@ -49,6 +49,20 @@ public class SupplyReservation {
 
     }
 
+    public SupplyReservation(Date date,
+                             Time startTime,
+                             Time endTime,
+                             int amount,
+                             Supply supply,
+                             User user) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.amount = amount;
+        this.supply = supply;
+        this.user = user;
+    }
+
     /**
      * Create a new SupplyReservation instance.
      *

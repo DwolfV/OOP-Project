@@ -63,7 +63,7 @@ public class UserControllerTest {
      * Checks whether getAllUsers returns the whole list.
      */
     @Test
-    public void getAllUsersTest() {
+    public void testGetAllUsersTest() {
         List<User> expectList = new ArrayList<User>(List.of(u1, u2, u3, u4, u5));
 
         when(userRep.findAll()).thenReturn(expectList);
@@ -77,22 +77,21 @@ public class UserControllerTest {
      * Checks whether getUserById returns the correct user.
      */
     @Test
-    public void getUserById() {
+    public void testGetUserById() {
         Optional<User> optionalU1 = Optional.of(u1);
         ResponseEntity<User> entityU1 = ResponseEntity.of(optionalU1);
 
-        when(userRep.findById(1L)).thenReturn(optionalU1);
+        when(userRep.findById(u1.getId())).thenReturn(optionalU1);
 
-        assertEquals(entityU1, userCon.getUserById(1L));
+        assertEquals(entityU1, userCon.getUserById(u1.getId()));
     }
 
     /**
      * Checks whether updateUser() updates the user.
      */
     @Test
-    public void updateUser() {
-        User newU1 = new User(1,
-                "newuser1@email.com",
+    public void testUpdateUser() {
+        User newU1 = new User("newuser1@email.com",
                 "student",
                 "newFn1",
                 "newLn1",
@@ -109,17 +108,17 @@ public class UserControllerTest {
 
         // specify what to return when save() and findById() is used in the userRepository
         when(userRep.save(newU1)).thenReturn(newU1);
-        when(userRep.findById(1L)).thenReturn(optionalU1);
+        when(userRep.findById(u1.getId())).thenReturn(optionalU1);
 
         // Use getBody() since you do not care about the status code
-        assertEquals(newEntityU1.getBody(), userCon.updateUser(newU1, 1, b).getBody());
+        assertEquals(newEntityU1.getBody(), userCon.updateUser(newU1, u1.getId(), b).getBody());
     }
 
     /**
      * Checks whether deleteUser() actually deletes a user.
      */
     @Test
-    public void deleteUser() {
+    public void testDeleteUser() {
         List<User> actualList = new ArrayList<User>(List.of(u1, u3, u4, u5));
         List<User> expectedList = new ArrayList<User>(List.of(u1, u2, u3, u4, u5));
 
@@ -127,14 +126,14 @@ public class UserControllerTest {
         Optional<User> optionalU2 = Optional.of(u2);
         ResponseEntity<User> entityU2 = ResponseEntity.of(optionalU2);
 
-        userCon.deleteUser(2L);
+        userCon.deleteUser(u2.getId());
         Mockito.doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) {
                 actualList.remove(1);
                 return null;
             }
-        }).when(userRep).deleteById(2L);
+        }).when(userRep).deleteById(u2.getId());
         when(userRep.findAll()).thenReturn(expectedList);
 
         assertEquals(expectedList, userCon.getAllUsers());
@@ -144,12 +143,12 @@ public class UserControllerTest {
      * Checks whether adding a new user returns the correct user.
      */
     @Test
-    public void newUser() {
+    public void testNewUser() {
 
         UriComponentsBuilder b = UriComponentsBuilder.newInstance();
 
         // new user and turn User object to Optional and to ResponseEntity
-        User u6 = new User(6, "user6@email.com", "student", "fn6", "ln6", new Date(1000));
+        User u6 = new User("user6@email.com", "student", "fn6", "ln6", new Date(1000));
         Optional<User> optionalU6 = Optional.of(u6);
         ResponseEntity<User> entityU6 = ResponseEntity.of(optionalU6);
 
