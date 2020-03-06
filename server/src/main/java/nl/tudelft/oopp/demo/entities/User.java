@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
+
 import java.util.Set;
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
@@ -36,6 +38,14 @@ public class User {
     private Set<Event> events = new HashSet<>();
 
     public User() {
+    }
+
+    public User(String email, String role, String first_name, String last_name, Date birth_date) {
+        this.email = email;
+        this.role = role;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birth_date = birth_date;
     }
     /**
      * Create a new User instance.

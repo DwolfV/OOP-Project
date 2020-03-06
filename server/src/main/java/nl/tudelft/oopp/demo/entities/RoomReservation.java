@@ -50,6 +50,17 @@ public class RoomReservation {
 
     public RoomReservation() {}
 
+    public RoomReservation(Date date,
+                           Room room,
+                           Time startTime,
+                           Time endTime,
+                           User user) {
+        this.date = date;
+        this.room = room;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.user = user;
+    }
     /**
      * Create a new RoomReservation instance.
      *

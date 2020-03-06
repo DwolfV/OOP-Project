@@ -1,5 +1,6 @@
-package nl.tudelft.oopp.demo;
+package nl.tudelft.oopp.demo.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -47,17 +48,21 @@ public class BuildingRepositoryTest {
         buildRep.save(b5.get(0));
     }
 
+    /**
+     * Test if the repositories loads correctly and isn't null.
+     *
+     * @throws Exception exception
+     */
     @Test
-    public void getByNameTest() {
-        assertEquals(b1, buildRep.findByName("name1"));
-        assertEquals(b2, buildRep.findByName("name2"));
-        assertEquals(b3, buildRep.findByName("name3"));
-        assertEquals(b4, buildRep.findByName("name4"));
-        assertEquals(b5, buildRep.findByName("name5"));
+    public void testLoadRepository() {
+        assertThat(buildRep).isNotNull();
     }
 
+    /**
+     * Checks whether findAll() gets a list of all the buildings.
+     */
     @Test
-    public void findAllTest() {
+    public void findFindAll() {
         List<Building> fullList = new ArrayList<Building>();
         fullList.addAll(b1);
         fullList.addAll(b2);
@@ -65,5 +70,17 @@ public class BuildingRepositoryTest {
         fullList.addAll(b4);
         fullList.addAll(b5);
         assertEquals(fullList, buildRep.findAll());
+    }
+
+    /**
+     * Checks whether findByName() gets a list of all the buildings with that name.
+     */
+    @Test
+    public void testFindByName() {
+        assertEquals(b1, buildRep.findByName("name1"));
+        assertEquals(b2, buildRep.findByName("name2"));
+        assertEquals(b3, buildRep.findByName("name3"));
+        assertEquals(b4, buildRep.findByName("name4"));
+        assertEquals(b5, buildRep.findByName("name5"));
     }
 }

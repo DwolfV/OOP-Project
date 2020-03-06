@@ -242,7 +242,14 @@ public class AdminSceneController implements Initializable {
         String zipCode = ZipCode.getText();
         String city = City.getText();
 
-        BuildingCommunication.addBuilding(buildingId, buildingName, streetName, streetNumber, zipCode, city);
+        BuildingCommunication.addBuilding(buildingName, streetName, streetNumber, zipCode, city);
+
+        BuildingID.setText(null);
+        BuildingName.setText(null);
+        StreetName.setText(null);
+        StreetNumber.setText(null);
+        ZipCode.setText(null);
+        City.setText(null);
     }
 
     // View Room and Add a Room
@@ -345,11 +352,15 @@ public class AdminSceneController implements Initializable {
 
     @FXML
     private void handleTextFieldDataRoom(ActionEvent event){
-        long roomID = Long.parseLong(BuildingID.getText());
+        long roomID = Long.parseLong(Building.getText());
         String roomName = RoomName.getText();
         Integer capacity = Integer.parseInt(Capacity.getText());
 
         RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
+
+        Building.setText(null);
+        RoomName.setText(null);
+        Capacity.setText(null);
     }
 
 }
