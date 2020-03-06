@@ -47,6 +47,13 @@ public class MainSceneController implements Initializable {
     private ObservableList<Building> buildingData = FXCollections.observableArrayList();
     private ObservableList<Room> roomData = FXCollections.observableArrayList();
 
+    public void closeSecondaryStage(){
+        MainDisplay.secondaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
+
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -83,6 +90,8 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        closeSecondaryStage();
     }
 
     @FXML
@@ -132,6 +141,8 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        closeSecondaryStage();
     }
 
     @FXML
@@ -146,6 +157,8 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        closeSecondaryStage();
     }
 
     @FXML
@@ -160,6 +173,8 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        closeSecondaryStage();
     }
 
     @FXML
@@ -175,6 +190,8 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        closeSecondaryStage();
     }
 
     @FXML
@@ -191,6 +208,8 @@ public class MainSceneController implements Initializable {
         } catch(Exception e) {
             e.printStackTrace();
         }
+
+        closeSecondaryStage();
     }
 
     @FXML
