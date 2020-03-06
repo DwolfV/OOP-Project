@@ -32,6 +32,14 @@ public class Room {
         this.building = building;
     }
 
+
+    /**
+     * Create a new Room instance.
+     *
+     * @param name The name of the Room.
+     * @param capacity The capacity of the room.
+     * @param building The building, in which the room is located.
+     */
     public Room(String name, Integer capacity, Building building) {
         this.name = name;
         this.capacity = capacity;
@@ -87,11 +95,11 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", capacity=" + capacity +
-                ", building=" + building +
-                '}';
+        return "Room{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", capacity=" + capacity
+                + ", building=" + building
+                + '}';
     }
 }

@@ -1,11 +1,12 @@
 package nl.tudelft.oopp.demo.entities;
 
+import org.springframework.lang.Nullable;
+
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
@@ -29,6 +30,10 @@ public class User {
 
     @Column(name = "birth_date")
     private Date birth_date;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<Event> events = new HashSet<>();
 
     public User() {
     }
@@ -100,6 +105,15 @@ public class User {
         this.birth_date = birth_date;
     }
 
+    @Nullable
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(@Nullable Set<Event> events) {
+        this.events = events;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,4 +127,14 @@ public class User {
                 Objects.equals(getBirth_date(), user.getBirth_date());
     }
 
+    @Override
+    public String toString() {
+        return "User{"
+                + "id=" + id
+                + ", email='" + email + '\''
+                + ", role='" + role + '\''
+                + ", first_name='" + first_name + '\''
+                + ", last_name='" + last_name + '\''
+                + '}';
+    }
 }

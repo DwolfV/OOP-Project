@@ -9,6 +9,6 @@ public class ServerCommunicationTest {
 
     @Test
     public void testBuildings() {
-        assertNotNull(ServerCommunication.getBuildings());
+        assertNotNull(BuildingCommunication.getBuildings());
     }
 }
