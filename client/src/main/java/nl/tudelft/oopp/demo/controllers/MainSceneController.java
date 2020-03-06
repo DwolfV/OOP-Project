@@ -182,12 +182,12 @@ public class MainSceneController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
             Parent adminParent = (Parent) fxmlLoader.load();
-            Stage adminStage = new Stage();
+            MainDisplay.adminStage = new Stage();
 
-            adminStage.isResizable();
-            adminStage.setScene(new Scene(adminParent));
-            adminStage.setTitle("Admin");
-            adminStage.show();
+            MainDisplay.adminStage.isResizable();
+            MainDisplay.adminStage.setScene(new Scene(adminParent));
+            MainDisplay.adminStage.setTitle("Admin");
+            MainDisplay.adminStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -198,6 +198,7 @@ public class MainSceneController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
             Parent registerParent = (Parent) fxmlLoader.load();
+            MainDisplay.registerStage = new Stage();
 
             MainDisplay.registerStage.setResizable(true);
             MainDisplay.registerStage.setScene(new Scene(registerParent));
