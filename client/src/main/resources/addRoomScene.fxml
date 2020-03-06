@@ -11,35 +11,29 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
    <top>
-      <AnchorPane prefHeight="700.0" prefWidth="377.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="386.0" prefWidth="349.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="8.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleTextFieldDataRoom" prefHeight="39.0" prefWidth="334.0" text="Add a room" />
-            <Text layoutX="141.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room ID">
+            <Button layoutX="8.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleTextFieldDataRoom" prefHeight="39.0" prefWidth="334.0" text="Add a room" />
+            <Text layoutX="114.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="RoomID" layoutX="69.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="122.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name">
+            <TextField fx:id="RoomName" layoutX="69.0" layoutY="54.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="136.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacity">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="RoomName" layoutX="69.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="141.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacity">
+            <TextField fx:id="Capacity" layoutX="69.0" layoutY="126.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="122.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building ID">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="Capacity" layoutX="69.0" layoutY="228.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="108.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building ID">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <TextField fx:id="Building" layoutX="69.0" layoutY="318.0" prefHeight="17.0" prefWidth="224.0" />
+            <TextField fx:id="Building" layoutX="69.0" layoutY="203.0" prefHeight="11.0" prefWidth="224.0" />
          </children>
       </AnchorPane>
    </top>
