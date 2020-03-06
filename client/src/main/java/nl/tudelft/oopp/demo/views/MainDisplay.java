@@ -23,7 +23,6 @@ public class MainDisplay extends Application {
     public static Stage primaryStage;
     public static Stage secondaryStage;
     public static Stage registerStage;
-    public static Stage adminStage;
 
     @Override
     public void start(Stage loginStage) throws IOException { //change loginstage to stage
@@ -38,6 +37,10 @@ public class MainDisplay extends Application {
         primaryStage.setTitle("Log In");
         primaryStage.setScene(loginScene);
         primaryStage.show();
+
+//        loginStage.setOnCloseRequest(e -> {
+//            Platform.exit();
+//        });
     }
 
     public static void main(String[] args) {
