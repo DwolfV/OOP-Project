@@ -5,9 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +21,9 @@ import javafx.event.*;
 
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
@@ -35,6 +39,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
+
+    Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
 
     @FXML
     private Label closeButton;
@@ -79,11 +85,11 @@ public class MainSceneController implements Initializable {
             Parent loginParent = (Parent) fxmlLoader.load();
             MainDisplay.secondaryStage = new Stage();
 
-            MainDisplay.secondaryStage.setResizable(true);
-            MainDisplay.secondaryStage.setScene(new Scene(loginParent));
+            MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
+
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -95,14 +101,13 @@ public class MainSceneController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent calendarParent = (Parent) fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setResizable(true);
-            MainDisplay.secondaryStage.setScene(new Scene(calendarParent));
+            MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
+            MainDisplay.secondaryStage.setMaximized(true);
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         closeSecondaryStage();
     }
 
@@ -144,16 +149,13 @@ public class MainSceneController implements Initializable {
             rootScene.setCenter(bPane);
 
             // show the scene
-            Stage reservationsStage = new Stage();
-            Scene scene = new Scene(rootScene);
-            reservationsStage.setScene(scene);
-            reservationsStage.setTitle("Reservations");
-            reservationsStage.show();
+            MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.secondaryStage.setTitle("Reservations");
+            MainDisplay.secondaryStage.show();
 
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         closeSecondaryStage();
     }
 
@@ -163,13 +165,12 @@ public class MainSceneController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
             Parent restaurantsParent = (Parent) fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(restaurantsParent));
+            MainDisplay.secondaryStage.setScene(new Scene(restaurantsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
             MainDisplay.secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         closeSecondaryStage();
     }
 
@@ -179,13 +180,12 @@ public class MainSceneController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
             Parent friendsParent = (Parent) fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(friendsParent));
+            MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Friends");
             MainDisplay.secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         closeSecondaryStage();
     }
 
@@ -196,13 +196,12 @@ public class MainSceneController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(location);
             Parent settingsParent = (Parent) fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(settingsParent));
+            MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");
             MainDisplay.secondaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         closeSecondaryStage();
     }
 
@@ -213,14 +212,12 @@ public class MainSceneController implements Initializable {
             Parent adminParent = (Parent) fxmlLoader.load();
             MainDisplay.adminStage = new Stage();
 
-            MainDisplay.adminStage.isResizable();
             MainDisplay.adminStage.setScene(new Scene(adminParent));
             MainDisplay.adminStage.setTitle("Admin");
             MainDisplay.adminStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         closeSecondaryStage();
     }
 
