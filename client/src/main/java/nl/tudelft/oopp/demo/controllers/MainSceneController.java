@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
@@ -53,6 +54,11 @@ public class MainSceneController implements Initializable {
     private ObservableList<Building> buildingData = FXCollections.observableArrayList();
     private ObservableList<Room> rooms = FXCollections.observableArrayList();
 
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+
     public void closeSecondaryStage(){
         MainDisplay.secondaryStage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -68,6 +74,12 @@ public class MainSceneController implements Initializable {
 
     @FXML
     public void handleLoginButton(ActionEvent event) throws Exception {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if(!UserCommunication.authenticate(username, password)) {
+            return;
+        }
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent loginParent = (Parent) fxmlLoader.load();

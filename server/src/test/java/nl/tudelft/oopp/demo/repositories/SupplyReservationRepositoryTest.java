@@ -66,9 +66,9 @@ public class SupplyReservationRepositoryTest {
         supplyRepository.save(s2);
         supplyRepository.save(s3);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000));
-        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000));
-        u3 = new User("email1", "student", "fn1", "ln1", new Date(1000));
+        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user1");
+        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000), "user2");
+        u3 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user3");
 
         userRepository.save(u1);
         userRepository.save(u2);
