@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.sql.Time;
 import java.util.Objects;
-import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
