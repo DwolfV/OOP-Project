@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
-    List<Holiday>  findByName(String name);
+    List<Holiday> findByName(String name);
 }
 

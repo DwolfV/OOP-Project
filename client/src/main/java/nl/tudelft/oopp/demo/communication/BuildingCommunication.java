@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.communication;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Room;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -41,7 +40,7 @@ public class BuildingCommunication {
         try {
             buildings = mapper.readValue(response.body(), new TypeReference<List<Building>>(){});
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getStackTrace();
         }
 
         return buildings;
@@ -82,9 +81,9 @@ public class BuildingCommunication {
      * Adds a building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
+    public static void addBuilding(String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(id, name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
         String JSONBuilding = "";
         try {
             JSONBuilding = mapper.writeValueAsString(newBuilding);
@@ -112,7 +111,7 @@ public class BuildingCommunication {
      */
     public static void updateBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(id, name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
         String JSONBuilding = "";
         try {
             JSONBuilding = mapper.writeValueAsString(newBuilding);

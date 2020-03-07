@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 public class Holiday {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
@@ -27,6 +30,14 @@ public class Holiday {
 
     @Column (name = "t_close")
     private Time t_close;
+
+
+    public Holiday(String name, Date date, Time t_open, Time t_close) {
+        this.name = name;
+        this.date = date;
+        this.t_open = t_open;
+        this.t_close = t_close;
+    }
 
     /**
      * Create a new Holiday instance.

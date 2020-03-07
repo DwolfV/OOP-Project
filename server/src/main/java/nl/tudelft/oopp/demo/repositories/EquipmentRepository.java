@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
-    Optional<Equipment> findById(long id);
 
+    Optional<Equipment> findById(long id);
 
     List<Equipment> findByName(String equipmentName);
 

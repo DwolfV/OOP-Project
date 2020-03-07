@@ -4,47 +4,53 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Supply",
+@Table(name = "Supply"/*,
         uniqueConstraints = {
                 @UniqueConstraint(
                         columnNames = {"name", "building_id"},
                         name = "unique_supply_per_building_constraint"
                 )
-        })
+        }*/)
 public class Supply {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    @NotBlank
+    @NotNull
     @Column(name = "name")
     private String name;
 
-    @NotBlank
-    @OneToMany(mappedBy = "supply", cascade = CascadeType.ALL)
-    private Set<SupplyReservation> reservations;
-
-    @NotBlank
     @Column(name = "stock")
     private int stock;
 
+    @OneToMany(mappedBy = "supply", cascade = CascadeType.ALL)
+    private Set<SupplyReservation> reservations;
+
     public Supply(){
 
+    }
+
+    public Supply(Building building, String name, int stock) {
+        this.building = building;
+        this.name = name;
+        this.stock = stock;
     }
 
     /**
@@ -74,12 +80,12 @@ public class Supply {
         this.id = id;
     }
 
-    public Building getBuildingId() {
+    public Building getBuilding() {
         return building;
     }
 
-    public void setBuildingId(Building buildingId) {
-        this.building = buildingId;
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     public String getName() {

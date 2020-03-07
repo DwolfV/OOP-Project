@@ -1,19 +1,15 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.lang.Nullable;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -48,8 +44,23 @@ public class RoomReservation {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
+    @OneToMany(mappedBy = "roomReservation", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<Order> orders = new HashSet<>();
+
     public RoomReservation() {}
 
+    public RoomReservation(Date date,
+                           Room room,
+                           Time startTime,
+                           Time endTime,
+                           User user) {
+        this.date = date;
+        this.room = room;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.user = user;
+    }
     /**
      * Create a new RoomReservation instance.
      *
@@ -121,6 +132,15 @@ public class RoomReservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Nullable
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(@Nullable Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

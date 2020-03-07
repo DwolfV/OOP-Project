@@ -1,19 +1,27 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
-
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Supply;
 import nl.tudelft.oopp.demo.repositories.SupplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 public class SupplyController {
+
     @Autowired
     SupplyRepository rep;
 
@@ -31,25 +39,24 @@ public class SupplyController {
      * Find supply by building and name
      *
      * @param name - The name of the supply that is to be found
-     * @param building - The building of which the supply is part of
+     * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building")
-    public ResponseEntity<Supply> getSupplyByBuildingAndName(@RequestParam String name, @RequestParam long building) {
-        return rep.findByBuildingAndName(building, name).map(supply -> ResponseEntity.ok(supply)
+    public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value="building_id") long id) {
+        return rep.findByBuildingIdAndName(id, name).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
      * Find supply by building and name
      *
-     * @param building - The building of which the supply is part of
+     * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
-    @GetMapping("/supply/building/{building}")
-    public ResponseEntity<List<Supply>> getSupplyByBuilding(@PathVariable long building) {
-        return rep.findByBuilding(building).map(supply -> ResponseEntity.ok(supply)
-        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/supply/building/{building_id}")
+    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value="building_id") long id) {
+        return rep.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rep.findByBuildingId(id), HttpStatus.OK);
     }
 
     /**
@@ -68,11 +75,13 @@ public class SupplyController {
      * Create a new supply
      * @return message
      */
-    @PostMapping(value = "/supply", consumes = {"application/json"})
-    public Supply createNewActivity(@Valid @RequestBody Supply supply) {
-        return rep.save(supply);
-    }
 
+    @PostMapping(value = "/supply", consumes = {"application/json"})
+    public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b){
+        rep.save(newSupply);
+        UriComponents uri = b.path("/supply/{id}").buildAndExpand(newSupply.getId());
+        return ResponseEntity.created(uri.toUri()).body(newSupply);
+    }
     /**
      * Update a supply
      *

@@ -3,13 +3,7 @@ package nl.tudelft.oopp.demo.entities;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import org.springframework.lang.Nullable;
 
@@ -24,6 +18,7 @@ import org.springframework.lang.Nullable;
 public class Building {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
@@ -65,6 +60,18 @@ public class Building {
 
     public Building() {
 
+    }
+
+    public Building(String name,
+                    String streetName,
+                    String streetNumber,
+                    String zipCode,
+                    String city) {
+        this.name = name;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.zipCode = zipCode;
+        this.city = city;
     }
 
     /**

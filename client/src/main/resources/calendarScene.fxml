@@ -40,7 +40,7 @@
                 </MenuButton>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="43.0" onAction="#handleAdminButton" layoutY="36.0" mnemonicParsing="false" text="Admin" />
+                  <Button layoutX="43.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
                </children>
             </Pane>
                 <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />

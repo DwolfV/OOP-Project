@@ -1,36 +1,61 @@
 package nl.tudelft.oopp.demo.entities;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "User")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
+    @NotNull
     @Column(name = "email")
     private String email;
 
+    @NotNull
     @Column(name = "role")
     private String role;
 
+    @NotNull
     @Column(name = "first_name")
     private String first_name;
 
+    @NotNull
     @Column(name = "last_name")
     private String last_name;
 
     @Column(name = "birth_date")
     private Date birth_date;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<Event> events = new HashSet<>();
+
     public User() {
+    }
+
+    public User(String email, String role, String first_name, String last_name, Date birth_date) {
+        this.email = email;
+        this.role = role;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.birth_date = birth_date;
     }
     /**
      * Create a new User instance.
@@ -100,6 +125,15 @@ public class User {
         this.birth_date = birth_date;
     }
 
+    @Nullable
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(@Nullable Set<Event> events) {
+        this.events = events;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,4 +147,14 @@ public class User {
                 Objects.equals(getBirth_date(), user.getBirth_date());
     }
 
+    @Override
+    public String toString() {
+        return "User{"
+                + "id=" + id
+                + ", email='" + email + '\''
+                + ", role='" + role + '\''
+                + ", first_name='" + first_name + '\''
+                + ", last_name='" + last_name + '\''
+                + '}';
+    }
 }

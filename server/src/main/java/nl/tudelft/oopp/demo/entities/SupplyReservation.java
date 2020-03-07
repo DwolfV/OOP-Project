@@ -1,42 +1,66 @@
 package nl.tudelft.oopp.demo.entities;
 
 import java.sql.Date;
+import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Supply_Reservation")
 public class SupplyReservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @NotBlank
     @Column(name = "date")
     private Date date;
 
-    @NotBlank
+    @NotNull
+    @Column(name = "start_time", nullable = false)
+    private Time startTime;
+
+    @NotNull
+    @Column(name = "end_time", nullable = false)
+    private Time endTime;
+
     @Column(name = "amount")
     private int amount;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "supply_id", referencedColumnName = "id")
     private Supply supply;
 
-    @NotBlank
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public SupplyReservation() {
 
+    }
+
+    public SupplyReservation(Date date,
+                             Time startTime,
+                             Time endTime,
+                             int amount,
+                             Supply supply,
+                             User user) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.amount = amount;
+        this.supply = supply;
+        this.user = user;
     }
 
     /**
@@ -51,11 +75,15 @@ public class SupplyReservation {
 
     public SupplyReservation(long id,
                              Date date,
+                             Time startTime,
+                             Time endTime,
                              int amount,
                              Supply supply,
                              User user) {
         this.id = id;
         this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.amount = amount;
         this.supply = supply;
         this.user = user;
@@ -71,6 +99,22 @@ public class SupplyReservation {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
     }
 
     public void setDate(Date date) {
@@ -94,7 +138,7 @@ public class SupplyReservation {
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(User user) {

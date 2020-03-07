@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 public class BuildingController {
@@ -57,8 +59,10 @@ public class BuildingController {
      * @return message
      */
     @PostMapping(value = "/building", consumes = {"application/json"})
-    public Building createNewActivity(@Valid @RequestBody Building building) {
-        return rep.save(building);
+    public ResponseEntity<Building> newBuilding(@Valid @RequestBody Building building, UriComponentsBuilder uri) {
+        rep.save(building);
+        UriComponents uriComponents = uri.path("/building/{id}").buildAndExpand(building.getId());
+        return ResponseEntity.created(uriComponents.toUri()).body(building);
     }
 
     /**
