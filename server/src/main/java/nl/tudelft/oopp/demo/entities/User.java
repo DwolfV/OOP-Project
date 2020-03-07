@@ -1,19 +1,19 @@
 package nl.tudelft.oopp.demo.entities;
 
-import org.springframework.lang.Nullable;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
-
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "User")
@@ -24,15 +24,19 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
+    @NotNull
     @Column(name = "email")
     private String email;
 
+    @NotNull
     @Column(name = "role")
     private String role;
 
+    @NotNull
     @Column(name = "first_name")
     private String first_name;
 
+    @NotNull
     @Column(name = "last_name")
     private String last_name;
 
