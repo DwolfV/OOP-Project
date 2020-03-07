@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @DataJpaTest
 public class RoomReservationRepositoryTest {
@@ -62,8 +63,8 @@ public class RoomReservationRepositoryTest {
         roomRep.save(r1);
         roomRep.save(r2);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "admin");
-        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000), "admin");
+        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user");
+        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000), "user2");
         userRep.save(u1);
         userRep.save(u2);
 
