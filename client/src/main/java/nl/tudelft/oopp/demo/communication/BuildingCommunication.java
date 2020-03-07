@@ -40,7 +40,7 @@ public class BuildingCommunication {
         try {
             buildings = mapper.readValue(response.body(), new TypeReference<List<Building>>(){});
         } catch (IOException e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
 
         return buildings;

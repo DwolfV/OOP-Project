@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.sun.istack.NotNull;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
@@ -39,6 +40,10 @@ public class User {
     @Column(name = "birth_date")
     private Date birth_date;
 
+    @NotNull
+    @Column(name = "user_name", unique = true, nullable = false)
+    private String username;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @Nullable
     private Set<Event> events = new HashSet<>();
@@ -46,12 +51,13 @@ public class User {
     public User() {
     }
 
-    public User(String email, String role, String first_name, String last_name, Date birth_date) {
+    public User(String email, String role, String first_name, String last_name, Date birth_date, String username) {
         this.email = email;
         this.role = role;
         this.first_name = first_name;
         this.last_name = last_name;
         this.birth_date = birth_date;
+        this.username = username;
     }
     /**
      * Create a new User instance.
@@ -64,13 +70,14 @@ public class User {
      * @param birth_date The birth date of the User.
      */
 
-    public User(long id, String email, String role, String first_name, String last_name, Date birth_date) {
+    public User(long id, String email, String role, String first_name, String last_name, Date birth_date, String username) {
         this.id = id;
         this.email = email;
         this.role = role;
         this.first_name = first_name;
         this.last_name = last_name;
         this.birth_date = birth_date;
+        this.username = username;
     }
 
     public long getId() {
@@ -130,6 +137,15 @@ public class User {
         this.events = events;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -140,17 +156,22 @@ public class User {
                 Objects.equals(getRole(), user.getRole()) &&
                 Objects.equals(getFirst_name(), user.getFirst_name()) &&
                 Objects.equals(getLast_name(), user.getLast_name()) &&
-                Objects.equals(getBirth_date(), user.getBirth_date());
+                Objects.equals(getBirth_date(), user.getBirth_date()) &&
+                Objects.equals(getUsername(), user.getUsername()) &&
+                Objects.equals(getEvents(), user.getEvents());
     }
 
     @Override
     public String toString() {
-        return "User{"
-                + "id=" + id
-                + ", email='" + email + '\''
-                + ", role='" + role + '\''
-                + ", first_name='" + first_name + '\''
-                + ", last_name='" + last_name + '\''
-                + '}';
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", birth_date=" + birth_date +
+                ", username='" + username + '\'' +
+                ", events=" + events +
+                '}';
     }
 }
