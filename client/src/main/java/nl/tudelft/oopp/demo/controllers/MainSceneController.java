@@ -52,7 +52,7 @@ public class MainSceneController implements Initializable {
     private BorderPane bPane = new BorderPane();
 
     private ObservableList<Building> buildingData = FXCollections.observableArrayList();
-    private ObservableList<Room> roomData = FXCollections.observableArrayList();
+    private ObservableList<Room> rooms = FXCollections.observableArrayList();
 
     @FXML
     private TextField usernameField;
@@ -115,8 +115,12 @@ public class MainSceneController implements Initializable {
     public void handleReservationButton(ActionEvent event) throws Exception {
         try {
             buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
-            roomData = FXCollections.observableList(RoomCommunication.getRooms());
+            rooms = FXCollections.observableList(RoomCommunication.getRooms());
             TitledPane[] tps = new TitledPane[buildingData.size()];
+            List<Button> buttons = new ArrayList<>();
+            List<Label> labels = new ArrayList<>();
+
+            int count=0;
 
             // load the scene
             BorderPane rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
@@ -131,15 +135,35 @@ public class MainSceneController implements Initializable {
                 grid.setVgap(4);
                 grid.setPadding(new Insets(5, 5, 5, 5));
 
-                ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(12));
-                for(int j = 0; j < rooms.size(); j++){
-                    grid.add(new Label(rooms.get(j).getName()), 0, j);
-                    grid.add(new Button("Reserve"), 1, j);
+
+                long id = buildingData.get(i).getId();
+
+                if(id!=0){
+                    rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(89));
+
+                    for(int j = 0; j < rooms.size(); j++){
+                        System.out.println(buildingData.get(i).getName() + " " + rooms.get(j).getName());
+                    }
+
+                    for(int j = 0; j < rooms.size(); j++){
+                        Label label1 = new Label(rooms.get(j).getName());
+                        labels.add(label1);
+                        Button button1 = new Button("Reserve");
+                        buttons.add(button1);
+
+                        grid.add(labels.get(count), 0, j);
+                        grid.add(buttons.get(count), 1, j);
+                        count = count +1;
+
+                        /*grid.add(new Label(rooms.get(j).getName()), 0, j);
+                        grid.add(new Button("Reserve"), 1, j);*/
+                    }
+
+                    tps[i].setText(buildingData.get(i).getName());
+                    tps[i].setContent(grid);
+                    ac.getPanes().add(tps[i]);
                 }
 
-                tps[i].setText(buildingData.get(i).getName());
-                tps[i].setContent(grid);
-                ac.getPanes().add(tps[i]);
             }
 
             // load the accordion into the scene
