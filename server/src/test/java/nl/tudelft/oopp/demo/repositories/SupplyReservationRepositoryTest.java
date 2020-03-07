@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.demo.repositories;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Supply;
 import nl.tudelft.oopp.demo.entities.SupplyReservation;
@@ -10,8 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @DataJpaTest
-class SupplyReservationRepositoryTest {
+public class SupplyReservationRepositoryTest {
 
     private Supply s1;
     private Supply s2;
@@ -30,19 +36,19 @@ class SupplyReservationRepositoryTest {
     private SupplyReservation sr3;
 
     @Autowired
-    public SupplyReservationRepository supplyReservationRepository;
+    private SupplyReservationRepository supplyReservationRepository;
 
     @Autowired
-    public SupplyRepository supplyRepository;
+    private SupplyRepository supplyRepository;
 
     @Autowired
-    public BuildingRepository buildingRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
-    public UserRepository userRepository;
+    private UserRepository userRepository;
 
     /**
-     * Creates all supplies and is done before each test.
+     * Creates all supplyReservations and is done before each test.
      */
     @BeforeEach
     public void save() {
@@ -62,30 +68,65 @@ class SupplyReservationRepositoryTest {
 
         u1 = new User("email1", "student", "fn1", "ln1", new Date(1000));
         u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000));
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000));
+        u3 = new User("email1", "student", "fn1", "ln1", new Date(1000));
 
         userRepository.save(u1);
         userRepository.save(u2);
         userRepository.save(u3);
 
-        sr1 = new SupplyReservation(1, new java.util.Date(1), 11, s1, u1);
-        sr2 = new SupplyReservation(2, new java.util.Date(2), 22, s2, u2);
-        sr3 = new SupplyReservation(3, new java.util.Date(3), 33, s3, u3);
+        sr1 = new SupplyReservation(new Date(1), new Time(1), new Time(2), 11, s1, u1);
+        sr2 = new SupplyReservation(new Date(2),new Time(1), new Time(2), 22, s1, u1);
+        sr3 = new SupplyReservation(new Date(1),new Time(2), new Time(3), 33, s3, u1);
+
+        supplyReservationRepository.save(sr1);
+        supplyReservationRepository.save(sr2);
+        supplyReservationRepository.save(sr3);
     }
 
-        //                             Date date,
-        //                             Time startTime,
-        //                             Time endTime,
-        //                             int amount,
-        //                             Supply supply,
-        //                             User user
+    /**
+     * Test if the repositories loads correctly and isn't null.
+     *
+     * @throws Exception exception
+     */
+
+    @Test
+    public void testLoadRepository() {
+        assertThat(supplyRepository).isNotNull();
+        assertThat(supplyReservationRepository).isNotNull();
+        assertThat(userRepository).isNotNull();
+        assertThat(buildingRepository).isNotNull();
     }
+
+    /**
+     * Checks whether findAll() gets a list of all the SupplyReservations.
+     */
+
+
+    @Test
+    public void testFindAll() {
+        List<SupplyReservation> list = new ArrayList<>(List.of(sr1, sr2, sr3));
+        assertEquals(list, supplyReservationRepository.findAll());
+    }
+
+    /**
+     * Checks whether findByUserId() gets a list of all the SupplyReservations from that id.
+     */
 
     @Test
     void findByUserId() {
+        List<SupplyReservation> list1 = new ArrayList<>(List.of(sr1, sr2,sr3));
+        assertEquals(list1, supplyReservationRepository.findByUserId(sr1.getUser().getId()));
     }
+
+    /**
+     * Checks whether findByUserIdAndRoomId()
+     * gets a list of all the RoomReservations from those id's.
+     */
 
     @Test
     void findByUserIdAndSupplyId() {
+        List<SupplyReservation> list1 = new ArrayList<>(List.of(sr1, sr2));
+        assertEquals(list1, supplyReservationRepository.findByUserIdAndSupplyId(list1.get(0).getUser().getId(), list1.get(0).getSupply().getId()));
     }
+
 }
