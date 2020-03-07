@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -23,6 +24,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @DataJpaTest
@@ -55,10 +58,10 @@ class RoomReservationControllerTest {
 
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000));
-        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000));
-        u4 = new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000));
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
+        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
+        u4 = new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000), "user4");
 
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
@@ -95,7 +98,42 @@ class RoomReservationControllerTest {
         when(roomReservationRepository.findByUserId(u1.getId())).thenReturn(List.of(rr1, rr5));
 
         assertEquals(List.of(rr1, rr5),
-                roomReservationController.getRoomReservationsByUser(u1.getId()));
+                roomReservationController.getRoomReservationsByUser(u1.getId(), new Authentication() {
+                    @Override
+                    public Collection<? extends GrantedAuthority> getAuthorities() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getCredentials() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getDetails() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getPrincipal() {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean isAuthenticated() {
+                        return false;
+                    }
+
+                    @Override
+                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+                    }
+
+                    @Override
+                    public String getName() {
+                        return "user1";
+                    }
+                }));
     }
 
     @Test
@@ -105,7 +143,42 @@ class RoomReservationControllerTest {
                 u1.getId(), r1.getId())).thenReturn(List.of(rr1));
 
         assertEquals(List.of(rr1), roomReservationController.getRoomReservationsByUserAndRoom(
-                u1.getId(), r1.getId()).getBody());
+                u1.getId(), r1.getId(), new Authentication() {
+                    @Override
+                    public Collection<? extends GrantedAuthority> getAuthorities() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getCredentials() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getDetails() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getPrincipal() {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean isAuthenticated() {
+                        return false;
+                    }
+
+                    @Override
+                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+                    }
+
+                    @Override
+                    public String getName() {
+                        return u1.getUsername();
+                    }
+                }).getBody());
     }
 
     @Test
@@ -113,7 +186,7 @@ class RoomReservationControllerTest {
         List<RoomReservation> expectedList = new ArrayList<RoomReservation>(
                 List.of(rr1,rr2,rr3,rr4));
         when(roomReservationRepository.findAll()).thenReturn(expectedList);
-        List<RoomReservation> actualList = roomReservationController.getRoomReservations();
+        List<RoomReservation> actualList = (List)roomReservationController.getRoomReservations().getBody();
 
         assertEquals(expectedList, actualList);
     }
@@ -124,14 +197,49 @@ class RoomReservationControllerTest {
         ResponseEntity<RoomReservation> entity = ResponseEntity.of(optionalRoomReservation);
 
         when(roomReservationRepository.findById(rr1.getId())).thenReturn(optionalRoomReservation);
-        assertEquals(entity, roomReservationController.getRoomReservationById(rr1.getId()));
+        assertEquals(entity, roomReservationController.getRoomReservationById(rr1.getId(), new Authentication() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
+
+            @Override
+            public Object getCredentials() {
+                return null;
+            }
+
+            @Override
+            public Object getDetails() {
+                return null;
+            }
+
+            @Override
+            public Object getPrincipal() {
+                return null;
+            }
+
+            @Override
+            public boolean isAuthenticated() {
+                return false;
+            }
+
+            @Override
+            public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+            }
+
+            @Override
+            public String getName() {
+                return "user1";
+            }
+        }));
     }
 
     @Test
     void testNewRoomReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
@@ -143,14 +251,49 @@ class RoomReservationControllerTest {
         when(roomReservationRepository.save(roomReservation)).thenReturn(roomReservation);
 
         assertEquals(roomReservation, roomReservationController.newRoomReservation(
-                roomReservation, uriComponentsBuilder).getBody());
+                roomReservation, uriComponentsBuilder, new Authentication() {
+                    @Override
+                    public Collection<? extends GrantedAuthority> getAuthorities() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getCredentials() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getDetails() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getPrincipal() {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean isAuthenticated() {
+                        return false;
+                    }
+
+                    @Override
+                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+                    }
+
+                    @Override
+                    public String getName() {
+                        return "user1";
+                    }
+                }).getBody());
     }
 
     @Test
     void testReplaceRoomReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
@@ -166,7 +309,42 @@ class RoomReservationControllerTest {
         when(roomReservationRepository.findById(rr1.getId())).thenReturn(optionalRoomReservation);
 
         assertEquals(responseEntity.getBody(), roomReservationController.replaceRoomReservation(
-                roomReservation, 1, uriComponentsBuilder).getBody());
+                roomReservation, 1, uriComponentsBuilder, new Authentication() {
+                    @Override
+                    public Collection<? extends GrantedAuthority> getAuthorities() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getCredentials() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getDetails() {
+                        return null;
+                    }
+
+                    @Override
+                    public Object getPrincipal() {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean isAuthenticated() {
+                        return false;
+                    }
+
+                    @Override
+                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+                    }
+
+                    @Override
+                    public String getName() {
+                        return "user1";
+                    }
+                }).getBody());
     }
 
     @Test
@@ -179,7 +357,42 @@ class RoomReservationControllerTest {
         Optional<RoomReservation> optionalRoomReservation = Optional.of(rr2);
         ResponseEntity<RoomReservation> responseEntity = ResponseEntity.of(optionalRoomReservation);
 
-        roomReservationController.deleteRoomReservation(rr2.getId());
+        roomReservationController.deleteRoomReservation(rr2.getId(), new Authentication() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
+
+            @Override
+            public Object getCredentials() {
+                return null;
+            }
+
+            @Override
+            public Object getDetails() {
+                return null;
+            }
+
+            @Override
+            public Object getPrincipal() {
+                return null;
+            }
+
+            @Override
+            public boolean isAuthenticated() {
+                return false;
+            }
+
+            @Override
+            public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+            }
+
+            @Override
+            public String getName() {
+                return "user1";
+            }
+        });
 
         Mockito.doAnswer(new Answer<Void>() {
             @Override

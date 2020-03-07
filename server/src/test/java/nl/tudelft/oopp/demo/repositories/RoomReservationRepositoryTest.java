@@ -62,8 +62,8 @@ public class RoomReservationRepositoryTest {
         roomRep.save(r1);
         roomRep.save(r2);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000));
-        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000));
+        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "admin");
+        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000), "admin");
         userRep.save(u1);
         userRep.save(u2);
 

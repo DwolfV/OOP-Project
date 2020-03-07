@@ -47,9 +47,9 @@ class SupplyReservationControllerTest {
 
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000));
-        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000));
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000) , "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
+        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
 
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Building b2 = new Building("name2", "s2", "sNo2", "z2", "c2");
@@ -108,7 +108,7 @@ class SupplyReservationControllerTest {
     void testNewSupplyReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Supply s1 = new Supply(b1, "s1", 7);
 
@@ -127,7 +127,7 @@ class SupplyReservationControllerTest {
     void testReplaceSupplyReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000));
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Supply s1 = new Supply(b1, "s1", 7);
         SupplyReservation supplyReservation = new SupplyReservation(
