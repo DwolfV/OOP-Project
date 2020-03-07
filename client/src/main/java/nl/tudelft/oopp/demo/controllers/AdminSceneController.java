@@ -27,6 +27,8 @@ import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminSceneController implements Initializable {
@@ -43,12 +45,12 @@ public class AdminSceneController implements Initializable {
     private TextField City;
 
 
-    @FXML
-    private TextField RoomName;
-    @FXML
-    private TextField Capacity;
-    @FXML
-    private TextField Building;
+//    @FXML
+//    private TextField RoomName;
+//    @FXML
+//    private TextField Capacity;
+//    @FXML
+//    private TextField Building;
 
     Button addButton = new Button("Add");
     Button updateButton = new Button("Update");
@@ -61,11 +63,6 @@ public class AdminSceneController implements Initializable {
     private ObservableList<Room> roomData = FXCollections.observableArrayList();
 
     public AdminSceneController() {
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Loading User Data");
     }
 
     @FXML
@@ -369,16 +366,30 @@ public class AdminSceneController implements Initializable {
         RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
     }
 
+//    @FXML
+//    private void handleTextFieldDataRoom(ActionEvent event){
+//        String roomName = RoomName.getText();
+//        Integer capacity = Integer.parseInt(Capacity.getText());
+//
+//        RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
+//
+//        Building.setText(null);
+//        RoomName.setText(null);
+//        Capacity.setText(null);
+//    }
+
+    ObservableList list = FXCollections.observableArrayList();
+
     @FXML
-    private void handleTextFieldDataRoom(ActionEvent event){
-        String roomName = RoomName.getText();
-        Integer capacity = Integer.parseInt(Capacity.getText());
+    private ChoiceBox<String> cb ;
 
-        RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
 
-        Building.setText(null);
-        RoomName.setText(null);
-        Capacity.setText(null);
+//    @FXML
+//    private void HandleChoiceBoxBuilding(ActionEvent event){
+//        cb.getItems().add("Apple");
+//    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
-
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -11,7 +12,7 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.addRoomSceneController">
    <top>
       <AnchorPane prefHeight="386.0" prefWidth="349.0" BorderPane.alignment="CENTER">
          <children>
@@ -28,12 +29,17 @@
                </font>
             </Text>
             <TextField fx:id="Capacity" layoutX="69.0" layoutY="126.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="122.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building ID">
+            <Text layoutX="142.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="Building" layoutX="69.0" layoutY="203.0" prefHeight="11.0" prefWidth="224.0" />
+            <TextField fx:id="Building" layoutX="73.0" layoutY="203.0" prefHeight="31.0" prefWidth="220.0" promptText="click the + button" />
+            <Button fx:id="buildingNamesButton" layoutX="259.0" layoutY="203.0" mnemonicParsing="false" onAction="#HandleBuildingNamesButton" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: transparent;" text="+">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </top>
