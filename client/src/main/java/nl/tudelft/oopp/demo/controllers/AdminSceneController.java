@@ -52,7 +52,7 @@ public class AdminSceneController implements Initializable {
 
     Button addButton = new Button("Add");
     Button updateButton = new Button("Update");
-    Button deleteButton = new Button("Delete");
+    Button deleteButton = new Button("Update");
     final BorderPane borderPane = new BorderPane();
 
     private TableView<Building> tableBuilding = new TableView<>();
