@@ -29,22 +29,16 @@ public class MainDisplay extends Application {
     public static Stage registerStage;
     public static Stage adminStage;
 
-    @FXML
-    private JFXDrawer drawer;
-
     @Override
     public void start(Stage loginStage) throws IOException { //change loginstage to stage
 
-        this.primaryStage = loginStage;
-
-        FXMLLoader loader = new FXMLLoader();
-        Parent loginParent = loader.load(getClass().getResource("/loginScene.fxml"));
+        Parent loginParent = FXMLLoader.load(getClass().getResource("/loginScene.fxml"));
         Scene loginScene = new Scene(loginParent);
 
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setTitle("Log In");
-        primaryStage.setScene(loginScene);
-        primaryStage.show();
+        loginStage.initStyle(StageStyle.UNDECORATED);
+        loginStage.setTitle("Log In");
+        loginStage.setScene(loginScene);
+        loginStage.show();
     }
 
     public static void main(String[] args) {

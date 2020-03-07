@@ -13,13 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
-    <left>
-        <VBox fx:id="vBox" prefHeight="600.0" prefWidth="120.0" style="-fx-background-color: #7C8082;">
-         <children>
-            <JFXDrawer fx:id="drawer" defaultDrawerSize="120.0" prefHeight="594.0" prefWidth="158.0" />
-         </children>
-        </VBox>
-    </left>
     <bottom>
         <HBox style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
@@ -50,4 +43,15 @@
             </AnchorPane>
          </children></HBox>
     </top>
+   <left>
+      <VBox maxWidth="120.0" prefHeight="594.0" prefWidth="120.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="626.0" prefWidth="100.0">
+               <children>
+                  <JFXDrawer fx:id="drawer" prefHeight="594.0" prefWidth="120.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </left>
 </BorderPane>

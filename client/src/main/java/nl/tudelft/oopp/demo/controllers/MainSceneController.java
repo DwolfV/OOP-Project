@@ -247,41 +247,28 @@ public class MainSceneController implements Initializable {
     private JFXHamburger hamburger;
 
     @FXML
-    private AnchorPane anchorPane;
-
-    @FXML
-    private VBox vbox;
-
-    @FXML
     private JFXDrawer drawer;
-
-    public void initDrawer() throws IOException {
-//        Parent contentNode = null;
-//        contentNode = FXMLLoader.load(getClass().getResource("/drawerMenuContent.FXML"));
-//        vbox.getChildren().clear();
-//        vbox.getChildren().add(contentNode);
-//        VBox vBox = new VBox(FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml")));
-//        drawer.setSidePane(vBox);
-
-        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
-        transition.setRate(-1);
-        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            transition.setRate(transition.getRate() * -1);
-            transition.play();
-            if (drawer.isClosed()) {
-                drawer.open();
-            } else {
-                drawer.close(); }
-        });
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            initDrawer();
+            VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
+            drawer.setSidePane(vBox);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+            if (drawer.isOpened()) {
+                drawer.close();
+            } else {
+                drawer.open(); }
+        });
+
     }
 
 }
