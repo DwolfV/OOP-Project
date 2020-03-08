@@ -48,6 +48,10 @@ public class MainSceneController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+
     public void closeSecondaryStage(){
         MainDisplay.secondaryStage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -79,6 +83,22 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleSignUpClick(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
+            Parent registerParent = fxmlLoader.load();
+            MainDisplay.registerStage = new Stage();
+
+            MainDisplay.registerStage.setResizable(true);
+            MainDisplay.registerStage.setScene(new Scene(registerParent));
+            MainDisplay.registerStage.setTitle("Register");
+            MainDisplay.registerStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -233,25 +253,4 @@ public class MainSceneController implements Initializable {
         }
         closeSecondaryStage();
     }
-
-    @FXML
-    public void handleSignUpClick(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
-            Parent registerParent = fxmlLoader.load();
-            MainDisplay.registerStage = new Stage();
-
-            MainDisplay.registerStage.setResizable(true);
-            MainDisplay.registerStage.setScene(new Scene(registerParent));
-            MainDisplay.registerStage.setTitle("Register");
-            MainDisplay.registerStage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-
 }

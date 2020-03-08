@@ -2,11 +2,12 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -24,22 +27,21 @@ import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
+import java.awt.event.ActionEvent;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminSceneController implements Initializable {
 
     @FXML
-    private TextField BuildingName;
+    private TextField RoomName;
     @FXML
-    private TextField StreetName;
+    private TextField Capacity;
     @FXML
-    private TextField StreetNumber;
+    private TextField Building;
     @FXML
-    private TextField ZipCode;
-    @FXML
-    private TextField City;
-
+    private ChoiceBox<Building> building;
 
     final Button addButton = new Button("Add");
     final Button updateButton = new Button("Update");
@@ -49,8 +51,11 @@ public class AdminSceneController implements Initializable {
     private final TableView<Building> tableBuilding = new TableView<>();
     private final TableView<Room> tableRoom = new TableView<>();
 
-    public AdminSceneController() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
+
+    // View, update, add and delete Building
 
     @FXML
     public void handleAddBuildingButton() {
@@ -67,24 +72,20 @@ public class AdminSceneController implements Initializable {
         }
     }
 
-    @FXML
-    public void handleAddRoomButton() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addRoomScene.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("New Room");
-            stage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+    private void updateBuildingButtonClicked() {
+        Building building = tableBuilding.getSelectionModel().getSelectedItem();
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(),building.getZipCode(), building.getCity());
     }
 
-    final HBox hb = new HBox();
+    public void deleteBuildingButtonClicked() {
+        ObservableList<Building> buildingSelected, allBuildings;
+        allBuildings = tableBuilding.getItems();
+        Building building = tableBuilding.getSelectionModel().getSelectedItem();
 
-    // View Building and Add a Building
+        allBuildings.remove(building);
+        BuildingCommunication.removeBuilding(building.getId());
+    }
+
     @FXML
     public void handleViewBuildingButtonClicked() {
 
@@ -162,7 +163,6 @@ public class AdminSceneController implements Initializable {
         cityCol.setCellValueFactory(
                 new PropertyValueFactory<>("City"));
         cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        //noinspection CodeBlock2Expr
         cityCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> {
                     t.getTableView().getItems().get(
@@ -195,7 +195,8 @@ public class AdminSceneController implements Initializable {
         borderPane.setPadding(new Insets(10,10,10,10));
 
         final HBox hBox = new HBox(deleteButton, updateButton, addButton);
-        hBox.setSpacing(5);
+        hBox.setSpacing(10);
+        hBox.setAlignment(Pos.CENTER);
         hBox.setPadding(new Insets(10, 10, 0, 10));
 
         borderPane.setTop(label);
@@ -208,38 +209,77 @@ public class AdminSceneController implements Initializable {
         secondStage.show();
     }
 
-    private void updateBuildingButtonClicked() {
-        Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(),building.getZipCode(), building.getCity());
-    }
-
-    public void deleteBuildingButtonClicked() {
-        ObservableList<Building> buildingSelected, allBuildings;
-        allBuildings = tableBuilding.getItems();
-        Building building = tableBuilding.getSelectionModel().getSelectedItem();
-
-        allBuildings.remove(building);
-        BuildingCommunication.removeBuilding(building.getId());
-    }
+    // View, update, add and delete Room
 
     @FXML
-    private void handleTextFieldData(ActionEvent event){
-        String buildingName = BuildingName.getText();
-        String streetName = StreetName.getText();
-        String streetNumber = StreetNumber.getText();
-        String zipCode = ZipCode.getText();
-        String city = City.getText();
+    public void handleAddRoomButton() {
+        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ArrayList<String> buildingList = new ArrayList<String>();
 
-        BuildingCommunication.addBuilding(buildingName, streetName, streetNumber, zipCode, city);
+        for (int i = 0; i < buildingNames.size(); i++) {
+            buildingList.add(buildingNames.get(i).getName() + ", " + buildingNames.get(i).getId());
+        }
+        ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
-        BuildingName.setText(null);
-        StreetName.setText(null);
-        StreetNumber.setText(null);
-        ZipCode.setText(null);
-        City.setText(null);
+
+        Stage stage = new Stage();
+
+        BorderPane  borderPane = new BorderPane();
+        VBox vBox = new VBox();
+
+        Text roomName = new Text("Room Name");
+        Text capacity = new Text("Capacity");
+        Text building = new Text("Building Name");
+
+        TextField RoomName = new TextField();
+        TextField Capacity = new TextField();
+        TextField Building = new TextField();
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
+        Button addButton = new Button("Add Room");
+
+        choiceBox.setItems(bl);
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            String[] string = newValue.split(", ");
+            Building.setText(string[1]);
+        });
+
+        vBox.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
+        vBox.setPadding(new Insets(10,10,10,10));
+        vBox.setSpacing(10);
+        borderPane.setTop(vBox);
+
+        stage.setScene(new Scene(borderPane, 300, 300));
+        stage.setTitle("New Room");
+        stage.show();
+
+        addButton.setOnAction((EventHandler) event -> {
+            String roomName1 = RoomName.getText();
+            Integer capacity1 = Integer.parseInt(Capacity.getText());
+
+            RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(Building.getText()));
+
+            Building.setText(null);
+            RoomName.setText(null);
+            Capacity.setText(null);
+        });
     }
 
-    // View Room and Add a Room
+    public void deleteRoomButtonClicked() {
+        ObservableList<Room> roomSelected, allRooms;
+        allRooms = tableRoom.getItems();
+        Room room = tableRoom.getSelectionModel().getSelectedItem();
+
+        allRooms.remove(room);
+        RoomCommunication.removeRoom(room.getId());
+    }
+
+    private void updateRoomButtonClicked() {
+        Room room = tableRoom.getSelectionModel().getSelectedItem();
+        RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
+    }
+
     @FXML
     public void handleViewRoomButtonClicked() {
 
@@ -320,7 +360,8 @@ public class AdminSceneController implements Initializable {
         borderPane.setPadding(new Insets(10,10,10,10));
 
         final HBox hBox = new HBox(deleteButton, updateButton, addButton);
-        hBox.setSpacing(5);
+        hBox.setSpacing(10);
+        hBox.setAlignment(Pos.CENTER);
         hBox.setPadding(new Insets(10, 10, 0, 10));
 
         borderPane.setTop(label);
@@ -333,44 +374,4 @@ public class AdminSceneController implements Initializable {
         thirdStage.show();
     }
 
-    public void deleteRoomButtonClicked() {
-        ObservableList<Room> roomSelected, allRooms;
-        allRooms = tableRoom.getItems();
-        Room room = tableRoom.getSelectionModel().getSelectedItem();
-
-        allRooms.remove(room);
-        RoomCommunication.removeRoom(room.getId());
-    }
-
-    private void updateRoomButtonClicked() {
-        Room room = tableRoom.getSelectionModel().getSelectedItem();
-        RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
-    }
-
-//    @FXML
-//    private void handleTextFieldDataRoom(ActionEvent event){
-//        String roomName = RoomName.getText();
-//        Integer capacity = Integer.parseInt(Capacity.getText());
-//
-//        RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
-//
-//        Building.setText(null);
-//        RoomName.setText(null);
-//        Capacity.setText(null);
-//    }
-
-    ObservableList list = FXCollections.observableArrayList();
-
-    @FXML
-    private ChoiceBox<String> cb ;
-
-
-//    @FXML
-//    private void HandleChoiceBoxBuilding(ActionEvent event){
-//        cb.getItems().add("Apple");
-//    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
 }
