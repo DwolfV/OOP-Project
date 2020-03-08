@@ -19,6 +19,7 @@ public class MainDisplay extends Application {
 
     @Override
     public void start(Stage loginStage) throws IOException { //change loginstage to stage
+        primaryStage = loginStage;
 
         Parent loginParent = FXMLLoader.load(getClass().getResource("/loginScene.fxml"));
         Scene loginScene = new Scene(loginParent);
