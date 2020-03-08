@@ -2,12 +2,10 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -27,38 +24,28 @@ import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminSceneController implements Initializable {
 
-    @FXML
-    private TextField BuildingName;
-    @FXML
-    private TextField StreetName;
-    @FXML
-    private TextField StreetNumber;
-    @FXML
-    private TextField ZipCode;
-    @FXML
-    private TextField City;
-
-
 //    @FXML
-//    private TextField RoomName;
+//    private TextField BuildingName;
 //    @FXML
-//    private TextField Capacity;
+//    private TextField StreetName;
 //    @FXML
-//    private TextField Building;
+//    private TextField StreetNumber;
+//    @FXML
+//    private TextField ZipCode;
+//    @FXML
+//    private TextField City;
 
-    Button addButton = new Button("Add");
-    Button updateButton = new Button("Update");
-    Button deleteButton = new Button("Delete");
+    final Button addButton = new Button("Add");
+    final Button updateButton = new Button("Update");
+    final Button deleteButton = new Button("Delete");
     final BorderPane borderPane = new BorderPane();
 
-    private TableView<Building> tableBuilding = new TableView<>();
-    private TableView<Room> tableRoom = new TableView<>();
+    private final TableView<Building> tableBuilding = new TableView<>();
+    private final TableView<Room> tableRoom = new TableView<>();
     private ObservableList<Building> buildingData = FXCollections.observableArrayList();
     private ObservableList<Room> roomData = FXCollections.observableArrayList();
 
@@ -66,7 +53,7 @@ public class AdminSceneController implements Initializable {
     }
 
     @FXML
-    public void handleAddBuildingButton() throws Exception {
+    public void handleAddBuildingButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addBuildingScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -81,7 +68,7 @@ public class AdminSceneController implements Initializable {
     }
 
     @FXML
-    public void handleAddRoomButton() throws Exception {
+    public void handleAddRoomButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/addRoomScene.fxml"));
             Parent root = (Parent) fxmlLoader.load();
@@ -239,23 +226,6 @@ public class AdminSceneController implements Initializable {
         BuildingCommunication.removeBuilding(building.getId());
     }
 
-    @FXML
-    private void handleTextFieldData(ActionEvent event){
-        String buildingName = BuildingName.getText();
-        String streetName = StreetName.getText();
-        String streetNumber = StreetNumber.getText();
-        String zipCode = ZipCode.getText();
-        String city = City.getText();
-
-        BuildingCommunication.addBuilding(buildingName, streetName, streetNumber, zipCode, city);
-
-        BuildingName.setText(null);
-        StreetName.setText(null);
-        StreetNumber.setText(null);
-        ZipCode.setText(null);
-        City.setText(null);
-    }
-
     // View Room and Add a Room
     @FXML
     public void handleViewRoomButtonClicked() {
@@ -365,29 +335,6 @@ public class AdminSceneController implements Initializable {
         Room room = tableRoom.getSelectionModel().getSelectedItem();
         RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
     }
-
-//    @FXML
-//    private void handleTextFieldDataRoom(ActionEvent event){
-//        String roomName = RoomName.getText();
-//        Integer capacity = Integer.parseInt(Capacity.getText());
-//
-//        RoomCommunication.addRoom(roomName, capacity, Long.parseLong(Building.getText()));
-//
-//        Building.setText(null);
-//        RoomName.setText(null);
-//        Capacity.setText(null);
-//    }
-
-    ObservableList list = FXCollections.observableArrayList();
-
-    @FXML
-    private ChoiceBox<String> cb ;
-
-
-//    @FXML
-//    private void HandleChoiceBoxBuilding(ActionEvent event){
-//        cb.getItems().add("Apple");
-//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

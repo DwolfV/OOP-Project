@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
-import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;

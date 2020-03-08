@@ -3,11 +3,8 @@ package nl.tudelft.oopp.demo.repositories;
 import java.util.List;
 import java.util.Optional;
 
-import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource

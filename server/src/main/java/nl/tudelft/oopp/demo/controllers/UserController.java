@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.UserRepository;

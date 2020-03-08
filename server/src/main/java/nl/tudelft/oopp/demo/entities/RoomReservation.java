@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.Nullable;
 
 import java.sql.Time;
@@ -10,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity

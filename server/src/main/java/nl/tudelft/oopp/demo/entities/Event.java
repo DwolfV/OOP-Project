@@ -4,7 +4,6 @@ import com.sun.istack.NotNull;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

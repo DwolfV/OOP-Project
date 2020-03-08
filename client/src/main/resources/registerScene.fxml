@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <AnchorPane prefHeight="329.0" prefWidth="470.0" style="-fx-background-color: #00A6D6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.RegisterSceneController">
    <children>
       <TextField layoutX="41.0" layoutY="94.0" prefHeight="31.0" prefWidth="190.0" promptText="First Name" />

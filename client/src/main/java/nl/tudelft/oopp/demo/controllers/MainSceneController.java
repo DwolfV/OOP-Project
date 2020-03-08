@@ -4,12 +4,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +15,9 @@ import javafx.scene.Scene;
 import javafx.event.*;
 
 
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
@@ -31,8 +25,6 @@ import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
-import java.io.IOException;
-import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,19 +32,16 @@ import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
-    Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+    final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
 
     @FXML
     private Label closeButton;
 
     @FXML
-    private Accordion ac = new Accordion();
+    private final Accordion ac = new Accordion();
 
     @FXML
-    private BorderPane bPane = new BorderPane();
-
-    private ObservableList<Building> buildingData = FXCollections.observableArrayList();
-    private ObservableList<Room> rooms = FXCollections.observableArrayList();
+    private final BorderPane bPane = new BorderPane();
 
     @FXML
     private TextField usernameField;
@@ -114,8 +103,8 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleReservationButton(ActionEvent event) throws Exception {
         try {
-            buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
-            rooms = FXCollections.observableList(RoomCommunication.getRooms());
+            ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+            ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
             List<Label> labels = new ArrayList<>();

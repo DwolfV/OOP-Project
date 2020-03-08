@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 
 @Entity
 @Table(name = "Dish_Order")

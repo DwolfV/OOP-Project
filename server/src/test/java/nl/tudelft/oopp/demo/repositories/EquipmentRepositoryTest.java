@@ -10,7 +10,6 @@ import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
-import nl.tudelft.oopp.demo.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

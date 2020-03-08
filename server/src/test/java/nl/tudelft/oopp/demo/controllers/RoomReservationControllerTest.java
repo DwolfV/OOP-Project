@@ -16,25 +16,19 @@ import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
-import org.aspectj.weaver.loadtime.Options;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.swing.text.html.Option;
 
 @DataJpaTest
 class RoomReservationControllerTest {

@@ -2,13 +2,14 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
 import javax.validation.Valid;
+
+import nl.tudelft.oopp.demo.config.Authentication;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,7 +91,7 @@ public class RoomReservationController {
      */
     @GetMapping("room_reservations/{user_id}/{room_id}")
     public @ResponseBody ResponseEntity<List<RoomReservation>> getRoomReservationsByUserAndRoom(@PathVariable(value="user_id") long userId, @PathVariable(value="room_id") long roomId, Authentication authentication) {
-        return users.findByUsername(authentication.getName()).map(user -> {
+        return users.findByUsername(org.springframework.security.core.Authentication.getName()).map(user -> {
             if (user.getId() == userId) return reservations.findByUserIdAndRoomId(userId, roomId).isEmpty() ? new ResponseEntity<List<RoomReservation>>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(reservations.findByUserIdAndRoomId(userId, roomId), HttpStatus.OK);
             return new ResponseEntity<List<RoomReservation>>(HttpStatus.UNAUTHORIZED);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

@@ -4,13 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.oopp.demo.entities.Building;
-import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
