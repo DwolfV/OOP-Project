@@ -7,15 +7,23 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.event.*;
 
 
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -42,6 +50,7 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private final BorderPane bPane = new BorderPane();
+
 
     @FXML
     private TextField usernameField;
@@ -125,37 +134,45 @@ public class MainSceneController implements Initializable {
         try {
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
             ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
+            buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+            rooms = FXCollections.observableList(RoomCommunication.getRooms());
+
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
             List<Label> labels = new ArrayList<>();
 
-            int count=0;
+            int count=0, c=0; // count - for lists, c - for tps
 
             // load the scene
             BorderPane rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
 
             // fill the accordion
-            for(int i = 0; i < tps.length; i++){
-                tps[i] = new TitledPane();
-                GridPane grid = new GridPane();
-                ColumnConstraints colConst = new ColumnConstraints();
-                colConst.setPercentWidth(100/2);
-                grid.getColumnConstraints().add(colConst);
-                grid.setVgap(4);
-                grid.setPadding(new Insets(5, 5, 5, 5));
+            for(int i = 0; i < buildingData.size(); i++){
 
+                //Look for rooms for the building i;
+                ObservableList<Room> showRooms = FXCollections.observableArrayList();
+                for(int k = 0; k < rooms.size(); k++){
+                    if(rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())){
+                        showRooms.add(rooms.get(k));
+                    }
+                }
 
-                long id = buildingData.get(i).getId();
-
-                if(id!=0){
-                    rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(89));
+                //if there are rooms for the building i - show them;
+                if(showRooms.size()!=0){
+                    tps[c] = new TitledPane();
+                    GridPane grid = new GridPane();
+                    ColumnConstraints colConst = new ColumnConstraints();
+                    colConst.setPercentWidth(100/2);
+                    grid.getColumnConstraints().add(colConst);
+                    grid.setVgap(4);
+                    grid.setPadding(new Insets(5, 5, 5, 5));
 
                     for (Room room : rooms) {
                         System.out.println(buildingData.get(i).getName() + " " + room.getName());
                     }
 
-                    for(int j = 0; j < rooms.size(); j++){
-                        Label label1 = new Label(rooms.get(j).getName());
+                    for(int j = 0; j < showRooms.size(); j++){
+                        Label label1 = new Label(showRooms.get(j).getName());
                         labels.add(label1);
                         Button button1 = new Button("Reserve");
                         buttons.add(button1);
@@ -163,14 +180,11 @@ public class MainSceneController implements Initializable {
                         grid.add(labels.get(count), 0, j);
                         grid.add(buttons.get(count), 1, j);
                         count = count +1;
-
-                        /*grid.add(new Label(rooms.get(j).getName()), 0, j);
-                        grid.add(new Button("Reserve"), 1, j);*/
                     }
-
-                    tps[i].setText(buildingData.get(i).getName());
-                    tps[i].setContent(grid);
-                    ac.getPanes().add(tps[i]);
+                    tps[c].setText(buildingData.get(i).getName());
+                    tps[c].setContent(grid);
+                    ac.getPanes().add(tps[c]);
+                    c++;
                 }
 
             }
