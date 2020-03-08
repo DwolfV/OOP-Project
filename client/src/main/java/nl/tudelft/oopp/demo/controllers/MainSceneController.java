@@ -100,51 +100,53 @@ public class MainSceneController implements Initializable {
         try {
             buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
             rooms = FXCollections.observableList(RoomCommunication.getRooms());
+
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
             List<Label> labels = new ArrayList<>();
 
-            int count=0;
+            int count=0, c=0; // count - for lists, c - for tps
 
             // load the scene
             BorderPane rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
 
             // fill the accordion
-            for(int i = 1; i < tps.length; i++){
-                tps[i] = new TitledPane();
-                GridPane grid = new GridPane();
-                ColumnConstraints colConst = new ColumnConstraints();
-                colConst.setPercentWidth(100/2);
-                grid.getColumnConstraints().add(colConst);
-                grid.setVgap(4);
-                grid.setPadding(new Insets(5, 5, 5, 5));
+            for(int i = 0; i < buildingData.size(); i++){
 
-
-                long id = buildingData.get(i).getId();
-
-                rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(id));
-
-                for(int j = 0; j < rooms.size(); j++){
-                    System.out.println(buildingData.get(i).getName() + " " + rooms.get(j).getName() + " " + buildingData.get(i).getId());
+                //Look for rooms for the building i;
+                ObservableList<Room> showRooms = FXCollections.observableArrayList();
+                for(int k = 0; k < rooms.size(); k++){
+                    if(rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())){
+                        showRooms.add(rooms.get(k));
+                    }
                 }
 
-                for(int j = 0; j < rooms.size(); j++){
-                    Label label1 = new Label(rooms.get(j).getName());
-                    labels.add(label1);
-                    Button button1 = new Button("Reserve");
-                    buttons.add(button1);
+                //if there are rooms for the building i - show them;
+                if(showRooms.size()!=0){
+                    tps[c] = new TitledPane();
+                    GridPane grid = new GridPane();
+                    ColumnConstraints colConst = new ColumnConstraints();
+                    colConst.setPercentWidth(100/2);
+                    grid.getColumnConstraints().add(colConst);
+                    grid.setVgap(4);
+                    grid.setPadding(new Insets(5, 5, 5, 5));
 
-                    grid.add(labels.get(count), 0, j);
-                    grid.add(buttons.get(count), 1, j);
-                    count = count +1;
 
-                    /*grid.add(new Label(rooms.get(j).getName()), 0, j);
-                      grid.add(new Button("Reserve"), 1, j);*/
+                    for(int j = 0; j < showRooms.size(); j++){
+                        Label label1 = new Label(showRooms.get(j).getName());
+                        labels.add(label1);
+                        Button button1 = new Button("Reserve");
+                        buttons.add(button1);
+
+                        grid.add(labels.get(count), 0, j);
+                        grid.add(buttons.get(count), 1, j);
+                        count = count +1;
+                    }
+                    tps[c].setText(buildingData.get(i).getName());
+                    tps[c].setContent(grid);
+                    ac.getPanes().add(tps[c]);
+                    c++;
                 }
-
-                tps[i].setText(buildingData.get(i).getName());
-                tps[i].setContent(grid);
-                ac.getPanes().add(tps[i]);
 
             }
 

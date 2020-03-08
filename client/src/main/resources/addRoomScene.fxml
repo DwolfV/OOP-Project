@@ -11,7 +11,7 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
    <top>
       <AnchorPane prefHeight="386.0" prefWidth="349.0" BorderPane.alignment="CENTER">
          <children>
@@ -33,7 +33,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <ChoiceBox fx:id="cb" layoutX="68.0" layoutY="196.0" prefHeight="39.0" prefWidth="221.0" />
+            <TextField fx:id="Building" layoutX="69.0" layoutY="203.0" prefHeight="11.0" prefWidth="224.0" />
          </children>
       </AnchorPane>
    </top>
