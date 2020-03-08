@@ -30,10 +30,10 @@ public class MainDisplay extends Application {
     @Override
     public void start(Stage loginStage) throws IOException { //change loginstage to stage
 
-        this.primaryStage = loginStage;
+        primaryStage = loginStage;
 
         FXMLLoader loader = new FXMLLoader();
-        Parent loginParent = loader.load(getClass().getResource("/loginScene.fxml"));
+        Parent loginParent = FXMLLoader.load(getClass().getResource("/loginScene.fxml"));
         Scene loginScene = new Scene(loginParent);
 
         primaryStage.initStyle(StageStyle.UNDECORATED);

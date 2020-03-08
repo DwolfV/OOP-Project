@@ -4,12 +4,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +15,9 @@ import javafx.scene.Scene;
 import javafx.event.*;
 
 
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
@@ -31,8 +25,6 @@ import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
-import java.io.IOException;
-import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,19 +32,16 @@ import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
-    Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+    final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
 
     @FXML
     private Label closeButton;
 
     @FXML
-    private Accordion ac = new Accordion();
+    private final Accordion ac = new Accordion();
 
     @FXML
-    private BorderPane bPane = new BorderPane();
-
-    private ObservableList<Building> buildingData = FXCollections.observableArrayList();
-    private ObservableList<Room> rooms = FXCollections.observableArrayList();
+    private final BorderPane bPane = new BorderPane();
 
     @FXML
     private TextField usernameField;
@@ -73,7 +62,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleLoginButton(ActionEvent event) throws Exception {
+    public void handleLoginButton(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -82,7 +71,7 @@ public class MainSceneController implements Initializable {
         }
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-            Parent loginParent = (Parent) fxmlLoader.load();
+            Parent loginParent = fxmlLoader.load();
             MainDisplay.secondaryStage = new Stage();
 
             MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
@@ -96,10 +85,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleHomeButton(ActionEvent event) throws Exception {
+    public void handleHomeButton(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-            Parent calendarParent = (Parent) fxmlLoader.load();
+            Parent calendarParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
@@ -112,10 +101,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleReservationButton(ActionEvent event) throws Exception {
+    public void handleReservationButton(ActionEvent event) {
         try {
-            buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
-            rooms = FXCollections.observableList(RoomCommunication.getRooms());
+            ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+            ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
             List<Label> labels = new ArrayList<>();
@@ -141,8 +130,8 @@ public class MainSceneController implements Initializable {
                 if(id!=0){
                     rooms = FXCollections.observableList(RoomCommunication.getRoomsByBuildingId(89));
 
-                    for(int j = 0; j < rooms.size(); j++){
-                        System.out.println(buildingData.get(i).getName() + " " + rooms.get(j).getName());
+                    for (Room room : rooms) {
+                        System.out.println(buildingData.get(i).getName() + " " + room.getName());
                     }
 
                     for(int j = 0; j < rooms.size(); j++){
@@ -184,10 +173,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleRestaurantsButton(ActionEvent event) throws Exception {
+    public void handleRestaurantsButton(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
-            Parent restaurantsParent = (Parent) fxmlLoader.load();
+            Parent restaurantsParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(restaurantsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
@@ -199,10 +188,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleFriendsButton(ActionEvent event) throws Exception {
+    public void handleFriendsButton(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
-            Parent friendsParent = (Parent) fxmlLoader.load();
+            Parent friendsParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Friends");
@@ -214,11 +203,11 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleSettingsButton(ActionEvent event) throws Exception {
+    public void handleSettingsButton(ActionEvent event) {
         try {
             URL location = getClass().getResource("/settingsScene.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(location);
-            Parent settingsParent = (Parent) fxmlLoader.load();
+            Parent settingsParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");
@@ -230,10 +219,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleAdminButton (ActionEvent event) throws Exception {
+    public void handleAdminButton (ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/adminScene.fxml"));
-            Parent adminParent = (Parent) fxmlLoader.load();
+            Parent adminParent = fxmlLoader.load();
             MainDisplay.adminStage = new Stage();
 
             MainDisplay.adminStage.setScene(new Scene(adminParent));
@@ -246,10 +235,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleSignUpClick(ActionEvent event) throws Exception {
+    public void handleSignUpClick(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
-            Parent registerParent = (Parent) fxmlLoader.load();
+            Parent registerParent = fxmlLoader.load();
             MainDisplay.registerStage = new Stage();
 
             MainDisplay.registerStage.setResizable(true);

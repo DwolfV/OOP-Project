@@ -15,7 +15,7 @@ public class RegisterSceneController implements Initializable {
     }
 
     @FXML
-    public void handleSignUpButton(ActionEvent event) throws Exception{
+    public void handleSignUpButton(ActionEvent event) {
         // have a sign up method on the server communication side
         MainDisplay.registerStage.close();
     }

@@ -3,26 +3,19 @@ package nl.tudelft.oopp.demo.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
-import nl.tudelft.oopp.demo.views.MainDisplay;
 
-import javax.swing.border.Border;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,9 +31,8 @@ public class addRoomSceneController implements Initializable {
     @FXML
     private Button buildingNamesButton;
 
-    private TableView<Building> tableBuilding = new TableView<>();
+    private final TableView<Building> tableBuilding = new TableView<>();
     private TableView<Room> tableRoom = new TableView<>();
-    private ObservableList<Building> buildingData = FXCollections.observableArrayList();
     private ObservableList<Room> roomData = FXCollections.observableArrayList();
 
     @Override
@@ -72,7 +64,7 @@ public class addRoomSceneController implements Initializable {
         buildingCol.setCellValueFactory(
                 new PropertyValueFactory<>("name"));
 
-        buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<nl.tudelft.oopp.demo.helperclasses.Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
         tableBuilding.getColumns().addAll(idCol, buildingCol);
 
