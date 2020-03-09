@@ -51,10 +51,14 @@ public class RoomReservationController {
      * @return a list of the room reservations for the given user {@link RoomReservation}.
      */
     @GetMapping("room_reservations/user/{user_id}")
-    public @ResponseBody ResponseEntity<List<RoomReservation>> getRoomReservationsByUser(@PathVariable(value="user_id") long userId, Authentication authentication) {
+    public @ResponseBody ResponseEntity<List<RoomReservation>>
+        getRoomReservationsByUser(@PathVariable(value = "user_id") long userId,
+                                  Authentication authentication) {
         System.out.println(authentication.getName());
         return users.findByUsername(authentication.getName()).map(user -> {
-            if (user.getId() == userId) return new ResponseEntity<>(reservations.findByUserId(userId), HttpStatus.OK);
+            if (user.getId() == userId) {
+                return new ResponseEntity<>(reservations.findByUserId(userId), HttpStatus.OK);
+            }
             return new ResponseEntity<List<RoomReservation>>(HttpStatus.UNAUTHORIZED);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -63,7 +67,7 @@ public class RoomReservationController {
          * GET Endpoint to retrieve the reservation for a room by ID.
          *
          * @param room_reservation_id Unique identifier of the equipment.
-         * @return The requested equipment {@link RoomReservation}.
+         * @return The requested room reservation {@link RoomReservation}.
          */
         @GetMapping("room_reservations/{room_reservation_id}")
         public @ResponseBody ResponseEntity<RoomReservation>
@@ -144,7 +148,8 @@ public class RoomReservationController {
 
                     return ResponseEntity.created(uri.toUri()).body(reservations.save(roomReservation));
                 })
-                .orElseGet(() -> {newRoomReservation.setId(roomReservationId);
+                .orElseGet(() -> {
+                    newRoomReservation.setId(roomReservationId);
                     return ResponseEntity.created(uri.toUri()).body(reservations.save(newRoomReservation));
                 });
     }
