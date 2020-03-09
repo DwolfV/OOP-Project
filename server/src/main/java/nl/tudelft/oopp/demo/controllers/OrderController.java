@@ -33,7 +33,7 @@ public class OrderController {
         return repository.findAll();
     }
 
-    @GetMapping("/roomReservation/{id}")
+    @GetMapping("/room_reservation/{id}")
     public List<Order> getOrdersByReservation(@PathVariable long id) {
         return repository.findOrdersByRoomReservationId();
     }
