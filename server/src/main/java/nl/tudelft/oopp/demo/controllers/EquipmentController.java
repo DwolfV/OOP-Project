@@ -76,6 +76,7 @@ public class EquipmentController {
      * @param newEquipment The new equipment to add.
      * @return The added equipment {@link Equipment}.
      */
+
     @PostMapping(value="/equipment", consumes = {"application/json"})
     public ResponseEntity<Equipment> addNewEquipment(@Valid @RequestBody Equipment newEquipment, UriComponentsBuilder b) {
         equipment.save(newEquipment);

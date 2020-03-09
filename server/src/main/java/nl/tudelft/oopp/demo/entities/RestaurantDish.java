@@ -1,14 +1,12 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.lang.Nullable;
 
+import java.util.HashSet;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -26,13 +24,22 @@ public class RestaurantDish {
 
     @NotBlank
     @ManyToOne
-    @JoinColumn(name = "building_id", referencedColumnName = "id")
-    private Building building;
+    @JoinColumn(name = "dish_id", referencedColumnName = "id")
+    private Dish dish;
 
-    public RestaurantDish(long id, Restaurant restaurant, Building building) {
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    @Nullable
+    private Set<DishOrder> dishOrders = new HashSet<>();
+
+
+    public RestaurantDish(){
+
+    }
+
+    public RestaurantDish(long id, Restaurant restaurant, Dish dish) {
         this.id = id;
         this.restaurant = restaurant;
-        this.building = building;
+        this.dish = dish;
     }
 
     @JsonIgnore
@@ -52,12 +59,21 @@ public class RestaurantDish {
         this.restaurant = restaurant;
     }
 
-    public Building getBuilding() {
-        return building;
+    public Dish getDish() {
+        return dish;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
+    public void setDish(Dish dish) {
+        this.dish = dish;
+    }
+
+    @Nullable
+    public Set<DishOrder> getDishOrders() {
+        return dishOrders;
+    }
+
+    public void setDishOrders(@Nullable Set<DishOrder> dishOrders) {
+        this.dishOrders = dishOrders;
     }
 
     @Override
@@ -69,9 +85,7 @@ public class RestaurantDish {
             return false;
         }
         RestaurantDish that = (RestaurantDish) o;
-        return id == that.id
-                && Objects.equals(restaurant, that.restaurant)
-                && Objects.equals(building, that.building);
+        return id == that.id;
     }
 
 }

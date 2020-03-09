@@ -19,19 +19,10 @@ public class Room {
     /**
      * Create a new Room instance.
      *
-     * @param id The unique ID of the Room that is used to identify it.
      * @param name The name of the Room.
      * @param capacity The capacity of the room.
      * @param building The building, in which the room is located.
      */
-
-    public Room(Long id, String name, Integer capacity, Building building) {
-        this.id = id;
-        this.name = name;
-        this.capacity = capacity;
-        this.building = building;
-    }
-
     public Room(String name, Integer capacity, Building building) {
         this.name = name;
         this.capacity = capacity;
@@ -87,11 +78,11 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", capacity=" + capacity +
-                ", building=" + building +
-                '}';
+        return "Room{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", capacity=" + capacity
+                + ", building=" + building
+                + '}';
     }
 }

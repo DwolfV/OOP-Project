@@ -1,17 +1,22 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
-
-import nl.tudelft.oopp.demo.entities.Building;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 public class RestaurantController {
@@ -62,9 +67,8 @@ public class RestaurantController {
      * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
      */
     @GetMapping("/restaurant/id/{name}")
-    public ResponseEntity<Restaurant> getRestaurantByName(@PathVariable String name) {
-        return restaurantRepository.findByName(name).map(restaurant -> ResponseEntity.ok(restaurant)
-        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public List<Restaurant> getRestaurantByName(@PathVariable String name) {
+        return restaurantRepository.findByName(name);
     }
 
 
@@ -74,9 +78,23 @@ public class RestaurantController {
      * @param restaurant The restaurant you want created
      * @return created restaurant
      */
+
+    // @PostMapping(value="/rooms", consumes = {"application/json"})
+    //    public ResponseEntity<Room> newRoom(@Valid @RequestBody Room newRoom, UriComponentsBuilder b) {
+    //        rooms.save(newRoom);
+    //        UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
+    //        return ResponseEntity
+    //                .created(uri.toUri())
+    //                .body(newRoom);
+    //    }
     @PostMapping(value = "/restaurant", consumes = {"application/json"})
-    public Restaurant createNewRestaurant(@Valid @RequestBody Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
+    public ResponseEntity<Restaurant> createNewRestaurant(@Valid @RequestBody Restaurant restaurant, UriComponentsBuilder b) {
+        restaurantRepository.save(restaurant);
+        UriComponents uriComponents = b.path("restaurant/id/{id}").buildAndExpand(restaurant.getId());
+        return ResponseEntity
+                .created(uriComponents.toUri())
+                .body(restaurant);
+
     }
 
     /**

@@ -18,13 +18,21 @@ public class Building {
 
     }
 
-    public Building(Long id,
-                    String name,
+    /**
+     * Create a new Building instance.
+     *
+     * @param name The name of the Building.
+     * @param streetName The name of the street for the Building
+     * @param streetNumber The number of the street for the Building
+     * @param zipCode The zip code for the Building
+     * @param city The city of the Building
+     */
+
+    public Building(String name,
                     String streetName,
                     String streetNumber,
                     String zipCode,
                     String city) {
-        this.id = id;
         this.name = name;
         this.streetName = streetName;
         this.streetNumber = streetNumber;

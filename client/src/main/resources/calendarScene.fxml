@@ -37,7 +37,7 @@
                 </MenuButton>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="43.0" onAction="#handleAdminButton" layoutY="36.0" mnemonicParsing="false" text="Admin" />
+                  <Button layoutX="43.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
                </children>
             </Pane>
                 <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
@@ -55,22 +55,5 @@
         <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
     </left>
     <center>
-        <GridPane gridLinesVisible="true" BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="515.0" minWidth="10.0" prefWidth="85.7" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-        </GridPane>
     </center>
 </BorderPane>

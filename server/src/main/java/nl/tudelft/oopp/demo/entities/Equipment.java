@@ -41,15 +41,21 @@ public class Equipment {
 
     }
 
+    public Equipment(Room room, String name, int amount) {
+        this.room = room;
+        this.name = name;
+        this.amount = amount;
+    }
+
     /**
-     * Create a new RoomEquipment instance.
-     * It is going to connect the Rooms to different Equipments.
+     * Create a new Equipment instance.
      *
-     * @param id The unique identifier for RoomEquipment.
-     * @param room The room to which the RoomEquipment belongs.
-     * @param name The Equipment like whi.
-     * @param amount How much of the Equipment there is in the Room.
+     * @param id A unique identifier for the Equipment.
+     * @param name The name of the Equipment.
+     * @param amount The amount of the Equipment that is in stock.
+     * @param room The room for the Equipment.
      */
+
     public Equipment(long id, Room room, String name, int amount) {
         this.id = id;
         this.room = room;
@@ -74,13 +80,16 @@ public class Equipment {
         this.room = room;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
     public int getAmount() {
+
         return amount;
     }
 

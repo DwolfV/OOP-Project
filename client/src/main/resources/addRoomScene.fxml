@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -11,35 +12,34 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.addRoomSceneController">
    <top>
-      <AnchorPane prefHeight="700.0" prefWidth="377.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="386.0" prefWidth="349.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="8.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleTextFieldDataRoom" prefHeight="39.0" prefWidth="334.0" text="Add a room" />
-            <Text layoutX="141.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room ID">
+            <Button layoutX="8.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleTextFieldDataRoom" prefHeight="39.0" prefWidth="334.0" text="Add a room" />
+            <Text layoutX="114.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="RoomID" layoutX="69.0" layoutY="67.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="122.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name">
+            <TextField fx:id="RoomName" layoutX="69.0" layoutY="54.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="136.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacity">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="RoomName" layoutX="69.0" layoutY="148.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="141.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacity">
+            <TextField fx:id="Capacity" layoutX="69.0" layoutY="126.0" prefHeight="17.0" prefWidth="224.0" />
+            <Text layoutX="142.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Building">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="Capacity" layoutX="69.0" layoutY="228.0" prefHeight="17.0" prefWidth="224.0" />
-            <Text layoutX="108.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuildingName">
+            <TextField fx:id="Building" layoutX="73.0" layoutY="203.0" prefHeight="31.0" prefWidth="220.0" promptText="click the + button" />
+            <Button fx:id="buildingNamesButton" layoutX="259.0" layoutY="203.0" mnemonicParsing="false" onAction="#HandleBuildingNamesButton" prefHeight="31.0" prefWidth="34.0" style="-fx-background-color: transparent;" text="+">
                <font>
-                  <Font size="24.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
-            </Text>
-            <TextField fx:id="Building" layoutX="69.0" layoutY="318.0" prefHeight="17.0" prefWidth="224.0" />
+            </Button>
          </children>
       </AnchorPane>
    </top>

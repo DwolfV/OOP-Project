@@ -11,14 +11,12 @@
 
 <!--<?import com.jfoenix.controls.JFXHamburger?>-->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="463.0" style="-fx-background-color: #00A6D6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="257.0" style="-fx-background-color: #00A6D6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="624.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="453.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="254.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleAddBuildingButton" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: white; -fx-effect: dropShadow(three-pass-box, purple, 10, 0, 0, 0); -fx-cursor: hand;" text="Add a Building" />
-            <Button layoutX="254.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleAddRoomButton" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: white; -fx-effect: dropShadow(three-pass-box, purple, 10, 0, 0, 0); -fx-cursor: hand;" text="Add a Room" />
-            <Button layoutX="63.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleViewBuildingButtonClicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: white; -fx-effect: dropShadow(three-pass-box, purple, 10, 0, 0, 0); -fx-cursor: hand;" text="View Buildings" />
-            <Button layoutX="63.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleViewRoomButtonClicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: white; -fx-effect: dropShadow(three-pass-box, purple, 10, 0, 0, 0); -fx-cursor: hand;" text="View Rooms" />
+            <Button layoutX="37.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleViewBuildingButtonClicked" prefHeight="40.0" prefWidth="190.0" style="-fx-background-color: white; -fx-effect: dropShadow(three-pass-box, purple, 10, 0, 0, 0); -fx-cursor: hand;" text="Buildings" />
+            <Button layoutX="37.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleViewRoomButtonClicked" prefHeight="40.0" prefWidth="190.0" style="-fx-background-color: white; -fx-effect: dropShadow(three-pass-box, purple, 10, 0, 0, 0); -fx-cursor: hand;" text="Rooms" />
          </children>
       </AnchorPane>
    </center>

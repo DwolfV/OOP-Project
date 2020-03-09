@@ -1,9 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Dish")
@@ -25,7 +24,24 @@ public class Dish {
     @Column(name = "price")
     private float price;
 
-    public Dish(long id, String name, String description, String type, float price) {
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    private Set<RestaurantDish> restaurantDishes = new HashSet<>();
+
+    public Dish() {
+
+    }
+
+    /**
+     * Create a new Dish instance.
+     *
+     * @param name The name of the Dish.
+     * @param description The description of the Dish; for example: the ingredients.
+     * @param price The price of the Dish.
+     * @param type The type of the Dish; for example: vegan, vegetarian etc.
+     */
+
+
+    public Dish(String name, String description, String type, float price) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -73,22 +89,42 @@ public class Dish {
         this.price = price;
     }
 
+    public Set<RestaurantDish> getRestaurantDishes() {
+        return restaurantDishes;
+    }
+
+    public void setRestaurantDishes(Set<RestaurantDish> restaurantDishes) {
+        this.restaurantDishes = restaurantDishes;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Dish dish = (Dish) o;
         return getId() == dish.getId();
     }
 
     @Override
     public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                '}';
+        return "Dish{"
+                + "id="
+                + id
+                + ", name='"
+                + name
+                + '\''
+                + ", description='"
+                + description
+                + '\''
+                + ", type='"
+                + type
+                + '\''
+                + ", price="
+                + price
+                + '}';
     }
 }

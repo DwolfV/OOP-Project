@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.communication;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Room;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -23,7 +22,7 @@ public class BuildingCommunication {
      */
     public static List<Building> getBuildings() {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/building")).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/building")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -53,8 +52,8 @@ public class BuildingCommunication {
      * @throws Exception if communication with the server fails.
      */
     public static Building getBuildingById(long id) {
-
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
+        // TODO what if Authenticator.SESSION_COOKIE is not set?
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -82,9 +81,9 @@ public class BuildingCommunication {
      * Adds a building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
+    public static void addBuilding(String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(id, name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
         String JSONBuilding = "";
         try {
             JSONBuilding = mapper.writeValueAsString(newBuilding);
@@ -93,7 +92,7 @@ public class BuildingCommunication {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONBuilding)).uri(URI.create("http://localhost:8080/building")).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONBuilding)).uri(URI.create("http://localhost:8080/building")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -112,7 +111,7 @@ public class BuildingCommunication {
      */
     public static void updateBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(id, name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
         String JSONBuilding = "";
         try {
             JSONBuilding = mapper.writeValueAsString(newBuilding);
@@ -121,7 +120,7 @@ public class BuildingCommunication {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONBuilding)).uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONBuilding)).uri(URI.create(String.format("http://localhost:8080/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -139,7 +138,7 @@ public class BuildingCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static void removeBuilding(long id) {
-        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).build();
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

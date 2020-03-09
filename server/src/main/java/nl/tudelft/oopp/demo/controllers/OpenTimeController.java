@@ -1,16 +1,21 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.List;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.OpenTime;
 import nl.tudelft.oopp.demo.repositories.OpenTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.util.List;
 
 public class OpenTimeController {
     @Autowired
@@ -24,7 +29,8 @@ public class OpenTimeController {
 
     @GetMapping("openTimes")
     public @ResponseBody
-    List<OpenTime> getOpenTimes(){
+    List<OpenTime> getOpenTimes() {
+
         return openTimes.findAll();
     }
 
@@ -36,21 +42,37 @@ public class OpenTimeController {
      */
 
     @GetMapping("openTimes/{building_id}")
-    public @ResponseBody ResponseEntity<List<OpenTime>> getOpenTimesForBuilding(@PathVariable(value="building_id") long id /*,
+    public @ResponseBody ResponseEntity<List<OpenTime>>
+        getOpenTimesForBuilding(@PathVariable(value = "building_id") long id /*,
                                                    @RequestParam String parameter*/) {
-        return openTimes.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(openTimes.findByBuildingId(id), HttpStatus.OK);
+        return openTimes.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(openTimes.findByBuildingId(id), HttpStatus.OK);
     }
 
+    /**
+     * GET Endpoint to retrieve holiday by ID.
+     *
+     * @param openTime_id Unique identifier of the equipment.
+     * @return The requested equipment {@link OpenTime}.
+     */
+
+    @GetMapping(value = "/openTimes", consumes = {"application/json"})
+    public @ResponseBody ResponseEntity<OpenTime> getOpenTimeById(@PathVariable long openTime_id) {
+        OpenTime toReturn = openTimes.findById(openTime_id).orElseGet(() -> null);
+        return (toReturn == null ) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
 
     /**
-     * POST Endpoint to add a new OpenTime
+     * POST Endpoint to add a new OpenTime.
      *
      * @param newOpenTime The new openTime to add.
      * @return The added openTime {@link OpenTime}.
      */
 
-    @PostMapping(value="/openTimes", consumes = {"application/json"})
-    public ResponseEntity<OpenTime> newOpenTime(@Valid @RequestBody OpenTime newOpenTime, UriComponentsBuilder b){
+    @PostMapping(value = "/openTimes", consumes = {"application/json"})
+    public ResponseEntity<OpenTime> newOpenTime(@Valid @RequestBody OpenTime newOpenTime,
+                                                UriComponentsBuilder b) {
         openTimes.save(newOpenTime);
         UriComponents uri = b.path("/openTimes/{id}").buildAndExpand(newOpenTime.getId());
         return ResponseEntity.created(uri.toUri()).body(newOpenTime);
@@ -65,7 +87,7 @@ public class OpenTimeController {
      */
 
     @PutMapping("openTimes/{openTime_id}")
-    public ResponseEntity<OpenTime> replaceOpenTime(@RequestBody OpenTime newOpenTime, @PathVariable long openTime_id, UriComponentsBuilder b){
+    public ResponseEntity<OpenTime> replaceOpenTime(@RequestBody OpenTime newOpenTime, @PathVariable long openTime_id, UriComponentsBuilder b) {
         UriComponents uri = b.path("/openTimes/{openTime_id}").buildAndExpand(openTime_id);
 
         OpenTime updatedOpenTime = openTimes.findById(openTime_id).map(openTime -> {
@@ -75,7 +97,8 @@ public class OpenTimeController {
             openTime.setT_open(newOpenTime.getT_open());
             return openTimes.save(openTime);
         })
-                .orElseGet(() -> {newOpenTime.setId(openTime_id);
+                .orElseGet(() -> {
+                    newOpenTime.setId(openTime_id);
                     return openTimes.save(newOpenTime);
                 });
         return ResponseEntity.created(uri.toUri()).body(updatedOpenTime);
@@ -89,7 +112,7 @@ public class OpenTimeController {
      */
 
     @DeleteMapping("openTimes/{openTime_id}")
-    public ResponseEntity<?> deleteOpenTime(@PathVariable long openTime_id){
+    public ResponseEntity<?> deleteOpenTime(@PathVariable long openTime_id) {
         openTimes.deleteById(openTime_id);
         return ResponseEntity.noContent().build();
     }
