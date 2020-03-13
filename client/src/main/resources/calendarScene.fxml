@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.calendarfx.view.CalendarView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
     <bottom>
         <HBox style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
@@ -21,7 +26,7 @@
         </HBox>
     </bottom>
     <top>
-            <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+        <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
                 <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu" HBox.hgrow="ALWAYS">
                     <items>
@@ -34,26 +39,28 @@
                     <HBox.margin>
                         <Insets left="5.0" top="20.0" />
                     </HBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                 </MenuButton>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="43.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
+                  <Button layoutX="33.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
                </children>
             </Pane>
-                <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
-                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="/TU_Delft_logo_White.png" />
-                    </image>
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                </ImageView>
-            </children></HBox>
+            <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@TU_Delft_logo_White.png" />
+               </image>
+            </ImageView>
+            </children>
+        </HBox>
     </top>
     <left>
         <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
     </left>
-    <center>
-    </center>
+   <center>
+      <CalendarView showPrintButton="false" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
