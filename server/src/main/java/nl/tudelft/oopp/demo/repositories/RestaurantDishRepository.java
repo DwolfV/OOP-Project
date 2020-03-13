@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RestaurantDishRepository  extends JpaRepository<RestaurantDish, Long> {
     @Override
     Optional<RestaurantDish> findById(Long restaurantId);
+    List<RestaurantDish> findByRestaurantId(long id);
     List<RestaurantDish> findByRestaurantIdAndDishId(long restaurantId, long dishId);
 }
