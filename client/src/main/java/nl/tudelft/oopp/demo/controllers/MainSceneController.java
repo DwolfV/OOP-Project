@@ -27,9 +27,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
@@ -209,12 +211,81 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleRestaurantsButton(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
-            Parent restaurantsParent = fxmlLoader.load();
+           //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
+           //Parent restaurantsParent = fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(restaurantsParent, screenSize.getWidth(), screenSize.getHeight()));
+            ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+            ObservableList<Restaurant> restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
+            buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+            restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
+
+            TitledPane[] tps = new TitledPane[buildingData.size()];
+            List<Button> buttons = new ArrayList<>();
+            List<Label> labels = new ArrayList<>();
+
+            int count=0, c=0; // count - for lists, c - for tps
+
+            // load the scene
+            BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
+
+            // fill the accordion
+            for(int i = 0; i < buildingData.size(); i++){
+
+                //Look for restaurants for the building i;
+                ObservableList<Restaurant> showRestaurants = FXCollections.observableArrayList();
+                for(int k = 0; k < restaurants.size(); k++){
+                    if(restaurants.get(k).getBuilding().getName().equals(buildingData.get(i).getName())){
+                        showRestaurants.add(restaurants.get(k));
+                    }
+                }
+
+                //if there are restaurants for the building i - show them;
+                if(showRestaurants.size()!=0){
+                    tps[c] = new TitledPane();
+                    GridPane grid = new GridPane();
+                    ColumnConstraints colConst = new ColumnConstraints();
+                    colConst.setPercentWidth(100/2);
+                    grid.getColumnConstraints().add(colConst);
+                    grid.setVgap(4);
+                    grid.setPadding(new Insets(5, 5, 5, 5));
+
+                    for (Restaurant restaurant : restaurants) {
+                        System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
+                    }
+
+                    for(int j = 0; j < showRestaurants.size(); j++){
+                        Label label1 = new Label(showRestaurants.get(j).getName());
+                        labels.add(label1);
+                        Button button1 = new Button("Menu");
+                        buttons.add(button1);
+
+                        grid.add(labels.get(count), 0, j);
+                        grid.add(buttons.get(count), 1, j);
+                        count = count +1;
+                    }
+                    tps[c].setText(buildingData.get(i).getName());
+                    tps[c].setContent(grid);
+                    ac.getPanes().add(tps[c]);
+                    c++;
+                }
+
+            }
+
+            // load the accordion into the scene
+            VBox vBox = new VBox(ac);
+            bPane.setCenter(vBox);
+            bPane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bPane);
+
+           /* MainDisplay.secondaryStage.setScene(new Scene(restaurantsParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.secondaryStage.setTitle("Restaurants");
+            MainDisplay.secondaryStage.show();*/
+
+            MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
             MainDisplay.secondaryStage.show();
+
+
         } catch(Exception e) {
             e.printStackTrace();
         }
