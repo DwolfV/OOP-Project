@@ -211,9 +211,6 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleRestaurantsButton(ActionEvent event) {
         try {
-           //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/restaurantsScene.fxml"));
-           //Parent restaurantsParent = fxmlLoader.load();
-
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
             ObservableList<Restaurant> restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
             buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
@@ -276,10 +273,6 @@ public class MainSceneController implements Initializable {
             bPane.setCenter(vBox);
             bPane.setPadding(new Insets(30, 5, 5, 10));
             rootScene.setCenter(bPane);
-
-           /* MainDisplay.secondaryStage.setScene(new Scene(restaurantsParent, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Restaurants");
-            MainDisplay.secondaryStage.show();*/
 
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
