@@ -57,9 +57,6 @@
             </children>
         </HBox>
     </top>
-    <left>
-        <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
-    </left>
    <center>
       <CalendarView showPrintButton="false" BorderPane.alignment="CENTER" />
    </center>
