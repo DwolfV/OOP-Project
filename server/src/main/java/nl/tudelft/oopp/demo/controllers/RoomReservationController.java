@@ -2,8 +2,11 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
+
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
@@ -48,6 +51,26 @@ public class RoomReservationController {
     ResponseEntity getRoomReservations() {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
+
+    /**
+     * GET Endpoint to retrieve a map of all room reservation start and end times.
+     *
+     * @return a map of the room reservation times {@link RoomReservation}.
+     */
+    @GetMapping(value = "room_reservations_times/{room_id}", consumes = {"application/json"})
+    public @ResponseBody
+    ResponseEntity<Map<String, String>> getRoomReservationTimesByRoomAndDay(@PathVariable(value = "room_id") long roomId, @Valid @RequestBody Date date) {
+        Map<String, String> unavailableTimes = new HashMap<>();
+
+        for (Object[] times : reservations.findStartAndEndTimesByRoomIdAndDate(roomId, date)) {
+            Time startTime = (Time) times[0];
+            Time endTime = (Time) times[1];
+            unavailableTimes.put(startTime.toString(), endTime.toString());
+        }
+
+        return new ResponseEntity<>(unavailableTimes, HttpStatus.OK);
+    }
+
     /**
      * GET Endpoint to retrieve a list of all room reservations for a user.
      *
@@ -66,27 +89,26 @@ public class RoomReservationController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-     /**
-         * GET Endpoint to retrieve the reservation for a room by ID.
-         *
-         * @param room_reservation_id Unique identifier of the equipment.
-         * @return The requested room reservation {@link RoomReservation}.
-         */
-        @GetMapping("room_reservations/{room_reservation_id}")
-        public @ResponseBody ResponseEntity<RoomReservation>
-                getRoomReservationById(@PathVariable(value = "room_reservation_id") long room_reservation_id, Authentication authentication) {
-            RoomReservation toReturn = reservations.findById(room_reservation_id).orElseGet(() -> null);
-
-            if (toReturn == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
-            if (!toReturn.getUser().getUsername().equals(authentication.getName())) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-
-            return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    /**
+     * GET Endpoint to retrieve the reservation for a room by ID.
+     *
+     * @param roomReservationId Unique identifier of the equipment.
+     * @return The requested room reservation {@link RoomReservation}.
+     */
+    @GetMapping("room_reservations/{room_reservation_id}")
+    public @ResponseBody ResponseEntity<RoomReservation>
+            getRoomReservationById(@PathVariable(value = "room_reservation_id") long roomReservationId, Authentication authentication) {
+        RoomReservation toReturn = reservations.findById(roomReservationId).orElseGet(() -> null);
+        if (toReturn == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        if (!toReturn.getUser().getUsername().equals(authentication.getName())) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    }
 
     /**
      * GET Endpoint to retrieve a list of all rooms reservations of a user in a given room.
@@ -96,29 +118,44 @@ public class RoomReservationController {
      * @return a list of the room reservations in the room by the user {@link RoomReservation}.
      */
     @GetMapping("room_reservations/{user_id}/{room_id}")
-    public @ResponseBody ResponseEntity<List<RoomReservation>> getRoomReservationsByUserAndRoom(@PathVariable(value="user_id") long userId, @PathVariable(value="room_id") long roomId, Authentication authentication) {
+    public @ResponseBody ResponseEntity<List<RoomReservation>> getRoomReservationsByUserAndRoom(@PathVariable(value = "user_id") long userId,
+                                                                                                @PathVariable(value = "room_id") long roomId,
+                                                                                                Authentication authentication) {
         return users.findByUsername(authentication.getName()).map(user -> {
-            if (user.getId() == userId) return reservations.findByUserIdAndRoomId(userId, roomId).isEmpty() ? new ResponseEntity<List<RoomReservation>>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(reservations.findByUserIdAndRoomId(userId, roomId), HttpStatus.OK);
+            if (user.getId() == userId) {
+                return reservations.findByUserIdAndRoomId(userId, roomId).isEmpty()
+                        ? new ResponseEntity<List<RoomReservation>>(HttpStatus.NOT_FOUND)
+                        : new ResponseEntity<>(reservations.findByUserIdAndRoomId(userId, roomId), HttpStatus.OK);
+            }
             return new ResponseEntity<List<RoomReservation>>(HttpStatus.UNAUTHORIZED);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * Checks if a given time frame is valid and available.
+     * @param startTime The start of the time period
+     * @param endTime The end of the time period
+     * @param allRoomReservations A list of all room reservations that have all unavailable time periods
+     * @return A boolean - true if the time slot is available and valid; false otherwise
+     */
     public boolean timeIsValid(Time startTime, Time endTime, List<RoomReservation> allRoomReservations) {
-        if (startTime.compareTo(endTime) > 0)
+        // TODO open times of the building; half hours only
+        if (startTime.compareTo(endTime) > 0) {
             return false;
+        }
 
         for (RoomReservation roomReservation : allRoomReservations) {
-            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) > 0 &&
-                    startTime.compareTo(roomReservation.getEndTime()) > 0;
+            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) > 0
+                    && startTime.compareTo(roomReservation.getEndTime()) > 0;
 
-            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) < 0 &&
-                    startTime.compareTo(roomReservation.getEndTime()) < 0;
+            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) < 0
+                    && startTime.compareTo(roomReservation.getEndTime()) < 0;
 
-            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) > 0 &&
-                    endTime.compareTo(roomReservation.getEndTime()) > 0;
+            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) > 0
+                    && endTime.compareTo(roomReservation.getEndTime()) > 0;
 
-            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) < 0 &&
-                    endTime.compareTo(roomReservation.getEndTime()) < 0;
+            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) < 0
+                    && endTime.compareTo(roomReservation.getEndTime()) < 0;
 
             // if the start time and the end time are not after the reserved time or they are not before it
             if (!((startTimeIsAfterReservedTime && endTimeIsAfterReservedTime) || (startTimeIsBeforeReservedTime && endTimeIsBeforeReservedTime))) {
@@ -135,16 +172,16 @@ public class RoomReservationController {
      * @param newRoomReservation The new room reservation to add.
      * @return The added room reservation {@link RoomReservation}.
      */
-    @PostMapping(value="/room_reservations", consumes = {"application/json"})
+    @PostMapping(value = "/room_reservations", consumes = {"application/json"})
     public ResponseEntity<RoomReservation> newRoomReservation(@Valid @RequestBody RoomReservation newRoomReservation, UriComponentsBuilder b, Authentication authentication) {
 
         if (authentication.getName().equals(newRoomReservation.getUser().getUsername())
                 && !users.findByUsername(authentication.getName()).isEmpty()
                 && newRoomReservation.getUser().getId() == users.findByUsername(authentication.getName()).get().getId()) {
 
-            List<RoomReservation> all_reservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
+            List<RoomReservation> allReservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
 
-            if (!timeIsValid(newRoomReservation.getStartTime(), newRoomReservation.getEndTime(), all_reservations)) {
+            if (!timeIsValid(newRoomReservation.getStartTime(), newRoomReservation.getEndTime(), allReservations)) {
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }
             // Save a newly created object, so that the id will be auto generated
@@ -170,19 +207,23 @@ public class RoomReservationController {
      * @return the new room reservation that is updated {@link RoomReservation}.
      */
     @PutMapping("room_reservations/{room_reservation_id}")
-    public ResponseEntity<RoomReservation> replaceRoomReservation(@RequestBody RoomReservation newRoomReservation, @PathVariable(value="room_reservation_id") long roomReservationId, UriComponentsBuilder b, Authentication authentication) {
+    public ResponseEntity<RoomReservation> replaceRoomReservation(@RequestBody RoomReservation newRoomReservation,
+                                                                  @PathVariable(value = "room_reservation_id") long roomReservationId,
+                                                                  UriComponentsBuilder b, Authentication authentication) {
 
         UriComponents uri = b.path("room_reservations/{room_reservation_id}").buildAndExpand(roomReservationId);
 
         return reservations.findById(roomReservationId)
-                .map( roomReservation -> {
+                .map(roomReservation -> {
                     if (users.findByUsername(authentication.getName()).isEmpty() || newRoomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()
-                    || roomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId())
+                        || roomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()) {
                         return new ResponseEntity<RoomReservation>(HttpStatus.UNAUTHORIZED);
+                    }
 
-                    List<RoomReservation> all_reservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
-                    if (!timeIsValid(newRoomReservation.getStartTime(), newRoomReservation.getEndTime(), all_reservations))
+                    List<RoomReservation> allReservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
+                    if (!timeIsValid(newRoomReservation.getStartTime(), newRoomReservation.getEndTime(), allReservations)) {
                         return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
+                    }
 
                     roomReservation.setUser(newRoomReservation.getUser());
                     roomReservation.setRoom(newRoomReservation.getRoom());

@@ -7,7 +7,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -70,15 +73,15 @@ public class RoomReservationCommunication {
                                           User user) {
         ObjectMapper mapper = new ObjectMapper();
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
-        String JSONRoomReservation = "";
+        String jsonRoomReservation = "";
         try {
-            JSONRoomReservation = mapper.writeValueAsString(newRoomReservation);
-            System.out.println(JSONRoomReservation);
+            jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);
+            System.out.println(jsonRoomReservation);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONRoomReservation)).uri(URI.create("http://localhost:8080/room_reservation")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRoomReservation)).uri(URI.create("http://localhost:8080/room_reservation")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -98,15 +101,15 @@ public class RoomReservationCommunication {
     public static void updateRoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
-        String JSONRoomReservation = "";
+        String jsonRoomReservation = "";
         try {
-            JSONRoomReservation = mapper.writeValueAsString(newRoomReservation);
-            System.out.println(JSONRoomReservation);
+            jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);
+            System.out.println(jsonRoomReservation);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONRoomReservation)).uri(URI.create(String.format("http://localhost:8080/room_reservation/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonRoomReservation)).uri(URI.create(String.format("http://localhost:8080/room_reservation/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -135,6 +138,50 @@ public class RoomReservationCommunication {
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
         }
+    }
+
+    /**
+     * Returns a hash map of all start and end times of all reservations for a given room on a given day.
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+    public static Map<Time, Time> getAllRoomReservationTimesPerRoomAndDate(long roomId, Date date) {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonDate = "";
+        try {
+            jsonDate = mapper.writeValueAsString(date);
+            System.out.println(jsonDate);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().method("GET", HttpRequest.BodyPublishers.ofString(jsonDate))
+                .uri(URI.create(String.format("http://localhost:8080/room_reservations_times/%s", roomId)))
+                .setHeader("Content-type", "application/json")
+                .setHeader("Cookie", Authenticator.SESSION_COOKIE)
+                .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+            return new HashMap<>();
+        }
+
+        Map<Time, Time> unavailableTimes = null;
+        try {
+            unavailableTimes = mapper.readValue(response.body(),
+                    new TypeReference<Map<Time, Time>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return unavailableTimes;
     }
 }
 
