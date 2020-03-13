@@ -43,15 +43,12 @@ public class RestaurantDishController {
      * GET Endpoint to retrieve all RestaurantDishes for a restaurant.
      * @return a list of the restaurant's dishes for the given restaurant {@link RestaurantDish}
      */
+
     @GetMapping("restaurant_dish/restaurant/{restaurant_id}")
-    public @ResponseBody ResponseEntity<List<RestaurantDish>> getRestaurantDishByRestaurant(@PathVariable(value = "restaurant_id") long restaurantId,
-                                                                                            Authentication authentication) {
-        return (ResponseEntity<List<RestaurantDish>>) restaurantRepository.findByName(authentication.getName()).map(restaurant -> {
-            if(restaurant.getId() == restaurantId) {
-                return new ResponseEntity<>(restaurantDishRepository.findById(restaurantId), HttpStatus.OK);
-            }
-            return new ResponseEntity<List<RestaurantDish>>(HttpStatus.UNAUTHORIZED);
-        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public @ResponseBody ResponseEntity<List<RestaurantDish>> getRestaurantDishByRestaurantId(@PathVariable ( value = "restaurant_id") long
+                                                                                              id) {
+        return restaurantDishRepository.findByRestaurantId(id).isEmpty() ? new
+                ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(restaurantDishRepository.findByRestaurantId(id), HttpStatus.OK);
     }
 
     /**
@@ -59,7 +56,7 @@ public class RestaurantDishController {
      *
      * @param restaurant_dish_id - unique identifier of the restaurantDish.
      * @return the requested {@link RestaurantDish}.
-      */
+     */
 
     @GetMapping("restaurant_dish/{restaurant_dish_id}")
     public @ResponseBody ResponseEntity<RestaurantDish> getRestaurantDishById
@@ -84,18 +81,12 @@ public class RestaurantDishController {
      * @return The added restaurant dish {@link RestaurantDish}.
      */
 
-    @PostMapping(value = "/restaurant_dish", consumes = {"application/json"})
-    public ResponseEntity<RestaurantDish> newRestaurantDish(@Valid @RequestBody RestaurantDish newRestaurantDish,
-                                                            UriComponentsBuilder b, Authentication authentication) {
-        if(authentication.getName().equals(newRestaurantDish.getRestaurant().getName())
-            && !restaurantRepository.findByName(authentication.getName()).isEmpty()
-                && newRestaurantDish.getRestaurant().getId() == restaurantRepository.findByName(authentication.getName()).get().getId()
-        ) {
-            RestaurantDish savedRestaurantDish = restaurantDishRepository.save(newRestaurantDish);
-            UriComponents uri = b.path("/restaurant_dish/{restaurant_dish_id}").buildAndExpand(savedRestaurantDish.getId());
-            return ResponseEntity.created(uri.toUri()).body(savedRestaurantDish);
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    @PostMapping(value = "restaurant_dish", consumes = {"application/json"})
+    public ResponseEntity<RestaurantDish>  newRestaurantDish(@Valid @RequestBody RestaurantDish newRestaurantDish, UriComponentsBuilder b) {
+        restaurantDishRepository.save(newRestaurantDish);
+        UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(newRestaurantDish.getId());
+        return ResponseEntity.created(uri.toUri()).body(newRestaurantDish);
     }
 
     /**
@@ -104,27 +95,25 @@ public class RestaurantDishController {
      * @param newRestaurantDish - The updated version of the restaurantDish
      * @return the new restaurantDish that is updated {@link RestaurantDish}
      */
+
+
     @PutMapping("restaurant_dish/{restaurant_dish_id}")
-    public ResponseEntity<RestaurantDish>
-        replaceRestaurantDish(@RequestBody RestaurantDish newRestaurantDish,
-                              @PathVariable(value = "restaurant_dish_id") long restaurant_dish_id,
-                                UriComponentsBuilder b, Authentication authentication) {
-            UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(restaurant_dish_id);
-            return restaurantDishRepository.findById(restaurant_dish_id)
-                    .map( restaurantDish -> {
-                        if(restaurantRepository.findByName(authentication.getName()).isEmpty() ||
-                        newRestaurantDish.getRestaurant().getId()!=restaurantRepository.findByName(authentication.getName()).get().getId() ||
-                        restaurantDish.getRestaurant().getId()!=restaurantRepository.findByName(authentication.getName()).get().getId())
-                            return new ResponseEntity<RestaurantDish>(HttpStatus.UNAUTHORIZED);
-                        restaurantDish.setDish(newRestaurantDish.getDish());
-                        restaurantDish.setRestaurant(newRestaurantDish.getRestaurant());
-                        restaurantDish.setDishOrders(newRestaurantDish.getDishOrders());
-                        return ResponseEntity.created(uri.toUri()).body(restaurantDishRepository.save(restaurantDish));
-                    }).orElseGet(()-> {
-                        newRestaurantDish.setId(restaurant_dish_id);
-                        return ResponseEntity.created(uri.toUri()).body(restaurantDishRepository.save(newRestaurantDish));
-                    });
+    public ResponseEntity<RestaurantDish>  updateRestaurantDish(@RequestBody RestaurantDish newRestaurantDish, @PathVariable long restaurant_dish_id, UriComponentsBuilder b) {
+        UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(restaurant_dish_id);
+
+        RestaurantDish restaurantDish = restaurantDishRepository.findById(restaurant_dish_id).map(restaurantDish1 -> {
+            restaurantDish1.setDishOrders(newRestaurantDish.getDishOrders());
+            restaurantDish1.setDish(newRestaurantDish.getDish());
+            restaurantDish1.setRestaurant(newRestaurantDish.getRestaurant());
+            return restaurantDishRepository.save(restaurantDish1);
+        }).orElseGet(() -> {
+            newRestaurantDish.setId(restaurant_dish_id);
+            return restaurantDishRepository.save(newRestaurantDish);
+        });
+
+        return ResponseEntity.created(uri.toUri()).body(restaurantDish);
     }
+
 
     /**
      * DELETE Endpoint to delete the entry of a given restaurant's dish.
