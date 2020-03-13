@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
@@ -68,7 +67,7 @@ public class RestaurantController {
      * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
      */
     @GetMapping("/restaurant/id/{name}")
-    public Optional<Restaurant> getRestaurantByName(@PathVariable String name) {
+    public List<Restaurant> getRestaurantByName(@PathVariable String name) {
         return restaurantRepository.findByName(name);
     }
 
