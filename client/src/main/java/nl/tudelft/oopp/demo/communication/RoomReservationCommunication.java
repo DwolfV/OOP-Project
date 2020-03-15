@@ -26,7 +26,7 @@ import org.codehaus.jackson.type.TypeReference;
  *      - delete a room reservation by user id or by its id
  */
 
-public class RoomReservationCommunication {
+public class  RoomReservationCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
