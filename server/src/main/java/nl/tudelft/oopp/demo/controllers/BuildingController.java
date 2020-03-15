@@ -97,7 +97,7 @@ public class BuildingController {
                         count++; //increment the filter counter
                     }
                     if(count == expected) { //the rooms has reached the expected amount of filters, thus
-                        result.add(building); //add the room
+                        result.add(building); //add the building
                         break; //break the loop
                     }
                 }
