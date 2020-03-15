@@ -13,10 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -134,12 +131,25 @@ public class MainSceneController implements Initializable {
 
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
-            List<Label> labels = new ArrayList<>();
+            //List<Label> labels = new ArrayList<>();
 
-            int count=0, c=0; // count - for lists, c - for tps
+            int c=0; // count - for lists, c - for tps
 
             // load the scene
             BorderPane rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
+
+            //Create time
+            ArrayList<String> timeFrom = new ArrayList<>();
+            ArrayList<String> timeTo = new ArrayList<>();
+
+            for(int p = 9; p < 20; p++){
+                timeFrom.add(p+".00");
+                timeFrom.add(p+".30");
+                if(p>9){
+                    timeTo.add(p+".00");
+                    timeTo.add(p+".30");
+                }
+            }
 
             // fill the accordion
             for(int i = 0; i < buildingData.size(); i++){
@@ -152,32 +162,43 @@ public class MainSceneController implements Initializable {
                     }
                 }
 
+
+                ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
+                ObservableList<String> to = FXCollections.observableArrayList(timeTo);
+
+
                 //if there are rooms for the building i - show them;
                 if(showRooms.size()!=0){
+                    VBox vBox = new VBox();
                     tps[c] = new TitledPane();
-                    GridPane grid = new GridPane();
-                    ColumnConstraints colConst = new ColumnConstraints();
-                    colConst.setPercentWidth(100/2);
-                    grid.getColumnConstraints().add(colConst);
-                    grid.setVgap(4);
-                    grid.setPadding(new Insets(5, 5, 5, 5));
-
-                    for (Room room : rooms) {
-                        System.out.println(buildingData.get(i).getName() + " " + room.getName());
-                    }
 
                     for(int j = 0; j < showRooms.size(); j++){
+                        HBox hBox = new HBox();
+
                         Label label1 = new Label(showRooms.get(j).getName());
-                        labels.add(label1);
+                        label1.setStyle("-fx-font-weight: bold");
+
+                        Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                         Button button1 = new Button("Reserve");
+                        //button1.setOnAction();
                         buttons.add(button1);
 
-                        grid.add(labels.get(count), 0, j);
-                        grid.add(buttons.get(count), 1, j);
-                        count = count +1;
+                        ChoiceBox<String> cb = new ChoiceBox<>();
+                        cb.setItems(from);
+                        ChoiceBox<String> cbb = new ChoiceBox<>();
+                        cbb.setItems(to);
+
+
+                        hBox.getChildren().addAll(label1,label2,cb,cbb,button1);
+                        hBox.setPadding(new Insets(5,10,5,10));
+                        hBox.setSpacing(150);
+                        hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+                                + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                                + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+                        vBox.getChildren().add(hBox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
-                    tps[c].setContent(grid);
+                    tps[c].setContent(vBox);
                     ac.getPanes().add(tps[c]);
                     c++;
                 }
