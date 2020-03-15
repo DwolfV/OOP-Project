@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
 import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.repositories.EquipmentRepository;
+import nl.tudelft.oopp.demo.repositories.ItemRepository;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,7 +34,20 @@ class RoomControllerTest {
     private Room r3;
     private Room r4;
 
+    private Equipment e1;
+    private Equipment e2;
+    private Equipment e3;
+
+    private Item i1;
+    private Item i2;
+
     private Building b1;
+
+    @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    EquipmentRepository equipmentRepository;
 
     @Mock
     private RoomRepository roomRepository;
@@ -48,7 +65,7 @@ class RoomControllerTest {
         r1 = new Room("r1", 11, b1);
         r2 = new Room("r2", 111, b1);
         r3 = new Room("r3", 1111, b1);
-        r4 = new Room("r3", 3111, b1);
+        r4 = new Room("r4", 3111, b1);
     }
 
     /**
@@ -67,6 +84,42 @@ class RoomControllerTest {
         when(roomRepository.findAll()).thenReturn(expectedList);
         List<Room> actualList = roomController.getRooms();
 
+        assertEquals(expectedList, actualList);
+    }
+
+    @Test
+    void testFilterWithoutEquipment() {
+        List<Room> expectedList = new ArrayList<Room>(List.of(r2,r3,r4));
+        when(roomRepository.filterRoom(b1.getId(),50)).thenReturn(expectedList);
+        List<Room> actualList = roomController.getFilteredRooms(b1.getId(),50, null, null, null, null);
+
+        assertEquals(expectedList, actualList);
+    }
+
+    @Test
+    void testFilterWithEquipment() {
+        i1 = new Item("blackboard");
+        i2 = new Item("projector");
+        itemRepository.save(i1);
+        itemRepository.save(i2);
+
+        e1 = new Equipment(r2, i1, 2);
+        e2 = new Equipment(r3, i1, 3);
+        e3 = new Equipment(r2, i2, 1);
+        equipmentRepository.save(e1);
+        equipmentRepository.save(e2);
+        equipmentRepository.save(e3);
+
+        r2.setEquipment(new ArrayList<>(List.of(e1, e3)));
+        r3.setEquipment(new ArrayList<>(List.of(e2)));
+
+        List<Room> expectedList = new ArrayList<Room>(List.of(r2));
+        List<Room> repoResult = new ArrayList<Room>(List.of(r2, r3, r4));
+        when(roomRepository.filterRoom(b1.getId(),50)).thenReturn(repoResult);
+        List<Room> actualList = roomController.getFilteredRooms(b1.getId(),50, i1.getName(), i2.getName(), null, null);
+
+        System.out.println(expectedList + " nice");
+        System.out.println(actualList);
         assertEquals(expectedList, actualList);
     }
 

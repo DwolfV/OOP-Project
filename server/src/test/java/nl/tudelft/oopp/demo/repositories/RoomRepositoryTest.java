@@ -11,6 +11,7 @@ import java.util.List;
 
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
 import nl.tudelft.oopp.demo.entities.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,26 +27,38 @@ public class RoomRepositoryTest {
     private Room r4;
     private Room r5;
 
+    private Building b1;
+    private Building b2;
+
     @Autowired
     private RoomRepository roomRep;
 
     @Autowired
     private BuildingRepository buildRep;
 
+    @Autowired
+    private EquipmentRepository equipmentRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
     /**
      * Creates all rooms and is done before each test.
      */
     @BeforeEach
     public void save() {
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
         r2 = new Room("room2", 2, b1);
         r3 = new Room("room3", 3, b1);
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
+
+        b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
         r4 = new Room("room4", 4, b2);
         r5 = new Room("room5", 5, b2);
+
         buildRep.save(b1);
         buildRep.save(b2);
+
         roomRep.save(r1);
         roomRep.save(r2);
         roomRep.save(r3);
@@ -122,6 +135,26 @@ public class RoomRepositoryTest {
         assertNotEquals(room1, roomRep.findByName("room5"));
         assertNotEquals(room2, roomRep.findByName("room3"));
         assertNotEquals(room2, emptyList);
+    }
+
+    @Test
+    public void testFilteredRooms() {
+        Item i1 = new Item("blackboard");
+        Item i2 = new Item("projector");
+        itemRepository.save(i1);
+        itemRepository.save(i2);
+
+        Equipment e1 = new Equipment(r2, i1, 2);
+        Equipment e2 = new Equipment(r3, i1, 3);
+        Equipment e3 = new Equipment(r2, i2, 1);
+        equipmentRepository.save(e1);
+        equipmentRepository.save(e2);
+        equipmentRepository.save(e3);
+
+        List<Room> expectedList = new ArrayList<>(List.of(r2, r3));
+        List<Room> resultList = roomRep.filterRoom(b1.getId(), 2);
+        System.out.println(r2.getEquipment().toString());
+        assertEquals(expectedList, resultList);
     }
 
 }
