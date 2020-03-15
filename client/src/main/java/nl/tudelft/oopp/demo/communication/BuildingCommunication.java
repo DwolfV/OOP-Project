@@ -44,7 +44,6 @@ public class BuildingCommunication {
             e.printStackTrace();
         }
 
-        System.out.println(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(71, Date.valueOf("1963-11-22")));
         return buildings;
     }
 

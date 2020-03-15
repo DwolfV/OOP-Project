@@ -149,7 +149,6 @@ public class RoomReservationCommunication {
         String jsonDate = "";
         try {
             jsonDate = mapper.writeValueAsString(date);
-            System.out.println(jsonDate);
         } catch (IOException e) {
             e.printStackTrace();
             return new HashMap<>();
