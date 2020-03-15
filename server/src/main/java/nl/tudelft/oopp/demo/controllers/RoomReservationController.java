@@ -139,8 +139,23 @@ public class RoomReservationController {
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
     public boolean timeIsValid(Time startTime, Time endTime, List<RoomReservation> allRoomReservations) {
-        // TODO open times of the building; half hours only
+        // TODO open times of the building
         if (startTime.compareTo(endTime) > 0) {
+            return false;
+        }
+
+        String sTime = startTime.toString();
+        String eTime = endTime.toString();
+        String startSec = sTime.split(":")[2];
+        String startMin = sTime.split(":")[1];
+        String endSec = eTime.split(":")[2];
+        String endMin = eTime.split(":")[1];
+
+        if (!startSec.equals("00") || !endSec.equals("00")) {
+            return false;
+        }
+
+        if ((!startMin.equals("00") && !startMin.equals("30")) || (!endMin.equals("00") && !endMin.equals("30"))) {
             return false;
         }
 
