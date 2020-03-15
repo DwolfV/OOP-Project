@@ -78,6 +78,58 @@ public class BuildingCommunication {
     }
 
     /**
+     * Retrieves a list of filtered buildings from the server
+     * @param capacity - the minimum capacity that a room inside a buildings should have
+     * @param e1 - the name of a piece of equipment that a room inside a buildings should have
+     * @param e2 - the name of a piece of equipment that a room inside a buildings should have
+     * @param e3 - the name of a piece of equipment that a room inside a buildings should have
+     * @param e4 - the name of a piece of equipment that a room inside a buildings should have
+     * @return  the body of a get request to the server.
+     */
+    public static List<Building> getFilteredBuildings(Integer capacity, String e1, String e2, String e3, String e4) {
+        String uri = "http://localhost:8080/building/filter";
+        if(capacity == null){
+            capacity = 0;
+        }
+        uri = "?capacity=" + capacity;
+        if(e1 != null) {
+            uri = "&e1=" + e1;
+        }
+        if(e2 != null) {
+            uri = "&e2=" + e2;
+        }
+        if(e3 != null) {
+            uri = "&e3=" + e3;
+        }
+        if(e4 != null) {
+            uri = "&e4=" + e4;
+        }
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(uri)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Building> buildings = null;
+        // TODO handle exception
+        try {
+            buildings = mapper.readValue(response.body(), new TypeReference<List<Building>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return buildings;
+    }
+
+    /**
      * Adds a building.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
