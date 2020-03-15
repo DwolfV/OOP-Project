@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.Optional;
 
 import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
+import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
+import nl.tudelft.oopp.demo.repositories.EquipmentRepository;
+import nl.tudelft.oopp.demo.repositories.ItemRepository;
+import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,11 +35,32 @@ public class BuildingControllerTest {
     private Building b4;
     private Building b5;
 
+    private Room r1;
+    private Room r2;
+
+    private Item i1;
+    private Item i2;
+
+    private Equipment e1;
+    private Equipment e2;
+
+    @Mock
+    private EquipmentRepository equipmentRepository;
+
+    @Mock
+    private ItemRepository itemRepository;
+
     @Mock
     private BuildingRepository buildingRepository;
 
     @InjectMocks
     private BuildingController buildingController;
+
+    @Mock
+    private RoomRepository roomRepository;
+
+    public BuildingControllerTest() {
+    }
 
     /**
      * Creates all buildings and is done before each test.
@@ -75,6 +102,41 @@ public class BuildingControllerTest {
 
         when(buildingRepository.findById(b1.getId())).thenReturn(optionalBuilding);
         assertEquals(entity, buildingController.getBuildingById(b1.getId()));
+    }
+
+    @Test
+    public void testGetFilteredBuilding() {
+        i1 = new Item("projector");
+        i2 = new Item("blackboard");
+
+        r1 = new Room("r1", 50, b1);
+        r2 = new Room("r2", 60, b2);
+
+        e1 = new Equipment(r1, i1, 2);
+        e2 = new Equipment(r2, i2, 3);
+
+        itemRepository.save(i1);
+        itemRepository.save(i2);
+
+        roomRepository.save(r1);
+        roomRepository.save(r2);
+
+        equipmentRepository.save(e1);
+        equipmentRepository.save(e2);
+
+        r1.setEquipment(new ArrayList<>(List.of(e1)));
+        r2.setEquipment(new ArrayList<>(List.of(e2)));
+
+        b1.setRooms(new ArrayList<>(List.of(r1)));
+        b2.setRooms(new ArrayList<>(List.of(r2)));
+
+        List<Building> expectedBuildings = new ArrayList<>(List.of(b1));
+        List<Building> repoResult = new ArrayList<>(List.of(b1,b2));
+        when(buildingRepository.filterBuilding(50)).thenReturn(repoResult);
+        List<Building> actualList = buildingController.getFilteredBuildings(50, i1.getName(), null, null, null);
+
+        assertEquals(expectedBuildings, actualList);
+
     }
 
     @Test

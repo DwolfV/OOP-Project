@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.springframework.lang.Nullable;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -39,7 +37,7 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     @Nullable
-    private Set<Equipment> equipment = new HashSet<>();
+    private List<Equipment> equipment = new ArrayList<>();
 
     public Room() {
 
@@ -97,6 +95,15 @@ public class Room {
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    @Nullable
+    public List<Equipment> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(@Nullable List<Equipment> equipment) {
+        this.equipment = equipment;
     }
 
     @Override

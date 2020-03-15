@@ -1,10 +1,24 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -44,11 +58,11 @@ public class Building {
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @Nullable
-    private Set<Supply> supplies = new HashSet<>();
+    private List<Supply> supplies = new ArrayList<>();
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @Nullable
-    private Set<Room> rooms = new HashSet<>();
+    private List<Room> rooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @Nullable
@@ -62,6 +76,15 @@ public class Building {
 
     }
 
+    /**
+     * Creates a new instance of the Building entity.
+     *
+     * @param name The name of the building
+     * @param streetName - The name of the street on which the Building is located
+     * @param streetNumber - The number of the street on which the Building is located
+     * @param zipCode - The zip code of the Building address
+     * @param city - The city in which the Building is located
+     */
     public Building(String name,
                     String streetName,
                     String streetNumber,
@@ -145,6 +168,16 @@ public class Building {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @JsonIgnore
+    @Nullable
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(@Nullable List<Room> rooms) {
+        this.rooms = rooms;
     }
 
     @Override
