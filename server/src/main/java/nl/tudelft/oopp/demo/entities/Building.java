@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import org.springframework.lang.Nullable;
@@ -44,11 +42,11 @@ public class Building {
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @Nullable
-    private Set<Supply> supplies = new HashSet<>();
+    private List<Supply> supplies = new ArrayList<>();
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @Nullable
-    private Set<Room> rooms = new HashSet<>();
+    private List<Room> rooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @Nullable
@@ -145,6 +143,15 @@ public class Building {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Nullable
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(@Nullable List<Room> rooms) {
+        this.rooms = rooms;
     }
 
     @Override
