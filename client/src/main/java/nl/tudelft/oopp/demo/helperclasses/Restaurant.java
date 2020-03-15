@@ -11,6 +11,10 @@ public class Restaurant {
     private Time tClose;
     private Time tOpen;
 
+    public Restaurant() {
+
+    }
+
     /**
      * Constructor for the Restaurant class.
      *

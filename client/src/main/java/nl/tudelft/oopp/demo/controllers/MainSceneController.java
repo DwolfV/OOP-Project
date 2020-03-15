@@ -22,11 +22,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
-import nl.tudelft.oopp.demo.helperclasses.Room;
+import nl.tudelft.oopp.demo.helperclasses.*;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.io.IOException;
@@ -52,12 +51,16 @@ public class MainSceneController implements Initializable {
 
     private final TableView<Building> tableBuilding = new TableView<>();
     private final TableView<Room> tableRoom = new TableView<>();
+    private final TableView<Restaurant> tableRestaurant = new TableView<>();
 
     final Button updateButtonBuilding = new Button("Update");
     final Button deleteButtonBuilding = new Button("Delete");
 
     final Button updateButtonRoom = new Button("Update");
     final Button deleteButtonRoom = new Button("Delete");
+
+    final Button updateButtonRestaurant = new Button("Update");
+    final Button deleteButtonRestaurant = new Button("Delete");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -281,8 +284,18 @@ public class MainSceneController implements Initializable {
         RoomCommunication.removeRoom(room.getId());
     }
 
-    public void refreshBuildingTable() {
+    public void updateButtonRestaurantClicked() {
+        Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
+        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.gettClose(), restaurant.gettOpen());
+    }
 
+    public void deleteButtonRestaurantClicked() {
+        ObservableList<Restaurant> restaurantSelected, allRestaurants;
+        allRestaurants = tableRestaurant.getItems();
+        Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
+
+        allRestaurants.remove(restaurant);
+        RestaurantCommunication.removeRestaurant(restaurant.getId());
     }
 
     public void handleAdminButton(ActionEvent event) throws IOException {
@@ -412,7 +425,7 @@ public class MainSceneController implements Initializable {
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuidling.setTop(vBoxAddBuilding);
 
-        addButtonBuilding.setOnAction((EventHandler) e -> {
+        addButtonBuilding.setOnAction(e -> {
             String buildingNameInput1 = buildingNameInput.getText();
             String streetNameInput1 = streetNameInput.getText();
             String streetNumberInput1 = streetNumberInput.getText();
@@ -426,6 +439,8 @@ public class MainSceneController implements Initializable {
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
+
+            tableBuilding.refresh();
         });
 
         // This VBox contains the table for the rooms and adding a room
@@ -539,7 +554,7 @@ public class MainSceneController implements Initializable {
         vBoxAddRoom.setSpacing(10);
         borderPaneAddRoom.setTop(vBoxAddRoom);
 
-        addButton.setOnAction((EventHandler) e -> {
+        addButton.setOnAction((EventHandler<ActionEvent>) e -> {
             String roomName1 = RoomName.getText();
             Integer capacity1 = Integer.parseInt(Capacity.getText());
 
@@ -558,6 +573,99 @@ public class MainSceneController implements Initializable {
         vBoxRoomsTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRoomsTP.getChildren().addAll(hBoxRoomTP, hBoxAddDeleteUpdateRooms);
         roomsTP.setContent(vBoxRoomsTP);
+
+//        // Table for restaurants
+//        tableRestaurant.setEditable(true);
+//
+//        TableColumn<Restaurant, Long> idRestaurantCol =
+//                new TableColumn<>("id");
+//        idRestaurantCol.setMinWidth(100);
+//        idRestaurantCol.setCellValueFactory(
+//                new PropertyValueFactory<>("id"));
+//
+//        TableColumn<Restaurant, String> restaurantNameCol =
+//                new TableColumn<>("Building Name");
+//        restaurantNameCol.setMinWidth(100);
+//        restaurantNameCol.setCellValueFactory(
+//                new PropertyValueFactory<>("name"));
+//        restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        restaurantNameCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+//                    t.getTableView().getItems().get(
+//                            t.getTablePosition().getRow()).setName(t.getNewValue());
+//                });
+//
+//        TableColumn<Restaurant, Building> buildingNameRestaurantCol =
+//                new TableColumn<>("Building Name");
+//        buildingNameRestaurantCol.setMinWidth(100);
+//        buildingNameRestaurantCol.setCellValueFactory(
+//                new PropertyValueFactory<>("building"));
+//        buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
+//        buildingNameRestaurantCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<Restaurant, Building> t) -> {
+//                    t.getTableView().getItems().get(
+//                            t.getTablePosition().getRow()).setBuilding(t.getNewValue());
+//                });
+//
+//        TableColumn<Restaurant, String> timeCloseCol =
+//                new TableColumn<>("Closing Time");
+//        timeCloseCol.setMinWidth(100);
+//        timeCloseCol.setCellValueFactory(
+//                new PropertyValueFactory<>("tClose"));
+//        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+////        timeCloseCol.setOnEditCommit(
+////                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+////                    t.getTableView().getItems().get(
+////                            t.getTablePosition().getRow()).settClose(t.getNewValue());
+////                });
+//
+//        TableColumn<Restaurant, String> timeOpenCol =
+//                new TableColumn<>("Opening Time");
+//        timeOpenCol.setMinWidth(100);
+//        timeOpenCol.setCellValueFactory(
+//                new PropertyValueFactory<>("tOpen"));
+//        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+////        timeOpenCol.setOnEditCommit(
+////                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+////                    t.getTableView().getItems().get(
+////                            t.getTablePosition().getRow()).settOpen(t.getNewValue());
+////                });
+//
+//        ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
+//        tableRestaurant.setItems(restaurantData);
+//        tableRestaurant.getColumns().addAll(idRestaurantCol, restaurantNameCol, buildingNameRestaurantCol, timeCloseCol, timeOpenCol);
+//
+//        //delete button
+//        deleteButtonRestaurant.setOnAction(e -> {
+//            try {
+//                deleteButtonRestaurantClicked();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//        });
+//
+//        //update button
+//        updateButtonRestaurant.setOnAction(e -> {
+//            try {
+//                updateButtonRestaurantClicked();
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//        });
+//
+//        // HBox for the buttons under the table
+//        HBox hBoxAddDeleteUpdateRestaurants = new HBox(10);
+//        hBoxAddDeleteUpdateRestaurants.setPadding(new Insets(20, 20, 20, 0));
+//        hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
+//
+//        // This VBox contains the table for the rooms and adding a room
+//        VBox vBoxRestaurantTP = new VBox();
+//        HBox hBoxRestaurantTP = new HBox();
+//        hBoxRestaurantTP.setSpacing(100);
+//        hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
+//        vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
+//        vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
+//        restaurantsTP.setContent(vBoxRestaurantTP);
 
         // load everything
         VBox vBox = new VBox(ac);
