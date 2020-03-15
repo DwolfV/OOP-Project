@@ -30,8 +30,9 @@ public class Equipment {
     private Room room;
 
     @NotNull
-    @Column(name = "name", length = 32)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    private Item item;
 
     @NotNull
     @Column(name = "amount")
@@ -41,9 +42,9 @@ public class Equipment {
 
     }
 
-    public Equipment(Room room, String name, int amount) {
+    public Equipment(Room room, Item item, int amount) {
         this.room = room;
-        this.name = name;
+        this.item = item;
         this.amount = amount;
     }
 
@@ -51,15 +52,15 @@ public class Equipment {
      * Create a new Equipment instance.
      *
      * @param id A unique identifier for the Equipment.
-     * @param name The name of the Equipment.
+     * @param item The item for the Equipment.
      * @param amount The amount of the Equipment that is in stock.
      * @param room The room for the Equipment.
      */
 
-    public Equipment(long id, Room room, String name, int amount) {
+    public Equipment(long id, Room room, Item item, int amount) {
         this.id = id;
         this.room = room;
-        this.name = name;
+        this.item = item;
         this.amount = amount;
     }
 
@@ -80,12 +81,12 @@ public class Equipment {
         this.room = room;
     }
 
-    public String getName() {
-        return name;
+    public Item getItem() {
+        return item;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public int getAmount() {
@@ -105,11 +106,7 @@ public class Equipment {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Equipment that = (Equipment) o;
-        return id == that.id
-                && amount == that.amount
-                && Objects.equals(room, that.room)
-                && Objects.equals(name, that.name);
+        Equipment equipment = (Equipment) o;
+        return id == equipment.id;
     }
-
 }

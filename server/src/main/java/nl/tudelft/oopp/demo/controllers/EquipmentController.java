@@ -56,7 +56,7 @@ public class EquipmentController {
      */
     @GetMapping("equipment/name/{name}")
     public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable(value="name") String equipmentName ) {
-        return equipment.findByName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipment.findByName(equipmentName), HttpStatus.OK);
+        return equipment.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipment.findByItemName(equipmentName), HttpStatus.OK);
     }
 
     /**
@@ -100,7 +100,7 @@ public class EquipmentController {
 
         Equipment updatedEquipment = equipment.findById(id)
                 .map( equipment -> {
-                    equipment.setName(newEquipment.getName());
+                    equipment.setItem(newEquipment.getItem());
                     equipment.setRoom(newEquipment.getRoom());
                     equipment.setAmount(newEquipment.getAmount());
                     return this.equipment.save(equipment);

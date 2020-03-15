@@ -1,15 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
-import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import nl.tudelft.oopp.demo.repositories.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +17,10 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class RestaurantControllerTest {

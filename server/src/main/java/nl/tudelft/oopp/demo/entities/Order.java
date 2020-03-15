@@ -14,7 +14,7 @@ public class Order {
     @Column(name = "id")
     private long id;
 
-    @NotBlank
+    //@NotBlank
     @ManyToOne
     @JoinColumn(name = "room_reservation_id", referencedColumnName = "id", nullable = false)
     private RoomReservation roomReservation;

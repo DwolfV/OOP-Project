@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.repositories.EquipmentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @DataJpaTest
 class EquipmentControllerTest {
+    private Item i1;
+    private Item i2;
+    private Item i3;
+
     private Equipment e1;
     private Equipment e2;
     private Equipment e3;
@@ -45,10 +50,16 @@ class EquipmentControllerTest {
         //constructor long id, Room room, String name, int amount for building
         //constructor long id, String name, Integer capacity, Building building) for room
         b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+
         r1 = new Room("name", 11, b1);
-        e1 = new Equipment(r1, "e1", 15);
-        e2 = new Equipment(r1, "e2", 22);
-        e3 = new Equipment(r1, "e3", 45);
+
+        i1 = new Item("e1");
+        i2 = new Item("e2");
+        i3 = new Item("e3");
+
+        e1 = new Equipment(r1, i1, 15);
+        e2 = new Equipment(r1, i2, 22);
+        e3 = new Equipment(r1, i3, 45);
     }
 
     /**
@@ -83,7 +94,7 @@ class EquipmentControllerTest {
         Optional<Equipment> optionalEquipment = Optional.of(e1);
         ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
 
-        Mockito.when(equipmentRepository.findByName(
+        Mockito.when(equipmentRepository.findByItemName(
                 "e1")).thenAnswer(invocationOnMock -> List.of(e1));
         assertEquals(List.of(entity.getBody()),
                 equipmentController.getEquipmentByName("e1").getBody());
@@ -105,7 +116,7 @@ class EquipmentControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("name", 11, b1);
-        Equipment equipment = new Equipment(r1, "e1", 15);
+        Equipment equipment = new Equipment(r1, i1, 15);
         Optional<Equipment> optionalEquipment = Optional.of(equipment);
         ResponseEntity<Equipment> responseEntity = ResponseEntity.of(optionalEquipment);
 
@@ -119,7 +130,7 @@ class EquipmentControllerTest {
     void testReplaceEquipment() {
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("name", 11, b1);
-        Equipment equipment = new Equipment(r1, "e1", 15);
+        Equipment equipment = new Equipment(r1, i1, 15);
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
         Optional<Equipment> optionalEquipment = Optional.of(e1);
 
