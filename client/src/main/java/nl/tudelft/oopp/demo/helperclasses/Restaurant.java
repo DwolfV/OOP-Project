@@ -25,9 +25,6 @@ public class Restaurant {
      * @param tOpen - the time at which the restaurant opens
      */
 
-    public Restaurant() {
-    }
-
 
     public Restaurant(String name, Building building, Time tClose, Time tOpen) {
         this.name = name;
