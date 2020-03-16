@@ -10,7 +10,7 @@ public class Equipment {
     /**
      * Create a new Equipment instance.
      *
-     * @param pc A counter for available pc.
+     * @param pc A counter for available pc.Caused by: java.net.ConnectException: Connection refused: no further information
      * @param whiteboard A counter for available whiteboards.
      * @param beamer A counter for available beamers.
      * @param microphone A counter for available microphones.

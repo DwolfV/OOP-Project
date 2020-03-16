@@ -2,12 +2,14 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 import javafx.util.StringConverter;
 
-public class BuildingToStringConvertor extends StringConverter {
+import java.sql.Time;
+
+public class TimeToStringConvertor extends StringConverter {
 
     @Override
     public String toString(Object object) {
-        Building b = (Building) object;
-        return b.getName();
+        Time t = (Time) object;
+        return t.getHours() + ": " + t.getMinutes();
     }
 
     @Override

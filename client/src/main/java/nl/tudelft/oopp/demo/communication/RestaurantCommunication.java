@@ -63,7 +63,7 @@ public class RestaurantCommunication {
 
      public static Restaurant getRestaurantById(long id) {
          // TODO what if Authenticator.SESSION_COOKIE is not set?
-         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/restaurant/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/restaurant/id/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
          HttpResponse<String> response = null;
 
          try {

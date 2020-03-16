@@ -33,15 +33,15 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    @NotBlank
+    //@NotBlank
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @NotBlank
+    //@NotBlank
     @Column(name = "startTime", nullable = false)
     private Time startTime;
 
-    @NotBlank
+    //@NotBlank
     @Column(name = "endTime", nullable = false)
     private Time endTime;
 
@@ -57,7 +57,6 @@ public class Event {
     /**
      * Constructor for the Event entity.
      *
-     * @param id - The auto-generated id
      * @param name - The name of the event
      * @param description - A description of the event
      * @param date - The date of the event
@@ -65,8 +64,7 @@ public class Event {
      * @param endTime - The end time of the event
      * @param user - The user who created the event
      */
-    public Event(long id,
-                 String name,
+    public Event(String name,
                  String description,
                  Date date,
                  Time startTime,
