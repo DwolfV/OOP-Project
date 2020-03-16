@@ -54,7 +54,7 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <DatePicker fx:id="dateId">
+            <DatePicker fx:id="dp" onAction="#pickDate">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>

@@ -13,19 +13,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
-import nl.tudelft.oopp.demo.communication.RoomCommunication;
-import nl.tudelft.oopp.demo.communication.UserCommunication;
+import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -122,34 +127,42 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleReservationButton(ActionEvent event) {
-        try {
+    private DatePicker dp;
+
+    @FXML
+    private Button searchId;
+
+    private static ArrayList<String> timeFrom = new ArrayList<>();
+    private static ArrayList<String> timeTo = new ArrayList<>();
+
+    private static BorderPane rootScene;
+
+    public void pickDate(ActionEvent event) {
+        ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
+        searchId.setOnAction(e -> {
+            LocalDate date = dp.getValue();
+            for(int i = 0; i < rooms.size(); i++) {
+                String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(i).getId(), Date.valueOf(date.toString())));
+                String replaced = string1.replace("{", "").replace("}", "");
+                replaced.trim();
+                if (!replaced.equals("")) {
+                    String[] string2 = replaced.split(", ");
+                    for (int k = 0; k < string2.length; k++) {
+                        String[] string3 = string2[k].split("=");
+                        timeFrom.add(string3[0]);
+                        System.out.println(string3.length);
+                        timeTo.add(string3[1]);
+                    }
+                }
+            }
+
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
-            ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
-            buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
-            rooms = FXCollections.observableList(RoomCommunication.getRooms());
 
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
             //List<Label> labels = new ArrayList<>();
 
             int c=0; // count - for lists, c - for tps
-
-            // load the scene
-            BorderPane rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
-
-            //Create time
-            ArrayList<String> timeFrom = new ArrayList<>();
-            ArrayList<String> timeTo = new ArrayList<>();
-
-            for(int p = 9; p < 20; p++){
-                timeFrom.add(p+".00");
-                timeFrom.add(p+".30");
-                if(p>9){
-                    timeTo.add(p+".00");
-                    timeTo.add(p+".30");
-                }
-            }
 
             // fill the accordion
             for(int i = 0; i < buildingData.size(); i++){
@@ -162,10 +175,8 @@ public class MainSceneController implements Initializable {
                     }
                 }
 
-
                 ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
                 ObservableList<String> to = FXCollections.observableArrayList(timeTo);
-
 
                 //if there are rooms for the building i - show them;
                 if(showRooms.size()!=0){
@@ -177,6 +188,7 @@ public class MainSceneController implements Initializable {
 
                         Label label1 = new Label(showRooms.get(j).getName());
                         label1.setStyle("-fx-font-weight: bold");
+//                        label1.setPadding(new Insets(0,10,0,0));
 
                         Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                         Button button1 = new Button("Reserve");
@@ -190,7 +202,6 @@ public class MainSceneController implements Initializable {
 
 
                         hBox.getChildren().addAll(label1,label2,cb,cbb,button1);
-                        hBox.setPadding(new Insets(5,10,5,10));
                         hBox.setSpacing(150);
                         hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                                 + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
@@ -210,6 +221,15 @@ public class MainSceneController implements Initializable {
             bPane.setCenter(vBox);
             bPane.setPadding(new Insets(30, 5, 5, 10));
             rootScene.setCenter(bPane);
+
+        });
+    }
+
+    @FXML
+    public void handleReservationButton(ActionEvent event) {
+        try {
+            // load the scene
+             rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
 
             // show the scene
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
