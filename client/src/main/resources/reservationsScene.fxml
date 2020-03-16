@@ -54,7 +54,7 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <DatePicker>
+            <DatePicker fx:id="dp" onAction="#pickDate">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
@@ -64,7 +64,7 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <TextField>
+            <TextField fx:id="capacityId">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
@@ -74,7 +74,7 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Text>
-            <CheckBox mnemonicParsing="false" text="Blackboard" textFill="WHITE">
+            <CheckBox fx:id="whiteboardId" mnemonicParsing="false" text="Whiteboard" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -82,7 +82,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Table" textFill="WHITE">
+            <CheckBox fx:id="tableId" mnemonicParsing="false" text="Table" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -90,7 +90,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="TV" textFill="WHITE">
+            <CheckBox fx:id="tvId" mnemonicParsing="false" text="TV" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -98,7 +98,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Projector" textFill="WHITE">
+            <CheckBox fx:id="projectorId" mnemonicParsing="false" text="Projector" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -106,7 +106,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Chairs" textFill="WHITE">
+            <CheckBox fx:id="chairsId" mnemonicParsing="false" text="Chairs" textFill="WHITE">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -129,6 +129,14 @@
                   <Insets left="10.0" />
                </padding>
             </CheckBox>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <Button fx:id="searchId" mnemonicParsing="false" text="Search" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets top="15.0" />
+                     </BorderPane.margin></Button>
+               </top>
+            </BorderPane>
          </children></VBox>
     </left>
    <center>

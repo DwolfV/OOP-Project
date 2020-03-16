@@ -97,6 +97,7 @@ public class Room {
         this.building = building;
     }
 
+    @JsonIgnore
     @Nullable
     public List<Equipment> getEquipment() {
         return equipment;
