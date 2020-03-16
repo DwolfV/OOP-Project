@@ -1,6 +1,12 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import nl.tudelft.oopp.demo.entities.Building;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Item;
 import nl.tudelft.oopp.demo.repositories.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,14 +19,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 public class ItemControllerTest {
@@ -74,7 +72,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void testCreateItem(){
+    public void testCreateItem() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
         Item i4 = new Item("speakers");
         Optional<Item> optionalItem = Optional.of(i4);
@@ -83,7 +81,7 @@ public class ItemControllerTest {
         when(itemRepository.save(i4)).thenReturn(i4);
 
         assertEquals(i4,
-                itemController.createItem(i4, uriComponentsBuilder).getBody());
+            itemController.createItem(i4, uriComponentsBuilder).getBody());
     }
 
     @Test
@@ -99,7 +97,7 @@ public class ItemControllerTest {
         when(itemRepository.findById(i1.getId())).thenReturn(optionalItem);
 
         assertEquals(newE.getBody(),
-                itemController.updateItem(i1.getId(), newItem).getBody());
+            itemController.updateItem(i1.getId(), newItem).getBody());
     }
 
 

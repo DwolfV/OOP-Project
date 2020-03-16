@@ -1,8 +1,12 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 
 @Entity
 @Table(name = "Dish_Order")
@@ -25,20 +29,20 @@ public class DishOrder {
     @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
     private RestaurantDish dish;
 
-    public DishOrder(){
+    public DishOrder() {
 
     }
 
     /**
-     * Constructor for the DishOrder class
+     * Constructor for the DishOrder class.
      *
      * @param amount - Amount of a certain dish
-     * @param order - The id of the order that the dish is part of
-     * @param dish - The id of the dish that is included in the order
+     * @param order  - The id of the order that the dish is part of
+     * @param dish   - The id of the dish that is included in the order
      */
     public DishOrder(int amount,
                      Order order,
-                     RestaurantDish dish){
+                     RestaurantDish dish) {
         this.amount = amount;
         this.order = order;
         this.dish = dish;

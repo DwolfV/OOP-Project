@@ -1,6 +1,20 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import nl.tudelft.oopp.demo.entities.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Order;
+import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.OrderRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
@@ -17,17 +31,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 public class OrderControllerTest {
@@ -90,8 +93,8 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void testGetAll(){
-        List<Order> expectedList = new ArrayList<Order>(List.of(o1,o2,o3));
+    public void testGetAll() {
+        List<Order> expectedList = new ArrayList<Order>(List.of(o1, o2, o3));
         when(orderRepository.findAll()).thenReturn(expectedList);
         List<Order> actualList = orderController.getAllOrders();
 
@@ -100,7 +103,7 @@ public class OrderControllerTest {
 
     @Test
     public void testGetOrdersByRoomReservationId() {
-        List<Order> expectedList = new ArrayList<Order>(List.of(o1,o2));
+        List<Order> expectedList = new ArrayList<Order>(List.of(o1, o2));
         when(orderRepository.findOrdersByRoomReservationId(rr1.getId())).thenReturn(expectedList);
         List<Order> actualList = orderController.getOrdersByReservationId(u1.getId());
 
@@ -140,18 +143,20 @@ public class OrderControllerTest {
             }
 
             @Override
+            public String getName() {
+                return "user2";
+            }
+
+            @Override
             public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
             }
 
-            @Override
-            public String getName() {
-                return "user2";
-            }
+
         };
 
         assertEquals(List.of(o3, o4),
-                orderController.getOrdersByUserId(u2.getId(), auth).getBody());
+            orderController.getOrdersByUserId(u2.getId(), auth).getBody());
     }
 
     @Test
@@ -162,7 +167,7 @@ public class OrderControllerTest {
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation rr1 = new RoomReservation(
-                new Date(1), r1, new Time(1), new Time(2), u1);
+            new Date(1), r1, new Time(1), new Time(2), u1);
 
         Order o4 = new Order(rr1);
         Optional<Order> optionalOrder = Optional.of(o4);
@@ -172,41 +177,43 @@ public class OrderControllerTest {
         when(users.findByUsername(u1.getUsername())).thenReturn(Optional.of(u1));
 
         assertEquals(o4, orderController.addOrder(o4, uriComponentsBuilder, new Authentication() {
-                    @Override
-                    public Collection<? extends GrantedAuthority> getAuthorities() {
-                        return null;
-                    }
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
 
-                    @Override
-                    public Object getCredentials() {
-                        return null;
-                    }
+            @Override
+            public Object getCredentials() {
+                return null;
+            }
 
-                    @Override
-                    public Object getDetails() {
-                        return null;
-                    }
+            @Override
+            public Object getDetails() {
+                return null;
+            }
 
-                    @Override
-                    public Object getPrincipal() {
-                        return null;
-                    }
+            @Override
+            public Object getPrincipal() {
+                return null;
+            }
 
-                    @Override
-                    public boolean isAuthenticated() {
-                        return false;
-                    }
+            @Override
+            public boolean isAuthenticated() {
+                return false;
+            }
 
-                    @Override
-                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+            @Override
+            public String getName() {
+                return "user1";
+            }
 
-                    }
+            @Override
+            public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
-                    @Override
-                    public String getName() {
-                        return "user1";
-                    }
-                }).getBody());
+            }
+
+
+        }).getBody());
     }
 
 
@@ -218,7 +225,7 @@ public class OrderControllerTest {
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
-                new Date(1), r1, new Time(1), new Time(2), u1);
+            new Date(1), r1, new Time(1), new Time(2), u1);
         Order newOrder = new Order(roomReservation);
 
         Optional<Order> newOptionalOrder = Optional.of(newOrder);
@@ -230,51 +237,53 @@ public class OrderControllerTest {
         when(orderRepository.save(newOrder)).thenReturn(newOrder);
         when(orderRepository.findById(o1.getId())).thenReturn(optionalOrder);
 
-        assertEquals(newRe.getBody(), orderController.updateOrder( 1,
-                newOrder, uriComponentsBuilder, new Authentication() {
-                    @Override
-                    public Collection<? extends GrantedAuthority> getAuthorities() {
-                        return null;
-                    }
+        assertEquals(newRe.getBody(), orderController.updateOrder(1,
+            newOrder, uriComponentsBuilder, new Authentication() {
+                @Override
+                public Collection<? extends GrantedAuthority> getAuthorities() {
+                    return null;
+                }
 
-                    @Override
-                    public Object getCredentials() {
-                        return null;
-                    }
+                @Override
+                public Object getCredentials() {
+                    return null;
+                }
 
-                    @Override
-                    public Object getDetails() {
-                        return null;
-                    }
+                @Override
+                public Object getDetails() {
+                    return null;
+                }
 
-                    @Override
-                    public Object getPrincipal() {
-                        return null;
-                    }
+                @Override
+                public Object getPrincipal() {
+                    return null;
+                }
 
-                    @Override
-                    public boolean isAuthenticated() {
-                        return false;
-                    }
+                @Override
+                public boolean isAuthenticated() {
+                    return false;
+                }
 
-                    @Override
-                    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+                @Override
+                public String getName() {
+                    return "user1";
+                }
 
-                    }
+                @Override
+                public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
-                    @Override
-                    public String getName() {
-                        return "user1";
-                    }
-                }).getBody());
+                }
+
+
+            }).getBody());
     }
 
     @Test
     void testDeleteOrder() {
         List<Order> actualList = new ArrayList<Order>(
-                List.of(o1, o3));
+            List.of(o1, o3));
         List<Order> orderList = new ArrayList<Order>(
-                List.of(o1, o2, o3));
+            List.of(o1, o2, o3));
 
         Optional<Order> optionalOrder = Optional.of(o2);
         ResponseEntity<Order> responseEntity = ResponseEntity.of(optionalOrder);
@@ -306,14 +315,16 @@ public class OrderControllerTest {
             }
 
             @Override
+            public String getName() {
+                return "user1";
+            }
+
+            @Override
             public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 
             }
 
-            @Override
-            public String getName() {
-                return "user1";
-            }
+
         });
 
         Mockito.doAnswer(new Answer<Void>() {

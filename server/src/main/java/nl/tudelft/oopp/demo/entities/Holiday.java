@@ -19,42 +19,42 @@ public class Holiday {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column (name = "date")
+    @Column(name = "date")
     private Date date;
 
-    @Column (name = "t_open")
-    private Time t_open;
+    @Column(name = "t_open")
+    private Time tOpen;
 
-    @Column (name = "t_close")
-    private Time t_close;
+    @Column(name = "t_close")
+    private Time tClose;
 
 
-    public Holiday(String name, Date date, Time t_open, Time t_close) {
+    public Holiday(String name, Date date, Time tOpen, Time tClose) {
         this.name = name;
         this.date = date;
-        this.t_open = t_open;
-        this.t_close = t_close;
+        this.tOpen = tOpen;
+        this.tClose = tClose;
     }
 
     /**
      * Create a new Holiday instance.
      *
-     * @param id A unique ID for the Holiday.
-     * @param date The date of the Holiday.
-     * @param name The name of the Holiday.
-     * @param t_close The closing time of a building during a Holiday.
-     * @param t_open The opening time of a building during a Holiday.
+     * @param id      A unique ID for the Holiday.
+     * @param date    The date of the Holiday.
+     * @param name    The name of the Holiday.
+     * @param tClose The closing time of a building during a Holiday.
+     * @param tOpen  The opening time of a building during a Holiday.
      */
 
-    public Holiday(long id, String name, Date date, Time t_open, Time t_close) {
+    public Holiday(long id, String name, Date date, Time tOpen, Time tClose) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.t_open = t_open;
-        this.t_close = t_close;
+        this.tOpen = tOpen;
+        this.tClose = tClose;
     }
 
     public long getId() {
@@ -81,20 +81,20 @@ public class Holiday {
         this.date = date;
     }
 
-    public Time getT_open() {
-        return t_open;
+    public Time gettOpen() {
+        return tOpen;
     }
 
-    public void setT_open(Time t_open) {
-        this.t_open = t_open;
+    public void settOpen(Time tOpen) {
+        this.tOpen = tOpen;
     }
 
-    public Time getT_close() {
-        return t_close;
+    public Time gettClose() {
+        return tClose;
     }
 
-    public void setT_close(Time t_close) {
-        this.t_close = t_close;
+    public void settClose(Time tClose) {
+        this.tClose = tClose;
     }
 
     @Override
@@ -107,10 +107,10 @@ public class Holiday {
         }
         Holiday holiday = (Holiday) o;
         return getId() == holiday.getId()
-                && Objects.equals(getName(), holiday.getName())
-                && Objects.equals(getDate(), holiday.getDate())
-                && Objects.equals(getT_open(), holiday.getT_open())
-                && Objects.equals(getT_close(), holiday.getT_close());
+            && Objects.equals(getName(), holiday.getName())
+            && Objects.equals(getDate(), holiday.getDate())
+            && Objects.equals(gettOpen(), holiday.gettOpen())
+            && Objects.equals(gettClose(), holiday.gettClose());
     }
 
 }

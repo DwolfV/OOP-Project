@@ -1,17 +1,22 @@
 package nl.tudelft.oopp.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.lang.Nullable;
-
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "Room_Reservation")
@@ -48,7 +53,8 @@ public class RoomReservation {
     @Nullable
     private Set<Order> orders = new HashSet<>();
 
-    public RoomReservation() {}
+    public RoomReservation() {
+    }
 
     public RoomReservation(Date date,
                            Room room,
@@ -61,15 +67,16 @@ public class RoomReservation {
         this.endTime = endTime;
         this.user = user;
     }
+
     /**
      * Create a new RoomReservation instance.
      *
-     * @param id A unique identifier of the RoomReservation.
-     * @param date Te date for which the Room is reserved.
-     * @param room The room that is reserved.
+     * @param id        A unique identifier of the RoomReservation.
+     * @param date      Te date for which the Room is reserved.
+     * @param room      The room that is reserved.
      * @param startTime The start time of the RoomReservation.
-     * @param endTime The end time of the RoomReservation.
-     * @param user The user that has reserved the room.
+     * @param endTime   The end time of the RoomReservation.
+     * @param user      The user that has reserved the room.
      */
 
     public RoomReservation(long id,
@@ -153,10 +160,10 @@ public class RoomReservation {
         }
         RoomReservation that = (RoomReservation) o;
         return id == that.id
-                && Objects.equals(date, that.date)
-                && Objects.equals(room, that.room)
-                && Objects.equals(startTime, that.startTime)
-                && Objects.equals(endTime, that.endTime)
-                && Objects.equals(user, that.user);
+            && Objects.equals(date, that.date)
+            && Objects.equals(room, that.room)
+            && Objects.equals(startTime, that.startTime)
+            && Objects.equals(endTime, that.endTime)
+            && Objects.equals(user, that.user);
     }
 }

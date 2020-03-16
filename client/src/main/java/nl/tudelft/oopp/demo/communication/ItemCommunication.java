@@ -1,16 +1,14 @@
 package nl.tudelft.oopp.demo.communication;
 
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Item;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import nl.tudelft.oopp.demo.helperclasses.Item;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 public class ItemCommunication {
 
@@ -18,6 +16,7 @@ public class ItemCommunication {
 
     /**
      * Retrieves a list of items from the server.
+     *
      * @return the body of a get request to the server.
      * @throws Exception if communication with the server fails.
      */
@@ -39,7 +38,8 @@ public class ItemCommunication {
         List<Item> items = null;
         // TODO handle exception
         try {
-            items = mapper.readValue(response.body(), new TypeReference<List<Item>>(){});
+            items = mapper.readValue(response.body(), new TypeReference<List<Item>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,20 +49,21 @@ public class ItemCommunication {
 
     /**
      * Adds an item.
+     *
      * @param name - the name of the item
      */
     public static void addItem(String name) {
         ObjectMapper mapper = new ObjectMapper();
         Item newItem = new Item(name);
-        String JSONItem = "";
+        String jsonItem = "";
         try {
-            JSONItem = mapper.writeValueAsString(newItem);
-            System.out.println(JSONItem);
+            jsonItem = mapper.writeValueAsString(newItem);
+            System.out.println(jsonItem);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONItem)).uri(URI.create("http://localhost:8080/item/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create("http://localhost:8080/item/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -77,20 +78,21 @@ public class ItemCommunication {
 
     /**
      * Updates a Item.
+     *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static void updateItem(long id, String name) {
         ObjectMapper mapper = new ObjectMapper();
         Item newItem = new Item(name);
-        String JSONItem = "";
+        String jsonItem = "";
         try {
-            JSONItem = mapper.writeValueAsString(newItem);
-            System.out.println(JSONItem);
+            jsonItem = mapper.writeValueAsString(newItem);
+            System.out.println(jsonItem);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONItem)).uri(URI.create(String.format("http://localhost:8080/item/update/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create(String.format("http://localhost:8080/item/update/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

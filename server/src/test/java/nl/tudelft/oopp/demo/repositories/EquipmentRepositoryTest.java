@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import nl.tudelft.oopp.demo.entities.*;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
+import nl.tudelft.oopp.demo.entities.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,9 +138,9 @@ public class EquipmentRepositoryTest {
         List<Equipment> equipmentList1 = new ArrayList<Equipment>(List.of(e1, e2));
         List<Equipment> equipmentList2 = new ArrayList<Equipment>(List.of(e3, e4, e5));
         assertEquals(equipmentList1,
-                equipRep.findByRoomId(equipmentList1.get(0).getRoom().getId()));
+            equipRep.findByRoomId(equipmentList1.get(0).getRoom().getId()));
         assertEquals(equipmentList2,
-                equipRep.findByRoomId(equipmentList2.get(0).getRoom().getId()));
+            equipRep.findByRoomId(equipmentList2.get(0).getRoom().getId()));
         assertEquals(fullList.size(), equipmentList1.size() + equipmentList2.size());
     }
 }

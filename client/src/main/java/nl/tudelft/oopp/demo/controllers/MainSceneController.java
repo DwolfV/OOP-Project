@@ -1,5 +1,12 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,11 +19,24 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -24,57 +44,49 @@ import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
-import nl.tudelft.oopp.demo.helperclasses.*;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 public class MainSceneController implements Initializable {
 
+    private static ArrayList<String> timeFrom = new ArrayList<>();
+    private static ArrayList<String> timeTo = new ArrayList<>();
+    private static BorderPane rootScene;
     final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-
-    @FXML
-    private Label closeButton;
+    final Button updateButtonBuilding = new Button("Update");
+    final Button deleteButtonBuilding = new Button("Delete");
+    final Button updateButtonRoom = new Button("Update");
+    final Button deleteButtonRoom = new Button("Delete");
+    final Button updateButtonRestaurant = new Button("Update");
+    final Button deleteButtonRestaurant = new Button("Delete");
     @FXML
     private final Accordion ac = new Accordion();
     @FXML
     private final BorderPane bPane = new BorderPane();
+    private final TableView<Building> tableBuilding = new TableView<>();
+    private final TableView<Room> tableRoom = new TableView<>();
+    private final TableView<Restaurant> tableRestaurant = new TableView<>();
+    @FXML
+    private Label closeButton;
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-
-    private final TableView<Building> tableBuilding = new TableView<>();
-    private final TableView<Room> tableRoom = new TableView<>();
-    private final TableView<Restaurant> tableRestaurant = new TableView<>();
-
-    final Button updateButtonBuilding = new Button("Update");
-    final Button deleteButtonBuilding = new Button("Delete");
-
-    final Button updateButtonRoom = new Button("Update");
-    final Button deleteButtonRoom = new Button("Delete");
-
-    final Button updateButtonRestaurant = new Button("Update");
-    final Button deleteButtonRestaurant = new Button("Delete");
+    @FXML
+    private DatePicker dp;
+    @FXML
+    private Button searchId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void closeSecondaryStage(){
+    public void closeSecondaryStage() {
         MainDisplay.secondaryStage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
@@ -92,7 +104,7 @@ public class MainSceneController implements Initializable {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(!UserCommunication.authenticate(username, password)) {
+        if (!UserCommunication.authenticate(username, password)) {
             return;
         }
         try {
@@ -104,7 +116,7 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -120,7 +132,7 @@ public class MainSceneController implements Initializable {
             MainDisplay.registerStage.setScene(new Scene(registerParent));
             MainDisplay.registerStage.setTitle("Register");
             MainDisplay.registerStage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -135,22 +147,11 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.secondaryStage.setMaximized(true);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
     }
-
-    @FXML
-    private DatePicker dp;
-
-    @FXML
-    private Button searchId;
-
-    private static ArrayList<String> timeFrom = new ArrayList<>();
-    private static ArrayList<String> timeTo = new ArrayList<>();
-
-    private static BorderPane rootScene;
 
     public void pickDate(ActionEvent event) {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
@@ -177,36 +178,37 @@ public class MainSceneController implements Initializable {
             List<Button> buttons = new ArrayList<>();
             //List<Label> labels = new ArrayList<>();
 
-            int c=0; // count - for lists, c - for tps
+            int c = 0; // count - for lists, c - for tps
 
             // fill the accordion
-            for(int i = 0; i < buildingData.size(); i++){
+            for (int i = 0; i < buildingData.size(); i++) {
 
                 //Look for rooms for the building i;
                 ObservableList<Room> showRooms = FXCollections.observableArrayList();
-                for(int k = 0; k < rooms.size(); k++){
-                    if(rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())){
+                for (int k = 0; k < rooms.size(); k++) {
+                    if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
                         LocalDate date = dp.getValue();
                         String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), Date.valueOf(date.toString())));
                         String replaced = string1.replace("{", "").replace("}", "");
                         replaced.trim();
-                        if (!replaced.equals(""))
+                        if (!replaced.equals("")) {
                             showRooms.add(rooms.get(k));
+                        }
                     }
                 }
 
 
                 //if there are rooms for the building i - show them;
-                if(showRooms.size()!=0){
+                if (showRooms.size() != 0) {
                     VBox vBox = new VBox();
                     tps[c] = new TitledPane();
 
-                    for(int j = 0; j < showRooms.size(); j++){
+                    for (int j = 0; j < showRooms.size(); j++) {
                         HBox hBox = new HBox();
 
                         Label label1 = new Label(showRooms.get(j).getName());
                         label1.setStyle("-fx-font-weight: bold");
-//                        label1.setPadding(new Insets(0,10,0,0));
+                        //label1.setPadding(new Insets(0,10,0,0));
 
                         Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                         Button button1 = new Button("Reserve");
@@ -238,11 +240,11 @@ public class MainSceneController implements Initializable {
                         cbb.setItems(to);
 
 
-                        hBox.getChildren().addAll(label1,label2,cb,cbb,button1);
+                        hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                         hBox.setSpacing(150);
                         hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                                + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                                + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+                            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                            + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
                         vBox.getChildren().add(hBox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
@@ -266,14 +268,14 @@ public class MainSceneController implements Initializable {
     public void handleReservationButton(ActionEvent event) {
         try {
             // load the scene
-             rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
+            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));
 
             // show the scene
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Reservations");
             MainDisplay.secondaryStage.show();
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
@@ -291,28 +293,28 @@ public class MainSceneController implements Initializable {
             List<Button> buttons = new ArrayList<>();
             List<Label> labels = new ArrayList<>();
 
-            int count=0, c=0; // count - for lists, c - for tps
+            int count = 0, c = 0; // count - for lists, c - for tps
 
             // load the scene
             BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
 
             // fill the accordion
-            for(int i = 0; i < buildingData.size(); i++){
+            for (int i = 0; i < buildingData.size(); i++) {
 
                 //Look for restaurants for the building i;
                 ObservableList<Restaurant> showRestaurants = FXCollections.observableArrayList();
-                for(int k = 0; k < restaurants.size(); k++){
-                    if(restaurants.get(k).getBuilding().getName().equals(buildingData.get(i).getName())){
+                for (int k = 0; k < restaurants.size(); k++) {
+                    if (restaurants.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
                         showRestaurants.add(restaurants.get(k));
                     }
                 }
 
                 //if there are restaurants for the building i - show them;
-                if(showRestaurants.size()!=0){
+                if (showRestaurants.size() != 0) {
                     tps[c] = new TitledPane();
                     GridPane grid = new GridPane();
                     ColumnConstraints colConst = new ColumnConstraints();
-                    colConst.setPercentWidth(100/2);
+                    colConst.setPercentWidth(100 / 2);
                     grid.getColumnConstraints().add(colConst);
                     grid.setVgap(4);
                     grid.setPadding(new Insets(5, 5, 5, 5));
@@ -321,7 +323,7 @@ public class MainSceneController implements Initializable {
                         System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
                     }
 
-                    for(int j = 0; j < showRestaurants.size(); j++){
+                    for (int j = 0; j < showRestaurants.size(); j++) {
                         Label label1 = new Label(showRestaurants.get(j).getName());
                         labels.add(label1);
                         Button button1 = new Button("Menu");
@@ -329,7 +331,7 @@ public class MainSceneController implements Initializable {
 
                         grid.add(labels.get(count), 0, j);
                         grid.add(buttons.get(count), 1, j);
-                        count = count +1;
+                        count = count + 1;
                     }
                     tps[c].setText(buildingData.get(i).getName());
                     tps[c].setContent(grid);
@@ -350,7 +352,7 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.show();
 
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
@@ -365,7 +367,7 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Friends");
             MainDisplay.secondaryStage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
@@ -381,7 +383,7 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");
             MainDisplay.secondaryStage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
@@ -389,7 +391,7 @@ public class MainSceneController implements Initializable {
 
     public void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(),building.getZipCode(), building.getCity());
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
     }
 
     public void deleteBuildingButtonClicked() {
@@ -442,70 +444,70 @@ public class MainSceneController implements Initializable {
         tableBuilding.setEditable(true);
 
         TableColumn<Building, Long> idCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idCol.setMinWidth(100);
         idCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Building, String> buildingCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingCol.setMinWidth(100);
         buildingCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
         buildingCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setName(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Building, String> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setName(t.getNewValue());
+            });
 
         TableColumn<Building, String> streetNameCol =
-                new TableColumn<>("Street Name");
+            new TableColumn<>("Street Name");
         streetNameCol.setMinWidth(100);
         streetNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("streetName"));
+            new PropertyValueFactory<>("streetName"));
         streetNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         streetNameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setStreetName(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Building, String> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setStreetName(t.getNewValue());
+            });
 
         TableColumn<Building, String> streetNumCol =
-                new TableColumn<>("Street Number");
+            new TableColumn<>("Street Number");
         streetNumCol.setMinWidth(100);
         streetNumCol.setCellValueFactory(
-                new PropertyValueFactory<>("streetNumber"));
+            new PropertyValueFactory<>("streetNumber"));
         streetNumCol.setCellFactory(TextFieldTableCell.forTableColumn());
         streetNumCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setStreetNumber(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Building, String> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setStreetNumber(t.getNewValue());
+            });
 
         TableColumn<Building, String> zipCodeCol =
-                new TableColumn<>("Zip Code");
+            new TableColumn<>("Zip Code");
         zipCodeCol.setMinWidth(100);
         zipCodeCol.setCellValueFactory(
-                new PropertyValueFactory<>("zipCode"));
+            new PropertyValueFactory<>("zipCode"));
         zipCodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         zipCodeCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setZipCode(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Building, String> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setZipCode(t.getNewValue());
+            });
 
         TableColumn<Building, String> cityCol =
-                new TableColumn<>("City");
+            new TableColumn<>("City");
         cityCol.setMinWidth(100);
         cityCol.setCellValueFactory(
-                new PropertyValueFactory<>("City"));
+            new PropertyValueFactory<>("City"));
         cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
         cityCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setCity(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Building, String> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setCity(t.getNewValue());
+            });
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
@@ -534,7 +536,7 @@ public class MainSceneController implements Initializable {
         hBoxAddDeleteUpdate.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
 
         // adding a building
-        BorderPane  borderPaneAddBuidling = new BorderPane();
+        BorderPane borderPaneAddBuidling = new BorderPane();
         VBox vBoxAddBuilding = new VBox();
 
         Text buildingName = new Text("Building Name");
@@ -552,7 +554,7 @@ public class MainSceneController implements Initializable {
         Button addButtonBuilding = new Button("Add Building");
 
         vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vBoxAddBuilding.setPadding(new Insets(10,10,10,10));
+        vBoxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuidling.setTop(vBoxAddBuilding);
 
@@ -587,40 +589,40 @@ public class MainSceneController implements Initializable {
         tableRoom.setEditable(true);
 
         TableColumn<Room, Long> idColRooms =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idColRooms.setMinWidth(100);
         idColRooms.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Room, String> roomCol =
-                new TableColumn<>("Room Name");
+            new TableColumn<>("Room Name");
         roomCol.setMinWidth(100);
         roomCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
         roomCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setName(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Room, String> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setName(t.getNewValue());
+            });
 
         TableColumn<Room, Integer> capacityCol =
-                new TableColumn<>("Capacity");
+            new TableColumn<>("Capacity");
         capacityCol.setMinWidth(100);
         capacityCol.setCellValueFactory(
-                new PropertyValueFactory<>("capacity"));
+            new PropertyValueFactory<>("capacity"));
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         capacityCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, Integer> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setCapacity(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Room, Integer> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setCapacity(t.getNewValue());
+            });
 
         TableColumn<Room, String> buildingNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Room, String>forTableColumn(new BuildingToStringConvertor()));
 
         ObservableList<Room> roomData = FXCollections.observableList(RoomCommunication.getRooms());
@@ -630,9 +632,9 @@ public class MainSceneController implements Initializable {
         //delete button
         deleteButtonRoom.setOnAction(e -> {
             try {
-            deleteRoomButtonClicked();
+                deleteRoomButtonClicked();
             } catch (Exception ex) {
-            ex.printStackTrace();
+                ex.printStackTrace();
             }
         });
 
@@ -659,7 +661,7 @@ public class MainSceneController implements Initializable {
         }
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
-        BorderPane  borderPaneAddRoom = new BorderPane();
+        BorderPane borderPaneAddRoom = new BorderPane();
         VBox vBoxAddRoom = new VBox();
 
         Text roomName = new Text("Room Name");
@@ -681,11 +683,11 @@ public class MainSceneController implements Initializable {
         });
 
         vBoxAddRoom.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
-        vBoxAddRoom.setPadding(new Insets(10,10,10,10));
+        vBoxAddRoom.setPadding(new Insets(10, 10, 10, 10));
         vBoxAddRoom.setSpacing(10);
         borderPaneAddRoom.setTop(vBoxAddRoom);
 
-        addButton.setOnAction((EventHandler<ActionEvent>) e -> {
+        addButton.setOnAction(e -> {
             String roomName1 = RoomName.getText();
             Integer capacity1 = Integer.parseInt(Capacity.getText());
 
