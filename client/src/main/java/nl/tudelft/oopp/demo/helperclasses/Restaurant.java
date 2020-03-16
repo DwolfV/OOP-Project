@@ -11,6 +11,10 @@ public class Restaurant {
     private Time tClose;
     private Time tOpen;
 
+    public Restaurant() {
+
+    }
+
     /**
      * Constructor for the Restaurant class.
      *
@@ -20,6 +24,8 @@ public class Restaurant {
      * @param tClose - the time at which the restaurant closes
      * @param tOpen - the time at which the restaurant opens
      */
+
+
     public Restaurant(String name, Building building, Time tClose, Time tOpen) {
         this.name = name;
         this.building = building;

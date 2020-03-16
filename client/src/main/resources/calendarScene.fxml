@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.calendarfx.view.CalendarView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
     <bottom>
         <HBox style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
@@ -34,6 +25,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleReservationButton" text="Reservations" />
                         <MenuItem mnemonicParsing="false" onAction="#handleRestaurantsButton" text="Restaurants" />
                         <MenuItem mnemonicParsing="false" onAction="#handleFriendsButton" text="Friends" />
+                        <MenuItem fx:id="adminButton" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
                         <MenuItem mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings" />
                     </items>
                     <HBox.margin>
@@ -43,19 +35,16 @@
                   <Insets />
                </opaqueInsets>
                 </MenuButton>
-            <Pane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Button layoutX="33.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin" />
-               </children>
-            </Pane>
-            <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@TU_Delft_logo_White.png" />
-               </image>
-            </ImageView>
-            </children>
-        </HBox>
+                <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/TU_Delft_logo_White.png" />
+                    </image>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </ImageView>
+            </children></HBox>
     </top>
    <center>
       <CalendarView showPrintButton="false" BorderPane.alignment="CENTER" />

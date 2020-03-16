@@ -39,7 +39,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/building/**", "/equipment/**", "/holidays/**",
                         "/openTimes/**", "/restaurant/**", "/rooms/**",
-                        "/room_reservations/**", "/supply/**", "/login")
+                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**")
                         .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
