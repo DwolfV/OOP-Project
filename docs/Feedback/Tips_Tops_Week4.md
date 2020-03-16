@@ -4,9 +4,9 @@
 - **Tip:** Start reviews on merge requests
 
 ###Alena 
-- **Top:** 
+- **Top:** Great communication within a fron end team
 
-- **Tip:** 
+- **Tip:** The work between front end and back end needs improvement
 
 ###Atanas
 - **Top:** Finished all of our deadlines. Everybody worked hard and did their part. Great communication as we had a lot of meetings.
