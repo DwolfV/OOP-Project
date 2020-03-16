@@ -39,13 +39,16 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/building/**", "/equipment/**", "/holidays/**",
                         "/openTimes/**", "/restaurant/**", "/rooms/**",
-                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**")
+                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/order/**")
                         .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/room_reservations/**").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/room_reservations/**").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE, "/room_reservations/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/order/**").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/order/**").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE, "/order/**").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
