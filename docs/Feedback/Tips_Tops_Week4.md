@@ -14,9 +14,9 @@
 - **Tip:** Maybe work more on the issue board as we did not document everything well enough. 
 
 ###Daniel
-- **Top:** 
+- **Top:** We improved the way we name our branches and how to do merge requests.
 
-- **Tip:**
+- **Tip:** Myabe work more on communication between front-end and back-end
 
 ###Bogdan
 - **Top:**
