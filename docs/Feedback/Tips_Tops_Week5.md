@@ -14,9 +14,9 @@
 - **Tip:** Improve communication between the front-end and back-end teams. We may start setting stricter deadlines because we all leave the work for the last moment.
 
 ###Daniel
-- **Top:** 
+- **Top:** We started to add reviews for merge requests which shows improvement with communication between group memebers, and improves reliability.
 
-- **Tip:**
+- **Tip:** I think giving tasks on the front-end still needs to improve like divide to small tasks, otherwise 1-2 peopel end up doing a lot.
 
 ###Bogdan
 - **Top:**
