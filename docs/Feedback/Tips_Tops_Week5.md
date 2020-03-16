@@ -4,9 +4,9 @@
 - **Tip:** With the coronavirus situation we need to work on our team communication.
 
 ###Alena 
-- **Top:** 
+- **Top:** Good work with merge requests
 
-- **Tip:** 
+- **Tip:** Need to deal more efficiently with problems of front end and back end
 
 ###Atanas
 - **Top:** We made some great merge request comments and descriptions. Also we started working on more complicated features. 
