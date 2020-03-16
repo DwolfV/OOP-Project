@@ -17,7 +17,7 @@
         </HBox>
     </bottom>
     <top>
-            <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+        <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
             <children>
                 <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu" HBox.hgrow="ALWAYS">
                     <items>
@@ -31,6 +31,9 @@
                     <HBox.margin>
                         <Insets left="5.0" top="20.0" />
                     </HBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                 </MenuButton>
                 <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
                 <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -43,9 +46,7 @@
                 </ImageView>
             </children></HBox>
     </top>
-    <left>
-        <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
-    </left>
-    <center>
-    </center>
+   <center>
+      <CalendarView showPrintButton="false" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
