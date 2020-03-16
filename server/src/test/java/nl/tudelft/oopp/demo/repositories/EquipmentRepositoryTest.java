@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import nl.tudelft.oopp.demo.entities.Building;
-import nl.tudelft.oopp.demo.entities.Equipment;
-import nl.tudelft.oopp.demo.entities.Room;
-import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +22,20 @@ public class EquipmentRepositoryTest {
     private Equipment e4;
     private Equipment e5;
 
+    private Item i1;
+    private Item i2;
+    private Item i3;
+    private Item i4;
+    private Item i5;
+
     private Room r1;
     private Room r2;
 
     private Building b1;
     private Building b2;
+
+    @Autowired
+    private ItemRepository itemRep;
 
     @Autowired
     private EquipmentRepository equipRep;
@@ -56,11 +62,22 @@ public class EquipmentRepositoryTest {
         roomRep.save(r1);
         roomRep.save(r2);
 
-        e1 = new Equipment(r1, "equip1", 1);
-        e2 = new Equipment(r1, "equip2", 2);
-        e3 = new Equipment(r2, "equip3", 3);
-        e4 = new Equipment(r2, "equip4", 4);
-        e5 = new Equipment(r2, "equip5", 5);
+        i1 = new Item("equip1");
+        i2 = new Item("equip2");
+        i3 = new Item("equip3");
+        i4 = new Item("equip4");
+        i5 = new Item("equip5");
+        itemRep.save(i1);
+        itemRep.save(i2);
+        itemRep.save(i3);
+        itemRep.save(i4);
+        itemRep.save(i5);
+
+        e1 = new Equipment(r1, i1, 1);
+        e2 = new Equipment(r1, i2, 2);
+        e3 = new Equipment(r2, i3, 3);
+        e4 = new Equipment(r2, i4, 4);
+        e5 = new Equipment(r2, i5, 5);
         equipRep.save(e1);
         equipRep.save(e2);
         equipRep.save(e3);
@@ -105,9 +122,9 @@ public class EquipmentRepositoryTest {
      */
     @Test
     public void testFindByName() {
-        String name = e1.getName();
+        String name = e1.getItem().getName();
         List<Equipment> listE1 = new ArrayList<Equipment>(List.of(e1));
-        assertEquals(listE1, equipRep.findByName(name));
+        assertEquals(listE1, equipRep.findByItemName(name));
     }
 
     /**

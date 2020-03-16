@@ -43,13 +43,13 @@ public class RestaurantController {
      * @param buildingName name of the building
      * @return List of restaurants in that building
      */
-    @GetMapping("/{building}/restaurant")
+    @GetMapping("/restaurant/{building}")
     public List<Restaurant> getRestaurantByBuilding(@PathVariable(value = "building") String buildingName) {
         return restaurantRepository.findAllByBuildingName(buildingName);
     }
 
     /**
-     * Find restaurant by id
+     * Find restaurant by id.
      *
      * @param id - The id of the building that is to be found
      * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
@@ -61,32 +61,24 @@ public class RestaurantController {
     }
 
     /**
-     * Find Restaurant by name
+     * Find Restaurant by name.
      *
      * @param name - The name of the restaurant that is to be found
      * @return the restaurant and 200 status code if the restaurant is found, 404 status code otherwise
      */
-    @GetMapping("/restaurant/id/{name}")
+    @GetMapping("/restaurant/name/{name}")
     public List<Restaurant> getRestaurantByName(@PathVariable String name) {
         return restaurantRepository.findByName(name);
     }
 
 
     /**
-     * Create a new restaurant
+     * Create a new restaurant.
      *
      * @param restaurant The restaurant you want created
      * @return created restaurant
      */
 
-    // @PostMapping(value="/rooms", consumes = {"application/json"})
-    //    public ResponseEntity<Room> newRoom(@Valid @RequestBody Room newRoom, UriComponentsBuilder b) {
-    //        rooms.save(newRoom);
-    //        UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
-    //        return ResponseEntity
-    //                .created(uri.toUri())
-    //                .body(newRoom);
-    //    }
     @PostMapping(value = "/restaurant", consumes = {"application/json"})
     public ResponseEntity<Restaurant> createNewRestaurant(@Valid @RequestBody Restaurant restaurant, UriComponentsBuilder b) {
         restaurantRepository.save(restaurant);
@@ -98,13 +90,13 @@ public class RestaurantController {
     }
 
     /**
-     * Update a restaurant
+     * Update a restaurant.
      *
      * @param id          -The id of the restaurant that is to be updated
      * @param newRestaurant - The restaurant instance that has the modified parameters
      * @return a response: the updated restaurant and the status 200 if the update was successful, 404 if the restaurant was not found
      */
-    @PutMapping("/restaurant/id/{id}")
+    @PutMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id,
                                                    @RequestBody Restaurant newRestaurant) {
         return restaurantRepository.findById(id).map(restaurant -> {
@@ -118,12 +110,12 @@ public class RestaurantController {
     }
 
     /**
-     * Delete a restaurant by it's id
+     * Delete a restaurant by its id.
      *
      * @param id - The id of the restaurant that is to be deleted
      * @return a response status: 200 if the restaurant has been deleted successfully, 404 if the restaurant was not found
      */
-    @DeleteMapping("/restaurant/name/{id}")
+    @DeleteMapping("/restaurant/{id}")
     public ResponseEntity deleteRestaurant(@PathVariable long id) {
         return restaurantRepository.findById(id).map(restaurant -> {
             restaurantRepository.delete(restaurant);
