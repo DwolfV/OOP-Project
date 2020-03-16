@@ -50,6 +50,20 @@ public class OpenTimeController {
     }
 
     /**
+     * GET EndPoint to retrieve a list of all openTimes for a building.
+     *
+     * @param id Unique identifier of the building
+     * @return a list of the openTimes for the building {@link OpenTime}.
+     */
+
+    @GetMapping("openTimesByDay/{building_id}/{day}")
+    public @ResponseBody ResponseEntity<OpenTime>
+    getOpenTimesForBuildingByDay(@PathVariable(value = "building_id") long id , @PathVariable String day) {
+        return openTimes.findByBuildingIdAndDay(id,day).map(openTime -> ResponseEntity.ok(openTime)
+        ).orElseGet( () -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
      * GET Endpoint to retrieve holiday by ID.
      *
      * @param openTime_id Unique identifier of the equipment.
