@@ -9,6 +9,7 @@ import java.util.Set;
 public class Dish {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
