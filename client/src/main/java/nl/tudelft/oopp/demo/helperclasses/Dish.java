@@ -10,10 +10,10 @@ public class Dish {
     /**
      * Create a new Dish instance.
      *
-     * @param name A name of the Dish.
+     * @param name        A name of the Dish.
      * @param description A short description of the dish and its contents.
-     * @param type Type of the dish, like fish, meat, drink, etc. or something more specific.
-     * @param price The price of that Dish.
+     * @param type        Type of the dish, like fish, meat, drink, etc. or something more specific.
+     * @param price       The price of that Dish.
      */
 
     public Dish(String name, String description, String type, float price) {
