@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
 import java.sql.Time;
-import java.util.List;
 
 public class Restaurant {
 
@@ -18,11 +17,11 @@ public class Restaurant {
     /**
      * Constructor for the Restaurant class.
      *
-     * @param id - id of the restaurant
-     * @param name - name of the restaurant
+     * @param id       - id of the restaurant
+     * @param name     - name of the restaurant
      * @param building - the building in which the restaurant is
-     * @param tClose - the time at which the restaurant closes
-     * @param tOpen - the time at which the restaurant opens
+     * @param tClose   - the time at which the restaurant closes
+     * @param tOpen    - the time at which the restaurant opens
      */
 
 

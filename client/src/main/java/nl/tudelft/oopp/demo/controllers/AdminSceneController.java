@@ -2,8 +2,6 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -27,30 +25,23 @@ import static nl.tudelft.oopp.demo.controllers.MainSceneController.*;
 
 public class AdminSceneController implements Initializable {
 
+    static final Button updateButtonBuilding = new Button("Update");
+    static final Button deleteButtonBuilding = new Button("Delete");
+    static final Button updateButtonRoom = new Button("Update");
+    static final Button deleteButtonRoom = new Button("Delete");
+    static final Button updateButtonRestaurant = new Button("Update");
+    static final Button deleteButtonRestaurant = new Button("Delete");
     private static final TableView<Building> tableBuilding = new TableView<>();
     private static final TableView<Room> tableRoom = new TableView<>();
     private static final TableView<Restaurant> tableRestaurant = new TableView<>();
 
-    static final Button updateButtonBuilding = new Button("Update");
-    static final Button deleteButtonBuilding = new Button("Delete");
-
-    private static final Button updateButtonRoom = new Button("Update");
-    private static final Button deleteButtonRoom = new Button("Delete");
-
-    private static final Button updateButtonRestaurant = new Button("Update");
-    private static final Button deleteButtonRestaurant = new Button("Delete");
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(),building.getZipCode(), building.getCity());
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
     }
 
     public static void deleteBuildingButtonClicked() {
-        ObservableList<Building> buildingSelected, allBuildings;
+        ObservableList<Building> allBuildings;
         allBuildings = tableBuilding.getItems();
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
 
@@ -64,7 +55,7 @@ public class AdminSceneController implements Initializable {
     }
 
     public static void deleteRoomButtonClicked() {
-        ObservableList<Room> roomSelected, allRooms;
+        ObservableList<Room> allRooms;
         allRooms = tableRoom.getItems();
         Room room = tableRoom.getSelectionModel().getSelectedItem();
 
@@ -78,7 +69,7 @@ public class AdminSceneController implements Initializable {
     }
 
     public static void deleteButtonRestaurantClicked() {
-        ObservableList<Restaurant> restaurantSelected, allRestaurants;
+        ObservableList<Restaurant> allRestaurants;
         allRestaurants = tableRestaurant.getItems();
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
 
@@ -103,10 +94,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
         buildingCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setName(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Building, String> streetNameCol =
                 new TableColumn<>("Street Name");
@@ -115,10 +104,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("streetName"));
         streetNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         streetNameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setStreetName(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
 
         TableColumn<Building, String> streetNumCol =
                 new TableColumn<>("Street Number");
@@ -127,10 +114,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("streetNumber"));
         streetNumCol.setCellFactory(TextFieldTableCell.forTableColumn());
         streetNumCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setStreetNumber(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
 
         TableColumn<Building, String> zipCodeCol =
                 new TableColumn<>("Zip Code");
@@ -139,10 +124,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("zipCode"));
         zipCodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         zipCodeCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setZipCode(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
 
         TableColumn<Building, String> cityCol =
                 new TableColumn<>("City");
@@ -151,10 +134,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("City"));
         cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
         cityCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Building, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setCity(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setCity(t.getNewValue()));
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
@@ -201,7 +182,7 @@ public class AdminSceneController implements Initializable {
         Button addButtonBuilding = new Button("Add Building");
 
         vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vBoxAddBuilding.setPadding(new Insets(10,10,10,10));
+        vBoxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vBoxAddBuilding);
 
@@ -250,10 +231,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("name"));
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
         roomCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setName(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Room, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Room, Integer> capacityCol =
                 new TableColumn<>("Capacity");
@@ -262,10 +241,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("capacity"));
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         capacityCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, Integer> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setCapacity(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Room, Integer> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
 
         TableColumn<Room, String> buildingNameCol =
                 new TableColumn<>("Building Name");
@@ -303,14 +280,14 @@ public class AdminSceneController implements Initializable {
 
         // adding room scene
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
-        ArrayList<String> buildingList = new ArrayList<String>();
+        ArrayList<String> buildingList = new ArrayList<>();
 
         for (int i = 0; i < buildingNames.size(); i++) {
             buildingList.add(buildingNames.get(i).getName() + ", " + buildingNames.get(i).getId());
         }
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
-        BorderPane  borderPaneAddRoom = new BorderPane();
+        BorderPane borderPaneAddRoom = new BorderPane();
         VBox vBoxAddRoom = new VBox();
 
         Text roomName = new Text("Room Name");
@@ -332,13 +309,13 @@ public class AdminSceneController implements Initializable {
         });
 
         vBoxAddRoom.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
-        vBoxAddRoom.setPadding(new Insets(10,10,10,10));
+        vBoxAddRoom.setPadding(new Insets(10, 10, 10, 10));
         vBoxAddRoom.setSpacing(10);
         borderPaneAddRoom.setTop(vBoxAddRoom);
 
-        addButton.setOnAction((EventHandler<ActionEvent>) e -> {
+        addButton.setOnAction(e -> {
             String roomName1 = RoomName.getText();
-            Integer capacity1 = Integer.parseInt(Capacity.getText());
+            int capacity1 = Integer.parseInt(Capacity.getText());
 
             RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(Building.getText()));
 
@@ -374,10 +351,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("name"));
         restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         restaurantNameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setName(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Restaurant, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Restaurant, Building> buildingNameRestaurantCol =
                 new TableColumn<>("Building Name");
@@ -386,10 +361,8 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
         buildingNameRestaurantCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, Building> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setBuilding(t.getNewValue());
-                });
+                (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
         TableColumn<Restaurant, String> timeCloseCol =
                 new TableColumn<>("Closing Time");
@@ -450,6 +423,10 @@ public class AdminSceneController implements Initializable {
         vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
         restaurantsTP.setContent(vBoxRestaurantTP);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 
 }

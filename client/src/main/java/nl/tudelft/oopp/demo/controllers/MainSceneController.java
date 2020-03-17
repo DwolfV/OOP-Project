@@ -1,17 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,45 +11,46 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import javafx.util.converter.IntegerStringConverter;
-
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
-import nl.tudelft.oopp.demo.communication.RoomCommunication;
-import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 public class MainSceneController implements Initializable {
 
+    public static final TitledPane buildingTP = new TitledPane("Buildings", new Button("View"));
+    public static final TitledPane roomsTP = new TitledPane("Rooms", new Button("View"));
+    public static final TitledPane restaurantsTP = new TitledPane("Restaurants", new Button("View"));
+    private static final ArrayList<String> timeFrom = new ArrayList<>();
+    private static final ArrayList<String> timeTo = new ArrayList<>();
+    private static BorderPane rootScene;
     final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-
-    @FXML
-    private Label closeButton;
     @FXML
     private final Accordion ac = new Accordion();
     @FXML
     private final BorderPane bPane = new BorderPane();
     @FXML
+    private Label closeButton;
+    @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-
-    private static final TableView<Building> tableBuilding = new TableView<>();
-    private static final TableView<Room> tableRoom = new TableView<>();
-    private static final TableView<Restaurant> tableRestaurant = new TableView<>();
-
-    public static final TitledPane buildingTP = new TitledPane("Buildings", new Button("View"));
-    public static final TitledPane roomsTP = new TitledPane("Rooms", new Button("View"));
-    public static final TitledPane restaurantsTP = new TitledPane("Restaurants", new Button("View"));
+    @FXML
+    private DatePicker dp;
+    @FXML
+    private Button searchId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,13 +64,13 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleCloseButtonAction(MouseEvent event) {
+    public void handleCloseButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void handleLoginButton(ActionEvent event) {
+    public void handleLoginButton() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -100,7 +92,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleSignUpClick(ActionEvent event) {
+    public void handleSignUpClick() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
             Parent registerParent = fxmlLoader.load();
@@ -116,7 +108,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleHomeButton(ActionEvent event) {
+    public void handleHomeButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent calendarParent = fxmlLoader.load();
@@ -131,18 +123,7 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
-    @FXML
-    private DatePicker dp;
-
-    @FXML
-    private Button searchId;
-
-    private static ArrayList<String> timeFrom = new ArrayList<>();
-    private static ArrayList<String> timeTo = new ArrayList<>();
-
-    private static BorderPane rootScene;
-
-    public void pickDate(ActionEvent event) {
+    public void pickDate() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         searchId.setOnAction(e -> {
             /*LocalDate date = dp.getValue();
@@ -179,7 +160,6 @@ public class MainSceneController implements Initializable {
                         LocalDate date = dp.getValue();
                         String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), Date.valueOf(date.toString())));
                         String replaced = string1.replace("{", "").replace("}", "");
-                        replaced.trim();
                         if (!replaced.equals("")) {
                             showRooms.add(rooms.get(k));
                         }
@@ -206,7 +186,6 @@ public class MainSceneController implements Initializable {
                         LocalDate date = dp.getValue();
                         String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), Date.valueOf(date.toString())));
                         String replaced = string1.replace("{", "").replace("}", "");
-                        replaced.trim();
                         if (!replaced.equals("")) {
                             String[] string2 = replaced.split(", ");
                             for (int k = 0; k < string2.length; k++) {
@@ -227,7 +206,7 @@ public class MainSceneController implements Initializable {
                         cbb.setItems(to);
 
 
-                        hBox.getChildren().addAll(label1,label2,cb,cbb,button1);
+                        hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                         hBox.setSpacing(150);
                         hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                                 + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
@@ -252,9 +231,9 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleReservationButton(ActionEvent event) {
+    public void handleReservationButton() {
         try {
-             rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
+            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // show the scene
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
@@ -268,12 +247,10 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleRestaurantsButton(ActionEvent event) {
+    public void handleRestaurantsButton() {
         try {
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
             ObservableList<Restaurant> restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
-            buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
-            restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
 
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
@@ -347,7 +324,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleFriendsButton(ActionEvent event) {
+    public void handleFriendsButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
             Parent friendsParent = fxmlLoader.load();
@@ -362,7 +339,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleSettingsButton(ActionEvent event) {
+    public void handleSettingsButton() {
         try {
             URL location = getClass().getResource("/settingsScene.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(location);
@@ -377,7 +354,7 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
-    public void handleAdminButton(ActionEvent event) throws IOException {
+    public void handleAdminButton() throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);

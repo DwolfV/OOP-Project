@@ -14,11 +14,11 @@ public class RoomReservation {
     /**
      * Create a new Building instance.
      *
-     * @param id The unique identifier for Building
-     * @param date The date of the room reservation
+     * @param id        The unique identifier for Building
+     * @param date      The date of the room reservation
      * @param startTime The starting time of the reservation
-     * @param endTime The time when the reservation ends
-     * @param user The user who owns the reservation
+     * @param endTime   The time when the reservation ends
+     * @param user      The user who owns the reservation
      */
     public RoomReservation(Date date, Time startTime, Time endTime, User user) {
         this.date = date;
