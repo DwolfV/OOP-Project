@@ -56,7 +56,7 @@ public class OpenTimeController {
      * @return a list of the openTimes for the building {@link OpenTime}.
      */
 
-    @GetMapping("openTimesByDay/{building_id}/{day}")
+    @GetMapping("openTimes/day/{building_id}/{day}")
     public @ResponseBody ResponseEntity<OpenTime>
     getOpenTimesForBuildingByDay(@PathVariable(value = "building_id") long id , @PathVariable String day) {
         return openTimes.findByBuildingIdAndDay(id,day).map(openTime -> ResponseEntity.ok(openTime)

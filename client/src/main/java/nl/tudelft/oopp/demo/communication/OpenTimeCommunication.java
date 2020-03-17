@@ -55,7 +55,7 @@ public class OpenTimeCommunication {
      */
     public static OpenTime getByBuildingIdAndDay(long id, String day) {
         // TODO what if Authenticator.SESSION_COOKIE is not set?
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/openTimesByDay/%s/%s", id, day))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/openTimes/day/%s/%s", id, day))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
