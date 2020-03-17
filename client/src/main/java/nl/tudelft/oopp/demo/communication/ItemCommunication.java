@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.communication;
 
-import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Item;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;

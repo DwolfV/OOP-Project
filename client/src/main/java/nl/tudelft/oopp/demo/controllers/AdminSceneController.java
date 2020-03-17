@@ -35,11 +35,20 @@ public class AdminSceneController implements Initializable {
     private static final TableView<Room> tableRoom = new TableView<>();
     private static final TableView<Restaurant> tableRestaurant = new TableView<>();
 
+    /**
+     * The method below is implemented for the update button under the building section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
         BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
     }
 
+    /**
+     * The method below is implemented for the delete button under the building section in the admin scene.
+     * When the user selects a row in the building table it will be deleted from the database.
+     */
     public static void deleteBuildingButtonClicked() {
         ObservableList<Building> allBuildings;
         allBuildings = tableBuilding.getItems();
@@ -49,11 +58,20 @@ public class AdminSceneController implements Initializable {
         BuildingCommunication.removeBuilding(building.getId());
     }
 
+    /**
+     * The method below is implemented for the update button under the rooms section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
     public static void updateRoomButtonClicked() {
         Room room = tableRoom.getSelectionModel().getSelectedItem();
         RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
     }
 
+    /**
+     * The method below is implemented for the delete button under the rooms section in the admin scene.
+     * When the user selects a row in the rooms table it will be deleted from the database.
+     */
     public static void deleteRoomButtonClicked() {
         ObservableList<Room> allRooms;
         allRooms = tableRoom.getItems();
@@ -63,11 +81,20 @@ public class AdminSceneController implements Initializable {
         RoomCommunication.removeRoom(room.getId());
     }
 
+    /**
+     * The method below is implemented for the update button under the restaurant section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
         RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.gettClose(), restaurant.gettOpen());
     }
 
+    /**
+     * The method below is implemented for the delete button under the restaurant section in the admin scene.
+     * When the user selects a row in the rooms table it will be deleted from the database.
+     */
     public static void deleteButtonRestaurantClicked() {
         ObservableList<Restaurant> allRestaurants;
         allRestaurants = tableRestaurant.getItems();
@@ -77,6 +104,10 @@ public class AdminSceneController implements Initializable {
         RestaurantCommunication.removeRestaurant(restaurant.getId());
     }
 
+    /**
+     * The method below is implemented for the building table which is loaded on the main accordion element in
+     * the admin scene.
+     */
     public static void BuildingView() {
         // Table for buildings
         tableBuilding.setEditable(true);
@@ -214,6 +245,10 @@ public class AdminSceneController implements Initializable {
         buildingTP.setContent(vBoxBuildingTP);
     }
 
+    /**
+     * The method below is implemented for the rooms table which is loaded on the main accordion element in
+     * the admin scene.
+     */
     public static void RoomView() {
         // Table for Rooms
         tableRoom.setEditable(true);
@@ -334,7 +369,11 @@ public class AdminSceneController implements Initializable {
         roomsTP.setContent(vBoxRoomsTP);
     }
 
-    public static void RestaurantView() { // this need to be implemented
+    /**
+     * The method below is implemented for the restaurant table which is loaded on the main accordion element in
+     * the admin scene.
+     */
+    public static void RestaurantView() {
         // Table for restaurants
         tableRestaurant.setEditable(true);
 
