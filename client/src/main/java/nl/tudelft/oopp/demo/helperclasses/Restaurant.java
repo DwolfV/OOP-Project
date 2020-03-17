@@ -7,8 +7,8 @@ public class Restaurant {
     private long id;
     private String name;
     private Building building;
-    private Time tClose;
-    private Time tOpen;
+    private Time timeClose;
+    private Time timeOpen;
 
     public Restaurant() {
 
@@ -17,19 +17,18 @@ public class Restaurant {
     /**
      * Constructor for the Restaurant class.
      *
-     * @param id       - id of the restaurant
      * @param name     - name of the restaurant
      * @param building - the building in which the restaurant is
-     * @param tClose   - the time at which the restaurant closes
-     * @param tOpen    - the time at which the restaurant opens
+     * @param timeClose   - the time at which the restaurant closes
+     * @param timeOpen    - the time at which the restaurant opens
      */
 
 
-    public Restaurant(String name, Building building, Time tClose, Time tOpen) {
+    public Restaurant(String name, Building building, Time timeClose, Time timeOpen) {
         this.name = name;
         this.building = building;
-        this.tClose = tClose;
-        this.tOpen = tOpen;
+        this.timeClose = timeClose;
+        this.timeOpen = timeOpen;
     }
 
     public long getId() {
@@ -56,19 +55,19 @@ public class Restaurant {
         this.building = building;
     }
 
-    public Time gettClose() {
-        return tClose;
+    public Time getTimeClose() {
+        return timeClose;
     }
 
-    public void settClose(Time tClose) {
-        this.tClose = tClose;
+    public void setTimeClose(Time timeClose) {
+        this.timeClose = timeClose;
     }
 
-    public Time gettOpen() {
-        return tOpen;
+    public Time getTimeOpen() {
+        return timeOpen;
     }
 
-    public void settOpen(Time tOpen) {
-        this.tOpen = tOpen;
+    public void setTimeOpen(Time timeOpen) {
+        this.timeOpen = timeOpen;
     }
 }

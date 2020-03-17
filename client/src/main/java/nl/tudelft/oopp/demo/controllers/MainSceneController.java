@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -67,7 +66,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private final Accordion ac = new Accordion();
     @FXML
-    private final BorderPane bPane = new BorderPane();
+    private final BorderPane borderPane = new BorderPane();
     private final TableView<Building> tableBuilding = new TableView<>();
     private final TableView<Room> tableRoom = new TableView<>();
     private final TableView<Restaurant> tableRestaurant = new TableView<>();
@@ -86,6 +85,9 @@ public class MainSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * Closes the secondary stage when clicking the close button.
+     */
     public void closeSecondaryStage() {
         MainDisplay.secondaryStage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -93,12 +95,20 @@ public class MainSceneController implements Initializable {
         });
     }
 
+    /**
+     * Handles the click on the close button.
+     * @param event The MouseEvent passed when clicking a button
+     */
     @FXML
     public void handleCloseButtonAction(MouseEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Login button.
+     * @param event The Action event that is passed when clicking a button.
+     */
     @FXML
     public void handleLoginButton(ActionEvent event) {
         String username = usernameField.getText();
@@ -121,6 +131,10 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    /**
+     * Handles the click on the Sign up button.
+     * @param event The Action event passed when clicking a button.
+     */
     @FXML
     public void handleSignUpClick(ActionEvent event) {
         try {
@@ -137,6 +151,10 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    /**
+     * Handles what happens when the client clicks on the Home button.
+     * @param event The Action event that is passed when clicking a button.
+     */
     @FXML
     public void handleHomeButton(ActionEvent event) {
         try {
@@ -153,6 +171,10 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client picks a date.
+     * @param event The Action event that is passed when clicking a button.
+     */
     public void pickDate(ActionEvent event) {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         searchId.setOnAction(e -> {
@@ -200,11 +222,11 @@ public class MainSceneController implements Initializable {
 
                 //if there are rooms for the building i - show them;
                 if (showRooms.size() != 0) {
-                    VBox vBox = new VBox();
+                    VBox vbox = new VBox();
                     tps[c] = new TitledPane();
 
                     for (int j = 0; j < showRooms.size(); j++) {
-                        HBox hBox = new HBox();
+                        HBox hbox = new HBox();
 
                         Label label1 = new Label(showRooms.get(j).getName());
                         label1.setStyle("-fx-font-weight: bold");
@@ -240,15 +262,15 @@ public class MainSceneController implements Initializable {
                         cbb.setItems(to);
 
 
-                        hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
-                        hBox.setSpacing(150);
-                        hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+                        hbox.getChildren().addAll(label1, label2, cb, cbb, button1);
+                        hbox.setSpacing(150);
+                        hbox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                             + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                             + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
-                        vBox.getChildren().add(hBox);
+                        vbox.getChildren().add(hbox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
-                    tps[c].setContent(vBox);
+                    tps[c].setContent(vbox);
                     ac.getPanes().add(tps[c]);
                     c++;
                 }
@@ -256,14 +278,18 @@ public class MainSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vBox = new VBox(ac);
-            bPane.setCenter(vBox);
-            bPane.setPadding(new Insets(30, 5, 5, 10));
-            rootScene.setCenter(bPane);
+            VBox vbox = new VBox(ac);
+            borderPane.setCenter(vbox);
+            borderPane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(borderPane);
 
         });
     }
 
+    /**
+     * Handles what happens when the client clicks on the Reservations button.
+     * @param event The Action event that is passed when clicking a button.
+     */
     @FXML
     public void handleReservationButton(ActionEvent event) {
         try {
@@ -281,6 +307,10 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Restaurants button.
+     * @param event The Action event that is passed when clicking a button.
+     */
     @FXML
     public void handleRestaurantsButton(ActionEvent event) {
         try {
@@ -293,7 +323,8 @@ public class MainSceneController implements Initializable {
             List<Button> buttons = new ArrayList<>();
             List<Label> labels = new ArrayList<>();
 
-            int count = 0, c = 0; // count - for lists, c - for tps
+            int count = 0; // for lists
+            int c = 0; // for tps
 
             // load the scene
             BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
@@ -342,10 +373,10 @@ public class MainSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vBox = new VBox(ac);
-            bPane.setCenter(vBox);
-            bPane.setPadding(new Insets(30, 5, 5, 10));
-            rootScene.setCenter(bPane);
+            VBox vbox = new VBox(ac);
+            borderPane.setCenter(vbox);
+            borderPane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(borderPane);
 
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
@@ -358,6 +389,10 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Friends button.
+     * @param event The Action event that is passed when clicking a button.
+     */
     @FXML
     public void handleFriendsButton(ActionEvent event) {
         try {
@@ -373,6 +408,10 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Settings button.
+     * @param event The Action event that is passed when clicking a button.
+     */
     @FXML
     public void handleSettingsButton(ActionEvent event) {
         try {
@@ -394,8 +433,11 @@ public class MainSceneController implements Initializable {
         BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
     }
 
+    /**
+     * Handles what happens when the client clicks on the 'delete' button in the buildings menu.
+     */
     public void deleteBuildingButtonClicked() {
-        ObservableList<Building> buildingSelected, allBuildings;
+        ObservableList<Building> allBuildings;
         allBuildings = tableBuilding.getItems();
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
 
@@ -408,8 +450,11 @@ public class MainSceneController implements Initializable {
         RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
     }
 
+    /**
+     * Handles what happens when the client clicks on the 'delete' button in the rooms menu.
+     */
     public void deleteRoomButtonClicked() {
-        ObservableList<Room> roomSelected, allRooms;
+        ObservableList<Room> allRooms;
         allRooms = tableRoom.getItems();
         Room room = tableRoom.getSelectionModel().getSelectedItem();
 
@@ -419,11 +464,14 @@ public class MainSceneController implements Initializable {
 
     public void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.gettClose(), restaurant.gettOpen());
+        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.getTimeClose(), restaurant.getTimeOpen());
     }
 
+    /**
+     * Handles what happens when the client clicks on the 'delete' button in the restaurants menu.
+     */
     public void deleteButtonRestaurantClicked() {
-        ObservableList<Restaurant> restaurantSelected, allRestaurants;
+        ObservableList<Restaurant> allRestaurants;
         allRestaurants = tableRestaurant.getItems();
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
 
@@ -431,6 +479,11 @@ public class MainSceneController implements Initializable {
         RestaurantCommunication.removeRestaurant(restaurant.getId());
     }
 
+    /**
+     * Handles what happens when the user clicks on the admin button.
+     * @param event The ActionEvent passed when clicking a button.
+     * @throws IOException Can throw an exception if the user passes unexpected input.
+     */
     public void handleAdminButton(ActionEvent event) throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
@@ -531,13 +584,13 @@ public class MainSceneController implements Initializable {
             }
         });
 
-        HBox hBoxAddDeleteUpdate = new HBox(10);
-        hBoxAddDeleteUpdate.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdate.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
+        HBox hboxAddDeleteUpdate = new HBox(10);
+        hboxAddDeleteUpdate.setPadding(new Insets(20, 20, 20, 0));
+        hboxAddDeleteUpdate.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
 
         // adding a building
         BorderPane borderPaneAddBuidling = new BorderPane();
-        VBox vBoxAddBuilding = new VBox();
+        VBox vboxAddBuilding = new VBox();
 
         Text buildingName = new Text("Building Name");
         Text streetName = new Text("Street Name");
@@ -553,10 +606,10 @@ public class MainSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-        vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vBoxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
-        vBoxAddBuilding.setSpacing(10);
-        borderPaneAddBuidling.setTop(vBoxAddBuilding);
+        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
+        vboxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
+        vboxAddBuilding.setSpacing(10);
+        borderPaneAddBuidling.setTop(vboxAddBuilding);
 
         addButtonBuilding.setOnAction(e -> {
             String buildingNameInput1 = buildingNameInput.getText();
@@ -577,13 +630,13 @@ public class MainSceneController implements Initializable {
         });
 
         // This VBox contains the table for the rooms and adding a room
-        VBox vBoxBuildingTP = new VBox();
-        HBox hBoxBuildingTP = new HBox();
-        hBoxBuildingTP.setSpacing(100);
-        hBoxBuildingTP.getChildren().addAll(tableBuilding, borderPaneAddBuidling);
-        vBoxBuildingTP.setPadding(new Insets(20, 20, 20, 20));
-        vBoxBuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxAddDeleteUpdate);
-        buildingTP.setContent(vBoxBuildingTP);
+        VBox vboxBuildingTP = new VBox();
+        HBox hboxBuildingTP = new HBox();
+        hboxBuildingTP.setSpacing(100);
+        hboxBuildingTP.getChildren().addAll(tableBuilding, borderPaneAddBuidling);
+        vboxBuildingTP.setPadding(new Insets(20, 20, 20, 20));
+        vboxBuildingTP.getChildren().addAll(hboxBuildingTP, hboxAddDeleteUpdate);
+        buildingTP.setContent(vboxBuildingTP);
 
         // Table for Rooms
         tableRoom.setEditable(true);
@@ -648,9 +701,9 @@ public class MainSceneController implements Initializable {
         });
 
         // HBox for the buttons under the table
-        HBox hBoxAddDeleteUpdateRooms = new HBox(10);
-        hBoxAddDeleteUpdateRooms.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdateRooms.getChildren().setAll(deleteButtonRoom, updateButtonRoom);
+        HBox hboxAddDeleteUpdateRooms = new HBox(10);
+        hboxAddDeleteUpdateRooms.setPadding(new Insets(20, 20, 20, 0));
+        hboxAddDeleteUpdateRooms.getChildren().setAll(deleteButtonRoom, updateButtonRoom);
 
         // adding room scene
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
@@ -662,15 +715,15 @@ public class MainSceneController implements Initializable {
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
         BorderPane borderPaneAddRoom = new BorderPane();
-        VBox vBoxAddRoom = new VBox();
+        VBox vboxAddRoom = new VBox();
 
         Text roomName = new Text("Room Name");
         Text capacity = new Text("Capacity");
         Text building = new Text("Building Name");
 
-        TextField RoomName = new TextField();
-        TextField Capacity = new TextField();
-        TextField Building = new TextField();
+        TextField roomNameField = new TextField();
+        TextField capacityField = new TextField();
+        TextField buildingField = new TextField();
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
         Button addButton = new Button("Add Room");
@@ -679,132 +732,132 @@ public class MainSceneController implements Initializable {
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             String[] string = newValue.split(", ");
-            Building.setText(string[1]);
+            buildingField.setText(string[1]);
         });
 
-        vBoxAddRoom.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
-        vBoxAddRoom.setPadding(new Insets(10, 10, 10, 10));
-        vBoxAddRoom.setSpacing(10);
-        borderPaneAddRoom.setTop(vBoxAddRoom);
+        vboxAddRoom.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, buildingField, choiceBox, addButton);
+        vboxAddRoom.setPadding(new Insets(10, 10, 10, 10));
+        vboxAddRoom.setSpacing(10);
+        borderPaneAddRoom.setTop(vboxAddRoom);
 
         addButton.setOnAction(e -> {
-            String roomName1 = RoomName.getText();
-            Integer capacity1 = Integer.parseInt(Capacity.getText());
+            String roomName1 = roomNameField.getText();
+            Integer capacity1 = Integer.parseInt(capacityField.getText());
 
-            RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(Building.getText()));
+            RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText()));
 
-            Building.setText(null);
-            RoomName.setText(null);
-            Capacity.setText(null);
+            buildingField.setText(null);
+            roomNameField.setText(null);
+            capacityField.setText(null);
         });
 
         // This VBox contains the table for the rooms and adding a room
-        VBox vBoxRoomsTP = new VBox();
-        HBox hBoxRoomTP = new HBox();
-        hBoxRoomTP.setSpacing(100);
-        hBoxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
-        vBoxRoomsTP.setPadding(new Insets(20, 20, 20, 20));
-        vBoxRoomsTP.getChildren().addAll(hBoxRoomTP, hBoxAddDeleteUpdateRooms);
-        roomsTP.setContent(vBoxRoomsTP);
+        VBox vboxRoomsTP = new VBox();
+        HBox hboxRoomTP = new HBox();
+        hboxRoomTP.setSpacing(100);
+        hboxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
+        vboxRoomsTP.setPadding(new Insets(20, 20, 20, 20));
+        vboxRoomsTP.getChildren().addAll(hboxRoomTP, hboxAddDeleteUpdateRooms);
+        roomsTP.setContent(vboxRoomsTP);
 
-//        // Table for restaurants
-//        tableRestaurant.setEditable(true);
-//
-//        TableColumn<Restaurant, Long> idRestaurantCol =
-//                new TableColumn<>("id");
-//        idRestaurantCol.setMinWidth(100);
-//        idRestaurantCol.setCellValueFactory(
-//                new PropertyValueFactory<>("id"));
-//
-//        TableColumn<Restaurant, String> restaurantNameCol =
-//                new TableColumn<>("Building Name");
-//        restaurantNameCol.setMinWidth(100);
-//        restaurantNameCol.setCellValueFactory(
-//                new PropertyValueFactory<>("name"));
-//        restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-//        restaurantNameCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-//                    t.getTableView().getItems().get(
-//                            t.getTablePosition().getRow()).setName(t.getNewValue());
-//                });
-//
-//        TableColumn<Restaurant, Building> buildingNameRestaurantCol =
-//                new TableColumn<>("Building Name");
-//        buildingNameRestaurantCol.setMinWidth(100);
-//        buildingNameRestaurantCol.setCellValueFactory(
-//                new PropertyValueFactory<>("building"));
-//        buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
-//        buildingNameRestaurantCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<Restaurant, Building> t) -> {
-//                    t.getTableView().getItems().get(
-//                            t.getTablePosition().getRow()).setBuilding(t.getNewValue());
-//                });
-//
-//        TableColumn<Restaurant, String> timeCloseCol =
-//                new TableColumn<>("Closing Time");
-//        timeCloseCol.setMinWidth(100);
-//        timeCloseCol.setCellValueFactory(
-//                new PropertyValueFactory<>("tClose"));
-//        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
-////        timeCloseCol.setOnEditCommit(
-////                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-////                    t.getTableView().getItems().get(
-////                            t.getTablePosition().getRow()).settClose(t.getNewValue());
-////                });
-//
-//        TableColumn<Restaurant, String> timeOpenCol =
-//                new TableColumn<>("Opening Time");
-//        timeOpenCol.setMinWidth(100);
-//        timeOpenCol.setCellValueFactory(
-//                new PropertyValueFactory<>("tOpen"));
-//        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
-////        timeOpenCol.setOnEditCommit(
-////                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-////                    t.getTableView().getItems().get(
-////                            t.getTablePosition().getRow()).settOpen(t.getNewValue());
-////                });
-//
-//        ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
-//        tableRestaurant.setItems(restaurantData);
-//        tableRestaurant.getColumns().addAll(idRestaurantCol, restaurantNameCol, buildingNameRestaurantCol, timeCloseCol, timeOpenCol);
-//
-//        //delete button
-//        deleteButtonRestaurant.setOnAction(e -> {
-//            try {
-//                deleteButtonRestaurantClicked();
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//        });
-//
-//        //update button
-//        updateButtonRestaurant.setOnAction(e -> {
-//            try {
-//                updateButtonRestaurantClicked();
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//        });
-//
-//        // HBox for the buttons under the table
-//        HBox hBoxAddDeleteUpdateRestaurants = new HBox(10);
-//        hBoxAddDeleteUpdateRestaurants.setPadding(new Insets(20, 20, 20, 0));
-//        hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
-//
-//        // This VBox contains the table for the rooms and adding a room
-//        VBox vBoxRestaurantTP = new VBox();
-//        HBox hBoxRestaurantTP = new HBox();
-//        hBoxRestaurantTP.setSpacing(100);
-//        hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
-//        vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
-//        vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
-//        restaurantsTP.setContent(vBoxRestaurantTP);
+        //        // Table for restaurants
+        //        tableRestaurant.setEditable(true);
+        //
+        //        TableColumn<Restaurant, Long> idRestaurantCol =
+        //                new TableColumn<>("id");
+        //        idRestaurantCol.setMinWidth(100);
+        //        idRestaurantCol.setCellValueFactory(
+        //                new PropertyValueFactory<>("id"));
+        //
+        //        TableColumn<Restaurant, String> restaurantNameCol =
+        //                new TableColumn<>("Building Name");
+        //        restaurantNameCol.setMinWidth(100);
+        //        restaurantNameCol.setCellValueFactory(
+        //                new PropertyValueFactory<>("name"));
+        //        restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        //        restaurantNameCol.setOnEditCommit(
+        //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+        //                    t.getTableView().getItems().get(
+        //                            t.getTablePosition().getRow()).setName(t.getNewValue());
+        //                });
+        //
+        //        TableColumn<Restaurant, Building> buildingNameRestaurantCol =
+        //                new TableColumn<>("Building Name");
+        //        buildingNameRestaurantCol.setMinWidth(100);
+        //        buildingNameRestaurantCol.setCellValueFactory(
+        //                new PropertyValueFactory<>("building"));
+        //        buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
+        //        buildingNameRestaurantCol.setOnEditCommit(
+        //                (TableColumn.CellEditEvent<Restaurant, Building> t) -> {
+        //                    t.getTableView().getItems().get(
+        //                            t.getTablePosition().getRow()).setBuilding(t.getNewValue());
+        //                });
+        //
+        //        TableColumn<Restaurant, String> timeCloseCol =
+        //                new TableColumn<>("Closing Time");
+        //        timeCloseCol.setMinWidth(100);
+        //        timeCloseCol.setCellValueFactory(
+        //                new PropertyValueFactory<>("tClose"));
+        //        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        ////        timeCloseCol.setOnEditCommit(
+        ////                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+        ////                    t.getTableView().getItems().get(
+        ////                            t.getTablePosition().getRow()).settClose(t.getNewValue());
+        ////                });
+        //
+        //        TableColumn<Restaurant, String> timeOpenCol =
+        //                new TableColumn<>("Opening Time");
+        //        timeOpenCol.setMinWidth(100);
+        //        timeOpenCol.setCellValueFactory(
+        //                new PropertyValueFactory<>("tOpen"));
+        //        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        ////        timeOpenCol.setOnEditCommit(
+        ////                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+        ////                    t.getTableView().getItems().get(
+        ////                            t.getTablePosition().getRow()).settOpen(t.getNewValue());
+        ////                });
+        //
+        //        ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
+        //        tableRestaurant.setItems(restaurantData);
+        //        tableRestaurant.getColumns().addAll(idRestaurantCol, restaurantNameCol, buildingNameRestaurantCol, timeCloseCol, timeOpenCol);
+        //
+        //        //delete button
+        //        deleteButtonRestaurant.setOnAction(e -> {
+        //            try {
+        //                deleteButtonRestaurantClicked();
+        //            } catch (Exception ex) {
+        //                ex.printStackTrace();
+        //            }
+        //        });
+        //
+        //        //update button
+        //        updateButtonRestaurant.setOnAction(e -> {
+        //            try {
+        //                updateButtonRestaurantClicked();
+        //            } catch (Exception ex) {
+        //                ex.printStackTrace();
+        //            }
+        //        });
+        //
+        //        // HBox for the buttons under the table
+        //        HBox hBoxAddDeleteUpdateRestaurants = new HBox(10);
+        //        hBoxAddDeleteUpdateRestaurants.setPadding(new Insets(20, 20, 20, 0));
+        //        hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
+        //
+        //        // This VBox contains the table for the rooms and adding a room
+        //        VBox vBoxRestaurantTP = new VBox();
+        //        HBox hBoxRestaurantTP = new HBox();
+        //        hBoxRestaurantTP.setSpacing(100);
+        //        hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
+        //        vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
+        //        vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
+        //        restaurantsTP.setContent(vBoxRestaurantTP);
 
         // load everything
-        VBox vBox = new VBox(ac);
-        bPane.setCenter(vBox);
-        bPane.setPadding(new Insets(10, 50, 10, 50));
-        rootScene.setCenter(bPane);
+        VBox vbox = new VBox(ac);
+        borderPane.setCenter(vbox);
+        borderPane.setPadding(new Insets(10, 50, 10, 50));
+        rootScene.setCenter(borderPane);
 
         // show the scene
         MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));

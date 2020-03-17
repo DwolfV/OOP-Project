@@ -103,12 +103,12 @@ public class RestaurantCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addRestaurant(String name, Building building, Time tClose, Time tOpen) {
+    public static void addRestaurant(String name, Building building, Time timeClose, Time timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
-        Restaurant restaurant = new Restaurant(name, building, tClose, tOpen);
-        String JSONRestaurant = "";
+        Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
+        String jsonRestaurant = "";
         try {
-            JSONRestaurant = mapper.writeValueAsString(restaurant);
+            jsonRestaurant = mapper.writeValueAsString(restaurant);
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();
@@ -119,7 +119,7 @@ public class RestaurantCommunication {
         }
 
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONRestaurant)).uri(URI.create("http://localhost:8080/restaurant")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRestaurant)).uri(URI.create("http://localhost:8080/restaurant")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -140,13 +140,13 @@ public class RestaurantCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRestaurant(long id, String name, Building building, Time tClose, Time tOpen) {
+    public static void updateRestaurant(long id, String name, Building building, Time timeClose, Time timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
-        Restaurant restaurant = new Restaurant(name, building, tClose, tOpen);
-        String JSONRestaurant = "";
+        Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
+        String jsonRestaurant = "";
         try {
-            JSONRestaurant = mapper.writeValueAsString(restaurant);
-            System.out.println(JSONRestaurant);
+            jsonRestaurant = mapper.writeValueAsString(restaurant);
+            System.out.println(jsonRestaurant);
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
@@ -155,7 +155,7 @@ public class RestaurantCommunication {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONRestaurant)).uri(URI.create(String.format("http://localhost:8080/restaurant/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonRestaurant)).uri(URI.create(String.format("http://localhost:8080/restaurant/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

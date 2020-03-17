@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.communication;
 
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -141,15 +140,15 @@ public class RoomCommunication {
     public static void addRoom(String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
-        String JSONRoom = "";
+        String jsonRoom = "";
         try {
-            JSONRoom = mapper.writeValueAsString(newRoom);
-            System.out.println(JSONRoom);
+            jsonRoom = mapper.writeValueAsString(newRoom);
+            System.out.println(jsonRoom);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JSONRoom)).uri(URI.create("http://localhost:8080/rooms")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRoom)).uri(URI.create("http://localhost:8080/rooms")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -170,15 +169,15 @@ public class RoomCommunication {
     public static void updateRoom(long id, String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
-        String JSONRoom = "";
+        String jsonRoom = "";
         try {
-            JSONRoom = mapper.writeValueAsString(newRoom);
-            System.out.println(JSONRoom);
+            jsonRoom = mapper.writeValueAsString(newRoom);
+            System.out.println(jsonRoom);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JSONRoom)).uri(URI.create(String.format("http://localhost:8080/rooms/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonRoom)).uri(URI.create(String.format("http://localhost:8080/rooms/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
