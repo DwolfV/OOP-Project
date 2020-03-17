@@ -368,8 +368,6 @@ public class MainSceneController implements Initializable {
         bPane.setPadding(new Insets(10, 50, 10, 50));
         rootScene.setCenter(bPane);
 
-        rootScene.getStylesheets().add(getClass().getResource("/adminScene.css").toString());
-
         // show the scene
         MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
         MainDisplay.secondaryStage.setTitle("Admin");
