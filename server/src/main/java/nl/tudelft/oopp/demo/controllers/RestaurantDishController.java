@@ -57,16 +57,14 @@ public class RestaurantDishController {
     /**
      * GET Endpoint to retrieve the restaurantDish by ID.
      *
-     * @param restaurant_dish_id - unique identifier of the restaurantDish.
+     * @param restaurantDishId - unique identifier of the restaurantDish.
      * @return the requested {@link RestaurantDish}.
      */
 
     @GetMapping("restaurant_dish/{restaurant_dish_id}")
     public @ResponseBody
-    ResponseEntity<RestaurantDish> getRestaurantDishById
-    (@PathVariable(value = "restaurant_dish_id")
-         long restaurant_dish_id, Authentication authentication) {
-        RestaurantDish toReturn = restaurantDishRepository.findById(restaurant_dish_id)
+    ResponseEntity<RestaurantDish> getRestaurantDishById(@PathVariable(value = "restaurant_dish_id") long restaurantDishId, Authentication authentication) {
+        RestaurantDish toReturn = restaurantDishRepository.findById(restaurantDishId)
             .orElseGet(() -> null);
         if (toReturn == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -97,23 +95,25 @@ public class RestaurantDishController {
     /**
      * PUT Endpoint to update the entry of the given restaurant dish.
      *
-     * @param restaurant_dish_id - Unique identifier of the restaurantDish that is to be updated
+     * @param restaurantDishId - Unique identifier of the restaurantDish that is to be updated
      * @param newRestaurantDish  - The updated version of the restaurantDish
      * @return the new restaurantDish that is updated {@link RestaurantDish}
      */
 
 
     @PutMapping("restaurant_dish/{restaurant_dish_id}")
-    public ResponseEntity<RestaurantDish> updateRestaurantDish(@RequestBody RestaurantDish newRestaurantDish, @PathVariable long restaurant_dish_id, UriComponentsBuilder b) {
-        UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(restaurant_dish_id);
+    public ResponseEntity<RestaurantDish> updateRestaurantDish(@RequestBody RestaurantDish newRestaurantDish,
+                                                               @PathVariable(value = "restaurant_dish_id") long restaurantDishId,
+                                                               UriComponentsBuilder b) {
+        UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(restaurantDishId);
 
-        RestaurantDish restaurantDish = restaurantDishRepository.findById(restaurant_dish_id).map(restaurantDish1 -> {
+        RestaurantDish restaurantDish = restaurantDishRepository.findById(restaurantDishId).map(restaurantDish1 -> {
             restaurantDish1.setDishOrders(newRestaurantDish.getDishOrders());
             restaurantDish1.setDish(newRestaurantDish.getDish());
             restaurantDish1.setRestaurant(newRestaurantDish.getRestaurant());
             return restaurantDishRepository.save(restaurantDish1);
         }).orElseGet(() -> {
-            newRestaurantDish.setId(restaurant_dish_id);
+            newRestaurantDish.setId(restaurantDishId);
             return restaurantDishRepository.save(newRestaurantDish);
         });
 
@@ -124,19 +124,19 @@ public class RestaurantDishController {
     /**
      * DELETE Endpoint to delete the entry of a given restaurant's dish.
      *
-     * @param restaurant_dish_id - the unique identifier of the restaurant's dish that is to be deleted. {@link RestaurantDish}
+     * @param restaurantDishId - the unique identifier of the restaurant's dish that is to be deleted. {@link RestaurantDish}
      */
 
     @DeleteMapping("restaurant_dish/{restaurant_dish_id}")
-    public ResponseEntity<?> deleteRestaurantDish(@PathVariable long restaurant_dish_id, Authentication authentication) {
-        RestaurantDish toDelete = restaurantDishRepository.findById(restaurant_dish_id).orElseGet(() -> null);
+    public ResponseEntity<?> deleteRestaurantDish(@PathVariable(value = "restaurant_dish_id") long restaurantDishId, Authentication authentication) {
+        RestaurantDish toDelete = restaurantDishRepository.findById(restaurantDishId).orElseGet(() -> null);
         if (toDelete == null) {
             return ResponseEntity.noContent().build();
         }
         if (!toDelete.getRestaurant().getName().equals(authentication.getName())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        restaurantDishRepository.deleteById(restaurant_dish_id);
+        restaurantDishRepository.deleteById(restaurantDishId);
         return ResponseEntity.noContent().build();
     }
 

@@ -39,6 +39,13 @@ public class OpenTime {
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
+    /**
+     * Create a new OpenTime instance.
+     *
+     * @param timeClose     The closing time of a building.
+     * @param timeOpen      The opening time of a building.
+     * @param building    The building for the OpenTime.
+     */
     public OpenTime(String day, Time timeOpen, Time timeClose, Building building) {
         this.day = day;
         this.timeOpen = timeOpen;

@@ -33,21 +33,29 @@ public class Restaurant {
 
     @NotNull
     @Column(name = "t_close")
-    private Time tClose;
+    private Time timeClose;
 
     @NotNull
     @Column(name = "t_open")
-    private Time tOpen;
+    private Time timeOpen;
 
     public Restaurant() {
 
     }
+    /**
+     * Create a new Restaurant instance.
+     *
+     * @param name     The name of the Holiday.
+     * @param building The name of the building that the Restaurant is located in.
+     * @param timeClose   The closing time of the Restaurant.
+     * @param timeOpen    The opening time of the Restaurant.
+     */
 
-    public Restaurant(String name, Building building, Time tClose, Time tOpen) {
+    public Restaurant(String name, Building building, Time timeClose, Time timeOpen) {
         this.name = name;
         this.building = building;
-        this.tClose = tClose;
-        this.tOpen = tOpen;
+        this.timeClose = timeClose;
+        this.timeOpen = timeOpen;
     }
 
     /**
@@ -56,16 +64,16 @@ public class Restaurant {
      * @param id       A unique identifier for the Restaurant.
      * @param name     The name of the Holiday.
      * @param building The name of the building that the Restaurant is located in.
-     * @param tClose   The closing time of the Restaurant.
-     * @param tOpen    The opening time of the Restaurant.
+     * @param timeClose   The closing time of the Restaurant.
+     * @param timeOpen    The opening time of the Restaurant.
      */
 
-    public Restaurant(long id, String name, Building building, Time tClose, Time tOpen) {
+    public Restaurant(long id, String name, Building building, Time timeClose, Time timeOpen) {
         this.id = id;
         this.name = name;
         this.building = building;
-        this.tClose = tClose;
-        this.tOpen = tOpen;
+        this.timeClose = timeClose;
+        this.timeOpen = timeOpen;
     }
 
     @JsonIgnore
@@ -93,20 +101,20 @@ public class Restaurant {
         this.building = building;
     }
 
-    public Time gettClose() {
-        return tClose;
+    public Time getTimeClose() {
+        return timeClose;
     }
 
-    public void settClose(Time tClose) {
-        this.tClose = tClose;
+    public void setTimeClose(Time timeClose) {
+        this.timeClose = timeClose;
     }
 
-    public Time gettOpen() {
-        return tOpen;
+    public Time getTimeOpen() {
+        return timeOpen;
     }
 
-    public void settOpen(Time tOpen) {
-        this.tOpen = tOpen;
+    public void setTimeOpen(Time timeOpen) {
+        this.timeOpen = timeOpen;
     }
 
     @Override
@@ -121,8 +129,8 @@ public class Restaurant {
         return id == that.id
             && Objects.equals(name, that.name)
             && Objects.equals(building, that.building)
-            && Objects.equals(tClose, that.tClose)
-            && Objects.equals(tOpen, that.tOpen);
+            && Objects.equals(timeClose, that.timeClose)
+            && Objects.equals(timeOpen, that.timeOpen);
     }
 
 }

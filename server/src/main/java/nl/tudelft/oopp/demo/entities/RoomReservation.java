@@ -56,6 +56,16 @@ public class RoomReservation {
     public RoomReservation() {
     }
 
+    /**
+     * Create a new RoomReservation instance.
+     *
+     * @param date      Te date for which the Room is reserved.
+     * @param room      The room that is reserved.
+     * @param startTime The start time of the RoomReservation.
+     * @param endTime   The end time of the RoomReservation.
+     * @param user      The user that has reserved the room.
+     */
+
     public RoomReservation(Date date,
                            Room room,
                            Time startTime,

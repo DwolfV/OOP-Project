@@ -41,6 +41,12 @@ public class EventController {
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * POST Endpoint to add a new Event.
+     *
+     * @param event The event to be added.
+     * @return The added Event.
+     */
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
         rep.save(event);
@@ -48,6 +54,12 @@ public class EventController {
         return ResponseEntity.created(uri.toUri()).body(event);
     }
 
+    /**
+     * PUT Endpoint to modify an existing Event.
+     *
+     * @param id The id of the event that is to be modified.
+     * @return A response entity with the modified Event on success.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable long id,
                                              @RequestBody Event newEvent) {
@@ -62,6 +74,12 @@ public class EventController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * DELETE Endpoint to delete an existing Event.
+     *
+     * @param id The id of the event that is to be deleted.
+     * @return A ResponseEntity with the corresponding HTTP status.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEvent(@PathVariable long id) {
         return rep.findById(id).map(event -> {

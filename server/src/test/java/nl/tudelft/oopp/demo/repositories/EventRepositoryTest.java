@@ -29,6 +29,9 @@ public class EventRepositoryTest {
     @Autowired
     private EventRepository eventRepository;
 
+    /**
+     * Creates all users, events, adds them to their repositories and is done before each test.
+     */
     @BeforeEach
     public void save() {
         u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");

@@ -38,6 +38,9 @@ public class EventControllerTest {
     @InjectMocks
     private EventController eventController;
 
+    /**
+     * Creates all users and events and is done before each test.
+     */
     @BeforeEach
     public void save() {
         u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");

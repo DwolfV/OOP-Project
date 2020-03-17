@@ -41,6 +41,12 @@ public class RestaurantDish {
 
     }
 
+    /**
+     * Creates a new instance of the RestaurantDish object.
+     * @param id The id of that RestaurantDish.
+     * @param restaurant The restaurant that has the dish.
+     * @param dish The dish.
+     */
     public RestaurantDish(long id, Restaurant restaurant, Dish dish) {
         this.id = id;
         this.restaurant = restaurant;

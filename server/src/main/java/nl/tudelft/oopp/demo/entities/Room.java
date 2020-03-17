@@ -50,6 +50,14 @@ public class Room {
 
     }
 
+    /**
+     * Create a new Room instance.
+     *
+     * @param name     The name of the Room.
+     * @param capacity The capacity of the room.
+     * @param building The building, in which the room is located.
+     */
+
     public Room(String name, Integer capacity, Building building) {
         this.name = name;
         this.capacity = capacity;

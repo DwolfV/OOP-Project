@@ -78,9 +78,8 @@ public class RoomReservationController {
      */
     @GetMapping("room_reservations/user/{user_id}")
     public @ResponseBody
-    ResponseEntity<List<RoomReservation>>
-    getRoomReservationsByUser(@PathVariable(value = "user_id") long userId,
-                              Authentication authentication) {
+    ResponseEntity<List<RoomReservation>> getRoomReservationsByUser(@PathVariable(value = "user_id") long userId,
+                                                                    Authentication authentication) {
         System.out.println(authentication.getName());
         return users.findByUsername(authentication.getName()).map(user -> {
             if (user.getId() == userId) {
@@ -98,8 +97,8 @@ public class RoomReservationController {
      */
     @GetMapping("room_reservations/{room_reservation_id}")
     public @ResponseBody
-    ResponseEntity<RoomReservation>
-    getRoomReservationById(@PathVariable(value = "room_reservation_id") long roomReservationId, Authentication authentication) {
+    ResponseEntity<RoomReservation> getRoomReservationById(@PathVariable(value = "room_reservation_id") long roomReservationId,
+                                                           Authentication authentication) {
         RoomReservation toReturn = reservations.findById(roomReservationId).orElseGet(() -> null);
         if (toReturn == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -148,12 +147,12 @@ public class RoomReservationController {
             return false;
         }
 
-        String sTime = startTime.toString();
-        String eTime = endTime.toString();
-        String startSec = sTime.split(":")[2];
-        String startMin = sTime.split(":")[1];
-        String endSec = eTime.split(":")[2];
-        String endMin = eTime.split(":")[1];
+        String startTimeString = startTime.toString();
+        String endTimeString = endTime.toString();
+        String startSec = startTimeString.split(":")[2];
+        String startMin = startTimeString.split(":")[1];
+        String endSec = endTimeString.split(":")[2];
+        String endMin = endTimeString.split(":")[1];
 
         if (!startSec.equals("00") || !endSec.equals("00")) {
             return false;
