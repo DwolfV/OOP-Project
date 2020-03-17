@@ -363,10 +363,12 @@ public class MainSceneController implements Initializable {
         AdminSceneController.RoomView();
 
         // load everything
-        VBox vBox = new VBox(ac);
-        bPane.setCenter(vBox);
+        VBox mainVerticalBox = new VBox(ac);
+        bPane.setCenter(mainVerticalBox);
         bPane.setPadding(new Insets(10, 50, 10, 50));
         rootScene.setCenter(bPane);
+
+        rootScene.getStylesheets().add(getClass().getResource("/adminScene.css").toString());
 
         // show the scene
         MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));

@@ -13,11 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.OpenTimeCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.*;
 
 import java.net.URL;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -213,7 +216,7 @@ public class AdminSceneController implements Initializable {
         Button addButtonBuilding = new Button("Add Building");
 
         vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vBoxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
+        vBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vBoxAddBuilding);
 
@@ -231,17 +234,73 @@ public class AdminSceneController implements Initializable {
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
+        });
 
-            tableBuilding.refresh();
+        // adding a openTime for each building
+        BorderPane borderPaneAddOpenTime = new BorderPane();
+        VBox vBoxAddOpenTime = new VBox();
+
+        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ArrayList<String> buildingList = new ArrayList<>();
+
+        for (int i = 0; i < buildingNames.size(); i++) {
+            buildingList.add(buildingNames.get(i).getName() + ", " + buildingNames.get(i).getId());
+        }
+        ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
+
+        Text day = new Text("Day");
+        Text openTime = new Text("Open Time");
+        Text closeTime = new Text("Close Time");
+        Text building = new Text("Building Name");
+
+        TextField dayInput = new TextField();
+        TextField openTimeInput = new TextField();
+        TextField closeTimeInput = new TextField();
+        TextField buildingInput = new TextField();
+
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
+        Button addOpenTime = new Button("Add Open Time");
+
+        choiceBox.setItems(bl);
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            String[] string = newValue.split(", ");
+            buildingInput.setText(string[1]);
+        });
+
+        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openTime, openTimeInput, closeTime, closeTimeInput, building, buildingInput, choiceBox, addOpenTime);
+        vBoxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
+        vBoxAddOpenTime.setSpacing(10);
+        borderPaneAddOpenTime.setTop(vBoxAddOpenTime);
+
+        addOpenTime.setOnAction(e -> {
+            System.out.println((openTimeInput.getText()));
+
+            String day1 = dayInput.getText();
+            Time openTime1 = Time.valueOf(openTimeInput.getText());
+            Time closeTime1 = Time.valueOf(closeTimeInput.getText());
+//            Time openTime1 = Time.valueOf("07:00:00");
+//            Time closeTime1 = Time.valueOf("12:00:00");
+
+            OpenTimeCommunication.addOpenTime(day1, openTime1, closeTime1, Long.parseLong(buildingInput.getText()));
+
+            dayInput.setText(null);
+            openTimeInput.setText(null);
+            closeTimeInput.setText(null);
+            buildingInput.setText(null);
         });
 
         // This VBox contains the table for the buildings and adding a building
         VBox vBoxBuildingTP = new VBox();
+        vBoxBuildingTP.setPadding(new Insets(20, 20, 20, 20));
         HBox hBoxBuildingTP = new HBox();
         hBoxBuildingTP.setSpacing(100);
-        hBoxBuildingTP.getChildren().addAll(tableBuilding, borderPaneAddBuilding);
-        vBoxBuildingTP.setPadding(new Insets(20, 20, 20, 20));
-        vBoxBuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxAddDeleteUpdate);
+        VBox vBoxBuildingAndButtons = new VBox();
+
+        vBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hBoxAddDeleteUpdate);
+        hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding, borderPaneAddOpenTime);
+        vBoxBuildingTP.getChildren().addAll(hBoxBuildingTP);
         buildingTP.setContent(vBoxBuildingTP);
     }
 
@@ -332,6 +391,7 @@ public class AdminSceneController implements Initializable {
         TextField RoomName = new TextField();
         TextField Capacity = new TextField();
         TextField Building = new TextField();
+
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
         Button addButton = new Button("Add Room");
@@ -344,7 +404,7 @@ public class AdminSceneController implements Initializable {
         });
 
         vBoxAddRoom.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
-        vBoxAddRoom.setPadding(new Insets(10, 10, 10, 10));
+        vBoxAddRoom.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddRoom.setSpacing(10);
         borderPaneAddRoom.setTop(vBoxAddRoom);
 

@@ -83,9 +83,9 @@ public class OpenTimeCommunication {
      * Adds an OpenTime.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addOpenTime(String day, Time openTime, Time closeTime, Building building) {
+    public static void addOpenTime(String day, Time openTime, Time closeTime, Long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
-        OpenTime newOpenTime = new OpenTime(day, openTime, closeTime, building);
+        OpenTime newOpenTime = new OpenTime(day, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
         String JSONOpenTime = "";
         try {
             JSONOpenTime = mapper.writeValueAsString(newOpenTime);
