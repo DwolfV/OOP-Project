@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@RestController
 public class OpenTimeController {
     @Autowired
     OpenTimeRepository openTimes;
@@ -84,7 +86,7 @@ public class OpenTimeController {
      * @return The added openTime {@link OpenTime}.
      */
 
-    @PostMapping(value = "/openTimes", consumes = {"application/json"})
+    @PostMapping(value = "openTimes", consumes = {"application/json"})
     public ResponseEntity<OpenTime> newOpenTime(@Valid @RequestBody OpenTime newOpenTime,
                                                 UriComponentsBuilder b) {
         openTimes.save(newOpenTime);
@@ -107,8 +109,8 @@ public class OpenTimeController {
         OpenTime updatedOpenTime = openTimes.findById(openTime_id).map(openTime -> {
             openTime.setDay(newOpenTime.getDay());
             openTime.setBuilding(newOpenTime.getBuilding());
-            openTime.setT_close(newOpenTime.getT_close());
-            openTime.setT_open(newOpenTime.getT_open());
+            openTime.setCloseTime(newOpenTime.getCloseTime());
+            openTime.setOpenTime(newOpenTime.getOpenTime());
             return openTimes.save(openTime);
         })
                 .orElseGet(() -> {
