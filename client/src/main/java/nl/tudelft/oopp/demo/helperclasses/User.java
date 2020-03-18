@@ -15,7 +15,6 @@ public class User {
     /**
      * Create a new User instance.
      *
-     * @param id A unique ID for the User.
      * @param email The email of the User.
      * @param role The role of the User, like student, employee, admin.
      * @param firstName The first name of the User.

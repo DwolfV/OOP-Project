@@ -1,5 +1,13 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,23 +18,30 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.*;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
+import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
+import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
-
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class MainSceneController implements Initializable {
 
@@ -40,7 +55,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private final Accordion ac = new Accordion();
     @FXML
-    private final BorderPane bPane = new BorderPane();
+    private final BorderPane bpane = new BorderPane();
     @FXML
     private Label closeButton;
     @FXML
@@ -169,11 +184,11 @@ public class MainSceneController implements Initializable {
 
                 //if there are rooms for the building i - show them;
                 if (showRooms.size() != 0) {
-                    VBox vBox = new VBox();
+                    VBox vbox = new VBox();
                     tps[c] = new TitledPane();
 
                     for (int j = 0; j < showRooms.size(); j++) {
-                        HBox hBox = new HBox();
+                        HBox hbox = new HBox();
 
                         Label label1 = new Label(showRooms.get(j).getName());
                         label1.setStyle("-fx-font-weight: bold");
@@ -206,15 +221,15 @@ public class MainSceneController implements Initializable {
                         cbb.setItems(to);
 
 
-                        hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
-                        hBox.setSpacing(150);
-                        hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+                        hbox.getChildren().addAll(label1, label2, cb, cbb, button1);
+                        hbox.setSpacing(150);
+                        hbox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                                 + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                                 + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
-                        vBox.getChildren().add(hBox);
+                        vbox.getChildren().add(hbox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
-                    tps[c].setContent(vBox);
+                    tps[c].setContent(vbox);
                     ac.getPanes().add(tps[c]);
                     c++;
                 }
@@ -222,10 +237,10 @@ public class MainSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vBox = new VBox(ac);
-            bPane.setCenter(vBox);
-            bPane.setPadding(new Insets(30, 5, 5, 10));
-            rootScene.setCenter(bPane);
+            VBox vbox = new VBox(ac);
+            bpane.setCenter(vbox);
+            bpane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bpane);
 
         });
     }
@@ -307,10 +322,10 @@ public class MainSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vBox = new VBox(ac);
-            bPane.setCenter(vBox);
-            bPane.setPadding(new Insets(30, 5, 5, 10));
-            rootScene.setCenter(bPane);
+            VBox vbox = new VBox(ac);
+            bpane.setCenter(vbox);
+            bpane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bpane);
 
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
@@ -359,14 +374,14 @@ public class MainSceneController implements Initializable {
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
 
-        AdminSceneController.BuildingView();
-        AdminSceneController.RoomView();
+        AdminSceneController.viewBuilding();
+        AdminSceneController.viewRoom();
 
         // load everything
-        VBox vBox = new VBox(ac);
-        bPane.setCenter(vBox);
-        bPane.setPadding(new Insets(10, 50, 10, 50));
-        rootScene.setCenter(bPane);
+        VBox vbox = new VBox(ac);
+        bpane.setCenter(vbox);
+        bpane.setPadding(new Insets(10, 50, 10, 50));
+        rootScene.setCenter(bpane);
 
         // show the scene
         MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
