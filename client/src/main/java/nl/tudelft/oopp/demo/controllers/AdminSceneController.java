@@ -98,7 +98,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.gettClose(), restaurant.gettOpen());
+        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.getTimeClose(), restaurant.getTimeOpen());
     }
 
     /**

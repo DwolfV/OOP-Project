@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,6 +55,7 @@ public class MainSceneController implements Initializable {
     private final Accordion ac = new Accordion();
     @FXML
     private final BorderPane bpane = new BorderPane();
+
     @FXML
     private Label closeButton;
     @FXML
@@ -71,6 +71,9 @@ public class MainSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * Closes the secondary stage when clicking the close button.
+     */
     public void closeSecondaryStage() {
         MainDisplay.secondaryStage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -78,12 +81,18 @@ public class MainSceneController implements Initializable {
         });
     }
 
+    /**
+     * Handles the click on the close button.
+     */
     @FXML
     public void handleCloseButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Login button.
+     */
     @FXML
     public void handleLoginButton() {
         String username = usernameField.getText();
@@ -106,6 +115,9 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    /**
+     * Handles the click on the Sign up button.
+     */
     @FXML
     public void handleSignUpClick() {
         try {
@@ -122,6 +134,9 @@ public class MainSceneController implements Initializable {
         }
     }
 
+    /**
+     * Handles what happens when the client clicks on the Home button.
+     */
     @FXML
     public void handleHomeButton() {
         try {
@@ -138,6 +153,9 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client picks a date.
+     */
     public void pickDate() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         searchId.setOnAction(e -> {
@@ -224,8 +242,10 @@ public class MainSceneController implements Initializable {
                         hbox.getChildren().addAll(label1, label2, cb, cbb, button1);
                         hbox.setSpacing(150);
                         hbox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                                + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                                + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+
+                            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                            + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+
                         vbox.getChildren().add(hbox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
@@ -238,6 +258,7 @@ public class MainSceneController implements Initializable {
 
             // load the accordion into the scene
             VBox vbox = new VBox(ac);
+
             bpane.setCenter(vbox);
             bpane.setPadding(new Insets(30, 5, 5, 10));
             rootScene.setCenter(bpane);
@@ -245,9 +266,13 @@ public class MainSceneController implements Initializable {
         });
     }
 
+    /**
+     * Handles what happens when the client clicks on the Reservations button.
+     */
     @FXML
     public void handleReservationButton() {
         try {
+            // load the scene
             rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // show the scene
@@ -261,6 +286,9 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Restaurants button.
+     */
     @FXML
     public void handleRestaurantsButton() {
         try {
@@ -323,6 +351,7 @@ public class MainSceneController implements Initializable {
 
             // load the accordion into the scene
             VBox vbox = new VBox(ac);
+
             bpane.setCenter(vbox);
             bpane.setPadding(new Insets(30, 5, 5, 10));
             rootScene.setCenter(bpane);
@@ -338,6 +367,9 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Friends button.
+     */
     @FXML
     public void handleFriendsButton() {
         try {
@@ -353,6 +385,9 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the client clicks on the Settings button.
+     */
     @FXML
     public void handleSettingsButton() {
         try {
@@ -369,6 +404,11 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
+    /**
+     * Handles what happens when the user clicks on the admin button.
+     *
+     * @throws IOException Can throw an exception if the user passes unexpected input.
+     */
     public void handleAdminButton() throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
