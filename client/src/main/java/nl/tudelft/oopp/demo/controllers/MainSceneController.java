@@ -84,16 +84,34 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleLoginButton(ActionEvent event) throws Exception {
+    public void handleLoginButton(ActionEvent ActionEvent) throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent loginParent = (Parent) fxmlLoader.load();
+            System.out.println(loginParent);
             MainDisplay.secondaryStage = new Stage();
 
             MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
+
+
+            drawer = (JFXDrawer) loginParent.lookup("#drawer");
+            hamburger = (JFXHamburger) loginParent.lookup("#hamburger");
+            VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
+            drawer.setSidePane(vBox);
+
+            HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+            transition.setRate(-1);
+            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                transition.setRate(transition.getRate() * -1);
+                transition.play();
+                if (drawer.isOpened()) {
+                    drawer.close();
+                } else {
+                    drawer.open(); }
+            });
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -251,23 +269,7 @@ public class MainSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
-            drawer.setSidePane(vBox);
-        } catch (IOException e) {
-            Logger.getLogger(MainSceneController.class.getName()).log(Level.SEVERE, null, e);
-        }
 
-        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
-        transition.setRate(-1);
-        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            transition.setRate(transition.getRate() * -1);
-            transition.play();
-            if (drawer.isOpened()) {
-                drawer.close();
-            } else {
-                drawer.open(); }
-        });
 
     }
 
