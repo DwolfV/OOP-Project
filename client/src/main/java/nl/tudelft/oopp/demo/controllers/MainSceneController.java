@@ -352,6 +352,7 @@ public class MainSceneController implements Initializable {
             e.printStackTrace();
         }
         closeSecondaryStage();
+        System.out.println(OpenTimeCommunication.getOpenTimes());
     }
 
     public void handleAdminButton() throws IOException {

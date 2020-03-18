@@ -31,11 +31,14 @@ public class AdminSceneController implements Initializable {
 
     static final Button updateButtonBuilding = new Button("Update");
     static final Button deleteButtonBuilding = new Button("Delete");
+    static final Button updateTimeBuilding = new Button("Update");
+    static final Button deleteTimeBuilding = new Button("Delete");
     static final Button updateButtonRoom = new Button("Update");
     static final Button deleteButtonRoom = new Button("Delete");
     static final Button updateButtonRestaurant = new Button("Update");
     static final Button deleteButtonRestaurant = new Button("Delete");
     private static final TableView<Building> tableBuilding = new TableView<>();
+    private static final TableView<OpenTime> tableBuildingTime = new TableView<>();
     private static final TableView<Room> tableRoom = new TableView<>();
     private static final TableView<Restaurant> tableRestaurant = new TableView<>();
 
@@ -83,6 +86,29 @@ public class AdminSceneController implements Initializable {
 
         allRooms.remove(room);
         RoomCommunication.removeRoom(room.getId());
+    }
+
+    /**
+     * The method below is implemented for the update button under the time section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
+    public static void updateTimeButtonClicked() {
+        OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
+        OpenTimeCommunication.updateOpenTime(openTime.getId(), openTime.getDay(), openTime.getOpenTime(), openTime.getCloseTime(), openTime.getBuilding());
+    }
+
+    /**
+     * The method below is implemented for the delete button under the time section in the admin scene.
+     * When the user selects a row in the rooms table it will be deleted from the database.
+     */
+    public static void deleteTimeButtonClicked() {
+        ObservableList<OpenTime> allTimes;
+        allTimes = tableBuildingTime.getItems();
+        OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
+
+        allTimes.remove(openTime);
+        OpenTimeCommunication.removeOpenTime(openTime.getId());
     }
 
     /**
@@ -194,9 +220,9 @@ public class AdminSceneController implements Initializable {
             }
         });
 
-        HBox hBoxAddDeleteUpdate = new HBox(10);
-        hBoxAddDeleteUpdate.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdate.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
+        HBox hBoxAddDeleteUpdateBuilding = new HBox(10);
+        hBoxAddDeleteUpdateBuilding.setPadding(new Insets(20, 20, 20, 0));
+        hBoxAddDeleteUpdateBuilding.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
 
         // adding a building
         BorderPane borderPaneAddBuilding = new BorderPane();
@@ -237,6 +263,77 @@ public class AdminSceneController implements Initializable {
             cityInput.setText(null);
         });
 
+        // Table for Time buildings
+        tableBuildingTime.setEditable(true);
+
+        TableColumn<OpenTime, Long> idBuildingTimeCol =
+                new TableColumn<>("id");
+        idBuildingTimeCol.setMinWidth(100);
+        idBuildingTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("id"));
+
+        TableColumn<OpenTime, String> buildingNameCol =
+                new TableColumn<>("Building Name");
+        buildingNameCol.setMinWidth(100);
+        buildingNameCol.setCellValueFactory(
+                new PropertyValueFactory<>("name"));
+
+        TableColumn<OpenTime, String> dayCol =
+                new TableColumn<>("Day");
+        dayCol.setMinWidth(100);
+        dayCol.setCellValueFactory(
+                new PropertyValueFactory<>("day"));
+        dayCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        dayCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setDay(t.getNewValue()));
+
+        TableColumn<OpenTime, String> openTimeCol =
+                new TableColumn<>("Open Time");
+        openTimeCol.setMinWidth(100);
+        openTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("openTime"));
+        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        openTimeCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
+
+        TableColumn<OpenTime, String> closeTimeCol =
+                new TableColumn<>("Close Time");
+        closeTimeCol.setMinWidth(100);
+        closeTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("closeTime"));
+        closeTimeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        closeTimeCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
+
+        ObservableList<OpenTime> buildingTimeData = FXCollections.observableList(OpenTimeCommunication.getOpenTimes());
+        tableBuildingTime.setItems(buildingTimeData);
+        tableBuildingTime.getColumns().addAll(idBuildingTimeCol, buildingNameCol, dayCol, openTimeCol, closeTimeCol);
+
+        //delete button
+        deleteTimeBuilding.setOnAction(e -> {
+            try {
+                deleteTimeButtonClicked();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        //update button
+        updateTimeBuilding.setOnAction(e -> {
+            try {
+                updateTimeButtonClicked();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        HBox hBoxAddDeleteUpdateTime = new HBox(10);
+        hBoxAddDeleteUpdateTime.setPadding(new Insets(20, 20, 20, 0));
+        hBoxAddDeleteUpdateTime.getChildren().setAll(deleteTimeBuilding, updateTimeBuilding);
+
         // adding a openTime for each building
         BorderPane borderPaneAddOpenTime = new BorderPane();
         VBox vBoxAddOpenTime = new VBox();
@@ -252,7 +349,7 @@ public class AdminSceneController implements Initializable {
         Text day = new Text("Day");
         Text openTime = new Text("Open Time");
         Text closeTime = new Text("Close Time");
-        Text building = new Text("Building Name");
+        Text building = new Text("Building ID");
 
         TextField dayInput = new TextField();
         TextField openTimeInput = new TextField();
@@ -292,17 +389,26 @@ public class AdminSceneController implements Initializable {
             choiceBox.setValue(null);
         });
 
-        // This VBox contains the table for the buildings and adding a building
-        VBox vBoxBuildingTP = new VBox();
-        vBoxBuildingTP.setPadding(new Insets(20, 20, 20, 20));
+        // The below things are to load everything to the building TP
+        VBox vBoxBuildingAndButtons = new VBox();
+        VBox vBoxOpenTimeAndButtons = new VBox();
+
         HBox hBoxBuildingTP = new HBox();
         hBoxBuildingTP.setSpacing(100);
-        VBox vBoxBuildingAndButtons = new VBox();
+        HBox hBoxTimeTP  = new HBox();
+        hBoxTimeTP.setSpacing(100);
 
-        vBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hBoxAddDeleteUpdate);
-        hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding, borderPaneAddOpenTime);
-        vBoxBuildingTP.getChildren().addAll(hBoxBuildingTP);
-        buildingTP.setContent(vBoxBuildingTP);
+        VBox vBoxMainbuildingTP = new VBox();
+        vBoxMainbuildingTP.setPadding(new Insets(20, 20, 20, 20));
+
+        vBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hBoxAddDeleteUpdateBuilding);
+        vBoxOpenTimeAndButtons.getChildren().addAll(tableBuildingTime, hBoxAddDeleteUpdateTime);
+
+        hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding);
+        hBoxTimeTP.getChildren().addAll(vBoxOpenTimeAndButtons, borderPaneAddOpenTime);
+
+        vBoxMainbuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxTimeTP);
+        buildingTP.setContent(vBoxMainbuildingTP);
     }
 
     /**
