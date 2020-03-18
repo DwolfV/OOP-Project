@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.TimeStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OpenTimeCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
@@ -280,8 +281,6 @@ public class AdminSceneController implements Initializable {
             String day1 = dayInput.getText();
             Time openTime1 = Time.valueOf(openTimeInput.getText());
             Time closeTime1 = Time.valueOf(closeTimeInput.getText());
-//            Time openTime1 = Time.valueOf("07:00:00");
-//            Time closeTime1 = Time.valueOf("12:00:00");
 
             OpenTimeCommunication.addOpenTime(day1, openTime1, closeTime1, Long.parseLong(buildingInput.getText()));
 
@@ -289,6 +288,8 @@ public class AdminSceneController implements Initializable {
             openTimeInput.setText(null);
             closeTimeInput.setText(null);
             buildingInput.setText(null);
+
+            choiceBox.setValue(null);
         });
 
         // This VBox contains the table for the buildings and adding a building
@@ -417,6 +418,8 @@ public class AdminSceneController implements Initializable {
             Building.setText(null);
             RoomName.setText(null);
             Capacity.setText(null);
+
+            choiceBox.setValue(null);
         });
 
         // This VBox contains the table for the rooms and adding a room
@@ -468,7 +471,7 @@ public class AdminSceneController implements Initializable {
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("tClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
 //        timeCloseCol.setOnEditCommit(
 //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
 //                    t.getTableView().getItems().get(
@@ -480,7 +483,7 @@ public class AdminSceneController implements Initializable {
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("tOpen"));
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
 //        timeOpenCol.setOnEditCommit(
 //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
 //                    t.getTableView().getItems().get(

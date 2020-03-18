@@ -361,6 +361,7 @@ public class MainSceneController implements Initializable {
 
         AdminSceneController.BuildingView();
         AdminSceneController.RoomView();
+        AdminSceneController.RestaurantView();
 
         // load everything
         VBox mainVerticalBox = new VBox(ac);
