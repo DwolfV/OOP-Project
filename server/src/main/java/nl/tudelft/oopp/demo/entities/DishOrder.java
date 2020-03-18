@@ -2,29 +2,28 @@ package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Dish_Order")
 public class DishOrder {
     @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @NotBlank
     @Column(name = "amount", nullable = false)
     private int amount;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
     private RestaurantDish dish;

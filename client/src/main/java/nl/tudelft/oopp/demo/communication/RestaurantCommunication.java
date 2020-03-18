@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.util.List;
+
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import org.codehaus.jackson.JsonGenerationException;
@@ -95,7 +96,6 @@ public class RestaurantCommunication {
 
         return restaurant;
     }
-
 
     /**
      * Adds a restaurant.
