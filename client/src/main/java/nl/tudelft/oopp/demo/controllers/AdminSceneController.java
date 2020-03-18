@@ -423,6 +423,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void RoomView() {
+        //clearing any previous tableview to avoid multiplication
+        tableRoom.getColumns().clear();
+
         // Table for Rooms
         tableRoom.setEditable(true);
 
@@ -551,6 +554,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void RestaurantView() {
+        //clearing any previous tableview to avoid multiplication
+        tableRestaurant.getColumns().clear();
+
         // Table for restaurants
         tableRestaurant.setEditable(true);
 
@@ -585,7 +591,7 @@ public class AdminSceneController implements Initializable {
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("tClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+//        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
 //        timeCloseCol.setOnEditCommit(
 //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
 //                    t.getTableView().getItems().get(
@@ -597,7 +603,7 @@ public class AdminSceneController implements Initializable {
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("tOpen"));
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+//        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
 //        timeOpenCol.setOnEditCommit(
 //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
 //                    t.getTableView().getItems().get(
@@ -632,9 +638,10 @@ public class AdminSceneController implements Initializable {
         hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
 
         // This VBox contains the table for the rooms and adding a room
-        VBox vBoxRestaurantTP = new VBox();
         HBox hBoxRestaurantTP = new HBox();
         hBoxRestaurantTP.setSpacing(100);
+        VBox vBoxRestaurantTP = new VBox();
+
         hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
         vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
