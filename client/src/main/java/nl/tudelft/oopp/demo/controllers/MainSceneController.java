@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.sun.nio.sctp.PeerAddressChangeNotification;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -358,11 +359,12 @@ public class MainSceneController implements Initializable {
     public void handleAdminButton() throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
+
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
 
         AdminSceneController.BuildingView();
         AdminSceneController.RoomView();
-        AdminSceneController.RestaurantView();
+//        AdminSceneController.RestaurantView();
 
         // load everything
         VBox mainVerticalBox = new VBox(ac);
