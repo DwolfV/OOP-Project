@@ -119,6 +119,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void viewBuilding() {
+        //clearing any previous tableview to avoid multiplication
+        tableBuilding.getColumns().clear();
+
         // Table for buildings
         tableBuilding.setEditable(true);
 
@@ -254,6 +257,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void viewRoom() {
+        //clearing any previous tableview to avoid multiplication
+        tableRoom.getColumns().clear();
+
         // Table for Rooms
         tableRoom.setEditable(true);
 
