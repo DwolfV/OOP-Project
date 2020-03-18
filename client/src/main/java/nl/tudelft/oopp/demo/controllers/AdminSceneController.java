@@ -137,9 +137,8 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void BuildingView() {
-
-        AdminSceneController.tableBuilding.getItems().clear();
-        AdminSceneController.tableBuildingTime.getItems().clear();
+        //clearing any previous tableview to avoid multiplication
+        tableBuilding.getColumns().clear();
 
         // Table for buildings
         tableBuilding.setEditable(true);
@@ -265,8 +264,10 @@ public class AdminSceneController implements Initializable {
             cityInput.setText(null);
         });
 
+        //clearing any previous tableview to avoid multiplication
+        tableBuildingTime.getColumns().clear();
+
         // Table for Time buildings
-        tableBuildingTime.getItems().clear();
         tableBuildingTime.setEditable(true);
 
         TableColumn<OpenTime, Long> idBuildingTimeCol =
