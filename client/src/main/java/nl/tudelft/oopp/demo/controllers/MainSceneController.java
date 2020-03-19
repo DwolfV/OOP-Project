@@ -55,6 +55,10 @@ public class MainSceneController implements Initializable {
     private DatePicker dp;
     @FXML
     private Button searchId;
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private JFXHamburger hamburger;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
