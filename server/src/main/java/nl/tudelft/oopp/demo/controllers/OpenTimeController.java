@@ -42,11 +42,26 @@ public class OpenTimeController {
      */
 
     @GetMapping("openTimes/{building_id}")
-    public @ResponseBody ResponseEntity<List<OpenTime>>
+    public @ResponseBody
+    ResponseEntity<List<OpenTime>>
         getOpenTimesForBuilding(@PathVariable(value = "building_id") long id /*,
                                                    @RequestParam String parameter*/) {
         return openTimes.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(openTimes.findByBuildingId(id), HttpStatus.OK);
+            : new ResponseEntity<>(openTimes.findByBuildingId(id), HttpStatus.OK);
+    }
+
+    /**
+     * GET EndPoint to retrieve a list of all openTimes for a building.
+     *
+     * @param id Unique identifier of the building
+     * @return a list of the openTimes for the building {@link OpenTime}.
+     */
+
+    @GetMapping("openTimes/day/{building_id}/{day}")
+    public @ResponseBody ResponseEntity<OpenTime>
+    getOpenTimesForBuildingByDay(@PathVariable(value = "building_id") long id, @PathVariable String day) {
+        return openTimes.findByBuildingIdAndDay(id,day).map(openTime -> ResponseEntity.ok(openTime)
+        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -57,10 +72,11 @@ public class OpenTimeController {
      */
 
     @GetMapping(value = "/openTimes", consumes = {"application/json"})
-    public @ResponseBody ResponseEntity<OpenTime> getOpenTimeById(@PathVariable long openTime_id) {
+    public @ResponseBody
+    ResponseEntity<OpenTime> getOpenTimeById(@PathVariable long openTime_id) {
         OpenTime toReturn = openTimes.findById(openTime_id).orElseGet(() -> null);
-        return (toReturn == null ) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                : new ResponseEntity<>(toReturn, HttpStatus.OK);
+        return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+            : new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
     /**
@@ -93,14 +109,14 @@ public class OpenTimeController {
         OpenTime updatedOpenTime = openTimes.findById(openTime_id).map(openTime -> {
             openTime.setDay(newOpenTime.getDay());
             openTime.setBuilding(newOpenTime.getBuilding());
-            openTime.setT_close(newOpenTime.getT_close());
-            openTime.setT_open(newOpenTime.getT_open());
+            openTime.setTimeClose(newOpenTime.getTimeClose());
+            openTime.setTimeOpen(newOpenTime.getTimeOpen());
             return openTimes.save(openTime);
         })
-                .orElseGet(() -> {
-                    newOpenTime.setId(openTime_id);
-                    return openTimes.save(newOpenTime);
-                });
+            .orElseGet(() -> {
+                newOpenTime.setId(openTime_id);
+                return openTimes.save(newOpenTime);
+            });
         return ResponseEntity.created(uri.toUri()).body(updatedOpenTime);
     }
 

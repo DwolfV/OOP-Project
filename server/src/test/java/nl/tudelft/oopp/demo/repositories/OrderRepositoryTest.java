@@ -1,18 +1,21 @@
 package nl.tudelft.oopp.demo.repositories;
 
-import nl.tudelft.oopp.demo.entities.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Order;
+import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 public class OrderRepositoryTest {
@@ -79,8 +82,8 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void testFindOrdersByRoomReservationId(){
-        List<Order> orderList = new ArrayList<Order>(List.of(o1,o2));
+    public void testFindOrdersByRoomReservationId() {
+        List<Order> orderList = new ArrayList<Order>(List.of(o1, o2));
         assertEquals(orderList, orderRepository.findOrdersByRoomReservationId(rr1.getId()));
     }
 }

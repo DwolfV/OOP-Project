@@ -1,12 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.event.ActionEvent;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import nl.tudelft.oopp.demo.views.MainDisplay;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class RegisterSceneController implements Initializable {
 
@@ -15,7 +13,7 @@ public class RegisterSceneController implements Initializable {
     }
 
     @FXML
-    public void handleSignUpButton(ActionEvent event) {
+    public void handleSignUpButton() {
         // have a sign up method on the server communication side
         MainDisplay.registerStage.close();
     }
