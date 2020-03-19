@@ -57,7 +57,7 @@ public class OpenTime {
      * @param closeTime The closing time of a building.
      * @param openTime The opening time of a building.
      * @param building The building for the OpenTime.
-     * @param building_id The building's ID for the OpenTime.
+     * @param building The building's ID for the OpenTime.
      */
 
     public OpenTime(long id, String day, Time openTime, Time closeTime, Building building) {
