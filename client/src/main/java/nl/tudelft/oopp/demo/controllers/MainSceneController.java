@@ -3,7 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
-import com.sun.nio.sctp.PeerAddressChangeNotification;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
