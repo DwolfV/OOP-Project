@@ -78,6 +78,10 @@ public class MainSceneController implements Initializable {
         stage.close();
     }
 
+    public void hamburgerMenu() {
+
+    }
+
     @FXML
     public void handleLoginButton (javafx.event.ActionEvent event) {
         String username = usernameField.getText();
