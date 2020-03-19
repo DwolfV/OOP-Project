@@ -1,0 +1,35 @@
+$l-blue: #6699CC;
+$d-blue: #336699;
+$d-grey: #878787;
+$b-blue: #66CCFF;
+$l-grey: #CCCCCC;
+
+.primary-pane {
+    -fx-background-color: $d-blue;
+}
+
+.secondary-pane {
+    -fx-background-color: $l-blue;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 3, 3), ; //radius,edge,x,y
+}
+
+.login-button {
+    -fx-background-color: $d-blue;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 2, 2);
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.login-button:hover {
+    -fx-background-color: $b-blue;
+}
+
+.hyperlink {
+    -fx-text-fill: white;
+    -fx-underline: false;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+}
+

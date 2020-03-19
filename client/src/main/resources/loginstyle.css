@@ -1,0 +1,30 @@
+.primary-pane {
+  -fx-background-color: #336699;
+}
+
+.secondary-pane {
+  -fx-background-color: #6699CC;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 3, 3);
+}
+
+.login-button {
+  -fx-background-color: #336699;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+.login-button:hover {
+  -fx-background-color: #66CCFF;
+}
+
+.hyperlink {
+  -fx-text-fill: white;
+  -fx-underline: false;
+}
+
+.hyperlink:hover {
+  -fx-underline: true;
+}
+
+/*# sourceMappingURL=loginstyle.css.map */

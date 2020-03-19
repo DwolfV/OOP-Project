@@ -120,6 +120,8 @@ public class MainSceneController implements Initializable {
      */
     @FXML
     public void handleSignUpClick() {
+        if(MainDisplay.registerStage != null)
+            return;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
             Parent registerParent = fxmlLoader.load();
@@ -129,6 +131,7 @@ public class MainSceneController implements Initializable {
             MainDisplay.registerStage.setScene(new Scene(registerParent));
             MainDisplay.registerStage.setTitle("Register");
             MainDisplay.registerStage.show();
+            MainDisplay.registerStage.setAlwaysOnTop(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

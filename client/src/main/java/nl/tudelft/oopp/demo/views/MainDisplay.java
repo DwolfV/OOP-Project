@@ -14,6 +14,10 @@ public class MainDisplay extends Application {
     public static Stage secondaryStage;
     public static Stage registerStage;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage loginStage) throws IOException {
 
@@ -26,9 +30,5 @@ public class MainDisplay extends Application {
         primaryStage.setTitle("Log In");
         primaryStage.setScene(loginScene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
