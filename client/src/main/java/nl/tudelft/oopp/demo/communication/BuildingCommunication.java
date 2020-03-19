@@ -73,7 +73,6 @@ public class BuildingCommunication {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return building;
     }
 

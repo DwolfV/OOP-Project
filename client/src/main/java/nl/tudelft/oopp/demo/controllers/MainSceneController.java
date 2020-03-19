@@ -164,27 +164,11 @@ public class MainSceneController implements Initializable {
     public void pickDate() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         searchId.setOnAction(e -> {
-            /*LocalDate date = dp.getValue();
-            for(int i = 0; i < rooms.size(); i++) {
-                String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(i).getId(), Date.valueOf(date.toString())));
-                String replaced = string1.replace("{", "").replace("}", "");
-                replaced.trim();
-                if (!replaced.equals("")) {
-                    String[] string2 = replaced.split(", ");
-                    for (int k = 0; k < string2.length; k++) {
-                        String[] string3 = string2[k].split("=");
-                        timeFrom.add(string3[0]);
-                        System.out.println(string3.length);
-                        timeTo.add(string3[1]);
-                    }
-                }
-            }*/
 
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
-            //List<Label> labels = new ArrayList<>();
 
             int c = 0; // count - for lists, c - for tps
 
@@ -196,6 +180,7 @@ public class MainSceneController implements Initializable {
                 for (int k = 0; k < rooms.size(); k++) {
                     if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
                         LocalDate date = dp.getValue();
+                        OpenTimeCommunication.getByBuildingId(i);
                         String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), Date.valueOf(date.toString())));
                         String replaced = string1.replace("{", "").replace("}", "");
                         if (!replaced.equals("")) {
@@ -219,6 +204,8 @@ public class MainSceneController implements Initializable {
                         Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                         Button button1 = new Button("Reserve");
                         buttons.add(button1);
+
+
 
 
                         LocalDate date = dp.getValue();
@@ -386,6 +373,7 @@ public class MainSceneController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(OpenTimeCommunication.getByBuildingId(13));
     }
 
     @FXML
@@ -406,6 +394,7 @@ public class MainSceneController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(OpenTimeCommunication.getByBuildingId(13));
     }
 
     public void handleAdminButton() throws IOException {
