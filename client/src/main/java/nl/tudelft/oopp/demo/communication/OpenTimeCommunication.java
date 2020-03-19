@@ -72,7 +72,7 @@ public class OpenTimeCommunication {
         List<OpenTime> openTime = new ArrayList<>();
         // TODO handle exception
         try {
-            openTime = mapper.readValue(response.body(), new TypeReference<OpenTime>(){});
+            openTime = mapper.readValue(response.body(), new TypeReference<List<OpenTime>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
