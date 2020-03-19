@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import com.sun.nio.sctp.PeerAddressChangeNotification;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,6 +15,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -87,6 +91,23 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
+
+            drawer = (JFXDrawer) loginParent.lookup("#drawer");
+            hamburger = (JFXHamburger) loginParent.lookup("#hamburger");
+            VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
+            drawer.setSidePane(vBox);
+
+            HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+            transition.setRate(-1);
+            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                transition.setRate(transition.getRate() * -1);
+                transition.play();
+                if (drawer.isOpened()) {
+                    drawer.close();
+                } else {
+                    drawer.open(); }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
