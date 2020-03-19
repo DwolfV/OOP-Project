@@ -24,7 +24,6 @@ import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -78,8 +77,19 @@ public class MainSceneController implements Initializable {
         stage.close();
     }
 
-    public void hamburgerMenu() {
-
+    public void hamburgerMenu() throws IOException {
+        VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
+        drawer.setSidePane(vBox);
+        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+            if (drawer.isOpened()) {
+                drawer.close();
+            } else {
+                drawer.open(); }
+        });
     }
 
     @FXML
@@ -103,19 +113,7 @@ public class MainSceneController implements Initializable {
 
             drawer = (JFXDrawer) loginParent.lookup("#drawer");
             hamburger = (JFXHamburger) loginParent.lookup("#hamburger");
-            VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
-            drawer.setSidePane(vBox);
-
-            HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
-            transition.setRate(-1);
-            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-                transition.setRate(transition.getRate() * -1);
-                transition.play();
-                if (drawer.isOpened()) {
-                    drawer.close();
-                } else {
-                    drawer.open(); }
-            });
+            hamburgerMenu();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,6 +131,11 @@ public class MainSceneController implements Initializable {
             MainDisplay.registerStage.setScene(new Scene(registerParent));
             MainDisplay.registerStage.setTitle("Register");
             MainDisplay.registerStage.show();
+
+            drawer = (JFXDrawer) registerParent.lookup("#drawer");
+            hamburger = (JFXHamburger) registerParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,11 +150,15 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
-            MainDisplay.secondaryStage.setMaximized(true);
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) calendarParent.lookup("#drawer");
+            hamburger = (JFXHamburger) calendarParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     public void pickDate() {
@@ -271,6 +278,10 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setTitle("Reservations");
             MainDisplay.secondaryStage.show();
 
+            drawer = (JFXDrawer) rootScene.lookup("#drawer");
+            hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -346,12 +357,15 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
 
+            drawer = (JFXDrawer) rootScene.lookup("#drawer");
+            hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+            hamburgerMenu();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     @FXML
@@ -363,27 +377,35 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Friends");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) friendsParent.lookup("#drawer");
+            hamburger = (JFXHamburger) friendsParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     @FXML
     public void handleSettingsButton() {
         try {
-            URL location = getClass().getResource("/settingsScene.fxml");
-            FXMLLoader fxmlLoader = new FXMLLoader(location);
-            Parent settingsParent = fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settingsScene.fxml"));
+            Parent settingsParent = (Parent) fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) settingsParent.lookup("#drawer");
+            hamburger = (JFXHamburger) settingsParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
-        System.out.println(OpenTimeCommunication.getOpenTimes());
     }
 
     public void handleAdminButton() throws IOException {
@@ -394,7 +416,7 @@ public class MainSceneController implements Initializable {
 
         AdminSceneController.BuildingView();
         AdminSceneController.RoomView();
-        AdminSceneController.RestaurantView();
+//        AdminSceneController.RestaurantView();
 
         // load everything
         VBox mainVerticalBox = new VBox(ac);
@@ -407,5 +429,10 @@ public class MainSceneController implements Initializable {
         MainDisplay.secondaryStage.setTitle("Admin");
         MainDisplay.secondaryStage.show();
         closeSecondaryStage();
+
+        drawer = (JFXDrawer) rootScene.lookup("#drawer");
+        hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+        hamburgerMenu();
+
     }
 }

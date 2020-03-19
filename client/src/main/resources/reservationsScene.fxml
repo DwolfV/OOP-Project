@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -42,7 +43,7 @@
         </HBox>
     </top>
     <left>
-        <VBox prefHeight="600.0" prefWidth="120.0" style="-fx-background-color: #7C8082;">
+        <VBox fx:id="vBox" prefHeight="600.0" prefWidth="120.0" style="-fx-background-color: #7C8082;">
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
                   style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Date: ">
                 <VBox.margin>
@@ -136,6 +137,9 @@
                     </Button>
                 </top>
             </BorderPane>
+            <children>
+                <JFXDrawer fx:id="drawer" defaultDrawerSize="120.0" prefHeight="594.0" prefWidth="158.0" />
+            </children>
         </VBox>
     </left>
    <center>

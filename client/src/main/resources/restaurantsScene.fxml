@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -36,12 +37,16 @@
                 <HBox.margin>
                     <Insets/>
                 </HBox.margin>
-                <Image url="/TU_Delft_logo_White.png"/>
+                <Image url="@TU_Delft_logo_White.png"/>
             </ImageView>
         </HBox>
     </top>
     <left>
-        <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
+        <VBox fx:id="vBox" prefHeight="600.0" prefWidth="120.0" style="-fx-background-color: #7C8082;">
+            <children>
+                <JFXDrawer fx:id="drawer" defaultDrawerSize="120.0" prefHeight="594.0" prefWidth="158.0" />
+            </children>
+        </VBox>
     </left>
    <center>
       <Accordion BorderPane.alignment="CENTER">
