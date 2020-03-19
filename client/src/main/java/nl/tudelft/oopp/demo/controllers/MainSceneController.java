@@ -24,6 +24,7 @@ import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -78,7 +79,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleLoginButton() {
+    public void handleLoginButton (javafx.event.ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -103,7 +104,7 @@ public class MainSceneController implements Initializable {
 
             HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
             transition.setRate(-1);
-            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
                 transition.setRate(transition.getRate() * -1);
                 transition.play();
                 if (drawer.isOpened()) {
@@ -403,5 +404,4 @@ public class MainSceneController implements Initializable {
         MainDisplay.secondaryStage.show();
         closeSecondaryStage();
     }
-
 }
