@@ -85,9 +85,10 @@ public class MainSceneController implements Initializable {
         if (!UserCommunication.authenticate(username, password)) {
             return;
         }
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-            Parent loginParent = fxmlLoader.load();
+            Parent loginParent = (Parent) fxmlLoader.load();
             MainDisplay.secondaryStage = new Stage();
 
             MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
