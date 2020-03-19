@@ -38,7 +38,7 @@ public class RestaurantTest {
     public void testConstructor() {
         assertNotNull(r1);
         assertEquals("name1", r1.getName());
-        assertEquals(new Time(3), r2.gettOpen());
+        assertEquals(new Time(3), r2.getTimeOpen());
         assertEquals(b2, r3.getBuilding());
     }
 }
