@@ -35,7 +35,7 @@
                 <HBox.margin>
                     <Insets/>
                 </HBox.margin>
-                <Image url="/TU_Delft_logo_White.png"/>
+                <Image url="@TU_Delft_logo_White.png"/>
             </ImageView>
         </HBox>
     </top>
