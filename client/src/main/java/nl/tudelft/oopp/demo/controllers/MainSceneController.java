@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +14,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -51,6 +55,10 @@ public class MainSceneController implements Initializable {
     private DatePicker dp;
     @FXML
     private Button searchId;
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private JFXHamburger hamburger;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,23 +77,44 @@ public class MainSceneController implements Initializable {
         stage.close();
     }
 
+    public void hamburgerMenu() throws IOException {
+        VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
+        drawer.setSidePane(vBox);
+        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+            if (drawer.isOpened()) {
+                drawer.close();
+            } else {
+                drawer.open(); }
+        });
+    }
+
     @FXML
-    public void handleLoginButton() {
+    public void handleLoginButton (javafx.event.ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         if (!UserCommunication.authenticate(username, password)) {
             return;
         }
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-            Parent loginParent = fxmlLoader.load();
+            Parent loginParent = (Parent) fxmlLoader.load();
             MainDisplay.secondaryStage = new Stage();
 
             MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
+
+            drawer = (JFXDrawer) loginParent.lookup("#drawer");
+            hamburger = (JFXHamburger) loginParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,6 +131,11 @@ public class MainSceneController implements Initializable {
             MainDisplay.registerStage.setScene(new Scene(registerParent));
             MainDisplay.registerStage.setTitle("Register");
             MainDisplay.registerStage.show();
+
+            drawer = (JFXDrawer) registerParent.lookup("#drawer");
+            hamburger = (JFXHamburger) registerParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,11 +150,15 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
-            MainDisplay.secondaryStage.setMaximized(true);
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) calendarParent.lookup("#drawer");
+            hamburger = (JFXHamburger) calendarParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     public void pickDate() {
@@ -240,6 +278,10 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setTitle("Reservations");
             MainDisplay.secondaryStage.show();
 
+            drawer = (JFXDrawer) rootScene.lookup("#drawer");
+            hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -315,12 +357,15 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
 
+            drawer = (JFXDrawer) rootScene.lookup("#drawer");
+            hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+            hamburgerMenu();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     @FXML
@@ -332,39 +377,50 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Friends");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) friendsParent.lookup("#drawer");
+            hamburger = (JFXHamburger) friendsParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     @FXML
     public void handleSettingsButton() {
         try {
-            URL location = getClass().getResource("/settingsScene.fxml");
-            FXMLLoader fxmlLoader = new FXMLLoader(location);
-            Parent settingsParent = fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settingsScene.fxml"));
+            Parent settingsParent = (Parent) fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) settingsParent.lookup("#drawer");
+            hamburger = (JFXHamburger) settingsParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
     public void handleAdminButton() throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
+
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
 
         AdminSceneController.BuildingView();
         AdminSceneController.RoomView();
+//        AdminSceneController.RestaurantView();
 
         // load everything
-        VBox vBox = new VBox(ac);
-        bPane.setCenter(vBox);
+        VBox mainVerticalBox = new VBox(ac);
+        bPane.setCenter(mainVerticalBox);
         bPane.setPadding(new Insets(10, 50, 10, 50));
         rootScene.setCenter(bPane);
 
@@ -373,6 +429,10 @@ public class MainSceneController implements Initializable {
         MainDisplay.secondaryStage.setTitle("Admin");
         MainDisplay.secondaryStage.show();
         closeSecondaryStage();
-    }
 
+        drawer = (JFXDrawer) rootScene.lookup("#drawer");
+        hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+        hamburgerMenu();
+
+    }
 }

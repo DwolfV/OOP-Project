@@ -13,11 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.OpenTimeCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.*;
 
 import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -27,13 +29,16 @@ public class AdminSceneController implements Initializable {
 
     static final Button updateButtonBuilding = new Button("Update");
     static final Button deleteButtonBuilding = new Button("Delete");
+    static final Button updateTimeBuilding = new Button("Update");
+    static final Button deleteTimeBuilding = new Button("Delete");
     static final Button updateButtonRoom = new Button("Update");
     static final Button deleteButtonRoom = new Button("Delete");
     static final Button updateButtonRestaurant = new Button("Update");
     static final Button deleteButtonRestaurant = new Button("Delete");
-    private static final TableView<Building> tableBuilding = new TableView<>();
-    private static final TableView<Room> tableRoom = new TableView<>();
-    private static final TableView<Restaurant> tableRestaurant = new TableView<>();
+    public static final TableView<Building> tableBuilding = new TableView<>();
+    public static final TableView<OpenTime> tableBuildingTime = new TableView<>();
+    public static final TableView<Room> tableRoom = new TableView<>();
+    public static final TableView<Restaurant> tableRestaurant = new TableView<>();
 
     /**
      * The method below is implemented for the update button under the building section in the admin scene.
@@ -82,6 +87,29 @@ public class AdminSceneController implements Initializable {
     }
 
     /**
+     * The method below is implemented for the update button under the time section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
+    public static void updateTimeButtonClicked() {
+        OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
+        OpenTimeCommunication.updateOpenTime(openTime.getId(), openTime.getDay(), openTime.getOpenTime(), openTime.getCloseTime(), openTime.getBuilding());
+    }
+
+    /**
+     * The method below is implemented for the delete button under the time section in the admin scene.
+     * When the user selects a row in the rooms table it will be deleted from the database.
+     */
+    public static void deleteTimeButtonClicked() {
+        ObservableList<OpenTime> allTimes;
+        allTimes = tableBuildingTime.getItems();
+        OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
+
+        allTimes.remove(openTime);
+        OpenTimeCommunication.removeOpenTime(openTime.getId());
+    }
+
+    /**
      * The method below is implemented for the update button under the restaurant section in the admin scene.
      * When the user double clicks on a specific section of a row one will be able to change the details, and
      * after changing the details one will have to press on the update button to update the database.
@@ -109,6 +137,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void BuildingView() {
+        //clearing any previous tableview to avoid multiplication
+        tableBuilding.getColumns().clear();
+
         // Table for buildings
         tableBuilding.setEditable(true);
 
@@ -190,9 +221,9 @@ public class AdminSceneController implements Initializable {
             }
         });
 
-        HBox hBoxAddDeleteUpdate = new HBox(10);
-        hBoxAddDeleteUpdate.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdate.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
+        HBox hBoxAddDeleteUpdateBuilding = new HBox(10);
+        hBoxAddDeleteUpdateBuilding.setPadding(new Insets(20, 20, 20, 0));
+        hBoxAddDeleteUpdateBuilding.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
 
         // adding a building
         BorderPane borderPaneAddBuilding = new BorderPane();
@@ -213,7 +244,7 @@ public class AdminSceneController implements Initializable {
         Button addButtonBuilding = new Button("Add Building");
 
         vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vBoxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
+        vBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vBoxAddBuilding);
 
@@ -231,18 +262,160 @@ public class AdminSceneController implements Initializable {
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
-
-            tableBuilding.refresh();
         });
 
-        // This VBox contains the table for the buildings and adding a building
-        VBox vBoxBuildingTP = new VBox();
+        //clearing any previous tableview to avoid multiplication
+        tableBuildingTime.getColumns().clear();
+
+        // Table for Time buildings
+        tableBuildingTime.setEditable(true);
+
+        TableColumn<OpenTime, Long> idBuildingTimeCol =
+                new TableColumn<>("id");
+        idBuildingTimeCol.setMinWidth(100);
+        idBuildingTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("id"));
+
+        TableColumn<OpenTime, String> buildingNameCol =
+                new TableColumn<>("Building Name");
+        buildingNameCol.setMinWidth(100);
+        buildingNameCol.setCellValueFactory(
+                new PropertyValueFactory<>("building"));
+        buildingNameCol.setCellFactory(TextFieldTableCell.<OpenTime, String>forTableColumn(new BuildingToStringConvertor()));
+
+        TableColumn<OpenTime, String> dayCol =
+                new TableColumn<>("Day");
+        dayCol.setMinWidth(100);
+        dayCol.setCellValueFactory(
+                new PropertyValueFactory<>("day"));
+        dayCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        dayCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
+                        t.getTablePosition().getRow()).setDay(t.getNewValue()));
+
+        TableColumn<OpenTime, String> openTimeCol =
+                new TableColumn<>("Open Time");
+        openTimeCol.setMinWidth(100);
+        openTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("openTime"));
+//        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        openTimeCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
+
+        TableColumn<OpenTime, String> closeTimeCol =
+                new TableColumn<>("Close Time");
+        closeTimeCol.setMinWidth(100);
+        closeTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("closeTime"));
+//        closeTimeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        closeTimeCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
+
+        ObservableList<OpenTime> buildingTimeData = FXCollections.observableList(OpenTimeCommunication.getOpenTimes());
+        tableBuildingTime.setItems(buildingTimeData);
+        tableBuildingTime.getColumns().addAll(idBuildingTimeCol, buildingNameCol, dayCol, openTimeCol, closeTimeCol);
+
+        //delete button
+        deleteTimeBuilding.setOnAction(e -> {
+            try {
+                deleteTimeButtonClicked();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        //update button
+        updateTimeBuilding.setOnAction(e -> {
+            try {
+                updateTimeButtonClicked();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        HBox hBoxAddDeleteUpdateTime = new HBox(10);
+        hBoxAddDeleteUpdateTime.setPadding(new Insets(20, 20, 20, 0));
+        hBoxAddDeleteUpdateTime.getChildren().setAll(deleteTimeBuilding, updateTimeBuilding);
+
+        // adding a openTime for each building
+        BorderPane borderPaneAddOpenTime = new BorderPane();
+        VBox vBoxAddOpenTime = new VBox();
+
+        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ArrayList<String> buildingList = new ArrayList<>();
+
+        for (Building name : buildingNames) {
+            buildingList.add(name.getName() + ", " + name.getId());
+        }
+        ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
+
+        Text day = new Text("Day");
+        Text openTime = new Text("Open Time");
+        Text closeTime = new Text("Close Time");
+        Text building = new Text("Building ID");
+
+        TextField dayInput = new TextField();
+        TextField openTimeInput = new TextField();
+        TextField closeTimeInput = new TextField();
+        TextField buildingInput = new TextField();
+
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
+        Button addOpenTime = new Button("Add Open Time");
+
+        choiceBox.setItems(bl);
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            String[] string = newValue.split(", ");
+            buildingInput.setText(string[1]);
+        });
+
+        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openTime, openTimeInput, closeTime, closeTimeInput, building, buildingInput, choiceBox, addOpenTime);
+        vBoxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
+        vBoxAddOpenTime.setSpacing(10);
+        borderPaneAddOpenTime.setTop(vBoxAddOpenTime);
+
+        addOpenTime.setOnAction(e -> {
+            System.out.println((openTimeInput.getText()));
+
+            String day1 = dayInput.getText();
+            Time openTime1 = Time.valueOf(openTimeInput.getText());
+            Time closeTime1 = Time.valueOf(closeTimeInput.getText());
+
+            OpenTimeCommunication.addOpenTime(day1, openTime1, closeTime1, Long.parseLong(buildingInput.getText()));
+
+            dayInput.setText(null);
+            openTimeInput.setText(null);
+            closeTimeInput.setText(null);
+            buildingInput.setText(null);
+
+            choiceBox.setValue(null);
+        });
+
+        // The below things are to load everything to the building TP
+        VBox vBoxBuildingAndButtons = new VBox();
+        VBox vBoxOpenTimeAndButtons = new VBox();
+
         HBox hBoxBuildingTP = new HBox();
         hBoxBuildingTP.setSpacing(100);
-        hBoxBuildingTP.getChildren().addAll(tableBuilding, borderPaneAddBuilding);
-        vBoxBuildingTP.setPadding(new Insets(20, 20, 20, 20));
-        vBoxBuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxAddDeleteUpdate);
-        buildingTP.setContent(vBoxBuildingTP);
+        HBox hBoxTimeTP  = new HBox();
+        hBoxTimeTP.setSpacing(100);
+
+        VBox vBoxMainBuildingTP = new VBox();
+        vBoxMainBuildingTP.setPadding(new Insets(20, 20, 20, 20));
+
+        vBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hBoxAddDeleteUpdateBuilding);
+        vBoxOpenTimeAndButtons.getChildren().addAll(tableBuildingTime, hBoxAddDeleteUpdateTime);
+
+        hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding);
+        hBoxTimeTP.getChildren().addAll(vBoxOpenTimeAndButtons, borderPaneAddOpenTime);
+
+        vBoxMainBuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxTimeTP);
+        ScrollPane scroll = new ScrollPane();
+        scroll.setContent(vBoxMainBuildingTP);
+        buildingTP.setContent(scroll);
     }
 
     /**
@@ -250,6 +423,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void RoomView() {
+        //clearing any previous tableview to avoid multiplication
+        tableRoom.getColumns().clear();
+
         // Table for Rooms
         tableRoom.setEditable(true);
 
@@ -317,8 +493,8 @@ public class AdminSceneController implements Initializable {
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
         ArrayList<String> buildingList = new ArrayList<>();
 
-        for (int i = 0; i < buildingNames.size(); i++) {
-            buildingList.add(buildingNames.get(i).getName() + ", " + buildingNames.get(i).getId());
+        for (Building buildingName : buildingNames) {
+            buildingList.add(buildingName.getName() + ", " + buildingName.getId());
         }
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
@@ -332,6 +508,7 @@ public class AdminSceneController implements Initializable {
         TextField RoomName = new TextField();
         TextField Capacity = new TextField();
         TextField Building = new TextField();
+
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
         Button addButton = new Button("Add Room");
@@ -344,7 +521,7 @@ public class AdminSceneController implements Initializable {
         });
 
         vBoxAddRoom.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
-        vBoxAddRoom.setPadding(new Insets(10, 10, 10, 10));
+        vBoxAddRoom.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddRoom.setSpacing(10);
         borderPaneAddRoom.setTop(vBoxAddRoom);
 
@@ -357,12 +534,15 @@ public class AdminSceneController implements Initializable {
             Building.setText(null);
             RoomName.setText(null);
             Capacity.setText(null);
+
+            choiceBox.setValue(null);
         });
 
         // This VBox contains the table for the rooms and adding a room
-        VBox vBoxRoomsTP = new VBox();
         HBox hBoxRoomTP = new HBox();
         hBoxRoomTP.setSpacing(100);
+        VBox vBoxRoomsTP = new VBox();
+
         hBoxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
         vBoxRoomsTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRoomsTP.getChildren().addAll(hBoxRoomTP, hBoxAddDeleteUpdateRooms);
@@ -374,6 +554,9 @@ public class AdminSceneController implements Initializable {
      * the admin scene.
      */
     public static void RestaurantView() {
+        //clearing any previous tableview to avoid multiplication
+        tableRestaurant.getColumns().clear();
+
         // Table for restaurants
         tableRestaurant.setEditable(true);
 
@@ -408,7 +591,7 @@ public class AdminSceneController implements Initializable {
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("tClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+//        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
 //        timeCloseCol.setOnEditCommit(
 //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
 //                    t.getTableView().getItems().get(
@@ -420,7 +603,7 @@ public class AdminSceneController implements Initializable {
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("tOpen"));
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+//        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
 //        timeOpenCol.setOnEditCommit(
 //                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
 //                    t.getTableView().getItems().get(
@@ -455,9 +638,10 @@ public class AdminSceneController implements Initializable {
         hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
 
         // This VBox contains the table for the rooms and adding a room
-        VBox vBoxRestaurantTP = new VBox();
         HBox hBoxRestaurantTP = new HBox();
         hBoxRestaurantTP.setSpacing(100);
+        VBox vBoxRestaurantTP = new VBox();
+
         hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
         vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);

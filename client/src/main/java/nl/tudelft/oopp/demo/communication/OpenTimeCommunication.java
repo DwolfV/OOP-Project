@@ -11,6 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OpenTimeCommunication {
@@ -24,7 +25,7 @@ public class OpenTimeCommunication {
      */
     public static List<OpenTime> getOpenTimes() {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/openTime")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/openTimes")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -46,6 +47,37 @@ public class OpenTimeCommunication {
         }
 
         return openTimes;
+    }
+
+    /**
+     * Retrieves an openTime by building id from the server.
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
+     */
+    public static List<OpenTime> getByBuildingId(long id) {
+        // TODO what if Authenticator.SESSION_COOKIE is not set?
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/openTimes/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<OpenTime> openTime = new ArrayList<>();
+        // TODO handle exception
+        try {
+            openTime = mapper.readValue(response.body(), new TypeReference<OpenTime>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return openTime;
     }
 
     /**
@@ -83,9 +115,9 @@ public class OpenTimeCommunication {
      * Adds an OpenTime.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addOpenTime(String day, Time openTime, Time closeTime, Building building) {
+    public static void addOpenTime(String day, Time openTime, Time closeTime, Long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
-        OpenTime newOpenTime = new OpenTime(day, openTime, closeTime, building);
+        OpenTime newOpenTime = new OpenTime(day, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
         String JSONOpenTime = "";
         try {
             JSONOpenTime = mapper.writeValueAsString(newOpenTime);
