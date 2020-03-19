@@ -69,15 +69,15 @@ class OpenTimeControllerTest {
         assertEquals(actualList, expectedList);
     }
 
-    @Test
-    public void testGetById() {
-        Optional<OpenTime> optionalOpenTime = Optional.of(t1);
-        ResponseEntity<OpenTime> entity = ResponseEntity.of(optionalOpenTime);
-
-        when(openTimeRepository.findById(t1.getId())).thenReturn(optionalOpenTime);
-        assertEquals(entity, openTimeController.getOpenTimeById(t1.getId()));
-
-    }
+//    @Test
+//    public void testGetById() {
+//        Optional<OpenTime> optionalOpenTime = Optional.of(t1);
+//        ResponseEntity<OpenTime> entity = ResponseEntity.of(optionalOpenTime);
+//
+//        when(openTimeRepository.findById(t1.getId())).thenReturn(optionalOpenTime);
+//        assertEquals(entity, openTimeController.getOpenTimeById(t1.getId()));
+//
+//    }
 
     @Test
     public void testNewOpenTime() {
