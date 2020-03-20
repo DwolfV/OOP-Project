@@ -65,20 +65,6 @@ public class OpenTimeController {
         ).orElseGet( () -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-//    /**
-//     * GET Endpoint to retrieve holiday by ID.
-//     *
-//     * @param openTime_id Unique identifier of the equipment.
-//     * @return The requested equipment {@link OpenTime}.
-//     */
-//
-//    @GetMapping(value = "/openTimes/{openTime_id}")
-//    public @ResponseBody ResponseEntity<OpenTime> getOpenTimeById(@PathVariable long openTime_id) {
-//        OpenTime toReturn = openTimes.findById(openTime_id).orElseGet(() -> null);
-//        return (toReturn == null ) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-//                : new ResponseEntity<>(toReturn, HttpStatus.OK);
-//    }
-
     /**
      * POST Endpoint to add a new OpenTime.
      *

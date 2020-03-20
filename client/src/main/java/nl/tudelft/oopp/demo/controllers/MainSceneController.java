@@ -18,7 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.*;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
+import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
@@ -26,8 +29,6 @@ import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -88,7 +89,9 @@ public class MainSceneController implements Initializable {
             if (drawer.isOpened()) {
                 drawer.close();
             } else {
-                drawer.open(); }
+                drawer.open();
+                drawer.setTranslateX(140);
+            }
         });
     }
 
@@ -144,7 +147,7 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleHomeButton() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/reservationsScene.fxml"));
             Parent calendarParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
@@ -161,32 +164,18 @@ public class MainSceneController implements Initializable {
         }
     }
 
-    public void pickDate() {
-        ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
-        searchId.setOnAction(e -> {
-            /*LocalDate date = dp.getValue();
-            for(int i = 0; i < rooms.size(); i++) {
-                String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(i).getId(), Date.valueOf(date.toString())));
-                String replaced = string1.replace("{", "").replace("}", "");
-                replaced.trim();
-                if (!replaced.equals("")) {
-                    String[] string2 = replaced.split(", ");
-                    for (int k = 0; k < string2.length; k++) {
-                        String[] string3 = string2[k].split("=");
-                        timeFrom.add(string3[0]);
-                        System.out.println(string3.length);
-                        timeTo.add(string3[1]);
-                    }
-                }
-            }*/
 
+    @FXML
+    public void handleReservationButton() {
+        try {
+            ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
-            //List<Label> labels = new ArrayList<>();
 
             int c = 0; // count - for lists, c - for tps
+            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // fill the accordion
             for (int i = 0; i < buildingData.size(); i++) {
@@ -195,12 +184,7 @@ public class MainSceneController implements Initializable {
                 ObservableList<Room> showRooms = FXCollections.observableArrayList();
                 for (int k = 0; k < rooms.size(); k++) {
                     if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
-                        LocalDate date = dp.getValue();
-                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), Date.valueOf(date.toString())));
-                        String replaced = string1.replace("{", "").replace("}", "");
-                        if (!replaced.equals("")) {
-                            showRooms.add(rooms.get(k));
-                        }
+                        showRooms.add(rooms.get(k));
                     }
                 }
 
@@ -221,20 +205,6 @@ public class MainSceneController implements Initializable {
                         buttons.add(button1);
 
 
-                        LocalDate date = dp.getValue();
-                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), Date.valueOf(date.toString())));
-                        String replaced = string1.replace("{", "").replace("}", "");
-                        if (!replaced.equals("")) {
-                            String[] string2 = replaced.split(", ");
-                            for (int k = 0; k < string2.length; k++) {
-                                String[] string3 = string2[k].split("=");
-                                timeFrom.add(string3[0]);
-                                System.out.println(string3.length);
-                                timeTo.add(string3[1]);
-                            }
-                        }
-
-
                         ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
                         ObservableList<String> to = FXCollections.observableArrayList(timeTo);
 
@@ -247,8 +217,8 @@ public class MainSceneController implements Initializable {
                         hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                         hBox.setSpacing(150);
                         hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                                + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                                + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+                                    + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                                    + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
                         vBox.getChildren().add(hBox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
@@ -265,13 +235,6 @@ public class MainSceneController implements Initializable {
             bPane.setPadding(new Insets(30, 5, 5, 10));
             rootScene.setCenter(bPane);
 
-        });
-    }
-
-    @FXML
-    public void handleReservationButton() {
-        try {
-            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // show the scene
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
@@ -419,9 +382,9 @@ public class MainSceneController implements Initializable {
 //        AdminSceneController.RestaurantView();
 
         // load everything
-        VBox mainVerticalBox = new VBox(ac);
-        bPane.setCenter(mainVerticalBox);
-        bPane.setPadding(new Insets(10, 50, 10, 50));
+        VBox vBox = new VBox(ac);
+        bPane.setCenter(vBox);
+        bPane.setPadding(new Insets(30, 5, 5, 10));
         rootScene.setCenter(bPane);
 
         // show the scene
