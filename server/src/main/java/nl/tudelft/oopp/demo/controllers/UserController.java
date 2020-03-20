@@ -1,13 +1,17 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.entities.UserInfo;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +32,9 @@ public class UserController {
 
     @Autowired
     JdbcUserDetailsManager jdbcUserDetailsManager;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /**
      * GET Endpoint to retrieve a list of all users.
@@ -116,5 +123,23 @@ public class UserController {
     @GetMapping(value = "login")
     public ResponseEntity<String> logIn(Authentication authentication) {
         return new ResponseEntity<>(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "signup", consumes = {"application/json"})
+    public ResponseEntity<User> signUp(@Valid @RequestBody UserInfo userInfo, UriComponentsBuilder b) {
+        // TODO sanitize the input strings?
+
+        if (jdbcUserDetailsManager.userExists(userInfo.getUsername())) {
+            return new ResponseEntity("User already exists.", HttpStatus.CONFLICT);
+        }
+
+        User newUser = new User(userInfo.getEmail(), "ROLE_USER", userInfo.getFirstName(), userInfo.getLastName(), null, userInfo.getUsername());
+
+        newUser = rep.save(newUser);
+        UriComponents uri = b.path("signup/{user_id}").buildAndExpand(newUser.getId());
+
+        jdbcUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(userInfo.getUsername()).password(passwordEncoder.encode(userInfo.getPassword())).roles("USER").build());
+
+        return ResponseEntity.created(uri.toUri()).body(newUser);
     }
 }

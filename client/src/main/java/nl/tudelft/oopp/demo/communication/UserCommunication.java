@@ -1,10 +1,14 @@
 package nl.tudelft.oopp.demo.communication;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
+import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.helperclasses.UserInfo;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class UserCommunication {
 
@@ -39,6 +43,43 @@ public class UserCommunication {
         Authenticator.ROLE = response.body().substring(1, response.body().length() - 1);
         System.out.println(Authenticator.ROLE + "; IS ADMIN - " + Authenticator.isAdmin());
         return true;
+    }
+
+    /**
+     * Creates a new user and saves their credentials and information in the database.
+     *
+     * @param user     The information that the user gives on sign up is stored in this object
+     * @param username The username that the user gives
+     * @param password The password that the user gives
+     * @return A boolean - true if everything went OK, false otherwise
+     */
+    public static boolean createNewUser(User user, String username, String password) {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonUserInfo = "";
+        UserInfo userInfo = new UserInfo(user.getEmail(), user.getRole(), user.getFirstName(), user.getLastName(), username, password);
+        try {
+            jsonUserInfo = mapper.writeValueAsString(userInfo);
+            System.out.println(userInfo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonUserInfo)).uri(URI.create("http://localhost:8080/signup")).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 201) {
+            System.out.println("Status: " + response.statusCode());
+            return false;
+        }
+
+        // if everything has gone fine, the user can authenticate with their newly added credentials
+        return authenticate(username, password);
     }
 
 }
