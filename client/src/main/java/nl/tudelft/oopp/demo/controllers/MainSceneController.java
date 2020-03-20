@@ -18,7 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.*;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
+import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
@@ -86,7 +89,9 @@ public class MainSceneController implements Initializable {
             if (drawer.isOpened()) {
                 drawer.close();
             } else {
-                drawer.open(); }
+                drawer.open();
+                drawer.setTranslateX(140);
+            }
         });
     }
 
@@ -142,7 +147,7 @@ public class MainSceneController implements Initializable {
     @FXML
     public void handleHomeButton() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/reservationsScene.fxml"));
             Parent calendarParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
@@ -344,7 +349,6 @@ public class MainSceneController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(OpenTimeCommunication.getByBuildingId(13));
     }
 
     @FXML
@@ -365,7 +369,6 @@ public class MainSceneController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(OpenTimeCommunication.getByBuildingId(13));
     }
 
     public void handleAdminButton() throws IOException {
@@ -381,7 +384,7 @@ public class MainSceneController implements Initializable {
         // load everything
         VBox mainVerticalBox = new VBox(ac);
         bPane.setCenter(mainVerticalBox);
-        bPane.setPadding(new Insets(10, 50, 10, 50));
+//        bPane.setPadding(new Insets(10, 50, 10, 50));
         rootScene.setCenter(bPane);
 
         // show the scene
