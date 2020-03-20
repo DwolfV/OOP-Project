@@ -382,9 +382,9 @@ public class MainSceneController implements Initializable {
 //        AdminSceneController.RestaurantView();
 
         // load everything
-        VBox mainVerticalBox = new VBox(ac);
-        bPane.setCenter(mainVerticalBox);
-//        bPane.setPadding(new Insets(10, 50, 10, 50));
+        VBox vBox = new VBox(ac);
+        bPane.setCenter(vBox);
+        bPane.setPadding(new Insets(30, 5, 5, 10));
         rootScene.setCenter(bPane);
 
         // show the scene

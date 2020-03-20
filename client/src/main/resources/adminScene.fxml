@@ -41,12 +41,13 @@
             </ImageView>
         </HBox>
     </top>
-   <center>
-       <BorderPane fx:id="borderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-       </BorderPane>
-   </center>
+    <center>
+        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+    </center>
     <left>
         <AnchorPane>
+            <VBox prefHeight="600.0" maxWidth="140.0" style="-fx-background-color: #7C8082;" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            </VBox>
             <JFXDrawer fx:id="drawer" defaultDrawerSize="140.0" prefHeight="600.0" prefWidth="140.0" AnchorPane.leftAnchor="-140.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"/>
         </AnchorPane>
     </left>
