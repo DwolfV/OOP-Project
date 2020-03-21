@@ -99,9 +99,9 @@ public class RestaurantCommunication {
          * @throws Exception if communication with the server fails or if the response is not proper json.
          */
 
-      public static void addRestaurant(String name, Building building, Time tClose, Time tOpen) {
+      public static void addRestaurant(String name, Long building, Time tClose, Time tOpen) {
           ObjectMapper mapper = new ObjectMapper();
-          Restaurant restaurant = new Restaurant(name, building, tClose, tOpen);
+          Restaurant restaurant = new Restaurant(name, BuildingCommunication.getBuildingById(building), tClose, tOpen);
           String JSONRestaurant = "";
           try {
               JSONRestaurant = mapper.writeValueAsString(restaurant);
@@ -135,9 +135,9 @@ public class RestaurantCommunication {
          * Updates a Restaurant.
          * @throws Exception if communication with the server fails or if the response is not proper json.
          */
-       public static void updateRestaurant(long id, String name, Building building, Time tClose, Time tOpen) {
+       public static void updateRestaurant(long id, String name, Long building, Time tClose, Time tOpen) {
            ObjectMapper mapper = new ObjectMapper();
-           Restaurant restaurant = new Restaurant(name, building, tClose, tOpen);
+           Restaurant restaurant = new Restaurant(name, BuildingCommunication.getBuildingById(building), tClose, tOpen);
            String JSONRestaurant = "" ;
             try {
                 JSONRestaurant = mapper.writeValueAsString(restaurant);

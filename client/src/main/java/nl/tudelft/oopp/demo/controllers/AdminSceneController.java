@@ -93,7 +93,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void updateTimeButtonClicked() {
         OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
-        OpenTimeCommunication.updateOpenTime(openTime.getId(), openTime.getDay(), openTime.getOpenTime(), openTime.getCloseTime(), openTime.getBuilding());
+        OpenTimeCommunication.updateOpenTime(openTime.getId(), openTime.getDay(), openTime.getOpenTime(), openTime.getCloseTime(), openTime.getBuilding().getId());
     }
 
     /**
@@ -116,7 +116,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.getTimeClose(), restaurant.getTimeOpen());
+        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen());
     }
 
     /**
@@ -589,18 +589,6 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
-        TableColumn<Restaurant, String> timeCloseCol =
-                new TableColumn<>("Closing Time");
-        timeCloseCol.setMinWidth(100);
-        timeCloseCol.setCellValueFactory(
-                new PropertyValueFactory<>("timeClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
-        timeCloseCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setTimeClose(Time.valueOf(t.getNewValue()));
-                });
-
         TableColumn<Restaurant, String> timeOpenCol =
                 new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
@@ -613,9 +601,21 @@ public class AdminSceneController implements Initializable {
                             t.getTablePosition().getRow()).setTimeOpen(Time.valueOf(t.getNewValue()));
                 });
 
+        TableColumn<Restaurant, String> timeCloseCol =
+                new TableColumn<>("Closing Time");
+        timeCloseCol.setMinWidth(100);
+        timeCloseCol.setCellValueFactory(
+                new PropertyValueFactory<>("timeClose"));
+        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+        timeCloseCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setTimeClose(Time.valueOf(t.getNewValue()));
+                });
+
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
         tableRestaurant.setItems(restaurantData);
-        tableRestaurant.getColumns().addAll(idRestaurantCol, restaurantNameCol, buildingNameRestaurantCol, timeCloseCol, timeOpenCol);
+        tableRestaurant.getColumns().addAll(idRestaurantCol, restaurantNameCol, buildingNameRestaurantCol, timeOpenCol, timeCloseCol);
 
         //delete button
         deleteButtonRestaurant.setOnAction(e -> {
@@ -635,6 +635,59 @@ public class AdminSceneController implements Initializable {
             }
         });
 
+        // adding a restaurant
+        BorderPane borderPaneAddRestaurant = new BorderPane();
+        VBox vBoxAddRestaurant = new VBox();
+
+        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ArrayList<String> buildingList = new ArrayList<>();
+
+        for (Building name : buildingNames) {
+            buildingList.add(name.getName() + ", " + name.getId());
+        }
+        ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
+
+        Text restaurantName = new Text("Restaurant Name");
+        Text buildingName = new Text("Building Name");
+        Text openingTime = new Text("Opening Time");
+        Text closingTime = new Text("Closing Time");
+
+        TextField restaurantNameInput = new TextField();
+        TextField buildingNameInput = new TextField();
+        TextField openingTimeInput = new TextField();
+        TextField closingTimeInput = new TextField();
+
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
+        Button addRestaurant = new Button("Add Restaurant");
+
+        choiceBox.setItems(bl);
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            String[] string = newValue.split(", ");
+            buildingNameInput.setText(string[1]);
+        });
+
+        vBoxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput, buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput, closingTime, closingTimeInput, addRestaurant);
+        vBoxAddRestaurant.setPadding(new Insets(0, 10, 10, 10));
+        vBoxAddRestaurant.setSpacing(10);
+        borderPaneAddRestaurant.setTop(vBoxAddRestaurant);
+
+        addRestaurant.setOnAction(e -> {
+            String restaurantNameInputText = restaurantNameInput.getText();
+            Time openingTimeInputText = Time.valueOf(openingTimeInput.getText());
+            Time closingTimeInputText = Time.valueOf(closingTimeInput.getText());
+
+            RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText);
+
+            restaurantNameInput.setText(null);
+            openingTimeInput.setText(null);
+            closingTimeInput.setText(null);
+            buildingNameInput.setText(null);
+
+            choiceBox.setValue(null);
+        });
+
         // HBox for the buttons under the table
         HBox hBoxAddDeleteUpdateRestaurants = new HBox(10);
         hBoxAddDeleteUpdateRestaurants.setPadding(new Insets(20, 20, 20, 0));
@@ -645,7 +698,7 @@ public class AdminSceneController implements Initializable {
         hBoxRestaurantTP.setSpacing(100);
         VBox vBoxRestaurantTP = new VBox();
 
-        hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
+        hBoxRestaurantTP.getChildren().addAll(tableRestaurant, borderPaneAddRestaurant);
         vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
 
