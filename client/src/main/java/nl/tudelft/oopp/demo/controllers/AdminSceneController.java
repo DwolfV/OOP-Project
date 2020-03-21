@@ -372,6 +372,7 @@ public class AdminSceneController implements Initializable {
         choiceBox.setItems(bl);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
             String[] string = newValue.split(", ");
             buildingInput.setText(string[1]);
         });
@@ -520,6 +521,7 @@ public class AdminSceneController implements Initializable {
         choiceBox.setItems(bl);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
             String[] string = newValue.split(", ");
             Building.setText(string[1]);
         });
@@ -668,6 +670,7 @@ public class AdminSceneController implements Initializable {
         choiceBox.setItems(bl);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
             String[] string = newValue.split(", ");
             buildingNameInput.setText(string[1]);
         });
