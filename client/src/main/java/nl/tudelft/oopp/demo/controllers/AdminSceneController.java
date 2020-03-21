@@ -298,20 +298,24 @@ public class AdminSceneController implements Initializable {
         openTimeCol.setMinWidth(100);
         openTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("openTime"));
-//        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-//        openTimeCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
-//                        t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
+        openTimeCol.setCellFactory(TextFieldTableCell.<OpenTime, String>forTableColumn((new TimeToStringConverter())));
+        openTimeCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<OpenTime, String> t) -> {
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setOpenTime(Time.valueOf(t.getNewValue()));
+                });
 
         TableColumn<OpenTime, String> closeTimeCol =
                 new TableColumn<>("Close Time");
         closeTimeCol.setMinWidth(100);
         closeTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("closeTime"));
-//        closeTimeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-//        closeTimeCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
-//                        t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
+        closeTimeCol.setCellFactory(TextFieldTableCell.<OpenTime, String>forTableColumn((new TimeToStringConverter())));
+        closeTimeCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<OpenTime, String> t) -> {
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setCloseTime(Time.valueOf(t.getNewValue()));
+                });
 
         ObservableList<OpenTime> buildingTimeData = FXCollections.observableList(OpenTimeCommunication.getOpenTimes());
         tableBuildingTime.setItems(buildingTimeData);
