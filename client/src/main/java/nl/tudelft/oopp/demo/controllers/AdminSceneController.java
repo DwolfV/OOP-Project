@@ -116,7 +116,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.gettClose(), restaurant.gettOpen());
+        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.getTimeClose(), restaurant.getTimeOpen());
     }
 
     /**
@@ -590,25 +590,25 @@ public class AdminSceneController implements Initializable {
                 new TableColumn<>("Closing Time");
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
-                new PropertyValueFactory<>("tClose"));
-//        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
-//        timeCloseCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-//                    t.getTableView().getItems().get(
-//                            t.getTablePosition().getRow()).settClose(t.getNewValue());
-//                });
+                new PropertyValueFactory<>("timeClose"));
+        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+        timeCloseCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setTimeClose(Time.valueOf(t.getNewValue()));
+                });
 
         TableColumn<Restaurant, String> timeOpenCol =
                 new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
-                new PropertyValueFactory<>("tOpen"));
-//        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
-//        timeOpenCol.setOnEditCommit(
-//                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
-//                    t.getTableView().getItems().get(
-//                            t.getTablePosition().getRow()).settOpen(t.getNewValue());
-//                });
+                new PropertyValueFactory<>("timeOpen"));
+        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+        timeOpenCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setTimeOpen(Time.valueOf(t.getNewValue()));
+                });
 
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
         tableRestaurant.setItems(restaurantData);
