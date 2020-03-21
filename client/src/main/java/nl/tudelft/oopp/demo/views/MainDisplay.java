@@ -2,33 +2,42 @@ package nl.tudelft.oopp.demo.views;
 
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MainDisplay extends Application {
 
-    public static Stage primaryStage;
-    public static Stage secondaryStage;
-    public static Stage registerStage;
+    private double x;
+    private double y;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage loginStage) throws IOException {
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/Scenes/startupScene.fxml"));
 
-        primaryStage = loginStage;
+        Scene scene = new Scene(root);
 
-        Parent loginParent = FXMLLoader.load(getClass().getResource("/loginScene.fxml"));
-        Scene loginScene = new Scene(loginParent);
+        root.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            }
+        });
 
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setTitle("Log In");
-        primaryStage.setScene(loginScene);
-        primaryStage.show();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Welcome");
+        stage.setScene(scene);
+        stage.show();
     }
 }

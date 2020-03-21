@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.controllers;
+/*package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,13 +55,6 @@ public class MainSceneController implements Initializable {
     private final Accordion ac = new Accordion();
     @FXML
     private final BorderPane bpane = new BorderPane();
-
-    @FXML
-    private Label closeButton;
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private PasswordField passwordField;
     @FXML
     private DatePicker dp;
     @FXML
@@ -70,95 +63,39 @@ public class MainSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-
+*/
     /**
      * Closes the secondary stage when clicking the close button.
-     */
-    public void closeSecondaryStage() {
-        MainDisplay.secondaryStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
+     *//*
+    public void closeSecondaryStage(){
+        MainDisplay.mainStage.setOnCloseRequest(e->{
+        Platform.exit();
+        System.exit(0);
         });
     }
-
-    /**
-     * Handles the click on the close button.
-     */
-    @FXML
-    public void handleCloseButtonAction() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * Handles what happens when the client clicks on the Login button.
-     */
-    @FXML
-    public void handleLoginButton() {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-
-        if (!UserCommunication.authenticate(username, password)) {
-            return;
-        }
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-            Parent loginParent = fxmlLoader.load();
-            MainDisplay.secondaryStage = new Stage();
-
-            MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Home");
-            MainDisplay.secondaryStage.show();
-            MainDisplay.primaryStage.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handles the click on the Sign up button.
-     */
-    @FXML
-    public void handleSignUpClick() {
-        if(MainDisplay.registerStage != null)
-            return;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/registerScene.fxml"));
-            Parent registerParent = fxmlLoader.load();
-            MainDisplay.registerStage = new Stage();
-
-            MainDisplay.registerStage.setResizable(true);
-            MainDisplay.registerStage.setScene(new Scene(registerParent));
-            MainDisplay.registerStage.setTitle("Register");
-            MainDisplay.registerStage.show();
-            MainDisplay.registerStage.setAlwaysOnTop(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+*/
     /**
      * Handles what happens when the client clicks on the Home button.
-     */
+     *//*
     @FXML
     public void handleHomeButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent calendarParent = fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Home");
-            MainDisplay.secondaryStage.show();
-            MainDisplay.secondaryStage.setMaximized(true);
+            MainDisplay.mainStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Home");
+            MainDisplay.mainStage.show();
+            MainDisplay.mainStage.setMaximized(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
     }
-
+*/
     /**
      * Handles what happens when the client picks a date.
-     */
+     *//*
     public void pickDate() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         searchId.setOnAction(e -> {
@@ -176,7 +113,7 @@ public class MainSceneController implements Initializable {
                         timeTo.add(string3[1]);
                     }
                 }
-            }*/
+            }
 
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
@@ -268,10 +205,10 @@ public class MainSceneController implements Initializable {
 
         });
     }
-
+*/
     /**
      * Handles what happens when the client clicks on the Reservations button.
-     */
+     *//*
     @FXML
     public void handleReservationButton() {
         try {
@@ -279,19 +216,19 @@ public class MainSceneController implements Initializable {
             rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // show the scene
-            MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Reservations");
-            MainDisplay.secondaryStage.show();
+            MainDisplay.mainStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Reservations");
+            MainDisplay.mainStage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
     }
-
+*/
     /**
      * Handles what happens when the client clicks on the Restaurants button.
-     */
+     *//*
     @FXML
     public void handleRestaurantsButton() {
         try {
@@ -359,38 +296,38 @@ public class MainSceneController implements Initializable {
             bpane.setPadding(new Insets(30, 5, 5, 10));
             rootScene.setCenter(bpane);
 
-            MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Restaurants");
-            MainDisplay.secondaryStage.show();
+            MainDisplay.mainStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Restaurants");
+            MainDisplay.mainStage.show();
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
-    }
+    }*/
 
     /**
      * Handles what happens when the client clicks on the Friends button.
-     */
+     *//*
     @FXML
     public void handleFriendsButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
             Parent friendsParent = fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Friends");
-            MainDisplay.secondaryStage.show();
+            MainDisplay.mainStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Friends");
+            MainDisplay.mainStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
     }
-
+*/
     /**
      * Handles what happens when the client clicks on the Settings button.
-     */
+     *//*
     @FXML
     public void handleSettingsButton() {
         try {
@@ -398,20 +335,20 @@ public class MainSceneController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(location);
             Parent settingsParent = fxmlLoader.load();
 
-            MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
-            MainDisplay.secondaryStage.setTitle("Settings");
-            MainDisplay.secondaryStage.show();
+            MainDisplay.mainStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Settings");
+            MainDisplay.mainStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
         closeSecondaryStage();
-    }
+    }*/
 
     /**
      * Handles what happens when the user clicks on the admin button.
      *
      * @throws IOException Can throw an exception if the user passes unexpected input.
-     */
+     *//*
     public void handleAdminButton() throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
@@ -427,10 +364,11 @@ public class MainSceneController implements Initializable {
         rootScene.setCenter(bpane);
 
         // show the scene
-        MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
-        MainDisplay.secondaryStage.setTitle("Admin");
-        MainDisplay.secondaryStage.show();
+        MainDisplay.mainStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+        MainDisplay.mainStage.setTitle("Admin");
+        MainDisplay.mainStage.show();
         closeSecondaryStage();
     }
 
 }
+*/
