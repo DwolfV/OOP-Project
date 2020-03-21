@@ -8,18 +8,17 @@ public class User {
     private String firstName;
     private String lastName;
 
-    public User(){
+    public User() {
 
     }
 
     /**
      * Create a new User instance.
      *
-     * @param id A unique ID for the User.
-     * @param email The email of the User.
-     * @param role The role of the User, like student, employee, admin.
+     * @param email     The email of the User.
+     * @param role      The role of the User, like student, employee, admin.
      * @param firstName The first name of the User.
-     * @param lastName The last name of the User.
+     * @param lastName  The last name of the User.
      */
     public User(String email,
                 String role,
@@ -86,11 +85,11 @@ public class User {
     @Override
     public String toString() {
         return "User{"
-                + "id=" + id
-                + ", email='" + email + '\''
-                + ", role='" + role + '\''
-                + ", first_name='" + firstName + '\''
-                + ", last_name='" + lastName + '\''
-                + '}';
+            + "id=" + id
+            + ", email='" + email + '\''
+            + ", role='" + role + '\''
+            + ", first_name='" + firstName + '\''
+            + ", last_name='" + lastName + '\''
+            + '}';
     }
 }

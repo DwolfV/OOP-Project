@@ -3,7 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import nl.tudelft.oopp.demo.entities.Quote;
 import nl.tudelft.oopp.demo.repositories.QuoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +25,21 @@ public class QuoteController {
     @ResponseBody
     public Quote getRandomQuote() {
         Quote q1 = new Quote(
-                1,
-                "A clever person solves a problem. A wise person avoids it.",
-                "Albert Einstein"
+            1,
+            "A clever person solves a problem. A wise person avoids it.",
+            "Albert Einstein"
         );
 
         Quote q2 = new Quote(
-                2,
-                "The computer was born to solve problems that did not exist before.",
-                "Bill Gates"
+            2,
+            "The computer was born to solve problems that did not exist before.",
+            "Bill Gates"
         );
 
         Quote q3 = new Quote(
-                3,
-                "Tell me and I forget.  Teach me and I remember.  Involve me and I learn.",
-                "Benjamin Franklin"
+            3,
+            "Tell me and I forget.  Teach me and I remember.  Involve me and I learn.",
+            "Benjamin Franklin"
         );
 
         ArrayList<Quote> quotes = new ArrayList<>();

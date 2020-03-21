@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "Open_Time")
+@Table(name = "Open_Time")
 public class OpenTime {
 
     @Id
@@ -27,44 +27,47 @@ public class OpenTime {
     private String day;
 
     @NotNull
-    @Column (name = "t_open")
-    private Time openTime;
+    @Column(name = "t_open")
+    private Time timeOpen;
 
     @NotNull
-    @Column (name = "t_close")
-    private Time closeTime;
+    @Column(name = "t_close")
+    private Time timeClose;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    public OpenTime() {
-
-    }
-
-    public OpenTime(String day, Time openTime, Time closeTime, Building building) {
-        this.day = day;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.building = building;
-
-    }
     /**
      * Create a new OpenTime instance.
      *
-     * @param id A unique ID for the OpenTime.
-     * @param closeTime The closing time of a building.
-     * @param openTime The opening time of a building.
-     * @param building The building for the OpenTime.
-     * @param building The building's ID for the OpenTime.
+     * @param timeClose     The closing time of a building.
+     * @param timeOpen      The opening time of a building.
+     * @param building    The building for the OpenTime.
+     */
+    public OpenTime(String day, Time timeOpen, Time timeClose, Building building) {
+        this.day = day;
+        this.timeOpen = timeOpen;
+        this.timeClose = timeClose;
+        this.building = building;
+
+    }
+
+    /**
+     * Create a new OpenTime instance.
+     *
+     * @param id          A unique ID for the OpenTime.
+     * @param timeClose     The closing time of a building.
+     * @param timeOpen      The opening time of a building.
+     * @param building    The building for the OpenTime.
      */
 
-    public OpenTime(long id, String day, Time openTime, Time closeTime, Building building) {
+    public OpenTime(long id, String day, Time timeOpen, Time timeClose, Building building) {
         this.id = id;
         this.day = day;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
+        this.timeOpen = timeOpen;
+        this.timeClose = timeClose;
         this.building = building;
 
     }
@@ -85,20 +88,20 @@ public class OpenTime {
         this.day = day;
     }
 
-    public Time getOpenTime() {
-        return openTime;
+    public Time getTimeOpen() {
+        return timeOpen;
     }
 
-    public void setOpenTime(Time openTime) {
-        this.openTime = openTime;
+    public void setTimeOpen(Time timeOpen) {
+        this.timeOpen = timeOpen;
     }
 
-    public Time getCloseTime() {
-        return closeTime;
+    public Time getTimeClose() {
+        return timeClose;
     }
 
-    public void setCloseTime(Time closeTime) {
-        this.closeTime = closeTime;
+    public void setTimeClose(Time timeClose) {
+        this.timeClose = timeClose;
     }
 
     public Building getBuilding() {
@@ -118,12 +121,12 @@ public class OpenTime {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        OpenTime open_time = (OpenTime) o;
-        return getId() == open_time.getId()
-                && Objects.equals(getDay(), open_time.getDay())
-                && Objects.equals(getOpenTime(), open_time.getOpenTime())
-                && Objects.equals(getCloseTime(), open_time.getCloseTime())
-                && Objects.equals(getBuilding(), open_time.getBuilding());
+        OpenTime openTime = (OpenTime) o;
+        return getId() == openTime.getId()
+            && Objects.equals(getDay(), openTime.getDay())
+            && Objects.equals(getTimeOpen(), openTime.getTimeOpen())
+            && Objects.equals(getTimeClose(), openTime.getTimeClose())
+            && Objects.equals(getBuilding(), openTime.getBuilding());
     }
 
 }

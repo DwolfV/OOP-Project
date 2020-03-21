@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.sun.istack.NotNull;
-import org.springframework.lang.Nullable;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "User")
@@ -63,14 +62,15 @@ public class User {
         this.birth_date = birth_date;
         this.username = username;
     }
+
     /**
      * Create a new User instance.
      *
-     * @param id A unique ID for the User.
-     * @param email The email of the User.
-     * @param role The role of the User, like student, employee, admin.
+     * @param id         A unique ID for the User.
+     * @param email      The email of the User.
+     * @param role       The role of the User, like student, employee, admin.
      * @param first_name The first name of the User.
-     * @param last_name The last name of the User.
+     * @param last_name  The last name of the User.
      * @param birth_date The birth date of the User.
      */
 
@@ -152,30 +152,34 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return getId() == user.getId() &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getRole(), user.getRole()) &&
-                Objects.equals(getFirst_name(), user.getFirst_name()) &&
-                Objects.equals(getLast_name(), user.getLast_name()) &&
-                Objects.equals(getBirth_date(), user.getBirth_date()) &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getEvents(), user.getEvents());
+        return getId() == user.getId()
+            && Objects.equals(getEmail(), user.getEmail())
+            && Objects.equals(getRole(), user.getRole())
+            && Objects.equals(getFirst_name(), user.getFirst_name())
+            && Objects.equals(getLast_name(), user.getLast_name())
+            && Objects.equals(getBirth_date(), user.getBirth_date())
+            && Objects.equals(getUsername(), user.getUsername())
+            && Objects.equals(getEvents(), user.getEvents());
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", birth_date=" + birth_date +
-                ", username='" + username + '\'' +
-                ", events=" + events +
-                '}';
+        return "User{"
+            + "id=" + id
+            + ", email='" + email + '\''
+            + ", role='" + role + '\''
+            + ", first_name='" + first_name + '\''
+            + ", last_name='" + last_name + '\''
+            + ", birth_date=" + birth_date
+            + ", username='" + username + '\''
+            + ", events=" + events
+            + '}';
     }
 }

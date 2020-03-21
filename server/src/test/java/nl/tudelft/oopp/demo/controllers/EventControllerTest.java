@@ -4,6 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Event;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.EventRepository;
@@ -17,12 +22,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 public class EventControllerTest {
@@ -39,6 +38,9 @@ public class EventControllerTest {
     @InjectMocks
     private EventController eventController;
 
+    /**
+     * Creates all users and events and is done before each test.
+     */
     @BeforeEach
     public void save() {
         u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
@@ -56,7 +58,7 @@ public class EventControllerTest {
 
     @Test
     public void testGetAllEvents() {
-        List<Event> expectedList = new ArrayList<Event>(List.of(e1,e2,e3));
+        List<Event> expectedList = new ArrayList<Event>(List.of(e1, e2, e3));
         when(eventRepository.findAll()).thenReturn(expectedList);
         List<Event> actualList = eventController.getAllEvents();
 
@@ -65,7 +67,7 @@ public class EventControllerTest {
 
     @Test
     public void testGetEventsByUserId() {
-        List<Event> expectedList = new ArrayList<Event>(List.of(e1,e2));
+        List<Event> expectedList = new ArrayList<Event>(List.of(e1, e2));
         when(eventRepository.findByUserId(u1.getId())).thenReturn(expectedList);
         List<Event> actualList = eventController.getEventsByUserId(u1.getId());
 
@@ -73,7 +75,7 @@ public class EventControllerTest {
     }
 
     @Test
-    public void testGetEventById(){
+    public void testGetEventById() {
         Optional<Event> optionalEvent = Optional.of(e1);
         ResponseEntity<Event> entity = ResponseEntity.of(optionalEvent);
 
@@ -91,7 +93,7 @@ public class EventControllerTest {
 
         when(eventRepository.save(event)).thenReturn(event);
 
-        assertEquals(event, eventController.addEvent(event,uriComponentsBuilder).getBody());
+        assertEquals(event, eventController.addEvent(event, uriComponentsBuilder).getBody());
     }
 
     @Test
@@ -110,13 +112,13 @@ public class EventControllerTest {
         when(eventRepository.save(event)).thenReturn(event);
         when(eventRepository.findById(e1.getId())).thenReturn(optionalEvent);
 
-        assertEquals(newEntity.getBody(), eventController.updateEvent(e1.getId(),event).getBody());
+        assertEquals(newEntity.getBody(), eventController.updateEvent(e1.getId(), event).getBody());
     }
 
     @Test
     public void testDeleteEvent() {
-        List<Event> actualList = new ArrayList<Event>(List.of(e1,e3));
-        List<Event> testList = new ArrayList<Event>(List.of(e1,e2,e3));
+        List<Event> actualList = new ArrayList<Event>(List.of(e1, e3));
+        List<Event> testList = new ArrayList<Event>(List.of(e1, e2, e3));
 
         Optional<Event> optionalEvent = Optional.of(e2);
         ResponseEntity<Event> responseEntity = ResponseEntity.of(optionalEvent);
