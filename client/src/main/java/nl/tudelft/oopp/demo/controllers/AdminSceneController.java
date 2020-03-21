@@ -411,8 +411,8 @@ public class AdminSceneController implements Initializable {
 
         hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding);
         hBoxTimeTP.getChildren().addAll(vBoxOpenTimeAndButtons, borderPaneAddOpenTime);
-
         vBoxMainBuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxTimeTP);
+
         ScrollPane scroll = new ScrollPane();
         scroll.setContent(vBoxMainBuildingTP);
         buildingTP.setContent(scroll);
@@ -546,7 +546,10 @@ public class AdminSceneController implements Initializable {
         hBoxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
         vBoxRoomsTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRoomsTP.getChildren().addAll(hBoxRoomTP, hBoxAddDeleteUpdateRooms);
-        roomsTP.setContent(vBoxRoomsTP);
+
+        ScrollPane scrollPaneRooms = new ScrollPane();
+        scrollPaneRooms.setContent(vBoxRoomsTP);
+        roomsTP.setContent(scrollPaneRooms);
     }
 
     /**
@@ -567,7 +570,7 @@ public class AdminSceneController implements Initializable {
                 new PropertyValueFactory<>("id"));
 
         TableColumn<Restaurant, String> restaurantNameCol =
-                new TableColumn<>("Building Name");
+                new TableColumn<>("Restaurant Name");
         restaurantNameCol.setMinWidth(100);
         restaurantNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("name"));
@@ -645,7 +648,10 @@ public class AdminSceneController implements Initializable {
         hBoxRestaurantTP.getChildren().addAll(tableRestaurant);
         vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
         vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
-        restaurantsTP.setContent(vBoxRestaurantTP);
+
+        ScrollPane scrollPaneRestaurant = new ScrollPane();
+        scrollPaneRestaurant.setContent(vBoxRestaurantTP);
+        restaurantsTP.setContent(scrollPaneRestaurant);
     }
 
     @Override
