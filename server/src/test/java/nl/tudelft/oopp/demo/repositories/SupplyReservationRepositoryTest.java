@@ -1,8 +1,5 @@
 package nl.tudelft.oopp.demo.repositories;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -15,6 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 public class SupplyReservationRepositoryTest {
@@ -75,8 +75,8 @@ public class SupplyReservationRepositoryTest {
         userRepository.save(u3);
 
         sr1 = new SupplyReservation(new Date(1), new Time(1), new Time(2), 11, s1, u1);
-        sr2 = new SupplyReservation(new Date(2), new Time(1), new Time(2), 22, s1, u1);
-        sr3 = new SupplyReservation(new Date(1), new Time(2), new Time(3), 33, s3, u1);
+        sr2 = new SupplyReservation(new Date(2),new Time(1), new Time(2), 22, s1, u1);
+        sr3 = new SupplyReservation(new Date(1),new Time(2), new Time(3), 33, s3, u1);
 
         supplyReservationRepository.save(sr1);
         supplyReservationRepository.save(sr2);
@@ -114,7 +114,7 @@ public class SupplyReservationRepositoryTest {
 
     @Test
     void findByUserId() {
-        List<SupplyReservation> list1 = new ArrayList<>(List.of(sr1, sr2, sr3));
+        List<SupplyReservation> list1 = new ArrayList<>(List.of(sr1, sr2,sr3));
         assertEquals(list1, supplyReservationRepository.findByUserId(sr1.getUser().getId()));
     }
 

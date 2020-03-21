@@ -66,11 +66,11 @@ public class SupplyReservation {
     /**
      * Create a new SupplyReservation instance.
      *
-     * @param id     Unique identifier as to be used in the database.
-     * @param user   Reference to the User class.
+     * @param id Unique identifier as to be used in the database.
+     * @param user Reference to the User class.
      * @param supply Reference to the User class.
      * @param amount The amount of supplies that are being reserved.
-     * @param date   The date of the reservation
+     * @param date The date of the reservation
      */
 
     public SupplyReservation(long id,
@@ -101,24 +101,24 @@ public class SupplyReservation {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 
     public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
 
     public Time getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getAmount() {
@@ -160,11 +160,11 @@ public class SupplyReservation {
     @Override
     public String toString() {
         return "SupplyReservation{"
-            + "id=" + id
-            + ", date=" + date
-            + ", amount=" + amount
-            + ", supply=" + supply
-            + ", user=" + user
-            + '}';
+                + "id=" + id
+                + ", date=" + date
+                + ", amount=" + amount
+                + ", supply=" + supply
+                + ", user=" + user
+                + '}';
     }
 }

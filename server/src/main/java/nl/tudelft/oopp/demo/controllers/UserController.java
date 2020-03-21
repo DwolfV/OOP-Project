@@ -1,7 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.util.List;
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,7 +26,6 @@ public class UserController {
 
     /**
      * GET Endpoint to retrieve a list of all users.
-     *
      * @return List of all users
      */
 
@@ -52,39 +46,39 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<User> getUserById(@PathVariable long user_id) {
         return rep.findById(user_id).map(user -> ResponseEntity.ok(user))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 
-    /**
-     * PUT Endpoint to update the entry of a given user.
-     * //     *
-     * //     * @param user_id Unique identifier of the user that is to be updated.
-     * //     * @param newUser The updated version of the user.
-     * //     * @return the new user that is updated.
-     */
+/**
+ * PUT Endpoint to update the entry of a given user.
+ * //     *
+ * //     * @param user_id Unique identifier of the user that is to be updated.
+ * //     * @param newUser The updated version of the user.
+ * //     * @return the new user that is updated.
+ */
 
 
-    @PutMapping("users/{id}")
+@PutMapping("users/{id}")
     public ResponseEntity<User> updateUser(@RequestBody User newUser, @PathVariable long id, UriComponentsBuilder b) {
 
-        UriComponents uri = b.path("users/{id}").buildAndExpand(id);
+    UriComponents uri = b.path("users/{id}").buildAndExpand(id);
 
-        User updatedUser = rep.findById(id).map(user -> {
-            user.setBirth_date(newUser.getBirth_date());
-            user.setEmail(newUser.getEmail());
-            user.setRole(newUser.getRole());
-            user.setFirst_name(newUser.getFirst_name());
-            user.setLast_name(newUser.getLast_name());
+    User updatedUser = rep.findById(id).map(user -> {
+        user.setBirth_date(newUser.getBirth_date());
+        user.setEmail(newUser.getEmail());
+        user.setRole(newUser.getRole());
+        user.setFirst_name(newUser.getFirst_name());
+        user.setLast_name(newUser.getLast_name());
 
-            return rep.save(user);
-        }).orElseGet(() -> {
-            newUser.setId(id);
-            return rep.save(newUser);
-        });
+        return rep.save(user);
+    }).orElseGet(() -> {
+        newUser.setId(id);
+        return rep.save(newUser);
+            });
 
-        return ResponseEntity.created(uri.toUri()).body(updatedUser);
-    }
+    return ResponseEntity.created(uri.toUri()).body(updatedUser);
+}
 
 
     /**

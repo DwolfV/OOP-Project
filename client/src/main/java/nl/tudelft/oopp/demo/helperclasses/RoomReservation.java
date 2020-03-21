@@ -14,6 +14,7 @@ public class RoomReservation {
     /**
      * Create a new Building instance.
      *
+     * @param id        The unique identifier for Building
      * @param date      The date of the room reservation
      * @param startTime The starting time of the reservation
      * @param endTime   The time when the reservation ends
@@ -81,10 +82,10 @@ public class RoomReservation {
     @Override
     public String toString() {
         return "RoomReservation{"
-            + ", date=" + date
-            + ", startTime=" + startTime
-            + ", endTime=" + endTime
-            + ", user=" + user
-            + '}';
+                + ", date=" + date
+                + ", startTime=" + startTime
+                + ", endTime=" + endTime
+                + ", user=" + user
+                + '}';
     }
 }

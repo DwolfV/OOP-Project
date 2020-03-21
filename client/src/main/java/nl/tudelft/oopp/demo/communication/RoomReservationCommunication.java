@@ -10,27 +10,28 @@ import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 
+
 /**
  * Note before:
  * The application needs to show the user a certain reservation.
  * The important features should be:
- * - get a room reservation by user id
- * - delete a room reservation by user id or by its id
+ *      - get a room reservation by user id
+ *      - delete a room reservation by user id or by its id
  */
 
-public class RoomReservationCommunication {
+public class  RoomReservationCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
      * Retrieves a list of room reservations made by a user from the server.
-     *
      * @return the body of a get request to the server.
      * @throws Exception if communication with the server fails.
      */
@@ -53,8 +54,7 @@ public class RoomReservationCommunication {
         // TODO handle exception
         try {
             roomReservations = mapper.readValue(response.body(),
-                new TypeReference<List<RoomReservation>>() {
-                });
+                               new TypeReference<List<RoomReservation>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,9 +64,8 @@ public class RoomReservationCommunication {
 
     /**
      * Adds a new room reservation.
-     *
      * @throws Exception if communication with the server fails
-     *                   or if the response is not proper json.
+     *         or if the response is not proper json.
      */
     public static void addRoomReservation(Date date,
                                           Time startTime,
@@ -97,7 +96,6 @@ public class RoomReservationCommunication {
 
     /**
      * Updates a RoomReservation.
-     *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static void updateRoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
@@ -126,7 +124,6 @@ public class RoomReservationCommunication {
 
     /**
      * Removes a room reservation.
-     *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static void removeRoomReservation(long id) {
@@ -145,7 +142,6 @@ public class RoomReservationCommunication {
 
     /**
      * Returns a hash map of all start and end times of all reservations for a given room on a given day.
-     *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static Map<Time, Time> getAllRoomReservationTimesPerRoomAndDate(long roomId, Date date) {
@@ -159,10 +155,10 @@ public class RoomReservationCommunication {
         }
 
         HttpRequest request = HttpRequest.newBuilder().method("GET", HttpRequest.BodyPublishers.ofString(jsonDate))
-            .uri(URI.create(String.format("http://localhost:8080/room_reservations_times/%s", roomId)))
-            .setHeader("Content-type", "application/json")
-            .setHeader("Cookie", Authenticator.SESSION_COOKIE)
-            .build();
+                .uri(URI.create(String.format("http://localhost:8080/room_reservations_times/%s", roomId)))
+                .setHeader("Content-type", "application/json")
+                .setHeader("Cookie", Authenticator.SESSION_COOKIE)
+                .build();
 
         HttpResponse<String> response = null;
         try {
@@ -179,8 +175,7 @@ public class RoomReservationCommunication {
         Map<Time, Time> unavailableTimes = null;
         try {
             unavailableTimes = mapper.readValue(response.body(),
-                new TypeReference<Map<Time, Time>>() {
-                });
+                    new TypeReference<Map<Time, Time>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
