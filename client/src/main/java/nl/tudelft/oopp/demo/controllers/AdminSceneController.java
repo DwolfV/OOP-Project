@@ -593,28 +593,28 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
-        TableColumn<Restaurant, String> timeOpenCol =
+        TableColumn<Restaurant, Time> timeOpenCol =
                 new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOpen"));
         timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeOpenCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+                (TableColumn.CellEditEvent<Restaurant, Time> t) -> {
                     t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setTimeOpen(Time.valueOf(t.getNewValue()));
+                            t.getTablePosition().getRow()).setTimeOpen(t.getNewValue());
                 });
 
-        TableColumn<Restaurant, String> timeCloseCol =
+        TableColumn<Restaurant, Time> timeCloseCol =
                 new TableColumn<>("Closing Time");
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeClose"));
         timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeCloseCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, String> t) -> {
+                (TableColumn.CellEditEvent<Restaurant, Time> t) -> {
                     t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setTimeClose(Time.valueOf(t.getNewValue()));
+                            t.getTablePosition().getRow()).setTimeClose(t.getNewValue());
                 });
 
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());

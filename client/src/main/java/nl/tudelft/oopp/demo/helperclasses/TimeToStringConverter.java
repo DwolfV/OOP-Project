@@ -1,8 +1,7 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import javafx.util.StringConverter;
-
 import java.sql.Time;
+import javafx.util.StringConverter;
 
 public class TimeToStringConverter extends StringConverter {
 
@@ -14,6 +13,6 @@ public class TimeToStringConverter extends StringConverter {
 
     @Override
     public Object fromString(String string) {
-        return null;
+        return Time.valueOf(string);
     }
 }
