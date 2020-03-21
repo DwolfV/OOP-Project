@@ -26,8 +26,7 @@ public class SupplyController {
     SupplyRepository rep;
 
     /**
-     * Find all the supplies.
-     *
+     * Find all the supplies
      * @return message
      */
     @GetMapping("/supply")
@@ -37,31 +36,31 @@ public class SupplyController {
     }
 
     /**
-     * Find supply by building and name.
+     * Find supply by building and name
      *
      * @param name - The name of the supply that is to be found
-     * @param id   - The building id of which the supply is part of
+     * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building")
-    public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value = "building_id") long id) {
+    public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value="building_id") long id) {
         return rep.findByBuildingIdAndName(id, name).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
-     * Find supply by building and name.
+     * Find supply by building and name
      *
      * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building/{building_id}")
-    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value = "building_id") long id) {
+    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value="building_id") long id) {
         return rep.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rep.findByBuildingId(id), HttpStatus.OK);
     }
 
     /**
-     * Find supply by id.
+     * Find supply by id
      *
      * @param id - The id of the supply that is to be found
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
@@ -73,28 +72,26 @@ public class SupplyController {
     }
 
     /**
-     * Create a new supply.
-     *
+     * Create a new supply
      * @return message
      */
 
     @PostMapping(value = "/supply", consumes = {"application/json"})
-    public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b) {
+    public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b){
         rep.save(newSupply);
         UriComponents uri = b.path("/supply/{id}").buildAndExpand(newSupply.getId());
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
-
     /**
-     * Update a supply.
+     * Update a supply
      *
-     * @param id        -The id of the supply that is to be updated
+     * @param id          -The id of the supply that is to be updated
      * @param newSupply - The supply instance that has the modified parameters
      * @return a response: the updated supply and the status 200 if the update was successful, 404 if the building was not found
      */
     @PutMapping("/supply/{id}")
     public ResponseEntity<Supply> updateSupply(@PathVariable long id,
-                                               @RequestBody Supply newSupply) {
+                                                   @RequestBody Supply newSupply) {
         return rep.findById(id).map(supply -> {
             supply.setStock(newSupply.getStock());
             supply.setName(newSupply.getName());
@@ -104,7 +101,7 @@ public class SupplyController {
     }
 
     /**
-     * Delete a supply by it's id.
+     * Delete a supply by it's id
      *
      * @param id - The id of the supply that is to be deleted
      * @return a response status: 200 if the supply has been deleted successfully, 404 if the supply was not found

@@ -47,7 +47,7 @@ class SupplyReservationControllerTest {
 
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000) , "user1");
         u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
         u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
 
@@ -77,11 +77,11 @@ class SupplyReservationControllerTest {
     @Test
     void testGetSupplyReservations() {
         List<SupplyReservation> expectedList =
-            new ArrayList<SupplyReservation>(List.of(sr1, sr2, sr3));
+                new ArrayList<SupplyReservation>(List.of(sr1,sr2,sr3));
         when(supplyReservationRepository.findAll()).thenReturn(expectedList);
         List<SupplyReservation> actualList = supplyReservationController.getSupplyReservations();
 
-        assertEquals(expectedList, actualList);
+        assertEquals(expectedList,actualList);
     }
 
     @Test
@@ -89,9 +89,9 @@ class SupplyReservationControllerTest {
         List<SupplyReservation> expectedList = new ArrayList<SupplyReservation>(List.of(sr1));
         when(supplyReservationRepository.findByUserId(u1.getId())).thenReturn(expectedList);
         List<SupplyReservation> actualList =
-            supplyReservationController.getSupplyReservationsByUser(u1.getId());
+                supplyReservationController.getSupplyReservationsByUser(u1.getId());
 
-        assertEquals(expectedList, actualList);
+        assertEquals(expectedList,actualList);
     }
 
     @Test
@@ -100,7 +100,7 @@ class SupplyReservationControllerTest {
         ResponseEntity<SupplyReservation> entity = ResponseEntity.of(optionalSupplyReservation);
 
         when(supplyReservationRepository.findById(
-            sr1.getId())).thenReturn(optionalSupplyReservation);
+                sr1.getId())).thenReturn(optionalSupplyReservation);
         assertEquals(entity, supplyReservationController.getRoomReservationById(sr1.getId()));
     }
 
@@ -113,14 +113,14 @@ class SupplyReservationControllerTest {
         Supply s1 = new Supply(b1, "s1", 7);
 
         SupplyReservation supplyReservation = new SupplyReservation(
-            new Date(1), new Time(10), new Time(11), 11, s1, u1);
+                new Date(1), new Time(10), new Time(11), 11, s1, u1);
         Optional<SupplyReservation> osr = Optional.of(supplyReservation);
         ResponseEntity<SupplyReservation> reservationResponseEntity = ResponseEntity.of(osr);
 
         when(supplyReservationRepository.save(supplyReservation)).thenReturn(supplyReservation);
 
         assertEquals(supplyReservation, supplyReservationController.newSupplyReservation(
-            supplyReservation, uriComponentsBuilder).getBody());
+                supplyReservation, uriComponentsBuilder).getBody());
     }
 
     @Test
@@ -131,7 +131,7 @@ class SupplyReservationControllerTest {
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Supply s1 = new Supply(b1, "s1", 7);
         SupplyReservation supplyReservation = new SupplyReservation(
-            new Date(1), new Time(10), new Time(11), 11, s1, u1);
+                new Date(1), new Time(10), new Time(11), 11, s1, u1);
 
         Optional<SupplyReservation> optionalSupplyReservation = Optional.of(sr1);
         ResponseEntity<SupplyReservation> entity = ResponseEntity.of(optionalSupplyReservation);
@@ -140,10 +140,10 @@ class SupplyReservationControllerTest {
 
         when(supplyReservationRepository.save(supplyReservation)).thenReturn(supplyReservation);
         when(supplyReservationRepository.findById(
-            sr1.getId())).thenReturn(optionalSupplyReservation);
+                sr1.getId())).thenReturn(optionalSupplyReservation);
 
         assertEquals(responseEntity.getBody(), supplyReservationController.replaceSupplyReservation(
-            supplyReservation, sr1.getId(), uriComponentsBuilder).getBody());
+                supplyReservation,sr1.getId(), uriComponentsBuilder).getBody());
 
     }
 
@@ -151,11 +151,11 @@ class SupplyReservationControllerTest {
     void testDeleteSupplyReservation() {
         List<SupplyReservation> actualList = new ArrayList<SupplyReservation>(List.of(sr1, sr3));
         List<SupplyReservation> expectedList =
-            new ArrayList<SupplyReservation>(List.of(sr1, sr2, sr3));
+                new ArrayList<SupplyReservation>(List.of(sr1,sr2,sr3));
 
         Optional<SupplyReservation> optionalSupplyReservation = Optional.of(sr2);
         ResponseEntity<SupplyReservation> supplyReservationResponseEntity =
-            ResponseEntity.of(optionalSupplyReservation);
+                ResponseEntity.of(optionalSupplyReservation);
 
         supplyReservationController.delete(sr2.getId());
         Mockito.doAnswer(new Answer<Void>() {

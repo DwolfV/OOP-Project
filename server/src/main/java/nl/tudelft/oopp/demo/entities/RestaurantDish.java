@@ -37,15 +37,10 @@ public class RestaurantDish {
     private Set<DishOrder> dishOrders = new HashSet<>();
 
 
-    public RestaurantDish() {
+    public RestaurantDish(){
 
     }
 
-    /**
-     * Creates a new instance of the RestaurantDish object.
-     * @param restaurant The restaurant that has the dish.
-     * @param dish The dish.
-     */
     public RestaurantDish(Restaurant restaurant, Dish dish) {
         this.restaurant = restaurant;
         this.dish = dish;

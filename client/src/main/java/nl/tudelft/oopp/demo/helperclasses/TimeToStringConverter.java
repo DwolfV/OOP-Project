@@ -1,9 +1,8 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
 import javafx.util.StringConverter;
 
-import javafx.util.StringConverter;
+import java.sql.Time;
 
 public class TimeToStringConverter extends StringConverter {
 

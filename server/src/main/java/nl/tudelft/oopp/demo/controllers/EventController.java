@@ -1,22 +1,17 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.util.List;
-import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Event;
 import nl.tudelft.oopp.demo.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/event")
@@ -38,15 +33,9 @@ public class EventController {
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventsById(@PathVariable long id) {
         return rep.findById(id).map(event -> new ResponseEntity<>(event, HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * POST Endpoint to add a new Event.
-     *
-     * @param event The event to be added.
-     * @return The added Event.
-     */
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
         rep.save(event);
@@ -54,15 +43,9 @@ public class EventController {
         return ResponseEntity.created(uri.toUri()).body(event);
     }
 
-    /**
-     * PUT Endpoint to modify an existing Event.
-     *
-     * @param id The id of the event that is to be modified.
-     * @return A response entity with the modified Event on success.
-     */
     @PutMapping("/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable long id,
-                                             @RequestBody Event newEvent) {
+                                                   @RequestBody Event newEvent) {
         return rep.findById(id).map(event -> {
             event.setName(newEvent.getName());
             event.setDescription(newEvent.getDescription());
@@ -74,12 +57,6 @@ public class EventController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /**
-     * DELETE Endpoint to delete an existing Event.
-     *
-     * @param id The id of the event that is to be deleted.
-     * @return A ResponseEntity with the corresponding HTTP status.
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEvent(@PathVariable long id) {
         return rep.findById(id).map(event -> {

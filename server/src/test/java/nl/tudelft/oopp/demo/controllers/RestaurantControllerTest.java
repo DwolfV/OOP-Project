@@ -1,9 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +17,10 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class RestaurantControllerTest {
@@ -63,7 +63,7 @@ class RestaurantControllerTest {
 
     @Test
     void testGetAllRestaurants() {
-        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1, r2, r3));
+        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1,r2,r3));
         when(restaurantRepository.findAll()).thenReturn(expectedList);
 
         List<Restaurant> actualList = restaurantController.getAllRestaurants();
@@ -108,7 +108,7 @@ class RestaurantControllerTest {
         when(restaurantRepository.save(restaurant)).thenReturn(restaurant);
 
         assertEquals(restaurant, restaurantController.createNewRestaurant(
-            restaurant, uriComponentsBuilder).getBody());
+                restaurant, uriComponentsBuilder).getBody());
     }
 
     @Test
@@ -131,8 +131,8 @@ class RestaurantControllerTest {
 
     @Test
     void testDeleteRestaurant() {
-        List<Restaurant> actualList = new ArrayList<Restaurant>(List.of(r1, r3));
-        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1, r2, r3));
+        List<Restaurant> actualList = new ArrayList<Restaurant>(List.of(r1,r3));
+        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1,r2,r3));
 
         Optional<Restaurant> optionalRestaurant = Optional.of(r2);
         ResponseEntity<Restaurant> responseEntity = ResponseEntity.of(optionalRestaurant);

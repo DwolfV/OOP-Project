@@ -3,10 +3,11 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
+
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @DataJpaTest
 public class RoomReservationRepositoryTest {
@@ -120,15 +122,15 @@ public class RoomReservationRepositoryTest {
     public void testFindByUserIdAndRoomId() {
         List<RoomReservation> list1 = new ArrayList<>(List.of(rr1, rr2));
         assertEquals(list1, roomResRep.findByUserIdAndRoomId(
-            list1.get(0).getUser().getId(), list1.get(0).getRoom().getId()));
+                list1.get(0).getUser().getId(), list1.get(0).getRoom().getId()));
 
         List<RoomReservation> list2 = new ArrayList<>(List.of(rr3));
         assertEquals(list2, roomResRep.findByUserIdAndRoomId(
-            list2.get(0).getUser().getId(), list2.get(0).getRoom().getId()));
+                list2.get(0).getUser().getId(), list2.get(0).getRoom().getId()));
 
         List<RoomReservation> list3 = new ArrayList<>(List.of(rr4, rr5));
         assertEquals(list3, roomResRep.findByUserIdAndRoomId(
-            list3.get(0).getUser().getId(), list3.get(0).getRoom().getId()));
+                list3.get(0).getUser().getId(), list3.get(0).getRoom().getId()));
     }
 
 }
