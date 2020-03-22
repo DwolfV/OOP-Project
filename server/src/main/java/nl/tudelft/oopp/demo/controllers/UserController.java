@@ -44,14 +44,14 @@ public class UserController {
     /**
      * Find user by id.
      *
-     * @param user_id The ID of the user that is to be found
+     * @param userId The ID of the user that is to be found
      * @return the user and 200 status code if the user is found, 404 status code otherwise
      */
 
     @GetMapping("users/{user_id}")
     public @ResponseBody
-    ResponseEntity<User> getUserById(@PathVariable long user_id) {
-        return rep.findById(user_id).map(user -> ResponseEntity.ok(user))
+    ResponseEntity<User> getUserById(@PathVariable long userId) {
+        return rep.findById(userId).map(user -> ResponseEntity.ok(user))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -90,12 +90,12 @@ public class UserController {
     /**
      * DELETE Endpoint to delete the entry of a given user.
      *
-     * @param user_id unique identifier of the user that is to be deleted.
+     * @param userId unique identifier of the user that is to be deleted.
      */
 
     @DeleteMapping("users/{user_id}")
-    public ResponseEntity<?> deleteUser(@PathVariable long user_id) {
-        rep.deleteById(user_id);
+    public ResponseEntity<?> deleteUser(@PathVariable long userId) {
+        rep.deleteById(userId);
 
         return ResponseEntity.noContent().build();
     }

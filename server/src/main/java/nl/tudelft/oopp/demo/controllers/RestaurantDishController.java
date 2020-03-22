@@ -64,7 +64,7 @@ public class RestaurantDishController {
     @GetMapping("restaurant_dish/{restaurant_dish_id}")
     public @ResponseBody
     ResponseEntity<RestaurantDish> getRestaurantDishById(@PathVariable(value = "restaurant_dish_id") long restaurantDishId) {
-       return restaurantDishRepository.findById(restaurantDishId).map(restaurantDish -> ResponseEntity.ok(restaurantDish))
+        return restaurantDishRepository.findById(restaurantDishId).map(restaurantDish -> ResponseEntity.ok(restaurantDish))
                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
