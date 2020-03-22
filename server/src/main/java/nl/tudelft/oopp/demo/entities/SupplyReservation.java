@@ -49,6 +49,16 @@ public class SupplyReservation {
 
     }
 
+    /**
+     * Creates a new instance of the SupplyReservation entity.
+     * @param date - The date that corresponds to the reservation of a supply.
+     * @param startTime - Since when the reservation for the supply has been made.
+     * @param endTime - Until when the reservation for the supply is made.
+     * @param amount - The amount of the supplies that are rented.
+     * @param supply - The name of the supply that is being reserved.
+     * @param user - The user that made the reservation
+     */
+
     public SupplyReservation(Date date,
                              Time startTime,
                              Time endTime,
