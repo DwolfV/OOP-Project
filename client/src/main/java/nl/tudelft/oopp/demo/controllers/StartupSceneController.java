@@ -1,28 +1,26 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class StartupSceneController implements Initializable {
 
-    public SignInSceneController signInSceneController;
-    public RegisterSceneController registerSceneController;
-    public Parent signInRoot;
-    public Parent registerRoot;
+    private SignInSceneController signInSceneController;
+    private RegisterSceneController registerSceneController;
+    private Parent signInRoot;
+    private Parent registerRoot;
 
-    @FXML
-    public BorderPane startupId;
+    @FXML public BorderPane startupId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,10 +42,22 @@ public class StartupSceneController implements Initializable {
         registerSceneController.setControllers(this, signInSceneController);
     }
 
-    @FXML
-    public void loadSignIn() {
+    /**
+     * handels the signing in when you press enter.
+     */
+    public void signInOnEnter() {
+        signInRoot.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                System.out.println("Key Pressed: " + ev.getCode());
+                signInSceneController.handleLoginButton();
+            }
+        });
     }
 
+    /**
+     * Closes the start up Stage.
+     * @param event mouse event
+     */
     @FXML
     private void close(MouseEvent event) {
         Stage stage = (Stage)startupId.getScene().getWindow();
