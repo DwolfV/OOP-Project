@@ -54,6 +54,17 @@ public class User {
     public User() {
     }
 
+
+    /**
+     * Creates a new instance of the User entity.
+     * @param email - The email of the user.
+     * @param role - The role of the user (for example: student, admin etc.)
+     * @param first_name - The first name of the user.
+     * @param last_name - The last name of the user.
+     * @param birth_date - The birth date of the user.
+     * @param username - The username.
+     */
+
     public User(String email, String role, String first_name, String last_name, Date birth_date, String username) {
         this.email = email;
         this.role = role;

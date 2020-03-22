@@ -14,12 +14,31 @@ public class OpenTime {
 
     }
 
+
+    /**
+     * Creates a new instance of the OpenTime entity.
+     * @param day - The day that corresponds to a specific openTime
+     * @param openTime - The time when a specific building opens
+     * @param closeTime - The time when a specific building closes
+     * @param building - The building that corresponds to this OpenTime
+     */
+
+
     public OpenTime(String day, Time openTime, Time closeTime, Building building) {
         this.day = day;
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.building = building;
     }
+
+    /**
+     * Creates a new instance of the OpenTime entity.
+     * @param id - The unique identifier corresponding to a specific openTime
+     * @param day - The day that corresponds to a specific openTime
+     * @param openTime - The time when a specific building opens
+     * @param closeTime - The time when a specific building closes
+     * @param building - The building that corresponds to this OpenTime
+     */
 
     public OpenTime(Long id, String day, Time openTime, Time closeTime, Building building) {
         this.id = id;
