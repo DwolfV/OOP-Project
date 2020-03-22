@@ -103,7 +103,7 @@ public class OpenTimeController {
      */
 
     @PutMapping("openTimes/{openTime_id}")
-    public ResponseEntity<OpenTime> replaceOpenTime(@RequestBody OpenTime newOpenTime, @PathVariable long openTimeId, UriComponentsBuilder b) {
+    public ResponseEntity<OpenTime> replaceOpenTime(@RequestBody OpenTime newOpenTime, @PathVariable(value = "openTime_id") long openTimeId, UriComponentsBuilder b) {
         UriComponents uri = b.path("/openTimes/{openTime_id}").buildAndExpand(openTimeId);
 
         OpenTime updatedOpenTime = openTimes.findById(openTimeId).map(openTime -> {
@@ -128,7 +128,7 @@ public class OpenTimeController {
      */
 
     @DeleteMapping("openTimes/{openTime_id}")
-    public ResponseEntity<?> deleteOpenTime(@PathVariable long openTimeId) {
+    public ResponseEntity<?> deleteOpenTime(@PathVariable(value = "openTime_id") long openTimeId) {
         openTimes.deleteById(openTimeId);
         return ResponseEntity.noContent().build();
     }

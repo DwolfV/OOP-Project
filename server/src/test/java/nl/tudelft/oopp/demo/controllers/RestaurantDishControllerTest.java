@@ -1,5 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +24,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
 @DataJpaTest
 class RestaurantDishControllerTest {
 
@@ -40,7 +40,7 @@ class RestaurantDishControllerTest {
 
     private RestaurantDish rd1;
     private RestaurantDish rd2;
-    private  RestaurantDish rd3;
+    private RestaurantDish rd3;
 
     @Mock
     private RestaurantDishRepository restaurantDishRepository;
@@ -73,47 +73,47 @@ class RestaurantDishControllerTest {
         rd3 = new RestaurantDish(r2, d3);
     }
 
-        /**
-         * Test if the controller loads correctly and isn't null.
-         *
-         * @throws Exception exception
-         */
+    /**
+     * Test if the controller loads correctly and isn't null.
+     *
+     * @throws Exception exception
+     */
 
-        @Test
-        public void controllerLoads() throws Exception {
-            assertThat(restaurantDishController).isNotNull();
-        }
+    @Test
+    public void controllerLoads() throws Exception {
+        assertThat(restaurantDishController).isNotNull();
+    }
 
 
     @Test
     void getAllRestaurantDishes() {
-       List<RestaurantDish> expected = new ArrayList<RestaurantDish>(List.of(rd1,rd2,rd3));
+        List<RestaurantDish> expected = new ArrayList<RestaurantDish>(List.of(rd1, rd2, rd3));
 
-       when(restaurantDishRepository.findAll()).thenReturn(expected);
+        when(restaurantDishRepository.findAll()).thenReturn(expected);
 
-       List<RestaurantDish> actual = restaurantDishController.getAllRestaurantDishes();
+        List<RestaurantDish> actual = restaurantDishController.getAllRestaurantDishes();
 
-       assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     void testGetRestaurantDishById() {
-            Optional<RestaurantDish> optionalRestaurantDish = Optional.of(rd1);
-            ResponseEntity<RestaurantDish> entity = ResponseEntity.of(optionalRestaurantDish);
+        Optional<RestaurantDish> optionalRestaurantDish = Optional.of(rd1);
+        ResponseEntity<RestaurantDish> entity = ResponseEntity.of(optionalRestaurantDish);
 
-            when(restaurantDishRepository.findById(rd1.getId())).thenReturn(optionalRestaurantDish);
-            assertEquals(entity, restaurantDishController.getRestaurantDishById(rd1.getId()));
-        }
+        when(restaurantDishRepository.findById(rd1.getId())).thenReturn(optionalRestaurantDish);
+        assertEquals(entity, restaurantDishController.getRestaurantDishById(rd1.getId()));
+    }
 
-     @Test
-     void getRestaurantDishByRestaurantId() {
-           List<RestaurantDish> expected = new ArrayList<RestaurantDish>(List.of(rd1,rd2));
-           when(restaurantDishRepository.findByRestaurantId(r1.getId())).thenReturn(expected);
+    @Test
+    void getRestaurantDishByRestaurantId() {
+        List<RestaurantDish> expected = new ArrayList<RestaurantDish>(List.of(rd1, rd2));
+        when(restaurantDishRepository.findByRestaurantId(r1.getId())).thenReturn(expected);
 
-           List<RestaurantDish> actual = restaurantDishController.getRestaurantDishByRestaurantId(r1.getId()).getBody();
+        List<RestaurantDish> actual = restaurantDishController.getRestaurantDishByRestaurantId(r1.getId()).getBody();
 
-           assertEquals(expected, actual);
-     }
+        assertEquals(expected, actual);
+    }
 
     @Test
     void newRestaurantDish() {
@@ -155,22 +155,22 @@ class RestaurantDishControllerTest {
     @Test
     void deleteRestaurantDish() {
         List<RestaurantDish> actual = new ArrayList<RestaurantDish>(List.of(rd1, rd3));
-        List<RestaurantDish> expected =  new ArrayList<RestaurantDish>(List.of(rd1,rd2,rd3));
+        List<RestaurantDish> expected = new ArrayList<RestaurantDish>(List.of(rd1, rd2, rd3));
 
         Optional<RestaurantDish> optionalRestaurantDish = Optional.of(rd2);
         ResponseEntity<RestaurantDish> responseEntity = ResponseEntity.of(optionalRestaurantDish);
 
         restaurantDishController.deleteRestaurantDish(rd2.getId());
 
-                Mockito.doAnswer(new Answer<Void>() {
-                    @Override
-                    public Void answer(InvocationOnMock invocation) {
-                        actual.remove(1);
-                        return null;
-                    }
-                }).when(restaurantDishRepository).deleteById(rd2.getId());
+        Mockito.doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) {
+                actual.remove(1);
+                return null;
+            }
+        }).when(restaurantDishRepository).deleteById(rd2.getId());
 
-         when(restaurantDishRepository.findAll()).thenReturn(expected);
-         assertEquals(expected, restaurantDishController.getAllRestaurantDishes());
+        when(restaurantDishRepository.findAll()).thenReturn(expected);
+        assertEquals(expected, restaurantDishController.getAllRestaurantDishes());
     }
 }

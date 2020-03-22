@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.sql.Date;
 import java.sql.Time;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -25,8 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class DishOrderControllerTest {
@@ -123,37 +123,36 @@ class DishOrderControllerTest {
     }
 
 
-        /**
-         * Test if the controller loads correctly and isn't null.
-         *
-         * @throws Exception exception
-         */
+    /**
+     * Test if the controller loads correctly and isn't null.
+     *
+     * @throws Exception exception
+     */
 
 
-        @Test
-        public void controllerLoads() throws Exception {
-            assertThat(dishOrderController).isNotNull();
-        }
+    @Test
+    public void controllerLoads() throws Exception {
+        assertThat(dishOrderController).isNotNull();
+    }
 
 
-        /**
-         * Checks whether getAllDishOrders returns the whole list.
-         */
-//
-//    @Test
-//    void getAllDishOrders() {
-//        List<DishOrder> expected = new ArrayList<>(List.of(do1, do2));
-//
-////         Specify what the repository should return when you call the
-////                // findAll() method which is done in the DishOrderController for the method we are testing
-//        when(dishOrderRepository.findAll()).thenReturn(expected);
-//
-//        // now call that method in the DishOrderController and put it into the actual list
-//        List<DishOrder> actual = dishOrderController.getAllDishOrders();
-//
-//        assertEquals(expected, actual);
-//    }
-
+    /**
+     * Checks whether getAllDishOrders returns the whole list.
+     */
+    //
+    //    @Test
+    //    void getAllDishOrders() {
+    //        List<DishOrder> expected = new ArrayList<>(List.of(do1, do2));
+    //
+    ////         Specify what the repository should return when you call the
+    ////                // findAll() method which is done in the DishOrderController for the method we are testing
+    //        when(dishOrderRepository.findAll()).thenReturn(expected);
+    //
+    //        // now call that method in the DishOrderController and put it into the actual list
+    //        List<DishOrder> actual = dishOrderController.getAllDishOrders();
+    //
+    //        assertEquals(expected, actual);
+    //    }
     @Test
     void getAllDishOrdersByOrder() {
     }

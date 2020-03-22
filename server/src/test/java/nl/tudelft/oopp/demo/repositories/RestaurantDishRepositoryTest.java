@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 class RestaurantDishRepositoryTest {
@@ -31,7 +31,7 @@ class RestaurantDishRepositoryTest {
 
     private RestaurantDish rd1;
     private RestaurantDish rd2;
-    private  RestaurantDish rd3;
+    private RestaurantDish rd3;
 
     @Autowired
     private DishRepository dishRepository;
@@ -88,19 +88,19 @@ class RestaurantDishRepositoryTest {
         restaurantDishRepository.save(rd3);
     }
 
-      /**
-         * Test if the repositories loads correctly and isn't null.
-         *
-         * @throws Exception exception
-         */
+    /**
+     * Test if the repositories loads correctly and isn't null.
+     *
+     * @throws Exception exception
+     */
 
-      @Test
-      public void testLoadRep() {
-          assertThat(buildRep).isNotNull();
-          assertThat(resRep).isNotNull();
-          assertThat(dishRepository).isNotNull();
-          assertThat(restaurantDishRepository).isNotNull();
-      }
+    @Test
+    public void testLoadRep() {
+        assertThat(buildRep).isNotNull();
+        assertThat(resRep).isNotNull();
+        assertThat(dishRepository).isNotNull();
+        assertThat(restaurantDishRepository).isNotNull();
+    }
 
     /**
      * Test if we can find all the restaurantDish by restaurant by using the restaurant id as input.
