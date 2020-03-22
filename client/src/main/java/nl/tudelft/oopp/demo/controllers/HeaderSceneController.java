@@ -24,11 +24,7 @@ public class HeaderSceneController implements Initializable {
     }
 
     @FXML
-    public void switchLeftBar(MouseEvent event) {
-        try {
-            mainSceneController.switchLeftBar();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void switchSidebar(MouseEvent event) {
+        mainSceneController.switchSidebar();
     }
 }

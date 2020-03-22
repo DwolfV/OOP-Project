@@ -3,10 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import com.jfoenix.controls.JFXHamburger?>
 <AnchorPane prefHeight="400.0" prefWidth="150.0" styleClass="secondary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HamburgerMenuSceneController">
    <children>
-      <JFXHamburger fx:id="hamburger" prefHeight="400.0" prefWidth="150.0">
+      <VBox fx:id="vBox" prefHeight="400.0" prefWidth="150.0">
          <children>
              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Button" />
              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Button" />
@@ -14,6 +13,6 @@
              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Button" />
              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Button" />
          </children>
-      </JFXHamburger>
+      </VBox>
    </children>
 </AnchorPane>

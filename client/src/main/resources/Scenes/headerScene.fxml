@@ -6,6 +6,6 @@
 
 <AnchorPane prefHeight="100.0" prefWidth="600.0" styleClass="primary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HeaderSceneController">
    <children>
-      <Button layoutX="77.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#switchLeftBar" text="Menu" />
+      <Button layoutX="32.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#switchSidebar" text="Menu" />
    </children>
 </AnchorPane>
