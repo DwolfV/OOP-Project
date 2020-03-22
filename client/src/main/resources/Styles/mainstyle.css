@@ -1,0 +1,20 @@
+.primary-pane {
+  -fx-background-color: #336699;
+}
+
+.secondary-pane {
+  -fx-background-color: #6699CC;
+}
+
+.button {
+  -fx-background-color: #336699;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+.button:hover {
+  -fx-background-color: #66CCFF;
+}
+
+/*# sourceMappingURL=mainstyle.css.map */

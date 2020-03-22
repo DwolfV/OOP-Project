@@ -19,12 +19,12 @@
             <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu"
                         HBox.hgrow="ALWAYS">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleHomeButton" text="Home"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleReservationButton" text="Reservations"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleRestaurantsButton" text="Restaurants"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleFriendsButton" text="Friends"/>
-                    <MenuItem fx:id="adminButton" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings"/>
+                    <MenuItem mnemonicParsing="false" text="Home"/>
+                    <MenuItem mnemonicParsing="false" text="Reservations"/>
+                    <MenuItem mnemonicParsing="false" text="Restaurants"/>
+                    <MenuItem mnemonicParsing="false" text="Friends"/>
+                    <MenuItem fx:id="adminButton" mnemonicParsing="false" text="Admin"/>
+                    <MenuItem mnemonicParsing="false" text="Settings"/>
                 </items>
                 <HBox.margin>
                     <Insets left="5.0" top="20.0"/>

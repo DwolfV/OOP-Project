@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="100.0" prefWidth="600.0" styleClass="primary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HeaderSceneController">
+   <children>
+      <Button layoutX="77.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#switchLeftBar" text="Menu" />
+   </children>
+</AnchorPane>

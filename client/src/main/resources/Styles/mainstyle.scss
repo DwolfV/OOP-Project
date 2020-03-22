@@ -10,7 +10,6 @@ $l-grey: #CCCCCC;
 
 .secondary-pane {
     -fx-background-color: $l-blue;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 3, 3), ; //radius,edge,x,y
 }
 
 .button {
@@ -23,24 +22,3 @@ $l-grey: #CCCCCC;
 .button:hover {
     -fx-background-color: $b-blue;
 }
-
-.hyperlink {
-    -fx-text-fill: white;
-    -fx-underline: false;
-}
-
-.hyperlink:hover {
-    -fx-underline: true;
-}
-
-.exit-button {
-    -fx-background-color: $l-blue;
-    -fx-text-fill: white;
-    -fx-text-font: Arial;
-    -fx-font-size: 12px;
-}
-
-.exit-button:hover {
-    -fx-background-color: red;
-}
-

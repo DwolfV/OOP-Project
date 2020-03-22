@@ -14,6 +14,9 @@ import javafx.stage.StageStyle;
 
 public class MainDisplay extends Application {
 
+    public Stage startupStage;
+    public Stage mainStage;
+
     private double x;
     private double y;
 

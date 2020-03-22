@@ -27,4 +27,15 @@
   -fx-underline: true;
 }
 
+.exit-button {
+  -fx-background-color: #6699CC;
+  -fx-text-fill: white;
+  -fx-text-font: Arial;
+  -fx-font-size: 12px;
+}
+
+.exit-button:hover {
+  -fx-background-color: red;
+}
+
 /*# sourceMappingURL=loginstyle.css.map */

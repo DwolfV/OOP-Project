@@ -5,16 +5,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
 
 public class SignInSceneController implements Initializable {
@@ -91,5 +95,26 @@ public class SignInSceneController implements Initializable {
 
         failedSignInLabel.setVisible(false);
         signedInLabel.setVisible(true);
+        openMainStage();
+    }
+
+    public void openMainStage() {
+        startupSceneController.close();
+
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/Scenes/mainScene.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene(root);
+
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setTitle("TU Delft reservations");
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
     }
 }

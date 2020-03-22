@@ -25,9 +25,8 @@
     </Label>
    <top>
       <AnchorPane prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="716.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#close" text="Exit" />
-         </children>
+        <Button cacheShape="false" focusTraversable="false" layoutX="721.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#close" prefHeight="25.0" prefWidth="25.0" scaleShape="false" styleClass="exit-button" text="x">
+        </Button>
       </AnchorPane>
    </top>
    <left>

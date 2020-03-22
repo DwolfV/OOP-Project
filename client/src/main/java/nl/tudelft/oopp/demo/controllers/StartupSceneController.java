@@ -56,10 +56,9 @@ public class StartupSceneController implements Initializable {
 
     /**
      * Closes the start up Stage.
-     * @param event mouse event
      */
     @FXML
-    private void close(MouseEvent event) {
+    public void close() {
         Stage stage = (Stage)startupId.getScene().getWindow();
         stage.close();
     }
