@@ -1,7 +1,5 @@
 package nl.tudelft.oopp.demo.communication;
 
-import java.sql.Date;
-import java.sql.Time;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
