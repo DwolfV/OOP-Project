@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.communication;
 
+import java.sql.Date;
+import java.sql.Time;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -72,6 +74,10 @@ public class BuildingCommunication {
             building = mapper.readValue(response.body(), new TypeReference<Building>(){});
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if (id == 13) {
+            RoomReservationCommunication.addRoomReservation(Date.valueOf("2022-01-20", Time.valueOf()));
         }
         return building;
     }

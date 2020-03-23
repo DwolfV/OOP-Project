@@ -10,6 +10,7 @@ public class RoomReservation {
     private Time startTime;
     private Time endTime;
     private User user;
+    private Room room;
 
     /**
      * Create a new Building instance.
@@ -20,11 +21,12 @@ public class RoomReservation {
      * @param endTime   The time when the reservation ends
      * @param user      The user who owns the reservation
      */
-    public RoomReservation(Date date, Time startTime, Time endTime, User user) {
+    public RoomReservation(Date date, Time startTime, Time endTime, User user, Room room) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.user = user;
+        this.room = room;
     }
 
     public long getId() {
@@ -65,6 +67,14 @@ public class RoomReservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
