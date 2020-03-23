@@ -29,6 +29,6 @@
 - **Tip:** improve the overall management of the project-improve giving small individual tasks
 
 ###Steph
-- **Top:**
+- **Top:** A lot of improvements in the flow, we have better branching, better merge requests and approvements. We are checking each others code better
 
-- **Tip:**
+- **Tip:** Communication is a bit harder since we were used to meeting a lot and that isn't possible anymore
