@@ -29,6 +29,6 @@
 - **Tip:** start working on filtering, do code review
 
 ###Steph
-- **Top:**
+- **Top:** We are meeting out deadlines and starting to work a lot more efficiently
 
-- **Tip:**
+- **Tip:** We could still need to checkstyle our code and communication needs to improve a little
