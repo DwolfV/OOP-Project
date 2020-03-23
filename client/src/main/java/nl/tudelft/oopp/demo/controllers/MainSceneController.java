@@ -177,6 +177,19 @@ public class MainSceneController implements Initializable {
             int c = 0; // count - for lists, c - for tps
             rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
+            //Create time
+            ArrayList<String> timeFrom = new ArrayList<>();
+            ArrayList<String> timeTo = new ArrayList<>();
+
+            for(int p = 9; p < 20; p++){
+                timeFrom.add(p+".00");
+                timeFrom.add(p+".30");
+                if(p>9){
+                    timeTo.add(p+".00");
+                    timeTo.add(p+".30");
+                }
+            }
+
             // fill the accordion
             for (int i = 0; i < buildingData.size(); i++) {
 
@@ -188,6 +201,8 @@ public class MainSceneController implements Initializable {
                     }
                 }
 
+                ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
+                ObservableList<String> to = FXCollections.observableArrayList(timeTo);
 
                 //if there are rooms for the building i - show them;
                 if (showRooms.size() != 0) {
@@ -204,13 +219,9 @@ public class MainSceneController implements Initializable {
                         Button button1 = new Button("Reserve");
                         buttons.add(button1);
 
-
-                        ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
-                        ObservableList<String> to = FXCollections.observableArrayList(timeTo);
-
-                        ChoiceBox<String> cb = new ChoiceBox<>();
+                        ComboBox<String> cb = new ComboBox<>();
                         cb.setItems(from);
-                        ChoiceBox<String> cbb = new ChoiceBox<>();
+                        ComboBox<String> cbb = new ComboBox<>();
                         cbb.setItems(to);
 
 
