@@ -76,9 +76,6 @@ public class BuildingCommunication {
             e.printStackTrace();
         }
 
-        if (id == 13) {
-            RoomReservationCommunication.addRoomReservation(Date.valueOf("2022-01-20", Time.valueOf()));
-        }
         return building;
     }
 
