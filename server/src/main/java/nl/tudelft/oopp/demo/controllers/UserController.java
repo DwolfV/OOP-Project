@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
@@ -108,7 +111,13 @@ public class UserController {
     }
 
     @GetMapping(value = "login")
-    public ResponseEntity<String> logIn(Authentication authentication) {
-        return new ResponseEntity<>(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), HttpStatus.OK);
+    public ResponseEntity<List<String>> logIn(Authentication authentication) {
+        String id = "0";
+        for (User user : getAllUsers()) {
+            if (user.getUsername().equals(authentication.getName())) {
+                id = Long.toString(user.getId());
+            }
+        }
+        return new ResponseEntity<>(Arrays.asList(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), id), HttpStatus.OK);
     }
 }
