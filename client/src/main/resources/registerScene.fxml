@@ -8,10 +8,10 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="282.0" prefWidth="470.0"
             style="-fx-background-color: #00A6D6;" xmlns="http://javafx.com/javafx/8"
             fx:controller="nl.tudelft.oopp.demo.controllers.RegisterSceneController">
-    <TextField layoutX="41.0" layoutY="94.0" prefHeight="31.0" prefWidth="190.0" promptText="First Name"/>
-    <TextField layoutX="239.0" layoutY="94.0" prefHeight="31.0" prefWidth="190.0" promptText="Last Name"/>
-    <TextField layoutX="41.0" layoutY="136.0" prefHeight="31.0" prefWidth="390.0" promptText="Email"/>
-    <TextField layoutX="41.0" layoutY="177.0" prefHeight="31.0" prefWidth="390.0" promptText="Password"/>
+    <TextField fx:id = "firstName" layoutX="41.0" layoutY="94.0" prefHeight="31.0" prefWidth="190.0" promptText="First Name"/>
+    <TextField fx:id = "lastName" layoutX="239.0" layoutY="94.0" prefHeight="31.0" prefWidth="190.0" promptText="Last Name"/>
+    <TextField fx:id = "email" layoutX="41.0" layoutY="136.0" prefHeight="31.0" prefWidth="390.0" promptText="Email"/>
+    <TextField fx:id = "password" layoutX="41.0" layoutY="177.0" prefHeight="31.0" prefWidth="390.0" promptText="Password"/>
     <Text fill="WHITE" layoutX="164.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
         <font>
             <Font name="Verdana" size="36.0"/>
