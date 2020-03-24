@@ -2,9 +2,9 @@ package nl.tudelft.oopp.demo.communication;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.OpenTime;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

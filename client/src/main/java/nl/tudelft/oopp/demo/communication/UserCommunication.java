@@ -7,8 +7,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.List;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class UserCommunication {
 

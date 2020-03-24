@@ -167,11 +167,9 @@ public class AdminSceneController implements Initializable {
         buildingCol.setCellValueFactory(
             new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
-<<<<<<< HEAD
         buildingCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setName(t.getNewValue()));
-=======
         buildingCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
@@ -192,7 +190,6 @@ public class AdminSceneController implements Initializable {
         closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConvertor())));
         closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Building, String> streetNameCol =
             new TableColumn<>("Street Name");
@@ -200,14 +197,11 @@ public class AdminSceneController implements Initializable {
         streetNameCol.setCellValueFactory(
             new PropertyValueFactory<>("streetName"));
         streetNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-<<<<<<< HEAD
         streetNameCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
-=======
         streetNameCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Building, String> streetNumCol =
             new TableColumn<>("Street Number");
@@ -215,14 +209,11 @@ public class AdminSceneController implements Initializable {
         streetNumCol.setCellValueFactory(
             new PropertyValueFactory<>("streetNumber"));
         streetNumCol.setCellFactory(TextFieldTableCell.forTableColumn());
-<<<<<<< HEAD
         streetNumCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
-=======
         streetNumCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Building, String> zipCodeCol =
             new TableColumn<>("Zip Code");
@@ -230,14 +221,11 @@ public class AdminSceneController implements Initializable {
         zipCodeCol.setCellValueFactory(
             new PropertyValueFactory<>("zipCode"));
         zipCodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
-<<<<<<< HEAD
         zipCodeCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
-=======
         zipCodeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Building, String> cityCol =
             new TableColumn<>("City");
@@ -245,14 +233,11 @@ public class AdminSceneController implements Initializable {
         cityCol.setCellValueFactory(
             new PropertyValueFactory<>("City"));
         cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
-<<<<<<< HEAD
         cityCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setCity(t.getNewValue()));
-=======
         cityCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setCity(t.getNewValue()));
->>>>>>> development
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
