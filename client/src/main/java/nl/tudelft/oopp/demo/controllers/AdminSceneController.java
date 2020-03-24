@@ -330,10 +330,10 @@ public class AdminSceneController implements Initializable {
         dayCol.setMinWidth(100);
         dayCol.setCellValueFactory(
                 new PropertyValueFactory<>("date"));
-        /** dayCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        dayCol.setCellFactory(TextFieldTableCell.forTableColumn(new DateToStringConvertor()));
         dayCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Occasion, LocalDate> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setDate(t.getNewValue())); */
+                        t.getTablePosition().getRow()).setDate(t.getNewValue()));
 
         TableColumn<Occasion, LocalTime> openHolidayTimeCol =
                 new TableColumn<>("Open Time");
