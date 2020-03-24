@@ -8,22 +8,25 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Room;
+import nl.tudelft.oopp.demo.helperclasses.Occasion;
 
-public class RoomCommunication {
+
+public class OccasionCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
-     * Retrieves a list of rooms.
+     * Retrieves a list of occasions from the server.
      *
-     * @return A list of all rooms.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
      */
-    public static List<Room> getRooms() {
+    public static List<Occasion> getOccasions() {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/rooms")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/occasion/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -37,80 +40,27 @@ public class RoomCommunication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        List<Room> room = null;
+        List<Occasion> occasions = null;
         // TODO handle exception
         try {
-            room = mapper.readValue(response.body(), new TypeReference<List<Room>>() {
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(response.body());
-        }
-
-        return room;
-    }
-
-    /**
-     * Retrieves a list of rooms that are located in a certain building.
-     *
-     * @return A list of all rooms.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
-     */
-    public static List<Room> getRoomsByBuildingId(long buildingId) {
-
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/rooms/%s", buildingId))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return "Communication with server failed";
-        }
-        if (response.statusCode() != 200) {
-            System.out.println("Status: " + response.statusCode());
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        List<Room> room = null;
-        // TODO handle exception
-        try {
-            room = mapper.readValue(response.body(), new TypeReference<List<Room>>() {
+            occasions = mapper.readValue(response.body(), new TypeReference<List<Occasion>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return room;
+        return occasions;
     }
 
     /**
-     * Retrieves a list of rooms that are located in a certain building.
+     * Retrieves a list of occasions for a specific building from the server.
      *
-     * @return A list of all rooms.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
      */
-    public static List<Room> getFilteredRoomsByBuilding(Long buildingId, Integer capacity, String e1, String e2, String e3, String e4) {
+    public static List<Occasion> getOccasionsByBuilding(long id) {
 
-        String uri = "http://localhost:8080/rooms/filter?building_id=" + buildingId;
-        if (capacity == null) {
-            capacity = 0;
-        }
-        uri = "?capacity=" + capacity;
-        if (e1 != null) {
-            uri = "&e1=" + e1;
-        }
-        if (e2 != null) {
-            uri = "&e2=" + e2;
-        }
-        if (e3 != null) {
-            uri = "&e3=" + e3;
-        }
-        if (e4 != null) {
-            uri = "&e4=" + e4;
-        }
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(uri)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
-
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/occasion/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -124,36 +74,70 @@ public class RoomCommunication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        List<Room> room = null;
+        List<Occasion> occasions = null;
         // TODO handle exception
         try {
-            room = mapper.readValue(response.body(), new TypeReference<List<Room>>() {
+            occasions = mapper.readValue(response.body(), new TypeReference<List<Occasion>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return room;
+        return occasions;
     }
 
     /**
-     * Adds a room.
+     * Retrieves an occasion by id from the server.
      *
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
      */
-    public static void addRoom(String roomName, int capacity, long buildingId) {
+    public static Occasion getOccasionById(long id) {
+
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/occasion/id/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
-        String jsonRoom = "";
+        Occasion occasion = null;
+        // TODO handle exception
         try {
-            jsonRoom = mapper.writeValueAsString(newRoom);
-            System.out.println(jsonRoom);
+            occasion = mapper.readValue(response.body(), new TypeReference<Occasion>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRoom)).uri(URI.create("http://localhost:8080/rooms")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        return occasion;
+    }
+
+    /**
+     * Adds an occasion.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+    public static void addOccasion(LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
+        String jsonOccasion = "";
+        try {
+            jsonOccasion = mapper.writeValueAsString(newOccasion);
+            System.out.println(jsonOccasion);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonOccasion)).uri(URI.create("http://localhost:8080/occasion/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -167,23 +151,23 @@ public class RoomCommunication {
     }
 
     /**
-     * Updates a room.
+     * Update an occasion.
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoom(long id, String roomName, int capacity, long buildingId) {
+    public static void updateOccasion(long id, LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
-        String jsonRoom = "";
+        Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
+        String jsonOccasion = "";
         try {
-            jsonRoom = mapper.writeValueAsString(newRoom);
-            System.out.println(jsonRoom);
+            jsonOccasion = mapper.writeValueAsString(newOccasion);
+            System.out.println(jsonOccasion);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonRoom)).uri(URI.create(String.format("http://localhost:8080/rooms/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonOccasion)).uri(URI.create(String.format("http://localhost:8080/occasion/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -197,12 +181,12 @@ public class RoomCommunication {
     }
 
     /**
-     * Removes a room.
+     * Removes an occasion.
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void removeRoom(long id) {
-        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/rooms/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    public static void removeOccasion(long id) {
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/occasion/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -71,16 +71,16 @@ class RoomReservationControllerTest {
         u3 = new User("user3@email.com", "student", "fn3", "ln3", "user3");
         u4 = new User("user4@email.com", "employee", "fn4", "ln4", "user4");
 
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
 
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c1");
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c1");
         r2 = new Room("r2", 21, b2);
 
-        Building b3 = new Building("b3", "s1", "sNo3", "z3", "c1");
+        Building b3 = new Building("b3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo3", "z3", "c1");
         r3 = new Room("r3", 31, b3);
 
-        Building b4 = new Building("b4", "s1", "sNo4", "z4", "c1");
+        Building b4 = new Building("b4", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo4", "z4", "c1");
         r4 = new Room("r4", 41, b4);
 
         rr1 = new RoomReservation(LocalDate.parse("2020-02-01"), r1, LocalTime.parse("12:00"), LocalTime.parse("13:00"), u1);
@@ -259,7 +259,7 @@ class RoomReservationControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
             LocalDate.parse("2020-01-03"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
@@ -316,7 +316,7 @@ class RoomReservationControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
             LocalDate.parse("2020-03-22"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);

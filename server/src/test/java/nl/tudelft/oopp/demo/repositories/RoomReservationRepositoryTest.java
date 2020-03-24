@@ -52,9 +52,9 @@ public class RoomReservationRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
-        b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
+        b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
         r2 = new Room("room2", 2, b2);
         buildRep.save(b1);
         buildRep.save(b2);

@@ -73,10 +73,10 @@ public class OrderControllerTest {
         u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
 
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
 
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c1");
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c1");
         r2 = new Room("r2", 21, b2);
 
         rr1 = new RoomReservation(LocalDate.parse("2020-01-01"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
@@ -164,7 +164,8 @@ public class OrderControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+
         Room r1 = new Room("r1", 11, b1);
         RoomReservation rr1 = new RoomReservation(
             LocalDate.parse("2020-01-01"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
@@ -222,7 +223,8 @@ public class OrderControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
             LocalDate.parse("2020-01-01"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);

@@ -5,9 +5,9 @@ import static nl.tudelft.oopp.demo.controllers.MainSceneController.restaurantsTP
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.roomsTP;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -52,7 +52,8 @@ public class AdminSceneController implements Initializable {
      */
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
+            building.getZipCode(), building.getCity());
     }
 
     /**
@@ -126,58 +127,77 @@ public class AdminSceneController implements Initializable {
         tableBuilding.setEditable(true);
 
         TableColumn<Building, Long> idCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idCol.setMinWidth(100);
         idCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Building, String> buildingCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingCol.setMinWidth(100);
         buildingCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
         buildingCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
+
+        TableColumn<Building, LocalTime> openTimeCol =
+            new TableColumn<>("Open Time");
+        openTimeCol.setMinWidth(100);
+        openTimeCol.setCellValueFactory(
+            new PropertyValueFactory<>("openTime"));
+        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConvertor()));
+        openTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
+
+        TableColumn<Building, LocalTime> closeTimeCol =
+            new TableColumn<>("Close Time");
+        closeTimeCol.setMinWidth(100);
+        closeTimeCol.setCellValueFactory(
+            new PropertyValueFactory<>("closeTime"));
+        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConvertor())));
+        closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
 
         TableColumn<Building, String> streetNameCol =
-                new TableColumn<>("Street Name");
+            new TableColumn<>("Street Name");
         streetNameCol.setMinWidth(100);
         streetNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("streetName"));
+            new PropertyValueFactory<>("streetName"));
         streetNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        streetNameCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
+        streetNameCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
+                t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
 
         TableColumn<Building, String> streetNumCol =
-                new TableColumn<>("Street Number");
+            new TableColumn<>("Street Number");
         streetNumCol.setMinWidth(100);
         streetNumCol.setCellValueFactory(
-                new PropertyValueFactory<>("streetNumber"));
+            new PropertyValueFactory<>("streetNumber"));
         streetNumCol.setCellFactory(TextFieldTableCell.forTableColumn());
         streetNumCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
 
         TableColumn<Building, String> zipCodeCol =
-                new TableColumn<>("Zip Code");
+            new TableColumn<>("Zip Code");
         zipCodeCol.setMinWidth(100);
         zipCodeCol.setCellValueFactory(
-                new PropertyValueFactory<>("zipCode"));
+            new PropertyValueFactory<>("zipCode"));
         zipCodeCol.setCellFactory(TextFieldTableCell.forTableColumn());
         zipCodeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
 
         TableColumn<Building, String> cityCol =
-                new TableColumn<>("City");
+            new TableColumn<>("City");
         cityCol.setMinWidth(100);
         cityCol.setCellValueFactory(
-                new PropertyValueFactory<>("City"));
+            new PropertyValueFactory<>("City"));
         cityCol.setCellFactory(TextFieldTableCell.forTableColumn());
         cityCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setCity(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCity(t.getNewValue()));
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
-        tableBuilding.getColumns().addAll(idCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
+        tableBuilding.getColumns().addAll(idCol, buildingCol, openTimeCol, closeTimeCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
 
         //delete button
         deleteButtonBuilding.setOnAction(e -> {
@@ -206,12 +226,16 @@ public class AdminSceneController implements Initializable {
         VBox vboxAddBuilding = new VBox();
 
         Text buildingName = new Text("Building Name");
+        Text openTime = new Text("Open Time");
+        Text closeTime = new Text("Close Time");
         Text streetName = new Text("Street Name");
         Text streetNumber = new Text("Street Number");
         Text zipCode = new Text("Zip Code");
         Text city = new Text("City");
 
         TextField buildingNameInput = new TextField();
+        TextField openTimeInput = new TextField();
+        TextField closeTimeInput = new TextField();
         TextField streetNameInput = new TextField();
         TextField streetNumberInput = new TextField();
         TextField zipCodeInput = new TextField();
@@ -219,27 +243,31 @@ public class AdminSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
+        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput, closeTime, closeTimeInput,
+            streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
         vboxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
         vboxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vboxAddBuilding);
 
         addButtonBuilding.setOnAction(e -> {
-            String buildingNameInput1 = buildingNameInput.getText();
-            String streetNameInput1 = streetNameInput.getText();
-            String streetNumberInput1 = streetNumberInput.getText();
-            String zipCodeInput1 = zipCodeInput.getText();
-            String cityInput1 = cityInput.getText();
+            String buildingNameInputText = buildingNameInput.getText();
+            String openTimeInputText = openTimeInput.getText();
+            String closeTimeInputText = closeTimeInput.getText();
+            String streetNameInputText = streetNameInput.getText();
+            String streetNumberInputText = streetNumberInput.getText();
+            String zipCodeInputText = zipCodeInput.getText();
+            String cityInputText = cityInput.getText();
 
-            BuildingCommunication.addBuilding(buildingNameInput1, streetNameInput1, streetNumberInput1, zipCodeInput1, cityInput1);
+            BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
+                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
 
             buildingNameInput.setText(null);
+            openTimeInput.setText(null);
+            closeTimeInput.setText(null);
             streetNameInput.setText(null);
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
-
-            tableBuilding.refresh();
         });
 
         // This VBox contains the table for the buildings and adding a building
@@ -264,34 +292,34 @@ public class AdminSceneController implements Initializable {
         tableRoom.setEditable(true);
 
         TableColumn<Room, Long> idColRooms =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idColRooms.setMinWidth(100);
         idColRooms.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Room, String> roomCol =
-                new TableColumn<>("Room Name");
+            new TableColumn<>("Room Name");
         roomCol.setMinWidth(100);
         roomCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
         roomCol.setOnEditCommit((TableColumn.CellEditEvent<Room, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Room, Integer> capacityCol =
-                new TableColumn<>("capacityField");
+            new TableColumn<>("capacityField");
         capacityCol.setMinWidth(100);
         capacityCol.setCellValueFactory(
-                new PropertyValueFactory<>("capacity"));
+            new PropertyValueFactory<>("capacity"));
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         capacityCol.setOnEditCommit((TableColumn.CellEditEvent<Room, Integer> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
 
         TableColumn<Room, String> buildingNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Room, String>forTableColumn(new BuildingToStringConvertor()));
 
         ObservableList<Room> roomData = FXCollections.observableList(RoomCommunication.getRooms());
@@ -386,41 +414,41 @@ public class AdminSceneController implements Initializable {
         tableRestaurant.setEditable(true);
 
         TableColumn<Restaurant, Long> idRestaurantCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idRestaurantCol.setMinWidth(100);
         idRestaurantCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Restaurant, String> restaurantNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         restaurantNameCol.setMinWidth(100);
         restaurantNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         restaurantNameCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, String> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Restaurant, Building> buildingNameRestaurantCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameRestaurantCol.setMinWidth(100);
         buildingNameRestaurantCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
         buildingNameRestaurantCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, Building> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
         TableColumn<Restaurant, String> timeCloseCol =
-                new TableColumn<>("Closing Time");
+            new TableColumn<>("Closing Time");
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
-                new PropertyValueFactory<>("tClose"));
+            new PropertyValueFactory<>("tClose"));
         timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
 
         TableColumn<Restaurant, String> timeOpenCol =
-                new TableColumn<>("Opening Time");
+            new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
-                new PropertyValueFactory<>("tOpen"));
+            new PropertyValueFactory<>("tOpen"));
         timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
 
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());

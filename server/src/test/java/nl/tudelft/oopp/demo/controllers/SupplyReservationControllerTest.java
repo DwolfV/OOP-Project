@@ -51,9 +51,9 @@ class SupplyReservationControllerTest {
         u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
         u3 = new User("user3@email.com", "student", "fn3", "ln3", "user3");
 
-        Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
-        Building b2 = new Building("name2", "s2", "sNo2", "z2", "c2");
-        Building b3 = new Building("name3", "s3", "sNo3", "z3", "c3");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        Building b3 = new Building("name3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s3", "sNo3", "z3", "c3");
 
         Supply s1 = new Supply(b1, "s1", 7);
         Supply s2 = new Supply(b2, "s2", 11);
@@ -109,7 +109,7 @@ class SupplyReservationControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
-        Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Supply s1 = new Supply(b1, "s1", 7);
 
         SupplyReservation supplyReservation = new SupplyReservation(
@@ -128,7 +128,8 @@ class SupplyReservationControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
-        Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+
         Supply s1 = new Supply(b1, "s1", 7);
         SupplyReservation supplyReservation = new SupplyReservation(
             LocalDate.parse("2020-05-05"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);

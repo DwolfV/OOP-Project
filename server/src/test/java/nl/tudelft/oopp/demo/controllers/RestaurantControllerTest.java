@@ -44,8 +44,8 @@ class RestaurantControllerTest {
 
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("b2", "s1", "sNo2", "z2", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo2", "z2", "c1");
         r1 = new Restaurant("r1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
         r2 = new Restaurant("r2", b2, LocalTime.parse("13:00"), LocalTime.parse("15:00"));
         r3 = new Restaurant("r3", b1, LocalTime.parse("16:00"), LocalTime.parse("17:30"));
@@ -101,8 +101,10 @@ class RestaurantControllerTest {
     @Test
     void testCreateNewRestaurant() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Restaurant restaurant = new Restaurant("r1", b1, LocalTime.parse("09:00"), LocalTime.parse("12:00"));
+
         Optional<Restaurant> optionalRestaurant = Optional.of(restaurant);
 
         when(restaurantRepository.save(restaurant)).thenReturn(restaurant);
@@ -114,8 +116,10 @@ class RestaurantControllerTest {
     @Test
     void testUpdateRestaurant() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Restaurant restaurant = new Restaurant("r1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
+
         Optional<Restaurant> optionalRestaurant = Optional.of(r1);
 
         ResponseEntity<Restaurant> entity = ResponseEntity.of(optionalRestaurant);

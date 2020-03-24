@@ -92,7 +92,7 @@ class DishOrderControllerTest {
 
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
 
         u1 = new User("email1", "student", "fn1", "ln1", "user");

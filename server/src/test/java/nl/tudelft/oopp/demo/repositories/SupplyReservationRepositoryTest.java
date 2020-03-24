@@ -52,9 +52,9 @@ public class SupplyReservationRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("build1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("build2", "s2", "sNo2", "z2", "c2");
-        b3 = new Building("build3", "s3", "sNo3", "z3", "c2");
+        b1 = new Building("build1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("build2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        b3 = new Building("build3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s3", "sNo3", "z3", "c2");
         buildingRepository.save(b1);
         buildingRepository.save(b2);
         buildingRepository.save(b3);

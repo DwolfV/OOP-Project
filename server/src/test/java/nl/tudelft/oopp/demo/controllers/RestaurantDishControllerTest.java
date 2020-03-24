@@ -55,15 +55,14 @@ class RestaurantDishControllerTest {
 
     @BeforeEach
     public void save() {
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Restaurant("res1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));    //building 1
         r2 = new Restaurant("res2", b1, LocalTime.parse("14:00"), LocalTime.parse("15:00"));    //building 1
         r3 = new Restaurant("res3", b1, LocalTime.parse("15:30"), LocalTime.parse("17:00"));    //building 1
 
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
         r4 = new Restaurant("res4", b2, LocalTime.parse("16:00"), LocalTime.parse("20:00"));    //building 2
         r5 = new Restaurant("res5", b2, LocalTime.parse("17:00"), LocalTime.parse("21:00"));    //building 2
-
 
         d1 = new Dish("french fries", "potatoes", "vegan", 3);
         d2 = new Dish("soup", "chicken, vegetables", "non-vegetarian", 4);
@@ -119,8 +118,9 @@ class RestaurantDishControllerTest {
     void newRestaurantDish() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
         r4 = new Restaurant("res4", b2, LocalTime.parse("16:00"), LocalTime.parse("20:00"));    //building 2
+
         d2 = new Dish("soup", "chicken, vegetables", "non-vegetarian", 4);
         RestaurantDish restaurantDish = new RestaurantDish(r4, d2);
         Optional<RestaurantDish> optionalRestaurantDish = Optional.of(restaurantDish);
@@ -136,8 +136,9 @@ class RestaurantDishControllerTest {
     void updateRestaurantDish() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Restaurant r1 = new Restaurant("res1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));    //building 1
+
         Dish d1 = new Dish("french fries", "potatoes", "vegan", 3);
         RestaurantDish restaurantDish = new RestaurantDish(r1, d1);
         Optional<RestaurantDish> optionalRestaurantDish = Optional.of(rd1);
