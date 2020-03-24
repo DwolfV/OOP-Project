@@ -8,9 +8,11 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.tudelft.oopp.demo.helperclasses.Occasion;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 
 public class OccasionCommunication {
@@ -38,6 +40,7 @@ public class OccasionCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Occasion> occasions = null;
         // TODO handle exception
         try {
@@ -71,6 +74,7 @@ public class OccasionCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Occasion> occasions = null;
         // TODO handle exception
         try {
@@ -104,10 +108,11 @@ public class OccasionCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Occasion occasion = null;
         // TODO handle exception
         try {
-            occasion = mapper.readValue(response.body(), new TypeReference<List<Occasion>>() {
+            occasion = mapper.readValue(response.body(), new TypeReference<Occasion>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -123,6 +128,7 @@ public class OccasionCommunication {
      */
     public static void addOccasion(LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
         String jsonOccasion = "";
         try {
@@ -152,6 +158,7 @@ public class OccasionCommunication {
      */
     public static void updateOccasion(long id, LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
         String jsonOccasion = "";
         try {

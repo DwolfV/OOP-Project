@@ -10,10 +10,12 @@ import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 
 /**
@@ -49,6 +51,7 @@ public class RoomReservationCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<RoomReservation> roomReservations = null;
         // TODO handle exception
         try {
@@ -73,6 +76,7 @@ public class RoomReservationCommunication {
                                           Time endTime,
                                           User user) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
         try {
@@ -102,6 +106,7 @@ public class RoomReservationCommunication {
      */
     public static void updateRoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
         try {
@@ -150,6 +155,7 @@ public class RoomReservationCommunication {
      */
     public static Map<Time, Time> getAllRoomReservationTimesPerRoomAndDate(long roomId, Date date) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         String jsonDate = "";
         try {
             jsonDate = mapper.writeValueAsString(date);

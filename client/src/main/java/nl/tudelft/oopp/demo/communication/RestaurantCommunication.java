@@ -8,13 +8,14 @@ import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class RestaurantCommunication {
 
@@ -40,6 +41,7 @@ public class RestaurantCommunication {
             System.out.println("Status: " + response.statusCode());
         }
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Restaurant> restaurants = null;
         // TODO handle exception
         try {
@@ -80,6 +82,7 @@ public class RestaurantCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = null;
 
         // TODO handle exception
@@ -105,6 +108,7 @@ public class RestaurantCommunication {
 
     public static void addRestaurant(String name, Building building, Time timeClose, Time timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
         String jsonRestaurant = "";
         try {
@@ -142,6 +146,7 @@ public class RestaurantCommunication {
      */
     public static void updateRestaurant(long id, String name, Building building, Time timeClose, Time timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
         String jsonRestaurant = "";
         try {
