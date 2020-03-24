@@ -2,8 +2,8 @@ package nl.tudelft.oopp.demo.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Dish;
 import nl.tudelft.oopp.demo.entities.DishOrder;
@@ -95,11 +95,11 @@ class DishOrderControllerTest {
         b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user");
+        u1 = new User("email1", "student", "fn1", "ln1", "user");
 
 
-        rr1 = new RoomReservation(new Date(1000), r1, new Time(1000), new Time(1500), u1);
-        rr2 = new RoomReservation(new Date(2000), r1, new Time(2000), new Time(2500), u1);
+        rr1 = new RoomReservation(LocalDate.parse("2018-01-01"), r1, LocalTime.parse("10:00"), LocalTime.parse("15:00"), u1);
+        rr2 = new RoomReservation(LocalDate.parse("2018-01-02"), r1, LocalTime.parse("20:00"), LocalTime.parse("20:25"), u1);
 
 
         o1 = new Order(rr1);
@@ -109,7 +109,7 @@ class DishOrderControllerTest {
         d2 = new Dish("soup", "chicken, vegetables", "non-vegetarian", 4);
 
 
-        res1 = new Restaurant("res1", b1, new Time(1), new Time(2));
+        res1 = new Restaurant("res1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
 
 
         rd1 = new RestaurantDish(res1, d1);
