@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,11 +12,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Dish;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 public class DishCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
@@ -136,7 +136,7 @@ public class DishCommunication {
 
     public static void updateDish(long id, String name, String description, String type, float price) {
         ObjectMapper mapper = new ObjectMapper();
-        Dish newDish =  new Dish(name, description, type, price);
+        Dish newDish = new Dish(name, description, type, price);
         String jsonDish = "";
         try {
             jsonDish = mapper.writeValueAsString(newDish);
