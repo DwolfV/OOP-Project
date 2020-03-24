@@ -9,6 +9,7 @@ dependencies {
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 
     compile group: 'com.fasterxml', name: 'jackson-module-json-org', version: '0.9.1'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.7.3'
     compile group: 'com.sun.faces', name: 'jsf-api', version: '2.2.20'
 
     compile 'com.jfoenix:jfoenix:9.0.8'
