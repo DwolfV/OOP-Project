@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Time;
+import java.time.LocalTime;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
@@ -24,8 +25,8 @@ public class RestaurantTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
-        b2 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
+        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"streetName1", "streetNumber1", "zipCode1", "city1");
+        b2 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"streetName1", "streetNumber1", "zipCode1", "city1");
         r1 = new Restaurant("name1", b1, new Time(1), new Time(2));
         r2 = new Restaurant("name2", b1, new Time(2), new Time(3));
         r3 = new Restaurant("name3", b2, new Time(1), new Time(2));

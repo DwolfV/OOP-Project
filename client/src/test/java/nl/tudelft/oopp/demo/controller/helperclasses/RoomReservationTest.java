@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
@@ -35,8 +36,8 @@ public class RoomReservationTest {
     public void save() {
         u1 = new User("email1", "student", "firstName1", "lastName1");
         u2 = new User("email2", "employee", "firstName2", "lastName2");
-        b1 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
-        b2 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
+        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"streetName1", "streetNumber1", "zipCode1", "city1");
+        b2 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"streetName1", "streetNumber1", "zipCode1", "city1");
         r1 = new Room("name1", 1, b1);
         r2 = new Room("name2", 2, b2);
         rr1 = new RoomReservation(new Date(1), new Time(2), new Time(3), u1);

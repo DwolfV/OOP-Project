@@ -8,6 +8,8 @@ import nl.tudelft.oopp.demo.helperclasses.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalTime;
+
 public class RoomTest {
 
     private Room r1;
@@ -22,8 +24,8 @@ public class RoomTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
-        b2 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
+        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"streetName1", "streetNumber1", "zipCode1", "city1");
+        b2 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"streetName1", "streetNumber1", "zipCode1", "city1");
         r1 = new Room("name1", 1, b1);
         r2 = new Room("name2", 2, b1);
         r3 = new Room("name3", 3, b2);
