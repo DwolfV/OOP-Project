@@ -1,16 +1,13 @@
 package nl.tudelft.oopp.demo.controllers;
 
-<<<<<<< HEAD
-=======
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.buildingTP;
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.restaurantsTP;
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.roomsTP;
-
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
->>>>>>> development
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -24,11 +21,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.*;
-
-import java.sql.Time;
 
 public class AdminSceneController implements Initializable {
 
@@ -41,7 +37,7 @@ public class AdminSceneController implements Initializable {
     static final Button updateButtonRestaurant = new Button("Update");
     static final Button deleteButtonRestaurant = new Button("Delete");
     public static final TableView<Building> tableBuilding = new TableView<>();
-    public static final TableView<OpenTime> tableBuildingTime = new TableView<>();
+    public static final TableView<Occasion> tableHoliday = new TableView<>();
     public static final TableView<Room> tableRoom = new TableView<>();
     public static final TableView<Restaurant> tableRestaurant = new TableView<>();
 
@@ -98,8 +94,8 @@ public class AdminSceneController implements Initializable {
      * after changing the details one will have to press on the update button to update the database.
      */
     public static void updateTimeButtonClicked() {
-        OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
-        OpenTimeCommunication.updateOpenTime(openTime.getId(), openTime.getDay(), openTime.getOpenTime(), openTime.getCloseTime(), openTime.getBuilding().getId());
+        Occasion occasion = tableHoliday.getSelectionModel().getSelectedItem();
+        OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(), occasion.getCloseTime(), occasion.getBuilding().getId());
     }
 
     /**
@@ -107,12 +103,12 @@ public class AdminSceneController implements Initializable {
      * When the user selects a row in the rooms table it will be deleted from the database.
      */
     public static void deleteTimeButtonClicked() {
-        ObservableList<OpenTime> allTimes;
-        allTimes = tableBuildingTime.getItems();
-        OpenTime openTime = tableBuildingTime.getSelectionModel().getSelectedItem();
+        ObservableList<Occasion> allTimes;
+        allTimes = tableHoliday.getItems();
+        Occasion occasion = tableHoliday.getSelectionModel().getSelectedItem();
 
-        allTimes.remove(openTime);
-        OpenTimeCommunication.removeOpenTime(openTime.getId());
+        allTimes.remove(occasion);
+        OccasionCommunication.removeOccasion(occasion.getId());
     }
 
     /**
@@ -281,18 +277,10 @@ public class AdminSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-<<<<<<< HEAD
-        vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
+        vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput, closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
         vBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vBoxAddBuilding);
-=======
-        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput, closeTime, closeTimeInput,
-            streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vboxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
-        vboxAddBuilding.setSpacing(10);
-        borderPaneAddBuilding.setTop(vboxAddBuilding);
->>>>>>> development
 
         addButtonBuilding.setOnAction(e -> {
             String buildingNameInputText = buildingNameInput.getText();
@@ -313,65 +301,64 @@ public class AdminSceneController implements Initializable {
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
-<<<<<<< HEAD
         });
 
         //clearing any previous tableview to avoid multiplication
-        tableBuildingTime.getColumns().clear();
+        tableHoliday.getColumns().clear();
 
-        // Table for Time buildings
-        tableBuildingTime.setEditable(true);
+        // Table for Holiday Time for buildings
+        tableHoliday.setEditable(true);
 
-        TableColumn<OpenTime, Long> idBuildingTimeCol =
+        TableColumn<Occasion, Long> idBuildingTimeCol =
                 new TableColumn<>("id");
         idBuildingTimeCol.setMinWidth(100);
         idBuildingTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("id"));
 
-        TableColumn<OpenTime, String> buildingNameCol =
+        TableColumn<Occasion, String> buildingNameCol =
                 new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
-        buildingNameCol.setCellFactory(TextFieldTableCell.<OpenTime, String>forTableColumn(new BuildingToStringConvertor()));
+        buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConvertor()));
 
-        TableColumn<OpenTime, String> dayCol =
+        TableColumn<Occasion, LocalDate> dayCol =
                 new TableColumn<>("Day");
         dayCol.setMinWidth(100);
         dayCol.setCellValueFactory(
-                new PropertyValueFactory<>("day"));
-        dayCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        dayCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<OpenTime, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setDay(t.getNewValue()));
+                new PropertyValueFactory<>("date"));
+//        dayCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//        dayCol.setOnEditCommit(
+//                (TableColumn.CellEditEvent<Occasion, LocalDate> t) -> t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()).setDate(t.getNewValue()));
 
-        TableColumn<OpenTime, String> openTimeCol =
+        TableColumn<Occasion, LocalTime> openHolidayTimeCol =
                 new TableColumn<>("Open Time");
-        openTimeCol.setMinWidth(100);
-        openTimeCol.setCellValueFactory(
+        openHolidayTimeCol.setMinWidth(100);
+        openHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("openTime"));
-        openTimeCol.setCellFactory(TextFieldTableCell.<OpenTime, String>forTableColumn((new TimeToStringConverter())));
-        openTimeCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<OpenTime, String> t) -> {
+        openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
+        openHolidayTimeCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                     t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setOpenTime(Time.valueOf(t.getNewValue()));
+                            t.getTablePosition().getRow()).setOpenTime(t.getNewValue());
                 });
 
-        TableColumn<OpenTime, String> closeTimeCol =
+        TableColumn<Occasion, LocalTime> closeHolidayTimeCol =
                 new TableColumn<>("Close Time");
-        closeTimeCol.setMinWidth(100);
-        closeTimeCol.setCellValueFactory(
+        closeHolidayTimeCol.setMinWidth(100);
+        closeHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("closeTime"));
-        closeTimeCol.setCellFactory(TextFieldTableCell.<OpenTime, String>forTableColumn((new TimeToStringConverter())));
-        closeTimeCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<OpenTime, String> t) -> {
+        closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
+        closeHolidayTimeCol.setOnEditCommit(
+                (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                     t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setCloseTime(Time.valueOf(t.getNewValue()));
+                            t.getTablePosition().getRow()).setCloseTime(t.getNewValue());
                 });
 
-        ObservableList<OpenTime> buildingTimeData = FXCollections.observableList(OpenTimeCommunication.getOpenTimes());
-        tableBuildingTime.setItems(buildingTimeData);
-        tableBuildingTime.getColumns().addAll(idBuildingTimeCol, buildingNameCol, dayCol, openTimeCol, closeTimeCol);
+        ObservableList<Occasion> buildingTimeData = FXCollections.observableList(OccasionCommunication.getOccasions());
+        tableHoliday.setItems(buildingTimeData);
+        tableHoliday.getColumns().addAll(idBuildingTimeCol, buildingNameCol, dayCol, openHolidayTimeCol, closeHolidayTimeCol);
 
         //delete button
         deleteTimeBuilding.setOnAction(e -> {
@@ -408,13 +395,13 @@ public class AdminSceneController implements Initializable {
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
         Text day = new Text("Day");
-        Text openTime = new Text("Open Time");
-        Text closeTime = new Text("Close Time");
+        Text openHolidayTime = new Text("Open Time");
+        Text closeHolidayTime = new Text("Close Time");
         Text building = new Text("Building ID");
 
         TextField dayInput = new TextField();
-        TextField openTimeInput = new TextField();
-        TextField closeTimeInput = new TextField();
+        TextField openHolidayTimeInput = new TextField();
+        TextField closeHolidayTimeInput = new TextField();
         TextField buildingInput = new TextField();
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
@@ -427,27 +414,24 @@ public class AdminSceneController implements Initializable {
             if (newValue == null) return;
             String[] string = newValue.split(", ");
             buildingInput.setText(string[1]);
-=======
->>>>>>> development
+
         });
 
-        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openTime, openTimeInput, closeTime, closeTimeInput, building, buildingInput, choiceBox, addOpenTime);
+        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput, closeHolidayTime, closeHolidayTimeInput, building, buildingInput, choiceBox, addOpenTime);
         vBoxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddOpenTime.setSpacing(10);
         borderPaneAddOpenTime.setTop(vBoxAddOpenTime);
 
         addOpenTime.setOnAction(e -> {
-            System.out.println((openTimeInput.getText()));
+            LocalDate dayInputText = LocalDate.parse(dayInput.getText());
+            LocalTime openHolidayTimeInputText = LocalTime.parse(openHolidayTimeInput.getText());
+            LocalTime closeHolidayTimeInputText = LocalTime.parse(closeHolidayTimeInput.getText());
 
-            String day1 = dayInput.getText();
-            Time openTime1 = Time.valueOf(openTimeInput.getText());
-            Time closeTime1 = Time.valueOf(closeTimeInput.getText());
-
-            OpenTimeCommunication.addOpenTime(day1, openTime1, closeTime1, Long.parseLong(buildingInput.getText()));
+            OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
 
             dayInput.setText(null);
-            openTimeInput.setText(null);
-            closeTimeInput.setText(null);
+            openHolidayTimeInput.setText(null);
+            closeHolidayTimeInput.setText(null);
             buildingInput.setText(null);
 
             choiceBox.setValue(null);
@@ -466,7 +450,7 @@ public class AdminSceneController implements Initializable {
         vBoxMainBuildingTP.setPadding(new Insets(20, 20, 20, 20));
 
         vBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hBoxAddDeleteUpdateBuilding);
-        vBoxOpenTimeAndButtons.getChildren().addAll(tableBuildingTime, hBoxAddDeleteUpdateTime);
+        vBoxOpenTimeAndButtons.getChildren().addAll(tableHoliday, hBoxAddDeleteUpdateTime);
 
         hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding);
         hBoxTimeTP.getChildren().addAll(vBoxOpenTimeAndButtons, borderPaneAddOpenTime);
@@ -500,32 +484,21 @@ public class AdminSceneController implements Initializable {
         roomCol.setCellValueFactory(
             new PropertyValueFactory<>("name"));
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
-<<<<<<< HEAD
         roomCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Room, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Room, Integer> capacityCol =
-                new TableColumn<>("Capacity");
-=======
-        roomCol.setOnEditCommit((TableColumn.CellEditEvent<Room, String> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
-
-        TableColumn<Room, Integer> capacityCol =
             new TableColumn<>("capacityField");
->>>>>>> development
         capacityCol.setMinWidth(100);
         capacityCol.setCellValueFactory(
             new PropertyValueFactory<>("capacity"));
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-<<<<<<< HEAD
         capacityCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Room, Integer> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
-=======
         capacityCol.setOnEditCommit((TableColumn.CellEditEvent<Room, Integer> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Room, String> buildingNameCol =
             new TableColumn<>("Building Name");
@@ -664,45 +637,31 @@ public class AdminSceneController implements Initializable {
                 (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
-        TableColumn<Restaurant, Time> timeOpenCol =
+        TableColumn<Restaurant, LocalTime> timeOpenCol =
                 new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOpen"));
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
         timeOpenCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, Time> t) -> {
+                (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                     t.getTableView().getItems().get(
                             t.getTablePosition().getRow()).setTimeOpen(t.getNewValue());
                 });
 
-        TableColumn<Restaurant, Time> timeCloseCol =
+        TableColumn<Restaurant, LocalTime> timeCloseCol =
                 new TableColumn<>("Closing Time");
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
+        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
         timeCloseCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, Time> t) -> {
+                (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                     t.getTableView().getItems().get(
                             t.getTablePosition().getRow()).setTimeClose(t.getNewValue());
                 });
         buildingNameRestaurantCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, Building> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
-
-        TableColumn<Restaurant, String> timeCloseCol =
-            new TableColumn<>("Closing Time");
-        timeCloseCol.setMinWidth(100);
-        timeCloseCol.setCellValueFactory(
-            new PropertyValueFactory<>("tClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
-
-        TableColumn<Restaurant, String> timeOpenCol =
-            new TableColumn<>("Opening Time");
-        timeOpenCol.setMinWidth(100);
-        timeOpenCol.setCellValueFactory(
-            new PropertyValueFactory<>("tOpen"));
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
 
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
         tableRestaurant.setItems(restaurantData);
@@ -767,8 +726,8 @@ public class AdminSceneController implements Initializable {
 
         addRestaurant.setOnAction(e -> {
             String restaurantNameInputText = restaurantNameInput.getText();
-            Time openingTimeInputText = Time.valueOf(openingTimeInput.getText());
-            Time closingTimeInputText = Time.valueOf(closingTimeInput.getText());
+            LocalTime openingTimeInputText = LocalTime.parse(openingTimeInput.getText());
+            LocalTime closingTimeInputText = LocalTime.parse(closingTimeInput.getText());
 
             RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText);
 
