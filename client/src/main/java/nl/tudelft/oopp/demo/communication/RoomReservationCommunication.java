@@ -5,8 +5,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,9 +68,9 @@ public class RoomReservationCommunication {
      * @throws Exception if communication with the server fails
      *                   or if the response is not proper json.
      */
-    public static void addRoomReservation(Date date,
-                                          Time startTime,
-                                          Time endTime,
+    public static void addRoomReservation(LocalDate date,
+                                          LocalTime startTime,
+                                          LocalTime endTime,
                                           User user) {
         ObjectMapper mapper = new ObjectMapper();
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
@@ -100,7 +100,7 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoomReservation(long id, Date date, Time startTime, Time endTime, User user) {
+    public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
@@ -148,7 +148,7 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static Map<Time, Time> getAllRoomReservationTimesPerRoomAndDate(long roomId, Date date) {
+    public static Map<LocalTime, LocalTime> getAllRoomReservationTimesPerRoomAndDate(long roomId, LocalDate date) {
         ObjectMapper mapper = new ObjectMapper();
         String jsonDate = "";
         try {
@@ -176,10 +176,10 @@ public class RoomReservationCommunication {
             return new HashMap<>();
         }
 
-        Map<Time, Time> unavailableTimes = null;
+        Map<LocalTime, LocalTime> unavailableTimes = null;
         try {
             unavailableTimes = mapper.readValue(response.body(),
-                new TypeReference<Map<Time, Time>>() {
+                new TypeReference<Map<LocalTime, LocalTime>>() {
                 });
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,7 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,12 +60,12 @@ public class RoomReservationController {
      */
     @GetMapping(value = "room_reservations_times/{room_id}", consumes = {"application/json"})
     public @ResponseBody
-    ResponseEntity<Map<String, String>> getRoomReservationTimesByRoomAndDay(@PathVariable(value = "room_id") long roomId, @Valid @RequestBody Date date) {
+    ResponseEntity<Map<String, String>> getRoomReservationTimesByRoomAndDay(@PathVariable(value = "room_id") long roomId, @Valid @RequestBody LocalDate date) {
         Map<String, String> unavailableTimes = new HashMap<>();
 
         for (Object[] times : reservations.findStartAndEndTimesByRoomIdAndDate(roomId, date)) {
-            Time startTime = (Time) times[0];
-            Time endTime = (Time) times[1];
+            LocalTime startTime = (LocalTime) times[0];
+            LocalTime endTime = (LocalTime) times[1];
             unavailableTimes.put(startTime.toString(), endTime.toString());
         }
 
@@ -141,14 +142,14 @@ public class RoomReservationController {
      * @param allRoomReservations A list of all room reservations that have all unavailable time periods
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
-    public boolean timeIsValid(Time startTime, Time endTime, List<RoomReservation> allRoomReservations) {
+    public boolean timeIsValid(LocalTime startTime, LocalTime endTime, List<RoomReservation> allRoomReservations) {
         // TODO open times of the building
         if (startTime.compareTo(endTime) > 0) {
             return false;
         }
 
-        String startTimeString = startTime.toString();
-        String endTimeString = endTime.toString();
+        String startTimeString = startTime.format(DateTimeFormatter.ISO_TIME);
+        String endTimeString = endTime.format(DateTimeFormatter.ISO_TIME);
         String startSec = startTimeString.split(":")[2];
         String startMin = startTimeString.split(":")[1];
         String endSec = endTimeString.split(":")[2];
