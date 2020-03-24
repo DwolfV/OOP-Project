@@ -5,6 +5,8 @@ import static nl.tudelft.oopp.demo.controllers.MainSceneController.restaurantsTP
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.roomsTP;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -24,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.TimeStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
@@ -52,7 +55,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
     }
 
     /**
@@ -140,6 +143,24 @@ public class AdminSceneController implements Initializable {
         buildingCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
+        TableColumn<Building, String> openTimeCol =
+                new TableColumn<>("Open Time");
+        openTimeCol.setMinWidth(100);
+        openTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("openTime"));
+        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConvertor()));
+        openTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
+                t.getTableView().getItems().get(t.getTablePosition().getRow()).setOpenTime(LocalTime.parse(t.getNewValue())));
+
+        TableColumn<Building, String> closeTimeCol =
+                new TableColumn<>("Close Time");
+        closeTimeCol.setMinWidth(100);
+        closeTimeCol.setCellValueFactory(
+                new PropertyValueFactory<>("closeTime"));
+        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConvertor())));
+        closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
+                t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(LocalTime.parse(t.getNewValue())));
+
         TableColumn<Building, String> streetNameCol =
                 new TableColumn<>("Street Name");
         streetNameCol.setMinWidth(100);
@@ -177,7 +198,7 @@ public class AdminSceneController implements Initializable {
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
-        tableBuilding.getColumns().addAll(idCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
+        tableBuilding.getColumns().addAll(idCol, openTimeCol, closeTimeCol, buildingCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
 
         //delete button
         deleteButtonBuilding.setOnAction(e -> {
@@ -206,12 +227,16 @@ public class AdminSceneController implements Initializable {
         VBox vboxAddBuilding = new VBox();
 
         Text buildingName = new Text("Building Name");
+        Text openTime = new Text("Open Time");
+        Text closeTime = new Text("Close Time");
         Text streetName = new Text("Street Name");
         Text streetNumber = new Text("Street Number");
         Text zipCode = new Text("Zip Code");
         Text city = new Text("City");
 
         TextField buildingNameInput = new TextField();
+        TextField openTimeInput = new TextField();
+        TextField closeTimeInput = new TextField();
         TextField streetNameInput = new TextField();
         TextField streetNumberInput = new TextField();
         TextField zipCodeInput = new TextField();
@@ -219,19 +244,21 @@ public class AdminSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
+        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput, closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
         vboxAddBuilding.setPadding(new Insets(10, 10, 10, 10));
         vboxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vboxAddBuilding);
 
         addButtonBuilding.setOnAction(e -> {
-            String buildingNameInput1 = buildingNameInput.getText();
-            String streetNameInput1 = streetNameInput.getText();
-            String streetNumberInput1 = streetNumberInput.getText();
-            String zipCodeInput1 = zipCodeInput.getText();
-            String cityInput1 = cityInput.getText();
+            String buildingNameInputText = buildingNameInput.getText();
+            String openTimeInputText = openTimeInput.getText();
+            String closeTimeInputText = closeTimeInput.getText();
+            String streetNameInputText = streetNameInput.getText();
+            String streetNumberInputText = streetNumberInput.getText();
+            String zipCodeInputText = zipCodeInput.getText();
+            String cityInputText = cityInput.getText();
 
-            BuildingCommunication.addBuilding(buildingNameInput1, streetNameInput1, streetNumberInput1, zipCodeInput1, cityInput1);
+            BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),  streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
 
             buildingNameInput.setText(null);
             streetNameInput.setText(null);
