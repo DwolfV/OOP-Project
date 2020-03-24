@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -66,10 +66,10 @@ class RoomReservationControllerTest {
 
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
-        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
-        u4 = new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000), "user4");
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
+        u3 = new User("user3@email.com", "student", "fn3", "ln3", "user3");
+        u4 = new User("user4@email.com", "employee", "fn4", "ln4", "user4");
 
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
@@ -83,10 +83,10 @@ class RoomReservationControllerTest {
         Building b4 = new Building("b4", "s1", "sNo4", "z4", "c1");
         r4 = new Room("r4", 41, b4);
 
-        rr1 = new RoomReservation(new Date(1), r1, new Time(1), new Time(2), u1);
-        rr2 = new RoomReservation(new Date(2), r2, new Time(3), new Time(4), u2);
-        rr3 = new RoomReservation(new Date(3), r3, new Time(1), new Time(4), u3);
-        rr4 = new RoomReservation(new Date(4), r4, new Time(2), new Time(3), u4);
+        rr1 = new RoomReservation(LocalDate.parse("2020-02-01"), r1, LocalTime.parse("12:00"), LocalTime.parse("13:00"), u1);
+        rr2 = new RoomReservation(LocalDate.parse("2020-02-02"), r2, LocalTime.parse("12:30"), LocalTime.parse("14:30"), u2);
+        rr3 = new RoomReservation(LocalDate.parse("2020-02-03"), r3, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u3);
+        rr4 = new RoomReservation(LocalDate.parse("2020-02-04"), r4, LocalTime.parse("12:00"), LocalTime.parse("12:30"), u4);
 
     }
 
@@ -102,7 +102,7 @@ class RoomReservationControllerTest {
 
     @Test
     void testGetRoomReservationsByUser() {
-        RoomReservation rr5 = new RoomReservation(new Date(5), r4, new Time(5), new Time(6), u1);
+        RoomReservation rr5 = new RoomReservation(LocalDate.parse("2000-01-01"), r4, LocalTime.parse("17:00"), LocalTime.parse("18:00"), u1);
         when(roomReservationRepository.findByUserId(u1.getId())).thenReturn(List.of(rr1, rr5));
 
         when(users.findByUsername(u1.getUsername())).thenReturn(Optional.of(u1));
@@ -152,7 +152,7 @@ class RoomReservationControllerTest {
 
     @Test
     void testGetRoomReservationsByUserAndRoom() {
-        RoomReservation rr5 = new RoomReservation(new Date(5), r4, new Time(5), new Time(6), u1);
+        RoomReservation rr5 = new RoomReservation(LocalDate.parse("2020-01-04"), r4, LocalTime.parse("15:00"), LocalTime.parse("16:00"), u1);
         when(roomReservationRepository.findByUserIdAndRoomId(
             u1.getId(), r1.getId())).thenReturn(List.of(rr1));
 
@@ -258,11 +258,11 @@ class RoomReservationControllerTest {
     void testNewRoomReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
-            new Date(1), r1, new Time(1), new Time(2), u1);
+            LocalDate.parse("2020-01-03"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
 
         Optional<RoomReservation> optionalRoomReservation = Optional.of(roomReservation);
         ResponseEntity<RoomReservation> responseEntity = ResponseEntity.of(optionalRoomReservation);
@@ -315,11 +315,11 @@ class RoomReservationControllerTest {
     void testReplaceRoomReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
-            new Date(1), r1, new Time(1), new Time(2), u1);
+            LocalDate.parse("2020-03-22"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
 
         Optional<RoomReservation> optionalRoomReservation = Optional.of(rr1);
 

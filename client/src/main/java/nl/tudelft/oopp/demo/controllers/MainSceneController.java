@@ -2,7 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -191,7 +191,7 @@ public class MainSceneController implements Initializable {
                 for (int k = 0; k < rooms.size(); k++) {
                     if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
                         LocalDate date = dp.getValue();
-                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), Date.valueOf(date.toString())));
+                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), date));
                         String replaced = string1.replace("{", "").replace("}", "");
                         if (!replaced.equals("")) {
                             showRooms.add(rooms.get(k));
@@ -217,7 +217,7 @@ public class MainSceneController implements Initializable {
 
 
                         LocalDate date = dp.getValue();
-                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), Date.valueOf(date.toString())));
+                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), date));
                         String replaced = string1.replace("{", "").replace("}", "");
                         if (!replaced.equals("")) {
                             String[] string2 = replaced.split(", ");

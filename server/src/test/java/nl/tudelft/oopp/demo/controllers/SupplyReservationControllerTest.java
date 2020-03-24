@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,9 +47,9 @@ class SupplyReservationControllerTest {
 
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
-        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
+        u3 = new User("user3@email.com", "student", "fn3", "ln3", "user3");
 
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Building b2 = new Building("name2", "s2", "sNo2", "z2", "c2");
@@ -59,9 +59,9 @@ class SupplyReservationControllerTest {
         Supply s2 = new Supply(b2, "s2", 11);
         Supply s3 = new Supply(b3, "s3", 52);
 
-        sr1 = new SupplyReservation(new Date(1), new Time(10), new Time(11), 11, s1, u1);
-        sr2 = new SupplyReservation(new Date(2), new Time(20), new Time(21), 22, s2, u2);
-        sr3 = new SupplyReservation(new Date(3), new Time(30), new Time(31), 33, s3, u3);
+        sr1 = new SupplyReservation(LocalDate.parse("2020-12-12"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);
+        sr2 = new SupplyReservation(LocalDate.parse("2020-12-13"), LocalTime.parse("20:00"), LocalTime.parse("21:00"), 22, s2, u2);
+        sr3 = new SupplyReservation(LocalDate.parse("2020-12-14"), LocalTime.parse("13:30"), LocalTime.parse("14:30"), 33, s3, u3);
     }
 
     /**
@@ -108,12 +108,12 @@ class SupplyReservationControllerTest {
     void testNewSupplyReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Supply s1 = new Supply(b1, "s1", 7);
 
         SupplyReservation supplyReservation = new SupplyReservation(
-            new Date(1), new Time(10), new Time(11), 11, s1, u1);
+            LocalDate.parse("2020-05-05"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);
         Optional<SupplyReservation> osr = Optional.of(supplyReservation);
         ResponseEntity<SupplyReservation> reservationResponseEntity = ResponseEntity.of(osr);
 
@@ -127,11 +127,11 @@ class SupplyReservationControllerTest {
     void testReplaceSupplyReservation() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
         Supply s1 = new Supply(b1, "s1", 7);
         SupplyReservation supplyReservation = new SupplyReservation(
-            new Date(1), new Time(10), new Time(11), 11, s1, u1);
+            LocalDate.parse("2020-05-05"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);
 
         Optional<SupplyReservation> optionalSupplyReservation = Optional.of(sr1);
         ResponseEntity<SupplyReservation> entity = ResponseEntity.of(optionalSupplyReservation);

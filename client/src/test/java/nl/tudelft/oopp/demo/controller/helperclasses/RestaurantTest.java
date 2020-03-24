@@ -3,7 +3,7 @@ package nl.tudelft.oopp.demo.controller.helperclasses;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
@@ -26,9 +26,9 @@ public class RestaurantTest {
     public void save() {
         b1 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
         b2 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
-        r1 = new Restaurant("name1", b1, new Time(1), new Time(2));
-        r2 = new Restaurant("name2", b1, new Time(2), new Time(3));
-        r3 = new Restaurant("name3", b2, new Time(1), new Time(2));
+        r1 = new Restaurant("name1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
+        r2 = new Restaurant("name2", b1, LocalTime.parse("14:00"), LocalTime.parse("15:00"));
+        r3 = new Restaurant("name3", b2, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
     }
 
     /**
@@ -38,7 +38,7 @@ public class RestaurantTest {
     public void testConstructor() {
         assertNotNull(r1);
         assertEquals("name1", r1.getName());
-        assertEquals(new Time(3), r2.getTimeOpen());
+        assertEquals(LocalTime.parse("15:00"), r2.getTimeOpen());
         assertEquals(b2, r3.getBuilding());
     }
 }

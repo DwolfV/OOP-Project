@@ -71,11 +71,10 @@ public class UserController {
         UriComponents uri = b.path("users/{id}").buildAndExpand(id);
 
         User updatedUser = rep.findById(id).map(user -> {
-            user.setBirth_date(newUser.getBirth_date());
             user.setEmail(newUser.getEmail());
             user.setRole(newUser.getRole());
-            user.setFirst_name(newUser.getFirst_name());
-            user.setLast_name(newUser.getLast_name());
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
 
             return rep.save(user);
         }).orElseGet(() -> {

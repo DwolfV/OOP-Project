@@ -3,8 +3,8 @@ package nl.tudelft.oopp.demo.controller.helperclasses;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
@@ -39,9 +39,9 @@ public class RoomReservationTest {
         b2 = new Building("name1", "streetName1", "streetNumber1", "zipCode1", "city1");
         r1 = new Room("name1", 1, b1);
         r2 = new Room("name2", 2, b2);
-        rr1 = new RoomReservation(new Date(1), new Time(2), new Time(3), u1);
-        rr2 = new RoomReservation(new Date(2), new Time(3), new Time(4), u1);
-        rr3 = new RoomReservation(new Date(3), new Time(4), new Time(5), u2);
+        rr1 = new RoomReservation(LocalDate.parse("2020-01-01"), LocalTime.parse("14:00"), LocalTime.parse("15:00"), u1);
+        rr2 = new RoomReservation(LocalDate.parse("2020-01-02"), LocalTime.parse("15:00"), LocalTime.parse("16:00"), u1);
+        rr3 = new RoomReservation(LocalDate.parse("2020-01-03"), LocalTime.parse("16:00"), LocalTime.parse("17:00"), u2);
     }
 
     /**
@@ -50,7 +50,7 @@ public class RoomReservationTest {
     @Test
     public void testConstructor() {
         assertNotNull(rr1);
-        assertEquals(new Time(3), rr2.getStartTime());
+        assertEquals(LocalTime.parse("15:00"), rr2.getStartTime());
         assertEquals(u1, rr1.getUser());
         assertEquals(u2, rr3.getUser());
     }
