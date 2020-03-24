@@ -5,7 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -106,7 +106,7 @@ public class RestaurantCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addRestaurant(String name, Building building, Time timeClose, Time timeOpen) {
+    public static void addRestaurant(String name, Building building, LocalTime timeClose, LocalTime timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
@@ -144,7 +144,7 @@ public class RestaurantCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRestaurant(long id, String name, Building building, Time timeClose, Time timeOpen) {
+    public static void updateRestaurant(long id, String name, Building building, LocalTime timeClose, LocalTime timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);

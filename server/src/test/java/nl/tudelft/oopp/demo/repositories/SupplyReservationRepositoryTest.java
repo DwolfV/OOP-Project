@@ -3,8 +3,7 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,17 +66,17 @@ public class SupplyReservationRepositoryTest {
         supplyRepository.save(s2);
         supplyRepository.save(s3);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000), "user2");
-        u3 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user3");
+        u1 = new User("email1", "student", "fn1", "ln1", "user1");
+        u2 = new User("email2", "employee", "fn2", "ln2", "user2");
+        u3 = new User("email1", "student", "fn1", "ln1", "user3");
 
         userRepository.save(u1);
         userRepository.save(u2);
         userRepository.save(u3);
 
-        sr1 = new SupplyReservation(new Date(1), new Time(1), new Time(2), 11, s1, u1);
-        sr2 = new SupplyReservation(new Date(2), new Time(1), new Time(2), 22, s1, u1);
-        sr3 = new SupplyReservation(new Date(1), new Time(2), new Time(3), 33, s3, u1);
+        sr1 = new SupplyReservation(LocalDate.parse("2000-01-01"), LocalTime.parse("10:00"), LocalTime.parse("15:00"), 11, s1, u1);
+        sr2 = new SupplyReservation(LocalDate.parse("2001-01-01"), LocalTime.parse("11:00"), LocalTime.parse("12:00"), 22, s1, u1);
+        sr3 = new SupplyReservation(LocalDate.parse("2002-01-01"), LocalTime.parse("13:00"), LocalTime.parse("14:00"), 33, s3, u1);
 
         supplyReservationRepository.save(sr1);
         supplyReservationRepository.save(sr2);

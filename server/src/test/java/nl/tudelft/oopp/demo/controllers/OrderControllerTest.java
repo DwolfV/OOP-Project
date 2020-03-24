@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,8 +70,8 @@ public class OrderControllerTest {
 
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
 
         Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
@@ -80,8 +79,8 @@ public class OrderControllerTest {
         Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c1");
         r2 = new Room("r2", 21, b2);
 
-        rr1 = new RoomReservation(new Date(1), r1, new Time(1), new Time(2), u1);
-        rr2 = new RoomReservation(new Date(2), r2, new Time(3), new Time(4), u2);
+        rr1 = new RoomReservation(LocalDate.parse("2020-01-01"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
+        rr2 = new RoomReservation(LocalDate.parse("2020-01-02"), r2, LocalTime.parse("15:00"), LocalTime.parse("16:00"), u2);
 
         o1 = new Order(rr1);
         o2 = new Order(rr1);
@@ -164,11 +163,12 @@ public class OrderControllerTest {
     public void testNewOrder() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+
         Room r1 = new Room("r1", 11, b1);
         RoomReservation rr1 = new RoomReservation(
-            new Date(1), r1, new Time(1), new Time(2), u1);
+            LocalDate.parse("2020-01-01"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
 
         Order o4 = new Order(rr1);
         Optional<Order> optionalOrder = Optional.of(o4);
@@ -222,11 +222,12 @@ public class OrderControllerTest {
     public void testUpdateOrder() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-        User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
+        User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
-            new Date(1), r1, new Time(1), new Time(2), u1);
+            LocalDate.parse("2020-01-01"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
         Order newOrder = new Order(roomReservation);
 
         Optional<Order> newOptionalOrder = Optional.of(newOrder);
