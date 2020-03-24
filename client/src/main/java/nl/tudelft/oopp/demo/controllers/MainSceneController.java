@@ -387,9 +387,9 @@ public class MainSceneController implements Initializable {
 
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
 
-        AdminSceneController.BuildingView();
-        AdminSceneController.RoomView();
-        AdminSceneController.RestaurantView();
+        AdminSceneController.buildingView();
+        AdminSceneController.roomView();
+        AdminSceneController.restaurantView();
 
         // load everything
         VBox vBox = new VBox(ac);

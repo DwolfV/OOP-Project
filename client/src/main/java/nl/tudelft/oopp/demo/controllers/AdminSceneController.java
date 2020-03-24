@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.buildingTP;
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.restaurantsTP;
 import static nl.tudelft.oopp.demo.controllers.MainSceneController.roomsTP;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -138,7 +139,7 @@ public class AdminSceneController implements Initializable {
      * The method below is implemented for the building table which is loaded on the main accordion element in
      * the admin scene.
      */
-    public static void BuildingView() {
+    public static void buildingView() {
         //clearing any previous tableview to avoid multiplication
         tableBuilding.getColumns().clear();
 
@@ -277,7 +278,9 @@ public class AdminSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-        vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput, closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput, zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
+        vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput,
+                closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput,
+                zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
         vBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vBoxAddBuilding);
@@ -411,13 +414,16 @@ public class AdminSceneController implements Initializable {
         choiceBox.setItems(bl);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) return;
+            if (newValue == null) {
+                return;
+            }
             String[] string = newValue.split(", ");
             buildingInput.setText(string[1]);
 
         });
 
-        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput, closeHolidayTime, closeHolidayTimeInput, building, buildingInput, choiceBox, addOpenTime);
+        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
+                closeHolidayTime, closeHolidayTimeInput, building, buildingInput, choiceBox, addOpenTime);
         vBoxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddOpenTime.setSpacing(10);
         borderPaneAddOpenTime.setTop(vBoxAddOpenTime);
@@ -465,7 +471,7 @@ public class AdminSceneController implements Initializable {
      * The method below is implemented for the rooms table which is loaded on the main accordion element in
      * the admin scene.
      */
-    public static void RoomView() {
+    public static void roomView() {
         //clearing any previous tableview to avoid multiplication
         tableRoom.getColumns().clear();
 
@@ -561,7 +567,9 @@ public class AdminSceneController implements Initializable {
         choiceBox.setItems(bl);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) return;
+            if (newValue == null) {
+                return;
+            }
             String[] string = newValue.split(", ");
             Building.setText(string[1]);
         });
@@ -602,7 +610,7 @@ public class AdminSceneController implements Initializable {
      * The method below is implemented for the restaurant table which is loaded on the main accordion element in
      * the admin scene.
      */
-    public static void RestaurantView() {
+    public static void restaurantView() {
         //clearing any previous tableview to avoid multiplication
         tableRestaurant.getColumns().clear();
 
@@ -714,12 +722,16 @@ public class AdminSceneController implements Initializable {
         choiceBox.setItems(bl);
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) return;
+            if (newValue == null) {
+                return;
+            }
             String[] string = newValue.split(", ");
             buildingNameInput.setText(string[1]);
         });
 
-        vBoxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput, buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput, closingTime, closingTimeInput, addRestaurant);
+        vBoxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput,
+                buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput,
+                closingTime, closingTimeInput, addRestaurant);
         vBoxAddRestaurant.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddRestaurant.setSpacing(10);
         borderPaneAddRestaurant.setTop(vBoxAddRestaurant);
