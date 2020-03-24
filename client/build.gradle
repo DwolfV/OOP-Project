@@ -13,7 +13,10 @@ dependencies {
 
     compile 'com.jfoenix:jfoenix:9.0.8'
     compile group: 'com.calendarfx', name: 'calendar', version: '11.8.3'
-    compile group: 'com.calendarfx', name: 'view', version: '11.8.3'}
+    compile group: 'com.calendarfx', name: 'view', version: '11.8.3'
+
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.3'
+}
 
 
 javafx {

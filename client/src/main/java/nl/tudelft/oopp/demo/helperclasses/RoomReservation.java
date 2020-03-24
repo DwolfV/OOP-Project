@@ -10,7 +10,9 @@ public class RoomReservation {
     private LocalTime startTime;
     private LocalTime endTime;
     private User user;
+    private Room room;
 
+    public RoomReservation() { }
     /**
      * Create a new Building instance.
      *
@@ -64,6 +66,14 @@ public class RoomReservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override

@@ -73,8 +73,8 @@ public class UserController {
         User updatedUser = rep.findById(id).map(user -> {
             user.setEmail(newUser.getEmail());
             user.setRole(newUser.getRole());
-            user.setFirst_name(newUser.getFirst_name());
-            user.setLast_name(newUser.getLast_name());
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
 
             return rep.save(user);
         }).orElseGet(() -> {

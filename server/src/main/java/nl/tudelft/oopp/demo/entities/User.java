@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -112,22 +112,23 @@ public class User {
         this.role = role;
     }
 
-    public String getFirst_name() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirst_name(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLast_name() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLast_name(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @JsonIgnore
     @Nullable
     public Set<Event> getEvents() {
         return events;
@@ -158,8 +159,8 @@ public class User {
         return getId() == user.getId()
             && Objects.equals(getEmail(), user.getEmail())
             && Objects.equals(getRole(), user.getRole())
-            && Objects.equals(getFirst_name(), user.getFirst_name())
-            && Objects.equals(getLast_name(), user.getLast_name())
+            && Objects.equals(getFirstName(), user.getFirstName())
+            && Objects.equals(getLastName(), user.getLastName())
             && Objects.equals(getUsername(), user.getUsername())
             && Objects.equals(getEvents(), user.getEvents());
     }

@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -151,6 +152,7 @@ public class RoomReservation {
         this.user = user;
     }
 
+    @JsonIgnore
     @Nullable
     public Set<Order> getOrders() {
         return orders;
