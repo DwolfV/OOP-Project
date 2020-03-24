@@ -1,8 +1,16 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Occasion;
-import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.OccasionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,21 +19,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 public class OccasionControllerTest {
@@ -40,10 +36,13 @@ public class OccasionControllerTest {
     @Mock
     private OccasionRepository occasionRepository;
 
+    /**
+     * Sets up the Building objects and occasionController repositories before they are used by the test class.
+     */
     @BeforeEach
     public void save() {
-        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
-        Building b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
+        Building b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s2", "sNo2", "z2", "c2");
 
         o1 = new Occasion(LocalDate.parse("2020-03-24"), LocalTime.parse("10:00"), LocalTime.parse("18:00"), b1);
         o2 = new Occasion(LocalDate.parse("2020-02-24"), LocalTime.parse("09:00"), LocalTime.parse("13:00"), b1);
@@ -57,7 +56,7 @@ public class OccasionControllerTest {
     }
 
     /**
-     * Test for getting all the occasions
+     * Test for getting all the occasions.
      */
     @Test
     public void testGetAll() {
@@ -69,7 +68,7 @@ public class OccasionControllerTest {
     }
 
     /**
-     * Test for getting all the occasions that affect a building
+     * Test for getting all the occasions that affect a building.
      */
     @Test
     public void testGetAllByBuilding() {
@@ -98,7 +97,7 @@ public class OccasionControllerTest {
     @Test
     public void testAddOccasion() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         Occasion o5 = new Occasion(LocalDate.parse("2020-07-02"), LocalTime.parse("17:00"), LocalTime.parse("23:00"), b1);
 
         when(occasionRepository.save(o5)).thenReturn(o5);
@@ -107,12 +106,12 @@ public class OccasionControllerTest {
     }
 
     /**
-     * Test for updating the occasion
+     * Test for updating the occasion.
      */
     @Test
     public void testUpdateOccasion() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
 
         Optional<Occasion> old = Optional.of(o1);
         ResponseEntity<Occasion> oldEntity = ResponseEntity.of(old);

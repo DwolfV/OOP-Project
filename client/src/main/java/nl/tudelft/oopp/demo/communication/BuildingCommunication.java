@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,11 +11,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.tudelft.oopp.demo.helperclasses.Building;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 public class BuildingCommunication {
 
@@ -186,7 +185,7 @@ public class BuildingCommunication {
     public static void addBuilding(String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Building newBuilding = new Building(name,openTime, closeTime, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
         String jsonBuilding = "";
         try {
             jsonBuilding = mapper.writeValueAsString(newBuilding);
