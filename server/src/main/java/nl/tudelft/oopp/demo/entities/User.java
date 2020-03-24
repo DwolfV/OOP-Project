@@ -40,9 +40,6 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "birthDate")
-    private Date birthDate;
-
     @NotNull
     @Column(name = "user_name", unique = true, nullable = false)
     private String username;
@@ -61,16 +58,14 @@ public class User {
      * @param role - The role of the user (for example: student, admin etc.)
      * @param firstName - The first name of the user.
      * @param lastName - The last name of the user.
-     * @param birthDate - The birth date of the user.
      * @param username - The username.
      */
 
-    public User(String email, String role, String firstName, String lastName, Date birthDate, String username) {
+    public User(String email, String role, String firstName, String lastName, String username) {
         this.email = email;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDate = birthDate;
         this.username = username;
     }
 
@@ -82,16 +77,14 @@ public class User {
      * @param role       The role of the User, like student, employee, admin.
      * @param firstName The first name of the User.
      * @param lastName  The last name of the User.
-     * @param birthDate The birth date of the User.
      */
 
-    public User(long id, String email, String role, String firstName, String lastName, Date birthDate, String username) {
+    public User(long id, String email, String role, String firstName, String lastName, String username) {
         this.id = id;
         this.email = email;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDate = birthDate;
         this.username = username;
     }
 
@@ -135,14 +128,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getBirth_date() {
-        return birthDate;
-    }
-
-    public void setBirth_date(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     @Nullable
     public Set<Event> getEvents() {
         return events;
@@ -175,7 +160,6 @@ public class User {
             && Objects.equals(getRole(), user.getRole())
             && Objects.equals(getFirst_name(), user.getFirst_name())
             && Objects.equals(getLast_name(), user.getLast_name())
-            && Objects.equals(getBirth_date(), user.getBirth_date())
             && Objects.equals(getUsername(), user.getUsername())
             && Objects.equals(getEvents(), user.getEvents());
     }
@@ -188,7 +172,6 @@ public class User {
             + ", role='" + role + '\''
             + ", first_name='" + firstName + '\''
             + ", last_name='" + lastName + '\''
-            + ", birth_date=" + birthDate
             + ", username='" + username + '\''
             + ", events=" + events
             + '}';
