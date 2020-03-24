@@ -1,7 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.List;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Order;
-import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.OrderRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * NB
@@ -54,7 +52,9 @@ public class OrderController {
     public @ResponseBody ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable long id, Authentication authentication) {
         System.out.println(authentication.getName());
         return users.findByUsername(authentication.getName()).map(user -> {
-            if (user.getId() == id) return new ResponseEntity<>(repository.findAllByRoomReservation_User_Id(id), HttpStatus.OK);
+            if (user.getId() == id) {
+                return new ResponseEntity<>(repository.findAllByRoomReservation_User_Id(id), HttpStatus.OK);
+            }
             return new ResponseEntity<List<Order>>(HttpStatus.UNAUTHORIZED);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -66,7 +66,7 @@ public class OrderController {
 //        return ResponseEntity.created(uri.toUri()).body(order);
 //    }
 
-    @PostMapping(value="/add", consumes = {"application/json"})
+    @PostMapping(value = "/add", consumes = {"application/json"})
     public ResponseEntity<Order> addOrder(@Valid @RequestBody Order newOrder, UriComponentsBuilder b, Authentication authentication) {
 
         if (authentication.getName().equals(newOrder.getRoomReservation().getUser().getUsername())
@@ -89,15 +89,18 @@ public class OrderController {
 
         return repository.findById(id).map(order -> {
             if (users.findByUsername(authentication.getName()).isEmpty() || order.getRoomReservation().getUser().getId() != users.findByUsername(authentication.getName()).get().getId()
-                    || order.getRoomReservation().getUser().getId() != users.findByUsername(authentication.getName()).get().getId())
+                    || order.getRoomReservation().getUser().getId() != users.findByUsername(authentication.getName()).get().getId()) {
                 return new ResponseEntity<Order>(HttpStatus.UNAUTHORIZED);
+
+            }
 
             order.setDishOrders(newOrder.getDishOrders());
             order.setRoomReservation(newOrder.getRoomReservation());
 
             return ResponseEntity.created(uri.toUri()).body(repository.save(order));
-        }).orElseGet(() -> {newOrder.setId(id);
-                    return ResponseEntity.created(uri.toUri()).body(repository.save(newOrder));
+        }).orElseGet(() -> {
+            newOrder.setId(id);
+            return ResponseEntity.created(uri.toUri()).body(repository.save(newOrder));
         });
     }
 

@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Item;
 import nl.tudelft.oopp.demo.repositories.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;

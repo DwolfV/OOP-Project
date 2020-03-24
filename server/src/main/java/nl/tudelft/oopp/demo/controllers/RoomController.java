@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
-import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
@@ -41,7 +40,7 @@ public class RoomController {
      * @return a list of the rooms in the building {@link Room}.
      */
     @GetMapping("rooms/{building_id}")
-    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value="building_id") long id) {
+    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value = "building_id") long id) {
         return rooms.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rooms.findByBuildingId(id), HttpStatus.OK);
     }
 
@@ -65,26 +64,36 @@ public class RoomController {
         List<Room> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Room> roomList = rooms.filterRoom(id, capacity);
-        if(!(e1 == null)) filters.add(e1);
-        if(!(e2 == null)) filters.add(e2);
-        if(!(e3 == null)) filters.add(e3);
-        if(!(e4 == null)) filters.add(e4);
+        if (!(e1 == null)) {
+            filters.add(e1);
+        }
+        if (!(e2 == null)) {
+            filters.add(e2);
+        }
+        if (!(e3 == null)) {
+            filters.add(e3);
+        }
+        if (!(e4 == null)) {
+            filters.add(e4);
+        }
         int expected = 0;
         //count the filters;
-        for(String s : filters) {
+        for (String s : filters) {
             expected++;
         }
 
-        if(expected == 0) return roomList;
+        if (expected == 0) {
+            return roomList;
+        }
 
-        for(Room room : roomList){
+        for (Room room : roomList) {
             List<Equipment> equipmentList = room.getEquipment();
             int count = 0; //to count how many filters the room satisfies
             for (Equipment equipment : equipmentList) {
-                if(filters.contains(equipment.getItem().getName())) {
+                if (filters.contains(equipment.getItem().getName())) {
                     count++; //increment the filter counter
                 }
-                if(count == expected) { //the rooms has reached the expected amount of filters, thus
+                if (count == expected) { //the rooms has reached the expected amount of filters, thus
                     result.add(room); //add the room
                     break; //break the loop
                 }
@@ -100,7 +109,7 @@ public class RoomController {
      * @param newRoom The new room to add.
      * @return The added room {@link Room}.
      */
-    @PostMapping(value="/rooms", consumes = {"application/json"})
+    @PostMapping(value = "/rooms", consumes = {"application/json"})
     public ResponseEntity<Room> newRoom(@Valid @RequestBody Room newRoom, UriComponentsBuilder b) {
         rooms.save(newRoom);
         UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
@@ -122,13 +131,14 @@ public class RoomController {
         UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(room_id);
 
         Room updatedRoom = rooms.findById(room_id)
-            .map( room -> {
+            .map(room -> {
                 room.setName(newRoom.getName());
                 room.setBuilding(newRoom.getBuilding());
                 room.setCapacity(newRoom.getCapacity());
                 return rooms.save(room);
             })
-            .orElseGet(() -> {newRoom.setId(room_id);
+            .orElseGet(() -> {
+                newRoom.setId(room_id);
                 return rooms.save(newRoom);
             });
 

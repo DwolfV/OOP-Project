@@ -2,13 +2,9 @@ package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import org.springframework.lang.Nullable;
-
 import java.util.*;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "Room")

@@ -16,8 +16,9 @@ public class BuildingToStringConvertor extends StringConverter {
     public Object fromString(String string) {
         List<Building> buildingList = BuildingCommunication.getBuildings();
         for (Building b : buildingList) {
-            if (b.getName().equals(string))
+            if (b.getName().equals(string)) {
                 return b;
+            }
         }
         // TODO what happens when the admin tries to change the building name to a name that does not exist?
         return null;

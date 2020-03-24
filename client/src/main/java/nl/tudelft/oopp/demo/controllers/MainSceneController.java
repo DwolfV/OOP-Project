@@ -18,7 +18,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -27,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -106,7 +106,7 @@ public class MainSceneController implements Initializable {
     }
 
     @FXML
-    public void handleLoginButton (javafx.event.ActionEvent event) {
+    public void handleLoginButton(javafx.event.ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -116,7 +116,7 @@ public class MainSceneController implements Initializable {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
-            Parent loginParent = (Parent) fxmlLoader.load();
+            Parent loginParent = fxmlLoader.load();
             MainDisplay.secondaryStage = new Stage();
 
             MainDisplay.secondaryStage.setScene(new Scene(loginParent, screenSize.getWidth(), screenSize.getHeight()));
@@ -365,7 +365,7 @@ public class MainSceneController implements Initializable {
     public void handleSettingsButton() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settingsScene.fxml"));
-            Parent settingsParent = (Parent) fxmlLoader.load();
+            Parent settingsParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");

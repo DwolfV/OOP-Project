@@ -43,7 +43,7 @@ public class SupplyController {
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building")
-    public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value="building_id") long id) {
+    public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value = "building_id") long id) {
         return rep.findByBuildingIdAndName(id, name).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -55,7 +55,7 @@ public class SupplyController {
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building/{building_id}")
-    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value="building_id") long id) {
+    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value = "building_id") long id) {
         return rep.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rep.findByBuildingId(id), HttpStatus.OK);
     }
 
@@ -77,7 +77,7 @@ public class SupplyController {
      */
 
     @PostMapping(value = "/supply", consumes = {"application/json"})
-    public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b){
+    public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b) {
         rep.save(newSupply);
         UriComponents uri = b.path("/supply/{id}").buildAndExpand(newSupply.getId());
         return ResponseEntity.created(uri.toUri()).body(newSupply);

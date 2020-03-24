@@ -1,12 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
-import org.springframework.lang.Nullable;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table (name = "Item")
@@ -61,7 +59,7 @@ public class Item {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         Item item = (Item) o;

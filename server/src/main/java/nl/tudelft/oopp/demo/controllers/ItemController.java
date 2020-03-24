@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import nl.tudelft.oopp.demo.entities.Building;
+import java.util.List;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Item;
 import nl.tudelft.oopp.demo.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/item")
@@ -49,7 +47,7 @@ public class ItemController {
      * @return an Item
      */
     @GetMapping("/name/{name}")
-    public ResponseEntity<Item> getItemByName(@PathVariable String name){
+    public ResponseEntity<Item> getItemByName(@PathVariable String name) {
         return itemRepository.findByName(name).map(item -> ResponseEntity.ok(item)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

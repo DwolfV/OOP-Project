@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import javafx.util.StringConverter;
 
 import javafx.util.StringConverter;
 

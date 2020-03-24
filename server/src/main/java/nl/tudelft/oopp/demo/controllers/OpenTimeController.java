@@ -60,9 +60,9 @@ public class OpenTimeController {
 
     @GetMapping("openTimes/day/{building_id}/{day}")
     public @ResponseBody ResponseEntity<OpenTime>
-    getOpenTimesForBuildingByDay(@PathVariable(value = "building_id") long id , @PathVariable String day) {
+    getOpenTimesForBuildingByDay(@PathVariable(value = "building_id") long id, @PathVariable String day) {
         return openTimes.findByBuildingIdAndDay(id,day).map(openTime -> ResponseEntity.ok(openTime)
-        ).orElseGet( () -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

@@ -68,38 +68,48 @@ public class BuildingController {
                                                @RequestParam (name = "e1", required = false) String e1,
                                                @RequestParam (name = "e2", required = false) String e2,
                                                @RequestParam (name = "e3", required = false) String e3,
-                                               @RequestParam (name = "e4", required = false) String e4){
+                                               @RequestParam (name = "e4", required = false) String e4) {
         List<Building> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Building> buildings = rep.filterBuilding(capacity);
 
-        if(!(e1 == null)) filters.add(e1);
-        if(!(e2 == null)) filters.add(e2);
-        if(!(e3 == null)) filters.add(e3);
-        if(!(e4 == null)) filters.add(e4);
+        if (!(e1 == null)) {
+            filters.add(e1);
+        }
+        if (!(e2 == null)) {
+            filters.add(e2);
+        }
+        if (!(e3 == null)) {
+            filters.add(e3);
+        }
+        if (!(e4 == null)) {
+            filters.add(e4);
+        }
         int expected = 0;
         //count the filters;
-        for(String s : filters) {
+        for (String s : filters) {
             expected++;
         }
 
-        if(expected == 0) return buildings;
+        if (expected == 0) {
+            return buildings;
+        }
 
-        for(Building building : buildings) {
+        for (Building building : buildings) {
             List<Room> rooms = building.getRooms();
-            for(Room room : rooms){
+            for (Room room : rooms) {
                 List<Equipment> equipmentList = room.getEquipment();
                 int count = 0; //to count how many filters the room satisfies
                 for (Equipment equipment : equipmentList) {
-                    if(filters.contains(equipment.getItem().getName())) {
+                    if (filters.contains(equipment.getItem().getName())) {
                         count++; //increment the filter counter
                     }
-                    if(count == expected) { //the rooms has reached the expected amount of filters, thus
+                    if (count == expected) { //the rooms has reached the expected amount of filters, thus
                         result.add(building); //add the building
                         break; //break the loop
                     }
                 }
-                if(result.contains(building)){
+                if (result.contains(building)) {
                     break;
                 }
             }
