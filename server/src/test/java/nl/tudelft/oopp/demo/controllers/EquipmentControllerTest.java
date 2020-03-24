@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,7 @@ class EquipmentControllerTest {
     public void save() {
         //constructor long id, Room room, String name, int amount for building
         //constructor long id, String name, Integer capacity, Building building) for room
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
 
         r1 = new Room("name", 11, b1);
 
@@ -114,7 +115,7 @@ class EquipmentControllerTest {
     @Test
     void testAddNewEquipment() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("name", 11, b1);
         Equipment equipment = new Equipment(r1, i1, 15);
         Optional<Equipment> optionalEquipment = Optional.of(equipment);
@@ -128,7 +129,7 @@ class EquipmentControllerTest {
 
     @Test
     void testReplaceEquipment() {
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("name", 11, b1);
         Equipment equipment = new Equipment(r1, i1, 15);
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();

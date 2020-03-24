@@ -3,7 +3,7 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,13 +36,15 @@ public class RestaurantRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
-        r1 = new Restaurant("res1", b1, new Time(1), new Time(2));    //building 1
-        r2 = new Restaurant("res2", b1, new Time(2), new Time(6));    //building 1
-        r3 = new Restaurant("res3", b1, new Time(3), new Time(7));    //building 1
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
-        r4 = new Restaurant("res4", b2, new Time(4), new Time(8));    //building 2
-        r5 = new Restaurant("res5", b2, new Time(5), new Time(9));    //building 2
+
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        r1 = new Restaurant("res1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));    //building 1
+        r2 = new Restaurant("res2", b1, LocalTime.parse("14:00"), LocalTime.parse("18:00"));    //building 1
+        r3 = new Restaurant("res3", b1, LocalTime.parse("15:00"), LocalTime.parse("19:00"));    //building 1
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        r4 = new Restaurant("res4", b2, LocalTime.parse("16:00"), LocalTime.parse("20:00"));    //building 2
+        r5 = new Restaurant("res5", b2, LocalTime.parse("17:00"), LocalTime.parse("19:00"));    //building 2
+
         buildRep.save(b1);
         buildRep.save(b2);
         resRep.save(r1);

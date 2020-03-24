@@ -1,11 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.util.Arrays;
 import java.util.List;
-
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.List;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,6 +31,7 @@ public class UserController {
 
     /**
      * GET Endpoint to retrieve a list of all users.
+     *
      * @return List of all users
      */
 
@@ -41,58 +44,57 @@ public class UserController {
     /**
      * Find user by id.
      *
-     * @param user_id The ID of the user that is to be found
+     * @param userId The ID of the user that is to be found
      * @return the user and 200 status code if the user is found, 404 status code otherwise
      */
 
     @GetMapping("users/{user_id}")
     public @ResponseBody
-    ResponseEntity<User> getUserById(@PathVariable long user_id) {
-        return rep.findById(user_id).map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    ResponseEntity<User> getUserById(@PathVariable long userId) {
+        return rep.findById(userId).map(user -> ResponseEntity.ok(user))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 
-/**
- * PUT Endpoint to update the entry of a given user.
- * //     *
- * //     * @param user_id Unique identifier of the user that is to be updated.
- * //     * @param newUser The updated version of the user.
- * //     * @return the new user that is updated.
- */
+    /**
+     * PUT Endpoint to update the entry of a given user.
+     * //     *
+     * //     * @param user_id Unique identifier of the user that is to be updated.
+     * //     * @param newUser The updated version of the user.
+     * //     * @return the new user that is updated.
+     */
 
 
-@PutMapping("users/{id}")
+    @PutMapping("users/{id}")
     public ResponseEntity<User> updateUser(@RequestBody User newUser, @PathVariable long id, UriComponentsBuilder b) {
 
-    UriComponents uri = b.path("users/{id}").buildAndExpand(id);
+        UriComponents uri = b.path("users/{id}").buildAndExpand(id);
 
-    User updatedUser = rep.findById(id).map(user -> {
-        user.setBirth_date(newUser.getBirth_date());
-        user.setEmail(newUser.getEmail());
-        user.setRole(newUser.getRole());
-        user.setFirst_name(newUser.getFirst_name());
-        user.setLast_name(newUser.getLast_name());
+        User updatedUser = rep.findById(id).map(user -> {
+            user.setEmail(newUser.getEmail());
+            user.setRole(newUser.getRole());
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
 
-        return rep.save(user);
-    }).orElseGet(() -> {
-        newUser.setId(id);
-        return rep.save(newUser);
-            });
+            return rep.save(user);
+        }).orElseGet(() -> {
+            newUser.setId(id);
+            return rep.save(newUser);
+        });
 
-    return ResponseEntity.created(uri.toUri()).body(updatedUser);
-}
+        return ResponseEntity.created(uri.toUri()).body(updatedUser);
+    }
 
 
     /**
      * DELETE Endpoint to delete the entry of a given user.
      *
-     * @param user_id unique identifier of the user that is to be deleted.
+     * @param userId unique identifier of the user that is to be deleted.
      */
 
     @DeleteMapping("users/{user_id}")
-    public ResponseEntity<?> deleteUser(@PathVariable long user_id) {
-        rep.deleteById(user_id);
+    public ResponseEntity<?> deleteUser(@PathVariable long userId) {
+        rep.deleteById(userId);
 
         return ResponseEntity.noContent().build();
     }
@@ -111,13 +113,7 @@ public class UserController {
     }
 
     @GetMapping(value = "login")
-    public ResponseEntity<List<String>> logIn(Authentication authentication) {
-        String id = "0";
-        for (User user : getAllUsers()) {
-            if (user.getUsername().equals(authentication.getName())) {
-                id = Long.toString(user.getId());
-            }
-        }
-        return new ResponseEntity<>(Arrays.asList(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), id), HttpStatus.OK);
+    public ResponseEntity<String> logIn(Authentication authentication) {
+        return new ResponseEntity<>(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), HttpStatus.OK);
     }
 }

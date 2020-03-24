@@ -1,14 +1,14 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 public class Restaurant {
 
     private long id;
     private String name;
     private Building building;
-    private Time timeClose;
-    private Time timeOpen;
+    private LocalTime timeClose;
+    private LocalTime timeOpen;
 
     public Restaurant() {
 
@@ -25,7 +25,7 @@ public class Restaurant {
      */
 
 
-    public Restaurant(String name, Building building, Time timeClose, Time timeOpen) {
+    public Restaurant(String name, Building building, LocalTime timeClose, LocalTime timeOpen) {
         this.name = name;
         this.building = building;
         this.timeClose = timeClose;
@@ -56,19 +56,19 @@ public class Restaurant {
         this.building = building;
     }
 
-    public Time getTimeClose() {
+    public LocalTime getTimeClose() {
         return timeClose;
     }
 
-    public void setTimeClose(Time timeClose) {
+    public void setTimeClose(LocalTime timeClose) {
         this.timeClose = timeClose;
     }
 
-    public Time getTimeOpen() {
+    public LocalTime getTimeOpen() {
         return timeOpen;
     }
 
-    public void setTimeOpen(Time timeOpen) {
+    public void setTimeOpen(LocalTime timeOpen) {
         this.timeOpen = timeOpen;
     }
 }

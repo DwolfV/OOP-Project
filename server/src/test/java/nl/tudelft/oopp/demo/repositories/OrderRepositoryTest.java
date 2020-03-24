@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,17 +50,17 @@ public class OrderRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
         buildRep.save(b1);
         roomRep.save(r1);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user");
+        u1 = new User("email1", "student", "fn1", "ln1", "user");
         userRep.save(u1);
 
 
-        rr1 = new RoomReservation(new Date(1000), r1, new Time(1000), new Time(1500), u1);
-        rr2 = new RoomReservation(new Date(2000), r1, new Time(2000), new Time(2500), u1);
+        rr1 = new RoomReservation(LocalDate.parse("2000-01-01"), r1, LocalTime.parse("10:00"), LocalTime.parse("10:30"), u1);
+        rr2 = new RoomReservation(LocalDate.parse("2010-01-01"), r1, LocalTime.parse("11:00"), LocalTime.parse("12:30"), u1);
         roomResRep.save(rr1);
         roomResRep.save(rr2);
 

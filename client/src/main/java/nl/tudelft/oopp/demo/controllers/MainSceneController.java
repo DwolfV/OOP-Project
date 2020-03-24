@@ -1,8 +1,16 @@
 package nl.tudelft.oopp.demo.controllers;
 
+<<<<<<< HEAD
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,14 +21,33 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+<<<<<<< HEAD
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+=======
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+>>>>>>> development
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
+=======
+import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
+>>>>>>> development
 import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
@@ -184,7 +211,16 @@ public class MainSceneController implements Initializable {
                 ObservableList<Room> showRooms = FXCollections.observableArrayList();
                 for (int k = 0; k < rooms.size(); k++) {
                     if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
+<<<<<<< HEAD
                         showRooms.add(rooms.get(k));
+=======
+                        LocalDate date = dp.getValue();
+                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), date));
+                        String replaced = string1.replace("{", "").replace("}", "");
+                        if (!replaced.equals("")) {
+                            showRooms.add(rooms.get(k));
+                        }
+>>>>>>> development
                     }
                 }
 
@@ -205,6 +241,23 @@ public class MainSceneController implements Initializable {
                         buttons.add(button1);
 
 
+<<<<<<< HEAD
+=======
+                        LocalDate date = dp.getValue();
+                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), date));
+                        String replaced = string1.replace("{", "").replace("}", "");
+                        if (!replaced.equals("")) {
+                            String[] string2 = replaced.split(", ");
+                            for (int k = 0; k < string2.length; k++) {
+                                String[] string3 = string2[k].split("=");
+                                timeFrom.add(string3[0]);
+                                System.out.println(string3.length);
+                                timeTo.add(string3[1]);
+                            }
+                        }
+
+
+>>>>>>> development
                         ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
                         ObservableList<String> to = FXCollections.observableArrayList(timeTo);
 

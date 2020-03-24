@@ -135,6 +135,8 @@ public class BuildingController {
         return rep.findById(id).map(building -> {
             building.setCity(newBuilding.getCity());
             building.setName(newBuilding.getName());
+            building.setOpenTime(newBuilding.getOpenTime());
+            building.setCloseTime(newBuilding.getCloseTime());
             building.setStreetName(newBuilding.getStreetName());
             building.setStreetNumber(newBuilding.getStreetNumber());
 

@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @DataJpaTest
@@ -25,8 +25,8 @@ public class DishRepositoryTest {
 
     /**
      * Creates all dishes before every test.
-     *  Saves 5 unique buildings lists into the repository so that we can use
-     *  it for testing in the @Test methods.
+     * Saves 5 unique buildings lists into the repository so that we can use
+     * it for testing in the @Test methods.
      */
 
 
@@ -61,7 +61,7 @@ public class DishRepositoryTest {
 
     @Test
     public void testFindAll() {
-        List<Dish> fullList = new ArrayList<>(List.of(d1,d2,d3,d4));
+        List<Dish> fullList = new ArrayList<>(List.of(d1, d2, d3, d4));
         assertEquals(fullList, dishRepository.findAll());
     }
 
@@ -69,11 +69,6 @@ public class DishRepositoryTest {
     void findById() {
         assertEquals(Optional.of(d1), dishRepository.findById(d1.getId()));
     }
-//  @Test
-//    public void testFindByName() {
-//        assertEquals(Optional.of(i1), itemRepository.findByName("projector"));
-//    }
-//}
 
     @Test
     void findByName() {

@@ -21,6 +21,9 @@ public class ItemRepoistoryTest {
     @Autowired
     private ItemRepository itemRepository;
 
+    /**
+     * Sets up the items and the item repositories so that they can be used later in the test.
+     */
     @BeforeEach
     public void save(){
         i1 = new Item("projector");

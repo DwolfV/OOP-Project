@@ -1,9 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import org.springframework.lang.Nullable;
-
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "User")
@@ -34,15 +33,12 @@ public class User {
     private String role;
 
     @NotNull
-    @Column(name = "first_name")
-    private String first_name;
+    @Column(name = "firstName")
+    private String firstName;
 
     @NotNull
-    @Column(name = "last_name")
-    private String last_name;
-
-    @Column(name = "birth_date")
-    private Date birth_date;
+    @Column(name = "lastName")
+    private String lastName;
 
     @NotNull
     @Column(name = "user_name", unique = true, nullable = false)
@@ -55,32 +51,40 @@ public class User {
     public User() {
     }
 
-    public User(String email, String role, String first_name, String last_name, Date birth_date, String username) {
+
+    /**
+     * Creates a new instance of the User entity.
+     * @param email - The email of the user.
+     * @param role - The role of the user (for example: student, admin etc.)
+     * @param firstName - The first name of the user.
+     * @param lastName - The last name of the user.
+     * @param username - The username.
+     */
+
+    public User(String email, String role, String firstName, String lastName, String username) {
         this.email = email;
         this.role = role;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birth_date = birth_date;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
     }
+
     /**
      * Create a new User instance.
      *
-     * @param id A unique ID for the User.
-     * @param email The email of the User.
-     * @param role The role of the User, like student, employee, admin.
-     * @param first_name The first name of the User.
-     * @param last_name The last name of the User.
-     * @param birth_date The birth date of the User.
+     * @param id         A unique ID for the User.
+     * @param email      The email of the User.
+     * @param role       The role of the User, like student, employee, admin.
+     * @param firstName The first name of the User.
+     * @param lastName  The last name of the User.
      */
 
-    public User(long id, String email, String role, String first_name, String last_name, Date birth_date, String username) {
+    public User(long id, String email, String role, String firstName, String lastName, String username) {
         this.id = id;
         this.email = email;
         this.role = role;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birth_date = birth_date;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
     }
 
@@ -108,30 +112,23 @@ public class User {
         this.role = role;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public Date getBirth_date() {
-        return birth_date;
-    }
-
-    public void setBirth_date(Date birth_date) {
-        this.birth_date = birth_date;
-    }
-
+    @JsonIgnore
     @Nullable
     public Set<Event> getEvents() {
         return events;
@@ -152,30 +149,32 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return getId() == user.getId() &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                Objects.equals(getRole(), user.getRole()) &&
-                Objects.equals(getFirst_name(), user.getFirst_name()) &&
-                Objects.equals(getLast_name(), user.getLast_name()) &&
-                Objects.equals(getBirth_date(), user.getBirth_date()) &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getEvents(), user.getEvents());
+        return getId() == user.getId()
+            && Objects.equals(getEmail(), user.getEmail())
+            && Objects.equals(getRole(), user.getRole())
+            && Objects.equals(getFirstName(), user.getFirstName())
+            && Objects.equals(getLastName(), user.getLastName())
+            && Objects.equals(getUsername(), user.getUsername())
+            && Objects.equals(getEvents(), user.getEvents());
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", birth_date=" + birth_date +
-                ", username='" + username + '\'' +
-                ", events=" + events +
-                '}';
+        return "User{"
+            + "id=" + id
+            + ", email='" + email + '\''
+            + ", role='" + role + '\''
+            + ", first_name='" + firstName + '\''
+            + ", last_name='" + lastName + '\''
+            + ", username='" + username + '\''
+            + ", events=" + events
+            + '}';
     }
 }

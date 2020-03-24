@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,8 +53,8 @@ public class EquipmentRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("build1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("build2", "s2", "sNo2", "z2", "c2");
+        b1 = new Building("build1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("build2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
         buildRep.save(b1);
         buildRep.save(b2);
 

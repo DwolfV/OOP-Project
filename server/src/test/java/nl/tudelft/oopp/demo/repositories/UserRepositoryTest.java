@@ -32,15 +32,15 @@ public class UserRepositoryTest {
     @BeforeEach
     public void save() {
         u1 = new ArrayList<User>(List.of(
-                new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1")));
+                new User("user1@email.com", "student", "fn1", "ln1", "user1")));
         u2 = new ArrayList<User>(List.of(
-                new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2")));
+                new User("user2@email.com", "student", "fn2", "ln2", "user2")));
         u3 = new ArrayList<User>(List.of(
-                new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3")));
+                new User("user3@email.com", "student", "fn3", "ln3", "user3")));
         u4 = new ArrayList<User>(List.of(
-                new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000), "user4")));
+                new User("user4@email.com", "employee", "fn4", "ln4", "user4")));
         u5 = new ArrayList<User>(List.of(
-                new User("user5@email.com", "employee", "fn5", "ln5", new Date(5000), "user5")));
+                new User("user5@email.com", "employee", "fn5", "ln5", "user5")));
         userRep.saveAll(u1);
         userRep.saveAll(u2);
         userRep.saveAll(u3);

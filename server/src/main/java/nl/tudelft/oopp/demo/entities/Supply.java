@@ -47,6 +47,13 @@ public class Supply {
 
     }
 
+    /**
+     * Creates a new instance of the Supply entity.
+     * @param building - The building that is linked to a specific supply
+     * @param name - The name of the supply
+     * @param stock - The stock of a specific supply
+     */
+
     public Supply(Building building, String name, int stock) {
         this.building = building;
         this.name = name;

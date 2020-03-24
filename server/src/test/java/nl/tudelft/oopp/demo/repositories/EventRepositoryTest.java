@@ -1,19 +1,18 @@
 package nl.tudelft.oopp.demo.repositories;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import nl.tudelft.oopp.demo.entities.Event;
 import nl.tudelft.oopp.demo.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 public class EventRepositoryTest {
@@ -30,17 +29,20 @@ public class EventRepositoryTest {
     @Autowired
     private EventRepository eventRepository;
 
+    /**
+     * Creates all users, events, adds them to their repositories and is done before each test.
+     */
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
 
         userRepository.save(u1);
         userRepository.save(u2);
 
-        e1 = new Event("BBQ", "Out with the boys, having a nice steak", new Date(2000), new Time(10), new Time(30), u1);
-        e2 = new Event("Beers", "Out with the boys, having a nice beer", new Date(3000), new Time(15), new Time(25), u1);
-        e3 = new Event("Match", "Out with the boys, watching a nice match", new Date(4000), new Time(10), new Time(12), u2);
+        e1 = new Event("BBQ", "Out with the boys, having a nice steak", LocalDate.parse("2019-01-01"), LocalTime.parse("10:00"), LocalTime.parse("13:00"), u1);
+        e2 = new Event("Beers", "Out with the boys, having a nice beer", LocalDate.parse("2019-01-02"), LocalTime.parse("15:00"), LocalTime.parse("17:00"), u1);
+        e3 = new Event("Match", "Out with the boys, watching a nice match", LocalDate.parse("2019-01-03"), LocalTime.parse("10:00"), LocalTime.parse("12:00"), u2);
 
         eventRepository.save(e1);
         eventRepository.save(e2);
