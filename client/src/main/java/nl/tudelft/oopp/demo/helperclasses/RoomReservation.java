@@ -12,7 +12,9 @@ public class RoomReservation {
     private User user;
     private Room room;
 
-    public RoomReservation() { }
+    public RoomReservation() {
+    }
+
     /**
      * Create a new Building instance.
      *

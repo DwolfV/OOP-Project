@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
@@ -13,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * Note before:
@@ -74,6 +74,7 @@ public class RoomReservationCommunication {
                                           LocalTime endTime,
                                           User user) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
         try {
@@ -103,6 +104,7 @@ public class RoomReservationCommunication {
      */
     public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
         try {
@@ -151,6 +153,7 @@ public class RoomReservationCommunication {
      */
     public static Map<LocalTime, LocalTime> getAllRoomReservationTimesPerRoomAndDate(long roomId, LocalDate date) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         String jsonDate = "";
         try {
             jsonDate = mapper.writeValueAsString(date);
