@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -71,16 +72,16 @@ class RoomReservationControllerTest {
         u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
         u4 = new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000), "user4");
 
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
 
-        Building b2 = new Building("b2", "s2", "sNo2", "z2", "c1");
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c1");
         r2 = new Room("r2", 21, b2);
 
-        Building b3 = new Building("b3", "s1", "sNo3", "z3", "c1");
+        Building b3 = new Building("b3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo3", "z3", "c1");
         r3 = new Room("r3", 31, b3);
 
-        Building b4 = new Building("b4", "s1", "sNo4", "z4", "c1");
+        Building b4 = new Building("b4", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo4", "z4", "c1");
         r4 = new Room("r4", 41, b4);
 
         rr1 = new RoomReservation(new Date(1), r1, new Time(1), new Time(2), u1);
@@ -259,7 +260,7 @@ class RoomReservationControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
             new Date(1), r1, new Time(1), new Time(2), u1);
@@ -316,7 +317,7 @@ class RoomReservationControllerTest {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
             new Date(1), r1, new Time(1), new Time(2), u1);

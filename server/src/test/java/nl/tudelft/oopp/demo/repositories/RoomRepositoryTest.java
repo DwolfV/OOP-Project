@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +48,12 @@ public class RoomRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
         r2 = new Room("room2", 2, b1);
         r3 = new Room("room3", 3, b1);
 
-        b2 = new Building("b2", "s2", "sNo2", "z2", "c2");
+        b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
         r4 = new Room("room4", 4, b2);
         r5 = new Room("room5", 5, b2);
 

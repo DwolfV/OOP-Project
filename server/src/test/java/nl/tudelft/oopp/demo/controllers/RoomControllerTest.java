@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,7 @@ class RoomControllerTest {
 
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
         r2 = new Room("r2", 111, b1);
         r3 = new Room("r3", 1111, b1);
@@ -143,7 +144,7 @@ class RoomControllerTest {
     @Test
     void testNewRoom() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room room = new Room("name", 11, b1);
         Optional<Room> roomOptional = Optional.of(room);
         ResponseEntity<Room> responseEntity = ResponseEntity.of(roomOptional);
@@ -156,7 +157,7 @@ class RoomControllerTest {
     @Test
     void testReplaceRoom() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room room = new Room("name", 11, b1);
 
         Optional<Room> roomOptional = Optional.of(r1);
