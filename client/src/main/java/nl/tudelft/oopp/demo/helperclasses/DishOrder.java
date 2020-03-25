@@ -66,23 +66,4 @@ public class DishOrder {
         return id == dishOrder.id;
     }
 
-    @Override
-    public String toString() {
-        return "DishOrder{"
-<<<<<<< HEAD
-                + "id=" + id
-                + ", amount=" + amount
-                + ", order=" + order
-                + ", restaurantDish="
-                + restaurantDish
-                +
-                '}';
-=======
-            + "id=" + id
-            + ", amount=" + amount
-            + ", order=" + order
-            + ", restaurantDish=" + restaurantDish
-            + '}';
->>>>>>> 898d8915a25e2efad2d5ce908d1cfa2859abbe48
-    }
 }
