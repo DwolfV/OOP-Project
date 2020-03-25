@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalTime;
 import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConverter;
 import org.junit.jupiter.api.Test;
 
 public class BuildingToStringConverterTest {
