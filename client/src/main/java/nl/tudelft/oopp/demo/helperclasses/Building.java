@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +13,8 @@ public class Building {
     private String streetNumber;
     private String zipCode;
     private String city;
+    private LocalTime openTime;
+    private LocalTime closeTime;
 
     private Set<Room> rooms = new HashSet<>();
 
@@ -29,11 +33,15 @@ public class Building {
      */
 
     public Building(String name,
+                    LocalTime openTime,
+                    LocalTime closeTime,
                     String streetName,
                     String streetNumber,
                     String zipCode,
                     String city) {
         this.name = name;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.zipCode = zipCode;
@@ -86,6 +94,22 @@ public class Building {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public LocalTime getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(LocalTime time) {
+        this.openTime = openTime;
+    }
+
+    public LocalTime getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(LocalTime time) {
+        this.closeTime = closeTime;
     }
 
     @Override

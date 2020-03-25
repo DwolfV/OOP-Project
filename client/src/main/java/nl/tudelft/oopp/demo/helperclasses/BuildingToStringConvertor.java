@@ -1,6 +1,9 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
 import javafx.util.StringConverter;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+
+import java.util.List;
 
 public class BuildingToStringConvertor extends StringConverter {
 
@@ -12,6 +15,13 @@ public class BuildingToStringConvertor extends StringConverter {
 
     @Override
     public Object fromString(String string) {
+        List<Building> buildingList = BuildingCommunication.getBuildings();
+        for (Building b : buildingList) {
+            if (b.getName().equals(string)) {
+                return b;
+            }
+        }
+        // TODO what happens when the admin tries to change the building name to a name that does not exist?
         return null;
     }
 }

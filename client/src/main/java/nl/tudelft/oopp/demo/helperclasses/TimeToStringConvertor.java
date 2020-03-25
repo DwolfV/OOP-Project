@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
-import javafx.util.StringConverter;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javafx.util.StringConverter;
 
@@ -9,12 +9,12 @@ public class TimeToStringConvertor extends StringConverter {
 
     @Override
     public String toString(Object object) {
-        Time t = (Time) object;
-        return t.getHours() + ": " + t.getMinutes();
+        LocalTime t = (LocalTime) object;
+        return t.format(DateTimeFormatter.ISO_TIME);
     }
 
     @Override
     public Object fromString(String string) {
-        return null;
+        return LocalTime.parse(string);
     }
 }

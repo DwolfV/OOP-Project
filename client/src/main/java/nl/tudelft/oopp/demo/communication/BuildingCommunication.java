@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalTime;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -139,9 +140,9 @@ public class BuildingCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addBuilding(String name, String streetName, String streetNumber, String zipCode, String city) {
+    public static void addBuilding(String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
         String jsonBuilding = "";
         try {
             jsonBuilding = mapper.writeValueAsString(newBuilding);
@@ -168,9 +169,9 @@ public class BuildingCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateBuilding(long id, String name, String streetName, String streetNumber, String zipCode, String city) {
+    public static void updateBuilding(long id, String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
-        Building newBuilding = new Building(name, streetName, streetNumber, zipCode, city);
+        Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
         String jsonBuilding = "";
         try {
             jsonBuilding = mapper.writeValueAsString(newBuilding);
