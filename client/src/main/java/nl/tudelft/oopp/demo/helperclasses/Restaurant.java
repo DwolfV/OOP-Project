@@ -17,7 +17,6 @@ public class Restaurant {
     /**
      * Constructor for the Restaurant class.
      *
-     * @param id       - id of the restaurant
      * @param name     - name of the restaurant
      * @param building - the building in which the restaurant is
      * @param timeClose   - the time at which the restaurant closes

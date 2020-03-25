@@ -35,15 +35,6 @@ public class UserCommunication {
             return false;
         }
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        String role = null;
-//        try {
-//            role = mapper.readValue(response.body(), new TypeReference<ArrayList<String>>(){});
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            System.out.println(response.body());
-//        }
-
         // set received cookie
         Authenticator.SESSION_COOKIE = response.headers().allValues(("Set-cookie")).get(0).split("; ")[0];
         ObjectMapper mapper = new ObjectMapper();
@@ -51,7 +42,7 @@ public class UserCommunication {
         try {
             responseString = mapper.readValue(response.body(),
                     new TypeReference<List<String>>() {
-                });
+                    });
         } catch (IOException e) {
             e.printStackTrace();
         }

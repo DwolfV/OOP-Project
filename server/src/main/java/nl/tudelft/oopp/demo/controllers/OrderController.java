@@ -67,12 +67,12 @@ public class OrderController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-//    @PostMapping(value = "/add", consumes = "application/json")
-//    public ResponseEntity<Order> addOrder(@Valid @RequestBody Order order, UriComponentsBuilder o) {
-//        repository.save(order);
-//        UriComponents uri = o.path("/order/{id}").buildAndExpand(order.getId());
-//        return ResponseEntity.created(uri.toUri()).body(order);
-//    }
+    /**
+     * POST Endpoint to add a new order.
+     *
+     * @param newOrder the new order to be added
+     * @return the added order
+     */
 
     @PostMapping(value = "/add", consumes = {"application/json"})
     public ResponseEntity<Order> addOrder(@Valid @RequestBody Order newOrder, UriComponentsBuilder b, Authentication authentication) {
@@ -89,6 +89,12 @@ public class OrderController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    /**
+     * Updates an Order.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable long id, @RequestBody Order newOrder, UriComponentsBuilder b, Authentication authentication) {
@@ -112,12 +118,14 @@ public class OrderController {
         });
     }
 
+    /**
+     * DELETE Endpoint to delete the entry of a given order.
+     *
+     * @param id unique identifier of the user that is to be deleted.
+     */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable long id, Authentication authentication) {
-//        return repository.findById(id).map( order -> {
-//            repository.delete(order);
-//            return new ResponseEntity("The order has been deleted successfully", HttpStatus.OK);
-//        }).orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND));
 
         Order orderToDelete = repository.findById(id).orElseGet(() -> null);
 

@@ -39,6 +39,14 @@ public class Equipment {
 
     }
 
+    /**
+     * Create a new Equipment instance.
+     *
+     * @param item The item for the Equipment.
+     * @param amount The amount of the Equipment that is in stock.
+     * @param room The room for the Equipment.
+     */
+
     public Equipment(Room room, Item item, int amount) {
         this.room = room;
         this.item = item;

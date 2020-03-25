@@ -25,18 +25,27 @@ public class Holiday {
     @Column (name = "date")
     private Date date;
 
-    @Column (name = "t_open")
-    private Time t_open;
+    @Column (name = "timeOpen")
+    private Time timeOpen;
 
-    @Column (name = "t_close")
-    private Time t_close;
+    @Column (name = "timeClose")
+    private Time timeClose;
+
+    /**
+     * Create a new Holiday instance.
+     *
+     * @param date The date of the Holiday.
+     * @param name The name of the Holiday.
+     * @param timeOpen The closing time of a building during a Holiday.
+     * @param timeClose The opening time of a building during a Holiday.
+     */
 
 
-    public Holiday(String name, Date date, Time t_open, Time t_close) {
+    public Holiday(String name, Date date, Time timeOpen, Time timeClose) {
         this.name = name;
         this.date = date;
-        this.t_open = t_open;
-        this.t_close = t_close;
+        this.timeOpen = timeOpen;
+        this.timeClose = timeClose;
     }
 
     /**
@@ -45,16 +54,16 @@ public class Holiday {
      * @param id A unique ID for the Holiday.
      * @param date The date of the Holiday.
      * @param name The name of the Holiday.
-     * @param t_close The closing time of a building during a Holiday.
-     * @param t_open The opening time of a building during a Holiday.
+     * @param timeOpen The closing time of a building during a Holiday.
+     * @param timeClose The opening time of a building during a Holiday.
      */
 
-    public Holiday(long id, String name, Date date, Time t_open, Time t_close) {
+    public Holiday(long id, String name, Date date, Time timeOpen, Time timeClose) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.t_open = t_open;
-        this.t_close = t_close;
+        this.timeOpen = timeOpen;
+        this.timeClose = timeClose;
     }
 
     public long getId() {
@@ -82,19 +91,19 @@ public class Holiday {
     }
 
     public Time getT_open() {
-        return t_open;
+        return timeOpen;
     }
 
-    public void setT_open(Time t_open) {
-        this.t_open = t_open;
+    public void setT_open(Time timeOpen) {
+        this.timeOpen = timeOpen;
     }
 
     public Time getT_close() {
-        return t_close;
+        return timeClose;
     }
 
-    public void setT_close(Time t_close) {
-        this.t_close = t_close;
+    public void setT_close(Time timeClose) {
+        this.timeClose = timeClose;
     }
 
     @Override

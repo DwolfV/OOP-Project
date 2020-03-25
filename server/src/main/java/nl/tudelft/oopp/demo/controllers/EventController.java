@@ -41,12 +41,25 @@ public class EventController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * POST Endpoint to add a new event.
+     *
+     * @param event the new event to be added
+     * @return the added event
+     */
+
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
         rep.save(event);
         UriComponents uri = e.path("/event/{id}").buildAndExpand(event.getId());
         return ResponseEntity.created(uri.toUri()).body(event);
     }
+
+    /**
+     * Updates an Event.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable long id,
@@ -61,6 +74,12 @@ public class EventController {
             return new ResponseEntity<>(rep.save(event), HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    /**
+     * DELETE Endpoint to delete the entry of a given event.
+     *
+     * @param id unique identifier of the user that is to be deleted.
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEvent(@PathVariable long id) {

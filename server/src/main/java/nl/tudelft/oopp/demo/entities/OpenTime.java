@@ -43,6 +43,15 @@ public class OpenTime {
 
     }
 
+    /**
+     * Create a new OpenTime instance.
+     *
+     * @param closeTime The closing time of a building.
+     * @param openTime The opening time of a building.
+     * @param day The day of the week corresponding to a specific openTime.
+     * @param building The building's ID for the OpenTime.
+     */
+
     public OpenTime(String day, Time openTime, Time closeTime, Building building) {
         this.day = day;
         this.openTime = openTime;
@@ -56,7 +65,7 @@ public class OpenTime {
      * @param id A unique ID for the OpenTime.
      * @param closeTime The closing time of a building.
      * @param openTime The opening time of a building.
-     * @param building The building for the OpenTime.
+     * @param day The day of the week corresponding to a specific openTime.
      * @param building The building's ID for the OpenTime.
      */
 
@@ -118,12 +127,12 @@ public class OpenTime {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        OpenTime open_time = (OpenTime) o;
-        return getId() == open_time.getId()
-                && Objects.equals(getDay(), open_time.getDay())
-                && Objects.equals(getOpenTime(), open_time.getOpenTime())
-                && Objects.equals(getCloseTime(), open_time.getCloseTime())
-                && Objects.equals(getBuilding(), open_time.getBuilding());
+        OpenTime openTime = (OpenTime) o;
+        return getId() == openTime.getId()
+                && Objects.equals(getDay(), openTime.getDay())
+                && Objects.equals(getOpenTime(), openTime.getOpenTime())
+                && Objects.equals(getCloseTime(), openTime.getCloseTime())
+                && Objects.equals(getBuilding(), openTime.getBuilding());
     }
 
 }

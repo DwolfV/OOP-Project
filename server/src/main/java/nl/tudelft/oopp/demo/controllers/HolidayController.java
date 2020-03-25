@@ -53,12 +53,12 @@ public class HolidayController {
     /**
     * GET Endpoint to retrieve holiday by ID.
      *
-     * @param holiday_id Unique identifier of the equipment.
+     * @param holidayId Unique identifier of the equipment.
      * @return The requested equipment {@link Holiday}.
      */
     @GetMapping("holidays/{holiday_id}")
-    public @ResponseBody ResponseEntity<Holiday> getHolidayById(@PathVariable long holiday_id) {
-        Holiday toReturn = holidays.findById(holiday_id).orElseGet(() -> null);
+    public @ResponseBody ResponseEntity<Holiday> getHolidayById(@PathVariable long holidayId) {
+        Holiday toReturn = holidays.findById(holidayId).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
@@ -66,24 +66,24 @@ public class HolidayController {
     /**
      * PUT Endpoint to update the entry of a given holiday.
      *
-     * @param holiday_id Unique identifier of the holiday that is to be updated
+     * @param holidayId Unique identifier of the holiday that is to be updated
      * @param newHoliday the updated version of the holiday
      * @return the new holiday that is updated
      */
 
     @PutMapping("holidays/{holiday_id}")
     public ResponseEntity<Holiday> replaceHoliday(@RequestBody Holiday newHoliday,
-                                               @PathVariable long holiday_id, UriComponentsBuilder b) {
-        UriComponents uri = b.path("holidays/{holiday_id}").buildAndExpand(holiday_id);
+                                               @PathVariable long holidayId, UriComponentsBuilder b) {
+        UriComponents uri = b.path("holidays/{holiday_id}").buildAndExpand(holidayId);
 
-        Holiday updatedHoliday = holidays.findById(holiday_id).map(holiday -> {
+        Holiday updatedHoliday = holidays.findById(holidayId).map(holiday -> {
             holiday.setDate(newHoliday.getDate());
             holiday.setName(newHoliday.getName());
             holiday.setT_close(newHoliday.getT_close());
             holiday.setT_open(newHoliday.getT_open());
             return holidays.save(holiday);
         }).orElseGet(() -> {
-            newHoliday.setId(holiday_id);
+            newHoliday.setId(holidayId);
             return holidays.save(newHoliday);
         });
         return ResponseEntity.created(uri.toUri()).body(updatedHoliday);
@@ -92,12 +92,12 @@ public class HolidayController {
     /**
      * DELETE Endpoint to delete the entry of a given holiday.
      *
-     * @param holiday_id Unique Identifier of the holiday that is to be deleted.
+     * @param holidayId Unique Identifier of the holiday that is to be deleted.
      */
 
     @DeleteMapping("holidays/{holiday_id}")
-    public ResponseEntity<?> deleteHoliday(@PathVariable long holiday_id) {
-        holidays.deleteById(holiday_id);
+    public ResponseEntity<?> deleteHoliday(@PathVariable long holidayId) {
+        holidays.deleteById(holidayId);
 
         return ResponseEntity.noContent().build();
     }

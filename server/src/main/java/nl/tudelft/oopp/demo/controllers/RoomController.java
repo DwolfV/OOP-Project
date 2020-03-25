@@ -128,16 +128,16 @@ public class RoomController {
     /**
      * PUT Endpoint to update the entry of a given room.
      *
-     * @param room_id Unique identifier of the room that is to be updated.
+     * @param roomId Unique identifier of the room that is to be updated.
      * @param newRoom The updated version of the room.
      * @return the new room that is updated {@link Room}.
      */
     @PutMapping("rooms/{room_id}")
-    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable long room_id, UriComponentsBuilder b) {
+    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable long roomId, UriComponentsBuilder b) {
 
-        UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(room_id);
+        UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(roomId);
 
-        Room updatedRoom = rooms.findById(room_id)
+        Room updatedRoom = rooms.findById(roomId)
             .map(room -> {
                 room.setName(newRoom.getName());
                 room.setBuilding(newRoom.getBuilding());
@@ -145,7 +145,7 @@ public class RoomController {
                 return rooms.save(room);
             })
             .orElseGet(() -> {
-                newRoom.setId(room_id);
+                newRoom.setId(roomId);
                 return rooms.save(newRoom);
             });
 
@@ -155,11 +155,11 @@ public class RoomController {
     /**
      * DELETE Endpoint to delete the entry of a given room.
      *
-     * @param room_id Unique identifier of the room that is to be deleted. {@link Room}
+     * @param roomId Unique identifier of the room that is to be deleted. {@link Room}
      */
     @DeleteMapping("rooms/{room_id}")
-    public ResponseEntity<?> deleteRoom(@PathVariable long room_id) {
-        rooms.deleteById(room_id);
+    public ResponseEntity<?> deleteRoom(@PathVariable long roomId) {
+        rooms.deleteById(roomId);
 
         return ResponseEntity.noContent().build();
     }
