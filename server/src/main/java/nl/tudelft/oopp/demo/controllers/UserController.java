@@ -113,6 +113,11 @@ public class UserController {
         return ResponseEntity.created(uri.toUri()).body(newUser);
     }
 
+    /**
+     * Login and authenticate.
+     * @param authentication authentication
+     * @return response entity list of usernames
+     */
     @GetMapping(value = "login")
     public ResponseEntity<List<String>> logIn(Authentication authentication) {
         String id = "0";

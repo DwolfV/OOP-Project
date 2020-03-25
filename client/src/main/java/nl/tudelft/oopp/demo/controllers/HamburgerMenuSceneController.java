@@ -1,17 +1,12 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import com.jfoenix.controls.JFXHamburger;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HamburgerMenuSceneController implements Initializable {
 
@@ -46,30 +41,51 @@ public class HamburgerMenuSceneController implements Initializable {
         adminSceneController = adminPanelLoader.getController();
     }
 
+    /**
+     * Set controllers for the class.
+     * @param mainSceneController Main Scene
+     * @param headerSceneController Header Scene
+     */
     public void setController(MainSceneController mainSceneController, HeaderSceneController headerSceneController) {
         this.mainSceneController = mainSceneController;
         this.headerSceneController = headerSceneController;
 
     }
 
+    /**
+     * Open reservations page.
+     * @param event mouse click
+     */
     public void openReservations(MouseEvent event) {
         mainSceneController.changeCenter(reservationRoot);
         mainSceneController.sidebar = (sidebarFilterRoot);
         headerSceneController.changeLeft();
     }
 
+    /**
+     * Open calendar page.
+     * @param event mouse click
+     */
     public void openCalendar(MouseEvent event) {
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }
 
+    /**
+     * Open restaurant page.
+     * @param event mouse click
+     */
     public void openRestaurants(MouseEvent event) {
         mainSceneController.changeCenter(restaurantRoot);
         mainSceneController.sidebar = (sidebarFilterRoot);
         headerSceneController.changeLeft();
     }
 
+    /**
+     * Open admin page.
+     * @param event mouse click
+     */
     public void openAdminPanel(MouseEvent event) {
         adminSceneController.setControllers(mainSceneController);
         mainSceneController.changeCenter(adminPanelRoot);

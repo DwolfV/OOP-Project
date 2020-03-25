@@ -17,8 +17,8 @@ public class MainDisplay extends Application {
     public Stage startupStage;
     public Stage mainStage;
 
-    private double x;
-    private double y;
+    private double xpos;
+    private double ypos;
 
     public static void main(String[] args) {
         launch(args);
@@ -33,8 +33,8 @@ public class MainDisplay extends Application {
         root.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                x = event.getSceneX();
-                y = event.getSceneY();
+                xpos = event.getSceneX();
+                ypos = event.getSceneY();
             }
         });
 

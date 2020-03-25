@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
 import java.time.LocalTime;
 
 public class Restaurant {

@@ -1,9 +1,8 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.util.List;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-
-import java.util.List;
 
 public class BuildingToStringConvertor extends StringConverter {
 

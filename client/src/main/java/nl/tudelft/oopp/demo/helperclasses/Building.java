@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -100,7 +99,7 @@ public class Building {
         return openTime;
     }
 
-    public void setOpenTime(LocalTime time) {
+    public void setOpenTime(LocalTime openTime) {
         this.openTime = openTime;
     }
 
@@ -108,7 +107,7 @@ public class Building {
         return closeTime;
     }
 
-    public void setCloseTime(LocalTime time) {
+    public void setCloseTime(LocalTime closeTime) {
         this.closeTime = closeTime;
     }
 

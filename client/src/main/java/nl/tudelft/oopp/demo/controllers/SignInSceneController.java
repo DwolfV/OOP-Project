@@ -41,10 +41,9 @@ public class SignInSceneController implements Initializable {
         System.out.println("SignInSceneController initialize");
 
         Platform.runLater(() -> {
-                usernameField.requestFocus();
-                startupSceneController.signInOnEnter();
-            });
-
+            usernameField.requestFocus();
+            startupSceneController.signInOnEnter();
+        });
     }
 
     /**
@@ -98,6 +97,9 @@ public class SignInSceneController implements Initializable {
         openMainStage();
     }
 
+    /**
+     * Open the main stage after logging in.
+     */
     public void openMainStage() {
         startupSceneController.close();
 
