@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * NB
+ * NB.
  * The order should be created automatically when the user clicks the Order button
  * Thus, the important methods here are:
  *  - get the order by a room reservation id
@@ -43,7 +43,7 @@ public class OrderController {
     }
 
     /**
-     * Gets all the events linked to a user
+     * Gets all the events linked to a user.
      * @param id - the id of the user by which the orders are retrieved
      * @param authentication - parameter used to check if the current user has the same id as the id of the user that owns the orders
      * @return a List of Orders which are linked to the logged in user

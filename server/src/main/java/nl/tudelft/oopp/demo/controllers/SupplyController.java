@@ -26,7 +26,7 @@ public class SupplyController {
     SupplyRepository rep;
 
     /**
-     * Find all the supplies
+     * Find all the supplies.
      * @return message
      */
     @GetMapping("/supply")
@@ -36,7 +36,7 @@ public class SupplyController {
     }
 
     /**
-     * Find supply by building and name
+     * Find supply by building and name.
      *
      * @param name - The name of the supply that is to be found
      * @param id - The building id of which the supply is part of
@@ -49,7 +49,7 @@ public class SupplyController {
     }
 
     /**
-     * Find supply by building and name
+     * Find supply by building and name.
      *
      * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
@@ -60,7 +60,7 @@ public class SupplyController {
     }
 
     /**
-     * Find supply by id
+     * Find supply by id.
      *
      * @param id - The id of the supply that is to be found
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
@@ -72,7 +72,7 @@ public class SupplyController {
     }
 
     /**
-     * Create a new supply
+     * Create a new supply.
      * @return message
      */
 
@@ -83,7 +83,7 @@ public class SupplyController {
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
     /**
-     * Update a supply
+     * Update a supply.
      *
      * @param id          -The id of the supply that is to be updated
      * @param newSupply - The supply instance that has the modified parameters
@@ -101,7 +101,7 @@ public class SupplyController {
     }
 
     /**
-     * Delete a supply by it's id
+     * Delete a supply by it's id.
      *
      * @param id - The id of the supply that is to be deleted
      * @return a response status: 200 if the supply has been deleted successfully, 404 if the supply was not found

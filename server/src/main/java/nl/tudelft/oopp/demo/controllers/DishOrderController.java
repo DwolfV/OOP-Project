@@ -60,7 +60,7 @@ public class DishOrderController {
     }
 
     /**
-     * Update a DishOrder
+     * Update a DishOrder.
      * @param id - the id of the dishOrder that is going to be changed
      * @param newDishOrder - the dish that has the newly updated attributes
      * @return a response entity
@@ -77,7 +77,7 @@ public class DishOrderController {
     }
 
     /**
-     * Delete a DishOrder
+     * Delete a DishOrder.
      * @param id - the id of the DishOrder that needs to be deleted
      * @return a status code
      */

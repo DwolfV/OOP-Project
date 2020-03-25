@@ -33,7 +33,7 @@ public class DishOrder {
     }
 
     /**
-     * Constructor for the DishOrder class
+     * Constructor for the DishOrder class.
      *
      * @param amount - Amount of a certain dish
      * @param order - The id of the order that the dish is part of

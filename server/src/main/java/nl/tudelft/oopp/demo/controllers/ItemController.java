@@ -67,7 +67,7 @@ public class ItemController {
     }
 
     /**
-     * PUT endpoint to update the details of an item
+     * PUT endpoint to update the details of an item.
      *
      * @param id - the id of the item that is going to be modified
      * @param newItem - the item with the updated details
