@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.stage.Screen;
+import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.helperclasses.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
