@@ -35,21 +35,21 @@ public class AdminSceneController implements Initializable {
 
     public MainSceneController mainSceneController;
 
-
-
     public static final TitledPane buildingTP = new TitledPane("Buildings", new Button("View"));
     public static final TitledPane roomsTP = new TitledPane("Rooms", new Button("View"));
     public static final TitledPane restaurantsTP = new TitledPane("Restaurants", new Button("View"));
 
     static final Button updateButtonBuilding = new Button("Update");
     static final Button deleteButtonBuilding = new Button("Delete");
+    static final Button updateTimeBuilding = new Button("Update");
+    static final Button deleteTimeBuilding = new Button("Delete");
     static final Button updateButtonRoom = new Button("Update");
     static final Button deleteButtonRoom = new Button("Delete");
     static final Button updateButtonRestaurant = new Button("Update");
     static final Button deleteButtonRestaurant = new Button("Delete");
 
     private static final TableView<Building> tableBuilding = new TableView<>();
-    private static final TableView<Restaurant> tableHoliday = new TableView<>();
+    private static final TableView<Occasion> tableHoliday = new TableView<>();
     private static final TableView<Room> tableRoom = new TableView<>();
     private static final TableView<Restaurant> tableRestaurant = new TableView<>();
 
@@ -71,15 +71,15 @@ public class AdminSceneController implements Initializable {
     public void setControllers(MainSceneController mainSceneController) {
         this.mainSceneController = mainSceneController;
     }
-
     /**
-    * The method below is implemented for the update button under the building section in the admin scene.
-    * When the user double clicks on a specific section of a row one will be able to change the details, and
-    * after changing the details one will have to press on the update button to update the database.
-    */
+     * The method below is implemented for the update button under the building section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(), building.getZipCode(), building.getCity());
+        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
+                building.getZipCode(), building.getCity());
     }
 
     /**
@@ -119,13 +119,36 @@ public class AdminSceneController implements Initializable {
     }
 
     /**
+     * The method below is implemented for the update button under the time section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
+    public static void updateTimeButtonClicked() {
+        Occasion occasion = tableHoliday.getSelectionModel().getSelectedItem();
+        OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(), occasion.getCloseTime(), occasion.getBuilding().getId());
+    }
+
+    /**
+     * The method below is implemented for the delete button under the time section in the admin scene.
+     * When the user selects a row in the rooms table it will be deleted from the database.
+     */
+    public static void deleteTimeButtonClicked() {
+        ObservableList<Occasion> allTimes;
+        allTimes = tableHoliday.getItems();
+        Occasion occasion = tableHoliday.getSelectionModel().getSelectedItem();
+
+        allTimes.remove(occasion);
+        OccasionCommunication.removeOccasion(occasion.getId());
+    }
+
+    /**
      * The method below is implemented for the update button under the restaurant section in the admin scene.
      * When the user double clicks on a specific section of a row one will be able to change the details, and
      * after changing the details one will have to press on the update button to update the database.
      */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding(), restaurant.getTimeClose(), restaurant.getTimeOpen());
+        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen());
     }
 
     /**

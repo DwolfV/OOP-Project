@@ -1,19 +1,19 @@
 package nl.tudelft.oopp.demo.communication;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.sql.Time;
-import java.util.List;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.tudelft.oopp.demo.helperclasses.Building;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.LocalTime;
+import java.util.List;
+
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 
 public class RestaurantCommunication {
@@ -40,6 +40,7 @@ public class RestaurantCommunication {
             System.out.println("Status: " + response.statusCode());
         }
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Restaurant> restaurants = null;
         // TODO handle exception
         try {
@@ -80,6 +81,7 @@ public class RestaurantCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = null;
 
         // TODO handle exception
@@ -103,9 +105,10 @@ public class RestaurantCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addRestaurant(String name, Building building, Time timeClose, Time timeOpen) {
+    public static void addRestaurant(String name, Long building, LocalTime timeClose, LocalTime timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
-        Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
+        mapper.registerModule(new JavaTimeModule());
+        Restaurant restaurant = new Restaurant(name, BuildingCommunication.getBuildingById(building), timeClose, timeOpen);
         String jsonRestaurant = "";
         try {
             jsonRestaurant = mapper.writeValueAsString(restaurant);
@@ -140,9 +143,10 @@ public class RestaurantCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRestaurant(long id, String name, Building building, Time timeClose, Time timeOpen) {
+    public static void updateRestaurant(long id, String name, Long building, LocalTime timeClose, LocalTime timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
-        Restaurant restaurant = new Restaurant(name, building, timeClose, timeOpen);
+        mapper.registerModule(new JavaTimeModule());
+        Restaurant restaurant = new Restaurant(name, BuildingCommunication.getBuildingById(building), timeClose, timeOpen);
         String jsonRestaurant = "";
         try {
             jsonRestaurant = mapper.writeValueAsString(restaurant);
