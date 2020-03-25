@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.controller.helperclasses;
 
 import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
