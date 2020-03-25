@@ -84,15 +84,15 @@ public class RestaurantController {
         restaurantRepository.save(restaurant);
         UriComponents uriComponents = b.path("restaurant/id/{id}").buildAndExpand(restaurant.getId());
         return ResponseEntity
-            .created(uriComponents.toUri())
-            .body(restaurant);
+                .created(uriComponents.toUri())
+                .body(restaurant);
 
     }
 
     /**
      * Update a restaurant.
      *
-     * @param id            -The id of the restaurant that is to be updated
+     * @param id          -The id of the restaurant that is to be updated
      * @param newRestaurant - The restaurant instance that has the modified parameters
      * @return a response: the updated restaurant and the status 200 if the update was successful, 404 if the restaurant was not found
      */
