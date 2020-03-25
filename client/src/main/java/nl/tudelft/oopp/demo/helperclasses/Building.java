@@ -137,9 +137,10 @@ public class Building {
         }
         Building building = (Building) o;
         return getName().equals(building.getName())
-                && getStreetName().equals(building.getStreetName())
-                && getStreetNumber().equals(building.getStreetNumber())
-                && getZipCode().equals(building.getZipCode())
-                && getCity().equals(building.getCity());
+            && getStreetName().equals(building.getStreetName())
+            && getStreetNumber().equals(building.getStreetNumber())
+            && getZipCode().equals(building.getZipCode())
+            && getCity().equals(building.getCity());
     }
+
 }

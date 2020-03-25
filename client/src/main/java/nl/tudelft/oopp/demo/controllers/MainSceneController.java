@@ -1,9 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -35,7 +37,6 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
-import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
@@ -54,8 +55,7 @@ public class MainSceneController implements Initializable {
     @FXML
     private final Accordion ac = new Accordion();
     @FXML
-    private final BorderPane bpane = new BorderPane();
-
+    private final BorderPane bPane = new BorderPane();
     @FXML
     private Label closeButton;
     @FXML
@@ -66,14 +66,15 @@ public class MainSceneController implements Initializable {
     private DatePicker dp;
     @FXML
     private Button searchId;
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private JFXHamburger hamburger;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    /**
-     * Closes the secondary stage when clicking the close button.
-     */
     public void closeSecondaryStage() {
         MainDisplay.secondaryStage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -81,26 +82,38 @@ public class MainSceneController implements Initializable {
         });
     }
 
-    /**
-     * Handles the click on the close button.
-     */
     @FXML
     public void handleCloseButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 
-    /**
-     * Handles what happens when the client clicks on the Login button.
-     */
+    public void hamburgerMenu() throws IOException {
+        VBox vBox = FXMLLoader.load(getClass().getResource("/drawerMenuContent.fxml"));
+        drawer.setSidePane(vBox);
+        HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+            if (drawer.isOpened()) {
+                drawer.close();
+            } else {
+                drawer.open();
+                drawer.setTranslateX(140);
+            }
+        });
+    }
+
     @FXML
-    public void handleLoginButton() {
+    public void handleLoginButton(javafx.event.ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         if (!UserCommunication.authenticate(username, password)) {
             return;
         }
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
             Parent loginParent = fxmlLoader.load();
@@ -110,14 +123,16 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
             MainDisplay.primaryStage.close();
+
+            drawer = (JFXDrawer) loginParent.lookup("#drawer");
+            hamburger = (JFXHamburger) loginParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Handles the click on the Sign up button.
-     */
     @FXML
     public void handleSignUpClick() {
         try {
@@ -129,59 +144,48 @@ public class MainSceneController implements Initializable {
             MainDisplay.registerStage.setScene(new Scene(registerParent));
             MainDisplay.registerStage.setTitle("Register");
             MainDisplay.registerStage.show();
+
+            drawer = (JFXDrawer) registerParent.lookup("#drawer");
+            hamburger = (JFXHamburger) registerParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Handles what happens when the client clicks on the Home button.
-     */
     @FXML
     public void handleHomeButton() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/reservationsScene.fxml"));
             Parent calendarParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Home");
             MainDisplay.secondaryStage.show();
-            MainDisplay.secondaryStage.setMaximized(true);
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) calendarParent.lookup("#drawer");
+            hamburger = (JFXHamburger) calendarParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
-    /**
-     * Handles what happens when the client picks a date.
-     */
-    public void pickDate() {
-        ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
-        searchId.setOnAction(e -> {
-            /*LocalDate date = dp.getValue();
-            for(int i = 0; i < rooms.size(); i++) {
-                String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(i).getId(), Date.valueOf(date.toString())));
-                String replaced = string1.replace("{", "").replace("}", "");
-                replaced.trim();
-                if (!replaced.equals("")) {
-                    String[] string2 = replaced.split(", ");
-                    for (int k = 0; k < string2.length; k++) {
-                        String[] string3 = string2[k].split("=");
-                        timeFrom.add(string3[0]);
-                        System.out.println(string3.length);
-                        timeTo.add(string3[1]);
-                    }
-                }
-            }*/
 
+    @FXML
+    public void handleReservationButton() {
+        try {
+            ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
             ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
             TitledPane[] tps = new TitledPane[buildingData.size()];
             List<Button> buttons = new ArrayList<>();
-            //List<Label> labels = new ArrayList<>();
 
             int c = 0; // count - for lists, c - for tps
+            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // fill the accordion
             for (int i = 0; i < buildingData.size(); i++) {
@@ -190,23 +194,18 @@ public class MainSceneController implements Initializable {
                 ObservableList<Room> showRooms = FXCollections.observableArrayList();
                 for (int k = 0; k < rooms.size(); k++) {
                     if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
-                        LocalDate date = dp.getValue();
-                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), date));
-                        String replaced = string1.replace("{", "").replace("}", "");
-                        if (!replaced.equals("")) {
-                            showRooms.add(rooms.get(k));
-                        }
+
                     }
                 }
 
 
                 //if there are rooms for the building i - show them;
                 if (showRooms.size() != 0) {
-                    VBox vbox = new VBox();
+                    VBox vBox = new VBox();
                     tps[c] = new TitledPane();
 
                     for (int j = 0; j < showRooms.size(); j++) {
-                        HBox hbox = new HBox();
+                        HBox hBox = new HBox();
 
                         Label label1 = new Label(showRooms.get(j).getName());
                         label1.setStyle("-fx-font-weight: bold");
@@ -214,20 +213,6 @@ public class MainSceneController implements Initializable {
                         Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                         Button button1 = new Button("Reserve");
                         buttons.add(button1);
-
-
-                        LocalDate date = dp.getValue();
-                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), date));
-                        String replaced = string1.replace("{", "").replace("}", "");
-                        if (!replaced.equals("")) {
-                            String[] string2 = replaced.split(", ");
-                            for (int k = 0; k < string2.length; k++) {
-                                String[] string3 = string2[k].split("=");
-                                timeFrom.add(string3[0]);
-                                System.out.println(string3.length);
-                                timeTo.add(string3[1]);
-                            }
-                        }
 
 
                         ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
@@ -239,17 +224,15 @@ public class MainSceneController implements Initializable {
                         cbb.setItems(to);
 
 
-                        hbox.getChildren().addAll(label1, label2, cb, cbb, button1);
-                        hbox.setSpacing(150);
-                        hbox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-
-                            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                            + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
-
-                        vbox.getChildren().add(hbox);
+                        hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
+                        hBox.setSpacing(150);
+                        hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+                                    + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                                    + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+                        vBox.getChildren().add(hBox);
                     }
                     tps[c].setText(buildingData.get(i).getName());
-                    tps[c].setContent(vbox);
+                    tps[c].setContent(vBox);
                     ac.getPanes().add(tps[c]);
                     c++;
                 }
@@ -257,28 +240,20 @@ public class MainSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vbox = new VBox(ac);
+            VBox vBox = new VBox(ac);
+            bPane.setCenter(vBox);
+            bPane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bPane);
 
-            bpane.setCenter(vbox);
-            bpane.setPadding(new Insets(30, 5, 5, 10));
-            rootScene.setCenter(bpane);
-
-        });
-    }
-
-    /**
-     * Handles what happens when the client clicks on the Reservations button.
-     */
-    @FXML
-    public void handleReservationButton() {
-        try {
-            // load the scene
-            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
 
             // show the scene
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Reservations");
             MainDisplay.secondaryStage.show();
+
+            drawer = (JFXDrawer) rootScene.lookup("#drawer");
+            hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+            hamburgerMenu();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -286,9 +261,6 @@ public class MainSceneController implements Initializable {
         closeSecondaryStage();
     }
 
-    /**
-     * Handles what happens when the client clicks on the Restaurants button.
-     */
     @FXML
     public void handleRestaurantsButton() {
         try {
@@ -350,26 +322,25 @@ public class MainSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vbox = new VBox(ac);
-
-            bpane.setCenter(vbox);
-            bpane.setPadding(new Insets(30, 5, 5, 10));
-            rootScene.setCenter(bpane);
+            VBox vBox = new VBox(ac);
+            bPane.setCenter(vBox);
+            bPane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bPane);
 
             MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Restaurants");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
 
+            drawer = (JFXDrawer) rootScene.lookup("#drawer");
+            hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+            hamburgerMenu();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
-    /**
-     * Handles what happens when the client clicks on the Friends button.
-     */
     @FXML
     public void handleFriendsButton() {
         try {
@@ -379,55 +350,62 @@ public class MainSceneController implements Initializable {
             MainDisplay.secondaryStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Friends");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) friendsParent.lookup("#drawer");
+            hamburger = (JFXHamburger) friendsParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
-    /**
-     * Handles what happens when the client clicks on the Settings button.
-     */
     @FXML
     public void handleSettingsButton() {
         try {
-            URL location = getClass().getResource("/settingsScene.fxml");
-            FXMLLoader fxmlLoader = new FXMLLoader(location);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settingsScene.fxml"));
             Parent settingsParent = fxmlLoader.load();
 
             MainDisplay.secondaryStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
             MainDisplay.secondaryStage.setTitle("Settings");
             MainDisplay.secondaryStage.show();
+            closeSecondaryStage();
+
+            drawer = (JFXDrawer) settingsParent.lookup("#drawer");
+            hamburger = (JFXHamburger) settingsParent.lookup("#hamburger");
+            hamburgerMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        closeSecondaryStage();
     }
 
-    /**
-     * Handles what happens when the user clicks on the admin button.
-     *
-     * @throws IOException Can throw an exception if the user passes unexpected input.
-     */
     public void handleAdminButton() throws IOException {
         // load main admin scene
         BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
+
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
 
-        AdminSceneController.viewBuilding();
-        AdminSceneController.viewRoom();
+        AdminSceneController.buildingView();
+        AdminSceneController.roomView();
+        AdminSceneController.restaurantView();
 
         // load everything
-        VBox vbox = new VBox(ac);
-        bpane.setCenter(vbox);
-        bpane.setPadding(new Insets(10, 50, 10, 50));
-        rootScene.setCenter(bpane);
+        VBox vBox = new VBox(ac);
+        bPane.setCenter(vBox);
+        bPane.setPadding(new Insets(30, 5, 5, 10));
+        rootScene.setCenter(bPane);
 
         // show the scene
         MainDisplay.secondaryStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
         MainDisplay.secondaryStage.setTitle("Admin");
         MainDisplay.secondaryStage.show();
         closeSecondaryStage();
-    }
 
+        drawer = (JFXDrawer) rootScene.lookup("#drawer");
+        hamburger = (JFXHamburger) rootScene.lookup("#hamburger");
+        hamburgerMenu();
+
+    }
 }

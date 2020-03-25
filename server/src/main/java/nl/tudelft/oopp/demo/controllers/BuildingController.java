@@ -11,14 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,7 +21,7 @@ public class BuildingController {
     BuildingRepository rep;
 
     /**
-     * Find all buildings.
+     * Find all buildings
      *
      * @return message
      */
@@ -39,7 +32,7 @@ public class BuildingController {
     }
 
     /**
-     * Find building by id.
+     * Find building by id
      *
      * @param id - The id of the building that is to be found
      * @return the building and 200 status code if the building is found, 404 status code otherwise
@@ -51,7 +44,7 @@ public class BuildingController {
     }
 
     /**
-     * Find building by name.
+     * Find building by name
      *
      * @param name - The name of the building that is to be found
      * @return the building and 200 status code if the building is found, 404 status code otherwise
@@ -62,21 +55,20 @@ public class BuildingController {
     }
 
     /**
-     * Filter a list of building with some given parameters.
-     *
+     * Filter a list of building with some given parameters
      * @param capacity - the capacity of the room
-     * @param e1       - name of a piece of equipment
-     * @param e2       - name of a piece of equipment
-     * @param e3       - name of a piece of equipment
-     * @param e4       - name of a piece of equipment
+     * @param e1 - name of a piece of equipment
+     * @param e2 - name of a piece of equipment
+     * @param e3 - name of a piece of equipment
+     * @param e4 - name of a piece of equipment
      * @return a list of filtered buildings by their room capacity and other equipment pieces
      */
     @GetMapping("/building/filter")
-    public List<Building> getFilteredBuildings(@RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
-                                               @RequestParam(name = "e1", required = false) String e1,
-                                               @RequestParam(name = "e2", required = false) String e2,
-                                               @RequestParam(name = "e3", required = false) String e3,
-                                               @RequestParam(name = "e4", required = false) String e4) {
+    public List<Building> getFilteredBuildings(@RequestParam (name = "capacity", required = false, defaultValue = "0") Integer capacity,
+                                               @RequestParam (name = "e1", required = false) String e1,
+                                               @RequestParam (name = "e2", required = false) String e2,
+                                               @RequestParam (name = "e3", required = false) String e3,
+                                               @RequestParam (name = "e4", required = false) String e4) {
         List<Building> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Building> buildings = rep.filterBuilding(capacity);
@@ -127,7 +119,7 @@ public class BuildingController {
     }
 
     /**
-     * Create a new building.
+     * Create a new building
      *
      * @return message
      */
@@ -139,7 +131,7 @@ public class BuildingController {
     }
 
     /**
-     * Update a building.
+     * Update a building
      *
      * @param id          -The id of the building that is to be updated
      * @param newBuilding - The building instance that has the modified parameters
@@ -161,7 +153,7 @@ public class BuildingController {
     }
 
     /**
-     * Delete a building by it's id.
+     * Delete a building by it's id
      *
      * @param id - The id of the building that is to be deleted
      * @return a response status: 200 if the building has been deleted successfully, 404 if the building was not found

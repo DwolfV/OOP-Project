@@ -24,8 +24,7 @@ public class DishController {
     DishRepository dishRepository;
 
     /**
-     * Find all dishes.
-     *
+     *  Find all dishes.
      * @return message
      */
     @GetMapping("/dish")
@@ -36,7 +35,6 @@ public class DishController {
 
     /**
      * Find dish by id.
-     *
      * @param id - the ID of the dish that is to be found
      * @return the dish and 200 status code if the dish is found, 404 status code otherwise
      */
@@ -44,12 +42,11 @@ public class DishController {
     @GetMapping("/dish/{id}")
     public ResponseEntity<Dish> getDishById(@PathVariable long id) {
         return dishRepository.findById(id).map(dish -> ResponseEntity.ok(dish))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
      * Find dish by name.
-     *
      * @param name - the name of the dish that is to be found
      * @return the dish and 200 status code if the dish is found, 404 status code otherwise
      */
@@ -61,7 +58,6 @@ public class DishController {
 
     /**
      * Create a new dish.
-     *
      * @return message
      */
 
@@ -74,8 +70,7 @@ public class DishController {
 
     /**
      * Update the dish.
-     *
-     * @param id      - the id of the dish that is to be modified
+     * @param id - the id of the dish that is to be modified
      * @param newDish - the dish instance that has the modified parameters
      * @return a response the updated building and the status 200 if the update was successful, 404 if the dish was not found
      */

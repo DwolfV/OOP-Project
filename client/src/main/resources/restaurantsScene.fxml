@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
@@ -16,31 +18,23 @@
     </bottom>
     <top>
         <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
-            <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu"
-                        HBox.hgrow="ALWAYS">
-                <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleHomeButton" text="Home"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleReservationButton" text="Reservations"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleRestaurantsButton" text="Restaurants"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleFriendsButton" text="Friends"/>
-                    <MenuItem fx:id="adminButton" mnemonicParsing="false" onAction="#handleAdminButton" text="Admin"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings"/>
-                </items>
-                <HBox.margin>
-                    <Insets left="5.0" top="20.0"/>
-                </HBox.margin>
-            </MenuButton>
+            <JFXHamburger fx:id="hamburger" layoutX="12.0" layoutY="20.0" prefHeight="64.0" prefWidth="98.0" stylesheets="@HamburgerStyle.css" />
             <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS"/>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                 <HBox.margin>
                     <Insets/>
                 </HBox.margin>
-                <Image url="/TU_Delft_logo_White.png"/>
+                <Image url="@TU_Delft_logo_White.png"/>
             </ImageView>
         </HBox>
     </top>
     <left>
-        <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;" />
+        <AnchorPane>
+            <VBox prefHeight="600.0" prefWidth="140.0" style="-fx-background-color: #7C8082;" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+            </VBox>
+            <JFXDrawer fx:id="drawer" defaultDrawerSize="140.0" prefHeight="600.0" prefWidth="140.0" AnchorPane.leftAnchor="-140.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"/>
+        </AnchorPane>
     </left>
    <center>
       <Accordion BorderPane.alignment="CENTER">

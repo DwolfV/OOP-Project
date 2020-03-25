@@ -12,6 +12,10 @@ public class Occasion {
     private LocalTime closeTime;
     private Building building;
 
+    public Occasion() {
+
+    }
+
     /**
      * Create a new Occasion instance.
      *

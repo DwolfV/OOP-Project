@@ -52,6 +52,7 @@ public class Dish {
 
 
     public Dish(String name, String description, String type, float price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;

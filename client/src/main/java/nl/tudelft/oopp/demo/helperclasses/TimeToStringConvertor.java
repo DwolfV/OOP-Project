@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import javafx.util.StringConverter;
 
 import javafx.util.StringConverter;
 
@@ -16,6 +15,6 @@ public class TimeToStringConvertor extends StringConverter {
 
     @Override
     public Object fromString(String string) {
-        return null;
+        return LocalTime.parse(string);
     }
 }

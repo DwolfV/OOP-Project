@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -43,9 +42,9 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                         .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/room_reservations/**").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/room_reservations/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/room_reservations/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/room_reservations/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/room_reservations/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/room_reservations/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
