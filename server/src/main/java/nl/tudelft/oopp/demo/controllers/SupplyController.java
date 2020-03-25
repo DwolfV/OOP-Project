@@ -89,6 +89,7 @@ public class SupplyController {
      * @param newSupply - The supply instance that has the modified parameters
      * @return a response: the updated supply and the status 200 if the update was successful, 404 if the building was not found
      */
+    
     @PutMapping("/supply/{id}")
     public ResponseEntity<Supply> updateSupply(@PathVariable long id,
                                                    @RequestBody Supply newSupply) {
