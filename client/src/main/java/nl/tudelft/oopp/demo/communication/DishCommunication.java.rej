@@ -1,9 +1,0 @@
-diff a/client/src/main/java/nl/tudelft/oopp/demo/communication/DishCommunication.java b/client/src/main/java/nl/tudelft/oopp/demo/communication/DishCommunication.java	(rejected hunks)
-@@ -0,6 +0,7 @@
- import com.fasterxml.jackson.core.type.TypeReference;
- import com.fasterxml.jackson.databind.ObjectMapper;
- import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-+=======
- import com.fasterxml.jackson.core.JsonGenerationException;
- import com.fasterxml.jackson.core.JsonParseException;
- import com.fasterxml.jackson.core.type.TypeReference;
