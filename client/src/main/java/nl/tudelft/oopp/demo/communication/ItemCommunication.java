@@ -56,15 +56,15 @@ public class ItemCommunication {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
-        String JsonItem = "";
+        String jsonItem = "";
         try {
-            JsonItem = mapper.writeValueAsString(newItem);
-            System.out.println(JsonItem);
+            jsonItem = mapper.writeValueAsString(newItem);
+            System.out.println(jsonItem);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(JsonItem)).uri(URI.create("http://localhost:8080/item/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create("http://localhost:8080/item/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -85,15 +85,15 @@ public class ItemCommunication {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
-        String JsonItem = "";
+        String jsonItem = "";
         try {
-            JsonItem = mapper.writeValueAsString(newItem);
-            System.out.println(JsonItem);
+            jsonItem = mapper.writeValueAsString(newItem);
+            System.out.println(jsonItem);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(JsonItem)).uri(URI.create(String.format("http://localhost:8080/item/update/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create(String.format("http://localhost:8080/item/update/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -264,13 +264,13 @@ public class AdminSceneController implements Initializable {
             }
         });
 
-        HBox hBoxAddDeleteUpdateBuilding = new HBox(10);
-        hBoxAddDeleteUpdateBuilding.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdateBuilding.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
+        HBox hoBoxAddDeleteUpdateBuilding = new HBox(10);
+        hoBoxAddDeleteUpdateBuilding.setPadding(new Insets(20, 20, 20, 0));
+        hoBoxAddDeleteUpdateBuilding.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
 
         // adding a building
         BorderPane borderPaneAddBuilding = new BorderPane();
-        VBox vBoxAddBuilding = new VBox();
+        VBox veBoxAddBuilding = new VBox();
 
         Text buildingName = new Text("Building Name");
         Text openTime = new Text("Open Time");
@@ -290,12 +290,12 @@ public class AdminSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-        vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput,
+        veBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput,
                 closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput,
                 zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
-        vBoxAddBuilding.setSpacing(10);
-        borderPaneAddBuilding.setTop(vBoxAddBuilding);
+        veBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
+        veBoxAddBuilding.setSpacing(10);
+        borderPaneAddBuilding.setTop(veBoxAddBuilding);
 
         addButtonBuilding.setOnAction(e -> {
             String buildingNameInputText = buildingNameInput.getText();
@@ -393,13 +393,13 @@ public class AdminSceneController implements Initializable {
             }
         });
 
-        HBox hBoxAddDeleteUpdateTime = new HBox(10);
-        hBoxAddDeleteUpdateTime.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdateTime.getChildren().setAll(deleteTimeBuilding, updateTimeBuilding);
+        HBox hoBoxAddDeleteUpdateTime = new HBox(10);
+        hoBoxAddDeleteUpdateTime.setPadding(new Insets(20, 20, 20, 0));
+        hoBoxAddDeleteUpdateTime.getChildren().setAll(deleteTimeBuilding, updateTimeBuilding);
 
         // adding a openTime for each building
         BorderPane borderPaneAddOpenTime = new BorderPane();
-        VBox vBoxAddOpenTime = new VBox();
+        VBox veBoxAddOpenTime = new VBox();
 
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
         ArrayList<String> buildingList = new ArrayList<>();
@@ -434,11 +434,11 @@ public class AdminSceneController implements Initializable {
 
         });
 
-        vBoxAddOpenTime.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
+        veBoxAddOpenTime.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
                 closeHolidayTime, closeHolidayTimeInput, building, buildingInput, choiceBox, addOpenTime);
-        vBoxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
-        vBoxAddOpenTime.setSpacing(10);
-        borderPaneAddOpenTime.setTop(vBoxAddOpenTime);
+        veBoxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
+        veBoxAddOpenTime.setSpacing(10);
+        borderPaneAddOpenTime.setTop(veBoxAddOpenTime);
 
         addOpenTime.setOnAction(e -> {
             LocalDate dayInputText = LocalDate.parse(dayInput.getText());
@@ -455,26 +455,26 @@ public class AdminSceneController implements Initializable {
         });
 
         // The below things are to load everything to the building TP
-        VBox vBoxBuildingAndButtons = new VBox();
-        VBox vBoxOpenTimeAndButtons = new VBox();
+        VBox veBoxBuildingAndButtons = new VBox();
+        VBox veBoxOpenTimeAndButtons = new VBox();
 
-        HBox hBoxBuildingTP = new HBox();
-        hBoxBuildingTP.setSpacing(100);
-        HBox hBoxTimeTP = new HBox();
-        hBoxTimeTP.setSpacing(100);
+        HBox hoBoxBuildingTP = new HBox();
+        hoBoxBuildingTP.setSpacing(100);
+        HBox hoBoxTimeTP = new HBox();
+        hoBoxTimeTP.setSpacing(100);
 
-        VBox vBoxMainBuildingTP = new VBox();
-        vBoxMainBuildingTP.setPadding(new Insets(20, 20, 20, 20));
+        VBox veBoxMainBuildingTP = new VBox();
+        veBoxMainBuildingTP.setPadding(new Insets(20, 20, 20, 20));
 
-        vBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hBoxAddDeleteUpdateBuilding);
-        vBoxOpenTimeAndButtons.getChildren().addAll(tableHoliday, hBoxAddDeleteUpdateTime);
+        veBoxBuildingAndButtons.getChildren().addAll(tableBuilding, hoBoxAddDeleteUpdateBuilding);
+        veBoxOpenTimeAndButtons.getChildren().addAll(tableHoliday, hoBoxAddDeleteUpdateTime);
 
-        hBoxBuildingTP.getChildren().addAll(vBoxBuildingAndButtons, borderPaneAddBuilding);
-        hBoxTimeTP.getChildren().addAll(vBoxOpenTimeAndButtons, borderPaneAddOpenTime);
-        vBoxMainBuildingTP.getChildren().addAll(hBoxBuildingTP, hBoxTimeTP);
+        hoBoxBuildingTP.getChildren().addAll(veBoxBuildingAndButtons, borderPaneAddBuilding);
+        hoBoxTimeTP.getChildren().addAll(veBoxOpenTimeAndButtons, borderPaneAddOpenTime);
+        veBoxMainBuildingTP.getChildren().addAll(hoBoxBuildingTP, hoBoxTimeTP);
 
         ScrollPane scroll = new ScrollPane();
-        scroll.setContent(vBoxMainBuildingTP);
+        scroll.setContent(veBoxMainBuildingTP);
         buildingTP.setContent(scroll);
     }
 
@@ -547,9 +547,9 @@ public class AdminSceneController implements Initializable {
         });
 
         // HBox for the buttons under the table
-        HBox hBoxAddDeleteUpdateRooms = new HBox(10);
-        hBoxAddDeleteUpdateRooms.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdateRooms.getChildren().setAll(deleteButtonRoom, updateButtonRoom);
+        HBox hoBoxAddDeleteUpdateRooms = new HBox(10);
+        hoBoxAddDeleteUpdateRooms.setPadding(new Insets(20, 20, 20, 0));
+        hoBoxAddDeleteUpdateRooms.getChildren().setAll(deleteButtonRoom, updateButtonRoom);
 
         // adding room scene
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
@@ -561,7 +561,7 @@ public class AdminSceneController implements Initializable {
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
         BorderPane borderPaneAddRoom = new BorderPane();
-        VBox vBoxAddRoom = new VBox();
+        VBox veBoxAddRoom = new VBox();
 
         Text roomName = new Text("Room Name");
         Text capacity = new Text("Capacity");
@@ -585,10 +585,10 @@ public class AdminSceneController implements Initializable {
             buildingField.setText(string[1]);
         });
 
-        vBoxAddRoom.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, buildingField, choiceBox, addButton);
-        vBoxAddRoom.setPadding(new Insets(0, 10, 10, 10));
-        vBoxAddRoom.setSpacing(10);
-        borderPaneAddRoom.setTop(vBoxAddRoom);
+        veBoxAddRoom.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, buildingField, choiceBox, addButton);
+        veBoxAddRoom.setPadding(new Insets(0, 10, 10, 10));
+        veBoxAddRoom.setSpacing(10);
+        borderPaneAddRoom.setTop(veBoxAddRoom);
 
         addButton.setOnAction(e -> {
             String roomName1 = roomNameField.getText();
@@ -609,7 +609,7 @@ public class AdminSceneController implements Initializable {
 
         hboxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
         vboxRoomTP.setPadding(new Insets(20, 20, 20, 20));
-        vboxRoomTP.getChildren().addAll(hboxRoomTP, hBoxAddDeleteUpdateRooms);
+        vboxRoomTP.getChildren().addAll(hboxRoomTP, hoBoxAddDeleteUpdateRooms);
 
         ScrollPane scrollPaneRooms = new ScrollPane();
         scrollPaneRooms.setContent(vboxRoomTP);
@@ -703,7 +703,7 @@ public class AdminSceneController implements Initializable {
 
         // adding a restaurant
         BorderPane borderPaneAddRestaurant = new BorderPane();
-        VBox vBoxAddRestaurant = new VBox();
+        VBox veBoxAddRestaurant = new VBox();
 
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
         ArrayList<String> buildingList = new ArrayList<>();
@@ -737,12 +737,12 @@ public class AdminSceneController implements Initializable {
             buildingNameInput.setText(string[1]);
         });
 
-        vBoxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput,
+        veBoxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput,
                 buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput,
                 closingTime, closingTimeInput, addRestaurant);
-        vBoxAddRestaurant.setPadding(new Insets(0, 10, 10, 10));
-        vBoxAddRestaurant.setSpacing(10);
-        borderPaneAddRestaurant.setTop(vBoxAddRestaurant);
+        veBoxAddRestaurant.setPadding(new Insets(0, 10, 10, 10));
+        veBoxAddRestaurant.setSpacing(10);
+        borderPaneAddRestaurant.setTop(veBoxAddRestaurant);
 
         addRestaurant.setOnAction(e -> {
             String restaurantNameInputText = restaurantNameInput.getText();
@@ -760,21 +760,21 @@ public class AdminSceneController implements Initializable {
         });
 
         // HBox for the buttons under the table
-        HBox hBoxAddDeleteUpdateRestaurants = new HBox(10);
-        hBoxAddDeleteUpdateRestaurants.setPadding(new Insets(20, 20, 20, 0));
-        hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
+        HBox hoBoxAddDeleteUpdateRestaurants = new HBox(10);
+        hoBoxAddDeleteUpdateRestaurants.setPadding(new Insets(20, 20, 20, 0));
+        hoBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
 
         // This VBox contains the table for the rooms and adding a room
-        HBox hBoxRestaurantTP = new HBox();
-        hBoxRestaurantTP.setSpacing(100);
-        VBox vBoxRestaurantTP = new VBox();
+        HBox hoBoxRestaurantTP = new HBox();
+        hoBoxRestaurantTP.setSpacing(100);
+        VBox veBoxRestaurantTP = new VBox();
 
-        hBoxRestaurantTP.getChildren().addAll(tableRestaurant, borderPaneAddRestaurant);
-        vBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
-        vBoxRestaurantTP.getChildren().addAll(hBoxRestaurantTP, hBoxAddDeleteUpdateRestaurants);
+        hoBoxRestaurantTP.getChildren().addAll(tableRestaurant, borderPaneAddRestaurant);
+        veBoxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
+        veBoxRestaurantTP.getChildren().addAll(hoBoxRestaurantTP, hoBoxAddDeleteUpdateRestaurants);
 
         ScrollPane scrollPaneRestaurant = new ScrollPane();
-        scrollPaneRestaurant.setContent(vBoxRestaurantTP);
+        scrollPaneRestaurant.setContent(veBoxRestaurantTP);
         restaurantsTP.setContent(scrollPaneRestaurant);
     }
 
