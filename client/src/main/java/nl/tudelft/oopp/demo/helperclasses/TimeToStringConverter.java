@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import javafx.util.StringConverter;
 
-public class TimeToStringConvertor extends StringConverter {
+public class TimeToStringConverter extends StringConverter {
 
     @Override
     public String toString(Object object) {

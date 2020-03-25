@@ -4,7 +4,7 @@ import java.util.List;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 
-public class BuildingToStringConvertor extends StringConverter {
+public class BuildingToStringConverter extends StringConverter {
 
     @Override
     public String toString(Object object) {
