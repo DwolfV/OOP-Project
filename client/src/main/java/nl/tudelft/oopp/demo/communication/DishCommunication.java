@@ -136,7 +136,7 @@ public class DishCommunication {
 
     public static void updateDish(long id, String name, String description, String type, float price) {
         ObjectMapper mapper = new ObjectMapper();
-        Dish newDish =  new Dish(name, description, type, price);
+        Dish newDish = new Dish(name, description, type, price);
         String jsonDish = "";
         try {
             jsonDish = mapper.writeValueAsString(newDish);
