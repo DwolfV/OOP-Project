@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-<<<<<<< HEAD
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -20,9 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-=======
-import javafx.scene.control.*;
->>>>>>> development
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -36,17 +32,7 @@ import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
-<<<<<<< HEAD
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
-import nl.tudelft.oopp.demo.helperclasses.DateToStringConverter;
-import nl.tudelft.oopp.demo.helperclasses.Occasion;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
-import nl.tudelft.oopp.demo.helperclasses.Room;
-import nl.tudelft.oopp.demo.helperclasses.TimeToStringConvertor;
-=======
 import nl.tudelft.oopp.demo.helperclasses.*;
->>>>>>> development
 
 public class AdminSceneController implements Initializable {
     public static final TitledPane buildingTP = new TitledPane("Buildings", new Button("View"));
@@ -60,7 +46,6 @@ public class AdminSceneController implements Initializable {
     static final Button deleteButtonRoom = new Button("Delete");
     static final Button updateButtonRestaurant = new Button("Update");
     static final Button deleteButtonRestaurant = new Button("Delete");
-<<<<<<< HEAD
     private static final TableView<Building> tableBuilding = new TableView<>();
     private static final TableView<Occasion> tableHoliday = new TableView<>();
     private static final TableView<Room> tableRoom = new TableView<>();
@@ -68,12 +53,6 @@ public class AdminSceneController implements Initializable {
     public MainSceneController mainSceneController;
     @FXML
     private Accordion ac;
-=======
-    public static final TableView<Building> tableBuilding = new TableView<>();
-    public static final TableView<Occasion> tableHoliday = new TableView<>();
-    public static final TableView<Room> tableRoom = new TableView<>();
-    public static final TableView<Restaurant> tableRestaurant = new TableView<>();
->>>>>>> development
 
     /**
      * The method below is implemented for the update button under the building section in the admin scene.
@@ -83,11 +62,8 @@ public class AdminSceneController implements Initializable {
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
         BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
-<<<<<<< HEAD
                 building.getZipCode(), building.getCity());
-=======
-            building.getZipCode(), building.getCity());
->>>>>>> development
+
     }
 
     /**
@@ -202,7 +178,6 @@ public class AdminSceneController implements Initializable {
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Building, LocalTime> openTimeCol =
-<<<<<<< HEAD
                 new TableColumn<>("Open Time");
         openTimeCol.setMinWidth(100);
         openTimeCol.setCellValueFactory(
@@ -219,24 +194,6 @@ public class AdminSceneController implements Initializable {
         closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConvertor())));
         closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
-=======
-            new TableColumn<>("Open Time");
-        openTimeCol.setMinWidth(100);
-        openTimeCol.setCellValueFactory(
-            new PropertyValueFactory<>("openTime"));
-        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConverter()));
-        openTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
-
-        TableColumn<Building, LocalTime> closeTimeCol =
-            new TableColumn<>("Close Time");
-        closeTimeCol.setMinWidth(100);
-        closeTimeCol.setCellValueFactory(
-            new PropertyValueFactory<>("closeTime"));
-        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConverter())));
-        closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Building, String> streetNameCol =
             new TableColumn<>("Street Name");
@@ -245,13 +202,7 @@ public class AdminSceneController implements Initializable {
             new PropertyValueFactory<>("streetName"));
         streetNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         streetNameCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
-<<<<<<< HEAD
-                t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
-=======
-                        t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
->>>>>>> development
-        streetNameCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
+            (TableColumn.CellEditEvent<Building, String> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetName(t.getNewValue()));
 
         TableColumn<Building, String> streetNumCol =
@@ -263,8 +214,6 @@ public class AdminSceneController implements Initializable {
         streetNumCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
-        streetNumCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setStreetNumber(t.getNewValue()));
 
         TableColumn<Building, String> zipCodeCol =
             new TableColumn<>("Zip Code");
@@ -275,8 +224,6 @@ public class AdminSceneController implements Initializable {
         zipCodeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
-        zipCodeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setZipCode(t.getNewValue()));
 
         TableColumn<Building, String> cityCol =
             new TableColumn<>("City");
@@ -287,8 +234,6 @@ public class AdminSceneController implements Initializable {
         cityCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setCity(t.getNewValue()));
-        cityCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCity(t.getNewValue()));
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
@@ -312,15 +257,9 @@ public class AdminSceneController implements Initializable {
             }
         });
 
-<<<<<<< HEAD
-        HBox hboxAddDeleteUpdateBuilding = new HBox(10);
-        hboxAddDeleteUpdateBuilding.setPadding(new Insets(20, 20, 20, 0));
-        hboxAddDeleteUpdateBuilding.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
-=======
         HBox hBoxAddDeleteUpdateBuilding = new HBox(10);
         hBoxAddDeleteUpdateBuilding.setPadding(new Insets(20, 20, 20, 0));
         hBoxAddDeleteUpdateBuilding.getChildren().setAll(deleteButtonBuilding, updateButtonBuilding);
->>>>>>> development
 
         // adding a building
         BorderPane borderPaneAddBuilding = new BorderPane();
@@ -344,21 +283,12 @@ public class AdminSceneController implements Initializable {
 
         Button addButtonBuilding = new Button("Add Building");
 
-<<<<<<< HEAD
-        vboxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput,
-                closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput,
-                zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
-        vboxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
-        vboxAddBuilding.setSpacing(10);
-        borderPaneAddBuilding.setTop(vboxAddBuilding);
-=======
         vBoxAddBuilding.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput,
                 closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput,
                 zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
         vBoxAddBuilding.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddBuilding.setSpacing(10);
         borderPaneAddBuilding.setTop(vBoxAddBuilding);
->>>>>>> development
 
         addButtonBuilding.setOnAction(e -> {
             String buildingNameInputText = buildingNameInput.getText();
@@ -370,11 +300,7 @@ public class AdminSceneController implements Initializable {
             String cityInputText = cityInput.getText();
 
             BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
-<<<<<<< HEAD
-                    streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
-=======
                 streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
->>>>>>> development
 
             buildingNameInput.setText(null);
             openTimeInput.setText(null);
@@ -402,11 +328,7 @@ public class AdminSceneController implements Initializable {
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
-<<<<<<< HEAD
-        buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConvertor()));
-=======
         buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConverter()));
->>>>>>> development
 
         TableColumn<Occasion, LocalDate> dayCol =
                 new TableColumn<>("Day");
@@ -416,22 +338,14 @@ public class AdminSceneController implements Initializable {
         dayCol.setCellFactory(TextFieldTableCell.forTableColumn(new DateToStringConverter()));
         dayCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalDate> t) -> t.getTableView().getItems().get(
-<<<<<<< HEAD
-                t.getTablePosition().getRow()).setDate(t.getNewValue()));
-=======
                         t.getTablePosition().getRow()).setDate(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Occasion, LocalTime> openHolidayTimeCol =
                 new TableColumn<>("Open Time");
         openHolidayTimeCol.setMinWidth(100);
         openHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("openTime"));
-<<<<<<< HEAD
         openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
-=======
-        openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
->>>>>>> development
         openHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -443,11 +357,7 @@ public class AdminSceneController implements Initializable {
         closeHolidayTimeCol.setMinWidth(100);
         closeHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("closeTime"));
-<<<<<<< HEAD
         closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
-=======
-        closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
->>>>>>> development
         closeHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -457,110 +367,6 @@ public class AdminSceneController implements Initializable {
         ObservableList<Occasion> buildingTimeData = FXCollections.observableList(OccasionCommunication.getOccasions());
         tableHoliday.setItems(buildingTimeData);
         tableHoliday.getColumns().addAll(idBuildingTimeCol, buildingNameCol, dayCol, openHolidayTimeCol, closeHolidayTimeCol);
-<<<<<<< HEAD
-
-        //delete button
-        deleteTimeBuilding.setOnAction(e -> {
-            try {
-                deleteTimeButtonClicked();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-
-        //update button
-        updateTimeBuilding.setOnAction(e -> {
-            try {
-                updateTimeButtonClicked();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-
-        HBox hboxAddDeleteUpdateTime = new HBox(10);
-        hboxAddDeleteUpdateTime.setPadding(new Insets(20, 20, 20, 0));
-        hboxAddDeleteUpdateTime.getChildren().setAll(deleteTimeBuilding, updateTimeBuilding);
-
-        // adding a openTime for each building
-        BorderPane borderPaneAddOpenTime = new BorderPane();
-        VBox vboxAddOpenTime = new VBox();
-
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
-        ArrayList<String> buildingList = new ArrayList<>();
-
-        for (Building name : buildingNames) {
-            buildingList.add(name.getName() + ", " + name.getId());
-        }
-        ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
-
-        Text day = new Text("Day");
-        Text openHolidayTime = new Text("Open Time");
-        Text closeHolidayTime = new Text("Close Time");
-        Text building = new Text("Building ID");
-
-        TextField dayInput = new TextField();
-        TextField openHolidayTimeInput = new TextField();
-        TextField closeHolidayTimeInput = new TextField();
-        TextField buildingInput = new TextField();
-
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-
-        Button addOpenTime = new Button("Add Open Time");
-
-        choiceBox.setItems(bl);
-
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
-                return;
-            }
-            String[] string = newValue.split(", ");
-            buildingInput.setText(string[1]);
-
-        });
-
-        vboxAddOpenTime.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
-                closeHolidayTime, closeHolidayTimeInput, building, buildingInput, choiceBox, addOpenTime);
-        vboxAddOpenTime.setPadding(new Insets(0, 10, 10, 10));
-        vboxAddOpenTime.setSpacing(10);
-        borderPaneAddOpenTime.setTop(vboxAddOpenTime);
-
-        addOpenTime.setOnAction(e -> {
-            LocalDate dayInputText = LocalDate.parse(dayInput.getText());
-            LocalTime openHolidayTimeInputText = LocalTime.parse(openHolidayTimeInput.getText());
-            LocalTime closeHolidayTimeInputText = LocalTime.parse(closeHolidayTimeInput.getText());
-
-            OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
-
-            dayInput.setText(null);
-            openHolidayTimeInput.setText(null);
-            closeHolidayTimeInput.setText(null);
-            buildingInput.setText(null);
-
-            choiceBox.setValue(null);
-        });
-
-        // The below things are to load everything to the building TP
-        VBox vboxBuildingAndButtons = new VBox();
-        VBox vboxOpenTimeAndButtons = new VBox();
-
-        HBox hboxBuildingTP = new HBox();
-        hboxBuildingTP.setSpacing(100);
-        HBox hboxTimeTP = new HBox();
-        hboxTimeTP.setSpacing(100);
-
-        VBox vboxMainBuildingTP = new VBox();
-        vboxMainBuildingTP.setPadding(new Insets(20, 20, 20, 20));
-
-        vboxBuildingAndButtons.getChildren().addAll(tableBuilding, hboxAddDeleteUpdateBuilding);
-        vboxOpenTimeAndButtons.getChildren().addAll(tableHoliday, hboxAddDeleteUpdateTime);
-
-        hboxBuildingTP.getChildren().addAll(vboxBuildingAndButtons, borderPaneAddBuilding);
-        hboxTimeTP.getChildren().addAll(vboxOpenTimeAndButtons, borderPaneAddOpenTime);
-        vboxMainBuildingTP.getChildren().addAll(hboxBuildingTP, hboxTimeTP);
-
-        ScrollPane scroll = new ScrollPane();
-        scroll.setContent(vboxMainBuildingTP);
-=======
 
         //delete button
         deleteTimeBuilding.setOnAction(e -> {
@@ -638,7 +444,6 @@ public class AdminSceneController implements Initializable {
             openHolidayTimeInput.setText(null);
             closeHolidayTimeInput.setText(null);
             buildingInput.setText(null);
-
             choiceBox.setValue(null);
         });
 
@@ -648,7 +453,7 @@ public class AdminSceneController implements Initializable {
 
         HBox hBoxBuildingTP = new HBox();
         hBoxBuildingTP.setSpacing(100);
-        HBox hBoxTimeTP  = new HBox();
+        HBox hBoxTimeTP = new HBox();
         hBoxTimeTP.setSpacing(100);
 
         VBox vBoxMainBuildingTP = new VBox();
@@ -663,7 +468,6 @@ public class AdminSceneController implements Initializable {
 
         ScrollPane scroll = new ScrollPane();
         scroll.setContent(vBoxMainBuildingTP);
->>>>>>> development
         buildingTP.setContent(scroll);
     }
 
@@ -692,11 +496,7 @@ public class AdminSceneController implements Initializable {
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
         roomCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Room, String> t) -> t.getTableView().getItems().get(
-<<<<<<< HEAD
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
-=======
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Room, Integer> capacityCol =
             new TableColumn<>("capacityField");
@@ -706,11 +506,7 @@ public class AdminSceneController implements Initializable {
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         capacityCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Room, Integer> t) -> t.getTableView().getItems().get(
-<<<<<<< HEAD
                 t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
-=======
-                        t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
->>>>>>> development
         capacityCol.setOnEditCommit((TableColumn.CellEditEvent<Room, Integer> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
 
@@ -764,15 +560,9 @@ public class AdminSceneController implements Initializable {
         Text capacity = new Text("Capacity");
         Text building = new Text("Building Name");
 
-<<<<<<< HEAD
         TextField roomNameField = new TextField();
         TextField capacityField = new TextField();
         TextField buildingField = new TextField();
-=======
-        TextField RoomName = new TextField();
-        TextField Capacity = new TextField();
-        TextField Building = new TextField();
->>>>>>> development
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
@@ -785,64 +575,37 @@ public class AdminSceneController implements Initializable {
                 return;
             }
             String[] string = newValue.split(", ");
-            Building.setText(string[1]);
+            buildingField.setText(string[1]);
         });
 
-<<<<<<< HEAD
-        vboxAddRoom.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, buildingField, choiceBox, addButton);
-        vboxAddRoom.setPadding(new Insets(0, 10, 10, 10));
-        vboxAddRoom.setSpacing(10);
-        borderPaneAddRoom.setTop(vboxAddRoom);
-=======
-        vBoxAddRoom.getChildren().addAll(roomName, RoomName, capacity, Capacity, building, Building, choiceBox, addButton);
+        vBoxAddRoom.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, buildingField, choiceBox, addButton);
         vBoxAddRoom.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddRoom.setSpacing(10);
         borderPaneAddRoom.setTop(vBoxAddRoom);
->>>>>>> development
 
         addButton.setOnAction(e -> {
-            String roomName1 = RoomName.getText();
-            int capacity1 = Integer.parseInt(Capacity.getText());
+            String roomName1 = roomNameField.getText();
+            int capacity1 = Integer.parseInt(capacityField.getText());
 
-            RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(Building.getText()));
+            RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText()));
 
-<<<<<<< HEAD
             buildingField.setText(null);
             roomNameField.setText(null);
             capacityField.setText(null);
-=======
-            Building.setText(null);
-            RoomName.setText(null);
-            Capacity.setText(null);
->>>>>>> development
-
             choiceBox.setValue(null);
         });
 
         // This VBox contains the table for the rooms and adding a room
-<<<<<<< HEAD
         HBox hboxRoomTP = new HBox();
         hboxRoomTP.setSpacing(100);
         VBox vboxRoomTP = new VBox();
 
         hboxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
         vboxRoomTP.setPadding(new Insets(20, 20, 20, 20));
-        vboxRoomTP.getChildren().addAll(hboxRoomTP, hboxAddDeleteUpdateRooms);
+        vboxRoomTP.getChildren().addAll(hboxRoomTP, hBoxAddDeleteUpdateRooms);
 
         ScrollPane scrollPaneRooms = new ScrollPane();
         scrollPaneRooms.setContent(vboxRoomTP);
-=======
-        HBox hBoxRoomTP = new HBox();
-        hBoxRoomTP.setSpacing(100);
-        VBox vBoxRoomsTP = new VBox();
-
-        hBoxRoomTP.getChildren().addAll(tableRoom, borderPaneAddRoom);
-        vBoxRoomsTP.setPadding(new Insets(20, 20, 20, 20));
-        vBoxRoomsTP.getChildren().addAll(hBoxRoomTP, hBoxAddDeleteUpdateRooms);
-
-        ScrollPane scrollPaneRooms = new ScrollPane();
-        scrollPaneRooms.setContent(vBoxRoomsTP);
->>>>>>> development
         roomsTP.setContent(scrollPaneRooms);
     }
 
@@ -871,42 +634,24 @@ public class AdminSceneController implements Initializable {
         restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         restaurantNameCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, String> t) -> t.getTableView().getItems().get(
-<<<<<<< HEAD
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
-=======
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
->>>>>>> development
-        restaurantNameCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, String> t) ->
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Restaurant, Building> buildingNameRestaurantCol =
             new TableColumn<>("Building Name");
         buildingNameRestaurantCol.setMinWidth(100);
         buildingNameRestaurantCol.setCellValueFactory(
-<<<<<<< HEAD
-                new PropertyValueFactory<>("building"));
-        buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
-        buildingNameRestaurantCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
-                t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
-=======
             new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConverter()));
         buildingNameRestaurantCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
->>>>>>> development
 
         TableColumn<Restaurant, LocalTime> timeOpenCol =
                 new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOpen"));
-<<<<<<< HEAD
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
-=======
         timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
->>>>>>> development
         timeOpenCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -918,22 +663,14 @@ public class AdminSceneController implements Initializable {
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeClose"));
-<<<<<<< HEAD
         timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
-=======
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
->>>>>>> development
         timeCloseCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                 t.getTableView().getItems().get(
                     t.getTablePosition().getRow()).setTimeClose(t.getNewValue());
             });
         buildingNameRestaurantCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, Building> t) ->
-<<<<<<< HEAD
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
-=======
-            t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
->>>>>>> development
 
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
         tableRestaurant.setItems(restaurantData);
@@ -959,11 +696,7 @@ public class AdminSceneController implements Initializable {
 
         // adding a restaurant
         BorderPane borderPaneAddRestaurant = new BorderPane();
-<<<<<<< HEAD
-        VBox vboxAddRestaurant = new VBox();
-=======
         VBox vBoxAddRestaurant = new VBox();
->>>>>>> development
 
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
         ArrayList<String> buildingList = new ArrayList<>();
@@ -997,21 +730,12 @@ public class AdminSceneController implements Initializable {
             buildingNameInput.setText(string[1]);
         });
 
-<<<<<<< HEAD
-        vboxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput,
-                buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput,
-                closingTime, closingTimeInput, addRestaurant);
-        vboxAddRestaurant.setPadding(new Insets(0, 10, 10, 10));
-        vboxAddRestaurant.setSpacing(10);
-        borderPaneAddRestaurant.setTop(vboxAddRestaurant);
-=======
         vBoxAddRestaurant.getChildren().addAll(restaurantName, restaurantNameInput,
                 buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput,
                 closingTime, closingTimeInput, addRestaurant);
         vBoxAddRestaurant.setPadding(new Insets(0, 10, 10, 10));
         vBoxAddRestaurant.setSpacing(10);
         borderPaneAddRestaurant.setTop(vBoxAddRestaurant);
->>>>>>> development
 
         addRestaurant.setOnAction(e -> {
             String restaurantNameInputText = restaurantNameInput.getText();
@@ -1034,18 +758,6 @@ public class AdminSceneController implements Initializable {
         hBoxAddDeleteUpdateRestaurants.getChildren().setAll(deleteButtonRestaurant, updateButtonRestaurant);
 
         // This VBox contains the table for the rooms and adding a room
-<<<<<<< HEAD
-        HBox hboxRestaurantTP = new HBox();
-        hboxRestaurantTP.setSpacing(100);
-        VBox vboxRestaurantTP = new VBox();
-
-        hboxRestaurantTP.getChildren().addAll(tableRestaurant, borderPaneAddRestaurant);
-        vboxRestaurantTP.setPadding(new Insets(20, 20, 20, 20));
-        vboxRestaurantTP.getChildren().addAll(hboxRestaurantTP, hboxAddDeleteUpdateRestaurants);
-
-        ScrollPane scrollPaneRestaurant = new ScrollPane();
-        scrollPaneRestaurant.setContent(vboxRestaurantTP);
-=======
         HBox hBoxRestaurantTP = new HBox();
         hBoxRestaurantTP.setSpacing(100);
         VBox vBoxRestaurantTP = new VBox();
@@ -1056,7 +768,6 @@ public class AdminSceneController implements Initializable {
 
         ScrollPane scrollPaneRestaurant = new ScrollPane();
         scrollPaneRestaurant.setContent(vBoxRestaurantTP);
->>>>>>> development
         restaurantsTP.setContent(scrollPaneRestaurant);
     }
 

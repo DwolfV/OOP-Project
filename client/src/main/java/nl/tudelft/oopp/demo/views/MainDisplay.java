@@ -24,7 +24,6 @@ public class MainDisplay extends Application {
         launch(args);
     }
 
-<<<<<<< HEAD
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Scenes/startupScene.fxml"));
@@ -44,6 +43,4 @@ public class MainDisplay extends Application {
         stage.setScene(scene);
         stage.show();
     }
-=======
->>>>>>> development
 }

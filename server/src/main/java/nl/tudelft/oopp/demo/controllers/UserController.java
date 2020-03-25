@@ -53,11 +53,7 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<User> getUserById(@PathVariable long userId) {
         return rep.findById(userId).map(user -> ResponseEntity.ok(user))
-<<<<<<< HEAD
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-=======
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
->>>>>>> development
     }
 
 

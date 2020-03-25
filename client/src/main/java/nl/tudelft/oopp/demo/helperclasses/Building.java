@@ -14,8 +14,6 @@ public class Building {
     private String streetNumber;
     private String zipCode;
     private String city;
-    private LocalTime openTime;
-    private LocalTime closeTime;
 
     private Set<Room> rooms = new HashSet<>();
 

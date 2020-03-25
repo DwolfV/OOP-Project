@@ -81,11 +81,7 @@ public class OccasionController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Occasion> updateOccasion(@PathVariable long id,
-<<<<<<< HEAD
-                                                   @RequestBody Occasion newOccasion) {
-=======
                                                     @RequestBody Occasion newOccasion) {
->>>>>>> development
         return occasionRepository.findById(id).map(occasion -> {
             occasion.setDate(newOccasion.getDate());
             occasion.setOpenTime(newOccasion.getOpenTime());
