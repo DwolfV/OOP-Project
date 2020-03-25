@@ -1,19 +1,20 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
 import javafx.util.StringConverter;
 
-public class DateToStringConverter extends StringConverter {
+public class TimeToStringConvertor extends StringConverter {
 
     @Override
     public String toString(Object object) {
-        LocalDate t = (LocalDate) object;
-        return t.format(DateTimeFormatter.ISO_DATE);
+        LocalTime t = (LocalTime) object;
+        return t.format(DateTimeFormatter.ISO_TIME);
     }
 
     @Override
     public Object fromString(String string) {
-        return LocalDate.parse(string);
+        return LocalTime.parse(string);
     }
 }

@@ -58,7 +58,7 @@ public class SupplyReservationController {
     ResponseEntity<SupplyReservation> getRoomReservationById(@PathVariable(value = "id") long supplyReservationId) {
         SupplyReservation toReturn = supplyReservationRepository.findById(supplyReservationId).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-            new ResponseEntity<>(toReturn, HttpStatus.OK);
+                new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
     /**

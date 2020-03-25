@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import com.jfoenix.controls.JFXHamburger?>-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+    <bottom>
+        <HBox style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+            </padding>
+            <Label alignment="BASELINE_CENTER" text="Group 62" textFill="WHITE"/>
+        </HBox>
+    </bottom>
+    <top>
+        <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+            <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu"
+                        HBox.hgrow="ALWAYS">
+                <items>
+                </items>
+                <HBox.margin>
+                    <Insets left="5.0" top="20.0"/>
+                </HBox.margin>
+            </MenuButton>
+            <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS"/>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+                <!--<Image url="/TU_Delft_logo_White.png"/>-->
+            </ImageView>
+        </HBox>
+    </top>
+    <right>
+        <VBox prefHeight="549.0" prefWidth="347.0" style="-fx-background-color: #D3D3D3;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                <Text fill="#00a6d6" layoutX="118.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Basket">
+                    <font>
+                        <Font size="36.0"/>
+                    </font>
+                </Text>
+                <Button layoutX="127.0" layoutY="467.0" mnemonicParsing="false" style="-fx-background-color: #00A6D6;"
+                        text="Order" textFill="WHITE">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Button>
+            </AnchorPane>
+        </VBox>
+    </right>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                <Text fontSmoothingType="LCD" layoutX="270.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Restaurant Name">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Text>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="52.0" nodeOrientation="INHERIT"
+                           pickOnBounds="true" preserveRatio="true">
+                    <!--<Image url="@../../../../../../OOPP%20resources/Food%20Plcae.jpg"/>-->
+                </ImageView>
+            </AnchorPane>
+            <Accordion>
+                <panes>
+                    <TitledPane animated="false" text="Main Courses">
+                        <font>
+                            <Font size="14.0"/>
+                        </font>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <Pane layoutX="22.0" layoutY="64.0" prefHeight="53.0" prefWidth="808.0"
+                                  style="-fx-border-color: darkgrey;">
+                                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Pulled Pork Sandwick"/>
+                                <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Pork meat, cheese, special sauce"/>
+                                <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                        style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                <Text layoutX="735.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="€3.5"/>
+                            </Pane>
+                            <Pane layoutX="22.0" layoutY="127.0" prefHeight="53.0" prefWidth="808.0"
+                                  style="-fx-border-color: darkgrey;">
+                                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Chicken Salad"/>
+                                <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Chicken meat, salad, Cesar sauce"/>
+                                <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                        style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                <Text layoutX="734.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="€5.5"/>
+                            </Pane>
+                            <Pane layoutX="22.0" prefHeight="53.0" prefWidth="808.0"
+                                  style="-fx-border-color: darkgrey;">
+                                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Kapsalon"/>
+                                <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Chicken meat, cheese, salads, tomatoes"/>
+                                <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                        style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                <Text layoutX="743.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="€6"/>
+                            </Pane>
+                        </AnchorPane>
+                    </TitledPane>
+                    <TitledPane animated="false" text="Vegetarian Options">
+                        <font>
+                            <Font size="14.0"/>
+                        </font>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <Pane layoutX="22.0" layoutY="76.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Veggie Wrap"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Tortilla, salad, tomatoes, veggie patty"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="735.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€3.5"/>
+                                </Pane>
+                                <Pane layoutX="22.0" layoutY="140.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Veggie burger"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Veggie patty, salad, tomatoes, pickles, onion"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="734.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€4.5"/>
+                                </Pane>
+                            </AnchorPane>
+                            <Pane layoutX="22.0" layoutY="14.0" prefHeight="53.0" prefWidth="808.0"
+                                  style="-fx-border-color: darkgrey;">
+                                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Simple salad"/>
+                                <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Salad, tomtoes, sauce"/>
+                                <Button layoutX="765.0" layoutY="14.0" mnemonicParsing="false"
+                                        style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                <Text layoutX="743.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="€5"/>
+                            </Pane>
+                        </AnchorPane>
+                    </TitledPane>
+                    <TitledPane animated="false" text="Dessert">
+                        <font>
+                            <Font size="14.0"/>
+                        </font>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <Pane layoutX="22.0" layoutY="64.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Ice Cream"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Various sorts: Vanilla, Chocolate, Strawberries, Wild Berries"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="711.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€2.5/cup"/>
+                                </Pane>
+                                <Pane layoutX="22.0" layoutY="127.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Cheesecake"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Toppings: Chocolate, Strawberries, Mango"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="734.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€3.5"/>
+                                </Pane>
+                                <Pane layoutX="22.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Tiramisu"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="100g"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="736.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€2.5"/>
+                                </Pane>
+                            </AnchorPane>
+                        </AnchorPane>
+                    </TitledPane>
+                    <TitledPane animated="false" text="Drinks">
+                        <font>
+                            <Font size="14.0"/>
+                        </font>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <Pane layoutX="22.0" layoutY="64.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Coffee"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Latte, Cappucino, Espresso, Milk Coffe"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="735.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€2.5"/>
+                                </Pane>
+                                <Pane layoutX="22.0" layoutY="127.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Water (500ml)"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Still, Sparkling"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="734.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€1.5"/>
+                                </Pane>
+                                <Pane layoutX="22.0" prefHeight="53.0" prefWidth="808.0"
+                                      style="-fx-border-color: darkgrey;">
+                                    <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Sodas (500ml)"/>
+                                    <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="Coca Cola, Fanta, Sprite"/>
+                                    <Button layoutX="765.0" layoutY="13.0" mnemonicParsing="false"
+                                            style="-fx-background-color: #00A6D6;" text="+" textFill="WHITE"/>
+                                    <Text layoutX="743.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          text="€3"/>
+                                </Pane>
+                            </AnchorPane>
+                        </AnchorPane>
+                    </TitledPane>
+                </panes>
+                <VBox.margin>
+                    <Insets left="40.0" right="40.0"/>
+                </VBox.margin>
+            </Accordion>
+        </VBox>
+    </center>
+</BorderPane>

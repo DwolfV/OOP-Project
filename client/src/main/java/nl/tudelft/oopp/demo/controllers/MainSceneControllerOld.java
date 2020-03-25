@@ -1,0 +1,374 @@
+/*package nl.tudelft.oopp.demo.controllers;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
+import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
+import nl.tudelft.oopp.demo.communication.UserCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.Restaurant;
+import nl.tudelft.oopp.demo.helperclasses.Room;
+import nl.tudelft.oopp.demo.views.MainDisplay;
+
+public class MainSceneController implements Initializable {
+
+    public static final TitledPane buildingTP = new TitledPane("Buildings", new Button("View"));
+    public static final TitledPane roomsTP = new TitledPane("Rooms", new Button("View"));
+    public static final TitledPane restaurantsTP = new TitledPane("Restaurants", new Button("View"));
+    private static final ArrayList<String> timeFrom = new ArrayList<>();
+    private static final ArrayList<String> timeTo = new ArrayList<>();
+    private static BorderPane rootScene;
+    final Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+    @FXML
+    private final Accordion ac = new Accordion();
+    @FXML
+    private final BorderPane bpane = new BorderPane();
+    @FXML
+    private DatePicker dp;
+    @FXML
+    private Button searchId;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+*/
+    /**
+     * Closes the secondary stage when clicking the close button.
+     *//*
+    public void closeSecondaryStage(){
+        MainDisplay.mainStage.setOnCloseRequest(e->{
+        Platform.exit();
+        System.exit(0);
+        });
+    }
+*/
+    /**
+     * Handles what happens when the client clicks on the Home button.
+     *//*
+    @FXML
+    public void handleHomeButton() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/calendarScene.fxml"));
+            Parent calendarParent = fxmlLoader.load();
+
+            MainDisplay.mainStage.setScene(new Scene(calendarParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Home");
+            MainDisplay.mainStage.show();
+            MainDisplay.mainStage.setMaximized(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeSecondaryStage();
+    }
+*/
+    /**
+     * Handles what happens when the client picks a date.
+     *//*
+    public void pickDate() {
+        ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
+        searchId.setOnAction(e -> {
+            /*LocalDate date = dp.getValue();
+            for(int i = 0; i < rooms.size(); i++) {
+                String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(i).getId(), Date.valueOf(date.toString())));
+                String replaced = string1.replace("{", "").replace("}", "");
+                replaced.trim();
+                if (!replaced.equals("")) {
+                    String[] string2 = replaced.split(", ");
+                    for (int k = 0; k < string2.length; k++) {
+                        String[] string3 = string2[k].split("=");
+                        timeFrom.add(string3[0]);
+                        System.out.println(string3.length);
+                        timeTo.add(string3[1]);
+                    }
+                }
+            }
+
+            ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+
+            TitledPane[] tps = new TitledPane[buildingData.size()];
+            List<Button> buttons = new ArrayList<>();
+            //List<Label> labels = new ArrayList<>();
+
+            int c = 0; // count - for lists, c - for tps
+
+            // fill the accordion
+            for (int i = 0; i < buildingData.size(); i++) {
+
+                //Look for rooms for the building i;
+                ObservableList<Room> showRooms = FXCollections.observableArrayList();
+                for (int k = 0; k < rooms.size(); k++) {
+                    if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
+                        LocalDate date = dp.getValue();
+                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(k).getId(), Date.valueOf(date.toString())));
+                        String replaced = string1.replace("{", "").replace("}", "");
+                        if (!replaced.equals("")) {
+                            showRooms.add(rooms.get(k));
+                        }
+                    }
+                }
+
+
+                //if there are rooms for the building i - show them;
+                if (showRooms.size() != 0) {
+                    VBox vbox = new VBox();
+                    tps[c] = new TitledPane();
+
+                    for (int j = 0; j < showRooms.size(); j++) {
+                        HBox hbox = new HBox();
+
+                        Label label1 = new Label(showRooms.get(j).getName());
+                        label1.setStyle("-fx-font-weight: bold");
+
+                        Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
+                        Button button1 = new Button("Reserve");
+                        buttons.add(button1);
+
+
+                        LocalDate date = dp.getValue();
+                        String string1 = String.valueOf(RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(rooms.get(j).getId(), Date.valueOf(date.toString())));
+                        String replaced = string1.replace("{", "").replace("}", "");
+                        if (!replaced.equals("")) {
+                            String[] string2 = replaced.split(", ");
+                            for (int k = 0; k < string2.length; k++) {
+                                String[] string3 = string2[k].split("=");
+                                timeFrom.add(string3[0]);
+                                System.out.println(string3.length);
+                                timeTo.add(string3[1]);
+                            }
+                        }
+
+
+                        ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
+                        ObservableList<String> to = FXCollections.observableArrayList(timeTo);
+
+                        ChoiceBox<String> cb = new ChoiceBox<>();
+                        cb.setItems(from);
+                        ChoiceBox<String> cbb = new ChoiceBox<>();
+                        cbb.setItems(to);
+
+
+                        hbox.getChildren().addAll(label1, label2, cb, cbb, button1);
+                        hbox.setSpacing(150);
+                        hbox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+
+                            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                            + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+
+                        vbox.getChildren().add(hbox);
+                    }
+                    tps[c].setText(buildingData.get(i).getName());
+                    tps[c].setContent(vbox);
+                    ac.getPanes().add(tps[c]);
+                    c++;
+                }
+
+            }
+
+            // load the accordion into the scene
+            VBox vbox = new VBox(ac);
+
+            bpane.setCenter(vbox);
+            bpane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bpane);
+
+        });
+    }
+*/
+    /**
+     * Handles what happens when the client clicks on the Reservations button.
+     *//*
+    @FXML
+    public void handleReservationButton() {
+        try {
+            // load the scene
+            rootScene = FXMLLoader.load(getClass().getResource("/reservationsScene.fxml"));    // load the scene
+
+            // show the scene
+            MainDisplay.mainStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Reservations");
+            MainDisplay.mainStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeSecondaryStage();
+    }
+*/
+    /**
+     * Handles what happens when the client clicks on the Restaurants button.
+     *//*
+    @FXML
+    public void handleRestaurantsButton() {
+        try {
+            ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+            ObservableList<Restaurant> restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
+
+            TitledPane[] tps = new TitledPane[buildingData.size()];
+            List<Button> buttons = new ArrayList<>();
+            List<Label> labels = new ArrayList<>();
+
+            // count - for lists, c - for tps
+            int count = 0;
+            int c = 0;
+
+            // load the scene
+            BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
+
+            // fill the accordion
+            for (int i = 0; i < buildingData.size(); i++) {
+
+                //Look for restaurants for the building i;
+                ObservableList<Restaurant> showRestaurants = FXCollections.observableArrayList();
+                for (int k = 0; k < restaurants.size(); k++) {
+                    if (restaurants.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
+                        showRestaurants.add(restaurants.get(k));
+                    }
+                }
+
+                //if there are restaurants for the building i - show them;
+                if (showRestaurants.size() != 0) {
+                    tps[c] = new TitledPane();
+                    GridPane grid = new GridPane();
+                    ColumnConstraints colConst = new ColumnConstraints();
+                    colConst.setPercentWidth(100 / 2);
+                    grid.getColumnConstraints().add(colConst);
+                    grid.setVgap(4);
+                    grid.setPadding(new Insets(5, 5, 5, 5));
+
+                    for (Restaurant restaurant : restaurants) {
+                        System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
+                    }
+
+                    for (int j = 0; j < showRestaurants.size(); j++) {
+                        Label label1 = new Label(showRestaurants.get(j).getName());
+                        labels.add(label1);
+                        Button button1 = new Button("Menu");
+                        buttons.add(button1);
+
+                        grid.add(labels.get(count), 0, j);
+                        grid.add(buttons.get(count), 1, j);
+                        count = count + 1;
+                    }
+                    tps[c].setText(buildingData.get(i).getName());
+                    tps[c].setContent(grid);
+                    ac.getPanes().add(tps[c]);
+                    c++;
+                }
+
+            }
+
+            // load the accordion into the scene
+            VBox vbox = new VBox(ac);
+
+            bpane.setCenter(vbox);
+            bpane.setPadding(new Insets(30, 5, 5, 10));
+            rootScene.setCenter(bpane);
+
+            MainDisplay.mainStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Restaurants");
+            MainDisplay.mainStage.show();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeSecondaryStage();
+    }*/
+
+    /**
+     * Handles what happens when the client clicks on the Friends button.
+     *//*
+    @FXML
+    public void handleFriendsButton() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/friendsScene.fxml"));
+            Parent friendsParent = fxmlLoader.load();
+
+            MainDisplay.mainStage.setScene(new Scene(friendsParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Friends");
+            MainDisplay.mainStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeSecondaryStage();
+    }
+*/
+    /**
+     * Handles what happens when the client clicks on the Settings button.
+     *//*
+    @FXML
+    public void handleSettingsButton() {
+        try {
+            URL location = getClass().getResource("/settingsScene.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(location);
+            Parent settingsParent = fxmlLoader.load();
+
+            MainDisplay.mainStage.setScene(new Scene(settingsParent, screenSize.getWidth(), screenSize.getHeight()));
+            MainDisplay.mainStage.setTitle("Settings");
+            MainDisplay.mainStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeSecondaryStage();
+    }*/
+
+    /**
+     * Handles what happens when the user clicks on the admin button.
+     *
+     * @throws IOException Can throw an exception if the user passes unexpected input.
+     *//*
+    public void handleAdminButton() throws IOException {
+        // load main admin scene
+        BorderPane rootScene = FXMLLoader.load(getClass().getResource("/adminScene.fxml"));
+        ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
+
+        AdminSceneController.viewBuilding();
+        AdminSceneController.viewRoom();
+
+        // load everything
+        VBox vbox = new VBox(ac);
+        bpane.setCenter(vbox);
+        bpane.setPadding(new Insets(10, 50, 10, 50));
+        rootScene.setCenter(bpane);
+
+        // show the scene
+        MainDisplay.mainStage.setScene(new Scene(rootScene, screenSize.getWidth(), screenSize.getHeight()));
+        MainDisplay.mainStage.setTitle("Admin");
+        MainDisplay.mainStage.show();
+        closeSecondaryStage();
+    }
+
+}
+*/

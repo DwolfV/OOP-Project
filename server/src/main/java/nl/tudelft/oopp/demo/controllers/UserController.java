@@ -53,7 +53,7 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<User> getUserById(@PathVariable long userId) {
         return rep.findById(userId).map(user -> ResponseEntity.ok(user))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 
@@ -113,6 +113,11 @@ public class UserController {
         return ResponseEntity.created(uri.toUri()).body(newUser);
     }
 
+    /**
+     * Login and authenticate.
+     * @param authentication authentication
+     * @return response entity list of usernames
+     */
     @GetMapping(value = "login")
     public ResponseEntity<List<String>> logIn(Authentication authentication) {
         String id = "0";
