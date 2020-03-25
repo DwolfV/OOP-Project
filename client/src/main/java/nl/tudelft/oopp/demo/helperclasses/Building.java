@@ -8,6 +8,8 @@ public class Building {
 
     private Long id;
     private String name;
+    private LocalTime openTime;
+    private LocalTime closeTime;
     private String streetName;
     private String streetNumber;
     private String zipCode;
@@ -25,6 +27,8 @@ public class Building {
      * Create a new Building instance.
      *
      * @param name         The name of the Building.
+     * @param openTime     The time at which the building opens
+     * @param closeTime    The time at which the building closes
      * @param streetName   The name of the street for the Building
      * @param streetNumber The number of the street for the Building
      * @param zipCode      The zip code for the Building
@@ -116,6 +120,8 @@ public class Building {
         return "Building{"
                 + "buildingId='" + id + '\''
                 + ", buildingName='" + name + '\''
+                + ", openTime='" + openTime + '\''
+                + ", closeTime='" + closeTime + '\''
                 + ", street='" + streetName + '\''
                 + ", streetNumber='" + streetNumber + '\''
                 + ", zipCode='" + zipCode + '\''
@@ -133,9 +139,10 @@ public class Building {
         }
         Building building = (Building) o;
         return getName().equals(building.getName())
-                && getStreetName().equals(building.getStreetName())
-                && getStreetNumber().equals(building.getStreetNumber())
-                && getZipCode().equals(building.getZipCode())
-                && getCity().equals(building.getCity());
+            && getStreetName().equals(building.getStreetName())
+            && getStreetNumber().equals(building.getStreetNumber())
+            && getZipCode().equals(building.getZipCode())
+            && getCity().equals(building.getCity());
     }
+
 }

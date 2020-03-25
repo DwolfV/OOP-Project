@@ -1,0 +1,11 @@
+.button:hover {
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-background-color: #00A6D6;
+}
+
+#anchorPane {
+    -fx-background-color: black;
+}

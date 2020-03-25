@@ -8,7 +8,6 @@ import nl.tudelft.oopp.demo.repositories.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +49,7 @@ public class RestaurantDishController {
     public @ResponseBody
     ResponseEntity<List<RestaurantDish>> getRestaurantDishByRestaurantId(@PathVariable(value = "restaurant_id") long
                                                                              id) {
+
         return restaurantDishRepository.findByRestaurantId(id).isEmpty() ? new
             ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(restaurantDishRepository.findByRestaurantId(id), HttpStatus.OK);
     }
@@ -63,18 +63,9 @@ public class RestaurantDishController {
 
     @GetMapping("restaurant_dish/{restaurant_dish_id}")
     public @ResponseBody
-    ResponseEntity<RestaurantDish> getRestaurantDishById(@PathVariable(value = "restaurant_dish_id") long restaurantDishId, Authentication authentication) {
-        RestaurantDish toReturn = restaurantDishRepository.findById(restaurantDishId)
-            .orElseGet(() -> null);
-        if (toReturn == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        if (!toReturn.getRestaurant().equals(authentication.getName())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+    ResponseEntity<RestaurantDish> getRestaurantDishById(@PathVariable(value = "restaurant_dish_id") long restaurantDishId) {
+        return restaurantDishRepository.findById(restaurantDishId).map(restaurantDish -> ResponseEntity.ok(restaurantDish))
+               .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -128,14 +119,7 @@ public class RestaurantDishController {
      */
 
     @DeleteMapping("restaurant_dish/{restaurant_dish_id}")
-    public ResponseEntity<?> deleteRestaurantDish(@PathVariable(value = "restaurant_dish_id") long restaurantDishId, Authentication authentication) {
-        RestaurantDish toDelete = restaurantDishRepository.findById(restaurantDishId).orElseGet(() -> null);
-        if (toDelete == null) {
-            return ResponseEntity.noContent().build();
-        }
-        if (!toDelete.getRestaurant().getName().equals(authentication.getName())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> deleteRestaurantDish(@PathVariable(value = "restaurant_dish_id") long restaurantDishId) {
         restaurantDishRepository.deleteById(restaurantDishId);
         return ResponseEntity.noContent().build();
     }

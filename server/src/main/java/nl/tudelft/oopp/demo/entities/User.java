@@ -157,17 +157,27 @@ public class User {
         }
         User user = (User) o;
         return getId() == user.getId()
+<<<<<<< HEAD
                 && Objects.equals(getEmail(), user.getEmail())
                 && Objects.equals(getRole(), user.getRole())
                 && Objects.equals(getFirstName(), user.getFirstName())
                 && Objects.equals(getLastName(), user.getLastName())
                 && Objects.equals(getUsername(), user.getUsername())
                 && Objects.equals(getEvents(), user.getEvents());
+=======
+            && Objects.equals(getEmail(), user.getEmail())
+            && Objects.equals(getRole(), user.getRole())
+            && Objects.equals(getFirstName(), user.getFirstName())
+            && Objects.equals(getLastName(), user.getLastName())
+            && Objects.equals(getUsername(), user.getUsername())
+            && Objects.equals(getEvents(), user.getEvents());
+>>>>>>> development
     }
 
     @Override
     public String toString() {
         return "User{"
+<<<<<<< HEAD
                 + "id=" + id
                 + ", email='" + email + '\''
                 + ", role='" + role + '\''
@@ -176,5 +186,15 @@ public class User {
                 + ", username='" + username + '\''
                 + ", events=" + events
                 + '}';
+=======
+            + "id=" + id
+            + ", email='" + email + '\''
+            + ", role='" + role + '\''
+            + ", first_name='" + firstName + '\''
+            + ", last_name='" + lastName + '\''
+            + ", username='" + username + '\''
+            + ", events=" + events
+            + '}';
+>>>>>>> development
     }
 }

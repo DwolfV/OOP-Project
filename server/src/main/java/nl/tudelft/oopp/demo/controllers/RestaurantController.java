@@ -98,7 +98,7 @@ public class RestaurantController {
      */
     @PutMapping("/restaurant/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable long id,
-                                                       @RequestBody Restaurant newRestaurant) {
+                                                   @RequestBody Restaurant newRestaurant) {
         return restaurantRepository.findById(id).map(restaurant -> {
             restaurant.setName(newRestaurant.getName());
             restaurant.setBuilding(newRestaurant.getBuilding());

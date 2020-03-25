@@ -27,7 +27,6 @@ public class SupplyController {
 
     /**
      * Find all the supplies.
-     *
      * @return message
      */
     @GetMapping("/supply")
@@ -40,7 +39,7 @@ public class SupplyController {
      * Find supply by building and name.
      *
      * @param name - The name of the supply that is to be found
-     * @param id   - The building id of which the supply is part of
+     * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
     @GetMapping("/supply/building")
@@ -74,7 +73,6 @@ public class SupplyController {
 
     /**
      * Create a new supply.
-     *
      * @return message
      */
 
@@ -84,17 +82,16 @@ public class SupplyController {
         UriComponents uri = b.path("/supply/{id}").buildAndExpand(newSupply.getId());
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
-
     /**
      * Update a supply.
      *
-     * @param id        -The id of the supply that is to be updated
+     * @param id          -The id of the supply that is to be updated
      * @param newSupply - The supply instance that has the modified parameters
      * @return a response: the updated supply and the status 200 if the update was successful, 404 if the building was not found
      */
     @PutMapping("/supply/{id}")
     public ResponseEntity<Supply> updateSupply(@PathVariable long id,
-                                               @RequestBody Supply newSupply) {
+                                                   @RequestBody Supply newSupply) {
         return rep.findById(id).map(supply -> {
             supply.setStock(newSupply.getStock());
             supply.setName(newSupply.getName());
