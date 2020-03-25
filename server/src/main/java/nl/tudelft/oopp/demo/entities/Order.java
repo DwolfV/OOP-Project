@@ -1,10 +1,5 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-<<<<<<< HEAD
-=======
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
->>>>>>> 89ac9722a93083e54624378b6a69098dd5fae83b
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Order_Reservation")
