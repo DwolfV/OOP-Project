@@ -13,7 +13,6 @@ import java.time.LocalTime;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Occasion;
 
-
 public class OccasionCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();

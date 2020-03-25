@@ -48,11 +48,12 @@ public class RestaurantSceneController implements Initializable {
         int c = 0;
 
         // load the scene
-        try {
-            BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //try {
+        //    BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+        //ac.getPanes().setAll()
 
         // fill the accordion
         for (int i = 0; i < buildingData.size(); i++) {
