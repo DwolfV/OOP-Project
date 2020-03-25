@@ -1,8 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "Order_Reservation")
@@ -13,7 +13,6 @@ public class Order {
     @Column(name = "id")
     private long id;
 
-    //@NotBlank
     @ManyToOne
     @JoinColumn(name = "room_reservation_id", referencedColumnName = "id", nullable = false)
     private RoomReservation roomReservation;
