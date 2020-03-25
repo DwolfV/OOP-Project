@@ -39,7 +39,6 @@ import nl.tudelft.oopp.demo.helperclasses.Occasion;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
-import nl.tudelft.oopp.demo.helperclasses.TimeToStringConvertor;
 
 public class AdminSceneController implements Initializable {
     public static final TitledPane buildingTP = new TitledPane("Buildings", new Button("View"));
@@ -189,7 +188,7 @@ public class AdminSceneController implements Initializable {
         openTimeCol.setMinWidth(100);
         openTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("openTime"));
-        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConvertor()));
+        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConverter()));
         openTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
 
@@ -198,7 +197,7 @@ public class AdminSceneController implements Initializable {
         closeTimeCol.setMinWidth(100);
         closeTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("closeTime"));
-        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConvertor())));
+        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConverter())));
         closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
 
@@ -352,7 +351,7 @@ public class AdminSceneController implements Initializable {
         openHolidayTimeCol.setMinWidth(100);
         openHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("openTime"));
-        openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
+        openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
         openHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -364,7 +363,7 @@ public class AdminSceneController implements Initializable {
         closeHolidayTimeCol.setMinWidth(100);
         closeHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("closeTime"));
-        closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
+        closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
         closeHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -670,7 +669,7 @@ public class AdminSceneController implements Initializable {
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeCloseCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                 t.getTableView().getItems().get(

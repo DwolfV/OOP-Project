@@ -13,7 +13,10 @@ public class Order {
      *
      * @param roomReservation - The room reservation to which the order is linked
      */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 898d8915a25e2efad2d5ce908d1cfa2859abbe48
     Order(RoomReservation roomReservation) {
         this.roomReservation = roomReservation;
     }
