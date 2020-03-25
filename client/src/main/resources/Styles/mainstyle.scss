@@ -1,4 +1,6 @@
 $l-blue: #6699CC;
+$el-blue: #A4CFF2;
+$eel-blue: #D8EEFF;
 $d-blue: #336699;
 $d-grey: #878787;
 $b-blue: #66CCFF;
@@ -12,6 +14,10 @@ $l-grey: #CCCCCC;
     -fx-background-color: $l-blue;
 }
 
+.hamburger-menu {
+    -fx-background-color: $l-blue;
+}
+
 .button {
     -fx-background-color: $d-blue;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 2, 2);
@@ -21,4 +27,44 @@ $l-grey: #CCCCCC;
 
 .button:hover {
     -fx-background-color: $b-blue;
+}
+
+// The titled panes inside the admin
+.table-pane > .content {
+    -fx-text-fill: white;
+    -fx-background-color: $l-blue;
+}
+
+.table-pane {
+    -fx-text-fill: white;
+}
+
+.table-pane > .title{
+    -fx-background-color: $d-blue;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+}
+
+// The table inside the titled panes in admin scene
+.table-view {
+    -fx-background-color: -fx-table-cell-border-color, white;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-padding: 0.0em;
+}
+
+.table-view .column-header {
+    -fx-background-color: $d-blue;
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: $eel-blue;
+}
+
+.table-row-cell:even {
+    -fx-background-color: $el-blue;
 }

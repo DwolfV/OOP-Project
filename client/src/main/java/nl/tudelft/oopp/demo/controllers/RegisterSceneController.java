@@ -27,8 +27,8 @@ public class RegisterSceneController implements Initializable {
         System.out.println("RegisterSceneController initialize");
 
         Platform.runLater(() -> {
-                firstNameField.requestFocus();
-            });
+            firstNameField.requestFocus();
+        });
     }
 
     /**

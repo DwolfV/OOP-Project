@@ -3,9 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="100.0" prefWidth="600.0" styleClass="primary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HeaderSceneController">
    <children>
-      <Button layoutX="32.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#switchSidebar" text="Menu" />
+      <Button layoutX="31.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#changeLeft" prefHeight="56.0" prefWidth="82.0" styleClass="hamburger-menu" text="Menu" />
    </children>
 </AnchorPane>

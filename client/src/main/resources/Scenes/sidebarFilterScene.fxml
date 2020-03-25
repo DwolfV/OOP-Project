@@ -8,12 +8,10 @@
 
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nl.tudelft.oopp.demo.controllers.ReservationSceneController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefWidth="200.0" maxWidth="200.0" styleClass="secondary-pane" stylesheets="@/Styles/mainstyle.css"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.ReservationSceneController">
 
-    <VBox prefHeight="388.0" prefWidth="120.0" style="-fx-background-color: #7C8082;">
+    <VBox prefWidth="200.0">
         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
               style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Date: ">
             <VBox.margin>

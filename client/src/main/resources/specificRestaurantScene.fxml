@@ -22,11 +22,6 @@
             <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu"
                         HBox.hgrow="ALWAYS">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#handleHomeButton" text="Home"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleReservationButton" text="Reservations"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleRestaurantsButton" text="Restaurants"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleFriendsButton" text="Friends"/>
-                    <MenuItem mnemonicParsing="false" onAction="#handleSettingsButton" text="Settings"/>
                 </items>
                 <HBox.margin>
                     <Insets left="5.0" top="20.0"/>
@@ -37,7 +32,7 @@
                 <HBox.margin>
                     <Insets/>
                 </HBox.margin>
-                <Image url="/TU_Delft_logo_White.png"/>
+                <!--<Image url="/TU_Delft_logo_White.png"/>-->
             </ImageView>
         </HBox>
     </top>
@@ -70,7 +65,7 @@
                 </Text>
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="52.0" nodeOrientation="INHERIT"
                            pickOnBounds="true" preserveRatio="true">
-                    <Image url="@../../../../../../OOPP%20resources/Food%20Plcae.jpg"/>
+                    <!--<Image url="@../../../../../../OOPP%20resources/Food%20Plcae.jpg"/>-->
                 </ImageView>
             </AnchorPane>
             <Accordion>
