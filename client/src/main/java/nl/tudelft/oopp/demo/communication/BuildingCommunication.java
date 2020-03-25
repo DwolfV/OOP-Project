@@ -1,15 +1,17 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Building;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 public class BuildingCommunication {
 
@@ -36,6 +38,8 @@ public class BuildingCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         List<Building> buildings = null;
         // TODO handle exception
         try {
@@ -49,7 +53,7 @@ public class BuildingCommunication {
     }
 
     /**
-     * Retrieves a list of buildings from the server.
+     * Retrieves a building from the server.
      *
      * @return the body of a get request to the server.
      * @throws Exception if communication with the server fails.
@@ -69,6 +73,7 @@ public class BuildingCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Building building = null;
         // TODO handle exception
         try {
@@ -79,6 +84,42 @@ public class BuildingCommunication {
         }
 
         return building;
+    }
+
+    /**
+     * Retrieves the open and close times for a specific building.
+     *
+     * @return the body of a get request to the server.
+     * @throws Exception if communication with the server fails.
+     */
+    public static List<LocalTime> getTimebyBuildingId(long id) {
+        // TODO what if Authenticator.SESSION_COOKIE is not set?
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        Building building = null;
+        // TODO handle exception
+        try {
+            building = mapper.readValue(response.body(), new TypeReference<Building>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<LocalTime> times = new ArrayList<>(List.of(building.getOpenTime(), building.getCloseTime()));
+
+        return times;
     }
 
     /**
@@ -123,6 +164,7 @@ public class BuildingCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Building> buildings = null;
         // TODO handle exception
         try {
@@ -142,6 +184,7 @@ public class BuildingCommunication {
      */
     public static void addBuilding(String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
         String jsonBuilding = "";
         try {
@@ -171,6 +214,7 @@ public class BuildingCommunication {
      */
     public static void updateBuilding(long id, String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
         String jsonBuilding = "";
         try {
