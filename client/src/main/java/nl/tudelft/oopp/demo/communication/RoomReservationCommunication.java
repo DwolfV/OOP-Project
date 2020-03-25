@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -50,6 +51,7 @@ public class RoomReservationCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<RoomReservation> roomReservations = null;
         // TODO handle exception
         try {
