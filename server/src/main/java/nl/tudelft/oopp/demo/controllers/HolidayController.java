@@ -76,17 +76,17 @@ public class HolidayController {
                                                @PathVariable long holiday_id, UriComponentsBuilder b) {
         UriComponents uri = b.path("holidays/{holiday_id}").buildAndExpand(holiday_id);
 
-         Holiday updatedHoliday = holidays.findById(holiday_id).map(holiday -> {
-             holiday.setDate(newHoliday.getDate());
-             holiday.setName(newHoliday.getName());
-             holiday.setT_close(newHoliday.getT_close());
-             holiday.setT_open(newHoliday.getT_open());
-             return holidays.save(holiday);
-         }).orElseGet(() -> {
-             newHoliday.setId(holiday_id);
-             return holidays.save(newHoliday);
-         });
-            return ResponseEntity.created(uri.toUri()).body(updatedHoliday);
+        Holiday updatedHoliday = holidays.findById(holiday_id).map(holiday -> {
+            holiday.setDate(newHoliday.getDate());
+            holiday.setName(newHoliday.getName());
+            holiday.setT_close(newHoliday.getT_close());
+            holiday.setT_open(newHoliday.getT_open());
+            return holidays.save(holiday);
+        }).orElseGet(() -> {
+            newHoliday.setId(holiday_id);
+            return holidays.save(newHoliday);
+        });
+        return ResponseEntity.created(uri.toUri()).body(updatedHoliday);
     }
 
     /**

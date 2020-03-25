@@ -9,12 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * NB
+ * NB.
  * The order should be created automatically when the user clicks the Order button
  * Thus, the important methods here are:
  *  - get the order by a room reservation id
@@ -43,7 +51,7 @@ public class OrderController {
     }
 
     /**
-     * Gets all the events linked to a user
+     * Gets all the events linked to a user.
      * @param id - the id of the user by which the orders are retrieved
      * @param authentication - parameter used to check if the current user has the same id as the id of the user that owns the orders
      * @return a List of Orders which are linked to the logged in user

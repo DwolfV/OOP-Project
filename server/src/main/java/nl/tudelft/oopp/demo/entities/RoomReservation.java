@@ -172,10 +172,10 @@ public class RoomReservation {
         }
         RoomReservation that = (RoomReservation) o;
         return id == that.id
-            && Objects.equals(date, that.date)
-            && Objects.equals(room, that.room)
-            && Objects.equals(startTime, that.startTime)
-            && Objects.equals(endTime, that.endTime)
-            && Objects.equals(user, that.user);
+                && Objects.equals(date, that.date)
+                && Objects.equals(room, that.room)
+                && Objects.equals(startTime, that.startTime)
+                && Objects.equals(endTime, that.endTime)
+                && Objects.equals(user, that.user);
     }
 }

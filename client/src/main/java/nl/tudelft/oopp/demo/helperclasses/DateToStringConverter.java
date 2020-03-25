@@ -1,11 +1,10 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import javafx.util.StringConverter;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javafx.util.StringConverter;
 
-public class DateToStringConvertor extends StringConverter {
+public class DateToStringConverter extends StringConverter {
 
     @Override
     public String toString(Object object) {

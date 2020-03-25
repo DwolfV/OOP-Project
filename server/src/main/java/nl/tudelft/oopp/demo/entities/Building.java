@@ -24,12 +24,12 @@ import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "Building",
-    uniqueConstraints = {
-            @UniqueConstraint(
-                    columnNames = {"street_name", "street_number", "zip_code", "city"},
-                    name = "unique_address_constraint"
-            )
-    })
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"street_name", "street_number", "zip_code", "city"},
+                        name = "unique_address_constraint"
+                )
+        })
 public class Building {
 
     @Id

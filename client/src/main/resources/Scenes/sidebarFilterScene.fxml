@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<AnchorPane prefWidth="200.0" maxWidth="200.0" styleClass="secondary-pane" stylesheets="@/Styles/mainstyle.css"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.ReservationSceneController">
+
+    <VBox prefWidth="200.0">
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Date: ">
+            <VBox.margin>
+                <Insets left="10.0" top="10.0"/>
+            </VBox.margin>
+        </Text>
+        <DatePicker fx:id="dp"> <!--onAction="#pickDate"-->
+            <VBox.margin>
+                <Insets left="10.0" right="10.0"/>
+            </VBox.margin>
+        </DatePicker>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Capacity:">
+            <VBox.margin>
+                <Insets left="10.0" top="10.0"/>
+            </VBox.margin>
+        </Text>
+        <TextField fx:id="capacityId">
+            <VBox.margin>
+                <Insets left="10.0" right="10.0"/>
+            </VBox.margin>
+        </TextField>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Facilities:">
+            <VBox.margin>
+                <Insets left="10.0" top="10.0"/>
+            </VBox.margin>
+        </Text>
+        <CheckBox fx:id="whiteboardId" mnemonicParsing="false" text="Whiteboard" textFill="WHITE">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <VBox.margin>
+                <Insets bottom="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="tableId" mnemonicParsing="false" text="Table" textFill="WHITE">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <VBox.margin>
+                <Insets bottom="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="tvId" mnemonicParsing="false" text="TV" textFill="WHITE">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <VBox.margin>
+                <Insets bottom="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="projectorId" mnemonicParsing="false" text="Projector" textFill="WHITE">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <VBox.margin>
+                <Insets bottom="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="chairsId" mnemonicParsing="false" text="Chairs" textFill="WHITE">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <VBox.margin>
+                <Insets bottom="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+              style="-fx-font-weight: bold; -fx-font-size: 20px;" text="Restaurants:">
+            <VBox.margin>
+                <Insets left="10.0" right="5.0" top="10.0"/>
+            </VBox.margin>
+        </Text>
+        <CheckBox mnemonicParsing="false" text="Delivery" textFill="WHITE">
+            <padding>
+                <Insets bottom="5.0" left="10.0"/>
+            </padding>
+        </CheckBox>
+        <CheckBox mnemonicParsing="false" text="Take Away" textFill="WHITE">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+        </CheckBox>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <top>
+                <Button fx:id="searchId" mnemonicParsing="false" text="Search" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets top="15.0"/>
+                    </BorderPane.margin>
+                </Button>
+            </top>
+        </BorderPane>
+    </VBox>
+</AnchorPane>

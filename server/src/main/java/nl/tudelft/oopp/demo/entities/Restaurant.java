@@ -127,10 +127,10 @@ public class Restaurant {
         }
         Restaurant that = (Restaurant) o;
         return id == that.id
-            && Objects.equals(name, that.name)
-            && Objects.equals(building, that.building)
-            && Objects.equals(timeClose, that.timeClose)
-            && Objects.equals(timeOpen, that.timeOpen);
+                && Objects.equals(name, that.name)
+                && Objects.equals(building, that.building)
+                && Objects.equals(timeClose, that.timeClose)
+                && Objects.equals(timeOpen, that.timeOpen);
     }
 
 }

@@ -19,8 +19,29 @@
     </bottom>
     <top>
         <HBox prefHeight="67.0" prefWidth="720.0" style="-fx-background-color: #00A6D6;" BorderPane.alignment="CENTER">
+<<<<<<< HEAD:client/src/main/resources/calendarSceneOld.fxml
+            <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="108.0" text="Menu"
+                        HBox.hgrow="ALWAYS">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="Home"/>
+                    <MenuItem mnemonicParsing="false" text="Reservations"/>
+                    <MenuItem mnemonicParsing="false" text="Restaurants"/>
+                    <MenuItem mnemonicParsing="false" text="Friends"/>
+                    <MenuItem fx:id="adminButton" mnemonicParsing="false" text="Admin"/>
+                    <MenuItem mnemonicParsing="false" text="Settings"/>
+                </items>
+                <HBox.margin>
+                    <Insets left="5.0" top="20.0"/>
+                </HBox.margin>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </MenuButton>
+            <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS"/>
+=======
             <JFXHamburger fx:id="hamburger" layoutX="12.0" layoutY="20.0" prefHeight="64.0" prefWidth="98.0" stylesheets="@HamburgerStyle.css" />
             <Region prefHeight="103.0" prefWidth="407.0" HBox.hgrow="ALWAYS" />
+>>>>>>> development:client/src/main/resources/calendarScene.fxml
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                 <HBox.margin>
                     <Insets />

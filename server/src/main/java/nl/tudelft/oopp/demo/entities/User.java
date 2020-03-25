@@ -168,13 +168,13 @@ public class User {
     @Override
     public String toString() {
         return "User{"
-            + "id=" + id
-            + ", email='" + email + '\''
-            + ", role='" + role + '\''
-            + ", first_name='" + firstName + '\''
-            + ", last_name='" + lastName + '\''
-            + ", username='" + username + '\''
-            + ", events=" + events
-            + '}';
+                + "id=" + id
+                + ", email='" + email + '\''
+                + ", role='" + role + '\''
+                + ", first_name='" + firstName + '\''
+                + ", last_name='" + lastName + '\''
+                + ", username='" + username + '\''
+                + ", events=" + events
+                + '}';
     }
 }

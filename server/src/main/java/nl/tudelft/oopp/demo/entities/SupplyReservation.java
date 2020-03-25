@@ -170,11 +170,11 @@ public class SupplyReservation {
     @Override
     public String toString() {
         return "SupplyReservation{"
-            + "id=" + id
-            + ", date=" + date
-            + ", amount=" + amount
-            + ", supply=" + supply
-            + ", user=" + user
-            + '}';
+                + "id=" + id
+                + ", date=" + date
+                + ", amount=" + amount
+                + ", supply=" + supply
+                + ", user=" + user
+                + '}';
     }
 }
