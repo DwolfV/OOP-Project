@@ -3,10 +3,6 @@ package nl.tudelft.oopp.demo.communication;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-<<<<<<< HEAD
-
-=======
->>>>>>> development
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,10 +16,6 @@ import java.util.Map;
 
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
-<<<<<<< HEAD
-
-=======
->>>>>>> development
 
 /**
  * Note before:
