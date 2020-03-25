@@ -8,7 +8,7 @@ public class DishOrder {
     private RestaurantDish restaurantDish;
 
     /**
-     * Constructor for the DishOrder class
+     * Constructor for the DishOrder class.
      *
      * @param amount - Amount of a certain dish
      * @param order - The id of the order that the dish is part of
@@ -68,11 +68,11 @@ public class DishOrder {
 
     @Override
     public String toString() {
-        return "DishOrder{" +
-                "id=" + id +
-                ", amount=" + amount +
-                ", order=" + order +
-                ", restaurantDish=" + restaurantDish +
-                '}';
+        return "DishOrder{"
+            + "id=" + id
+            + ", amount=" + amount
+            + ", order=" + order
+            + ", restaurantDish=" + restaurantDish
+            + '}';
     }
 }
