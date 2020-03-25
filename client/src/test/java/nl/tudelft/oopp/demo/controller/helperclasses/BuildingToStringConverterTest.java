@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalTime;
 import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConvertor;
+import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConverter;
 import org.junit.jupiter.api.Test;
 
 public class BuildingToStringConverterTest {
@@ -14,7 +14,7 @@ public class BuildingToStringConverterTest {
 
     @Test
     public void testToString() {
-        BuildingToStringConvertor buildConverter = new BuildingToStringConvertor();
+        BuildingToStringConverter buildConverter = new BuildingToStringConverter();
         String expected = b1.getName();
         String actual = buildConverter.toString(b1);
 

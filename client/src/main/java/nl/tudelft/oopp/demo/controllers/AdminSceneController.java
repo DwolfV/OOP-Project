@@ -169,7 +169,7 @@ public class AdminSceneController implements Initializable {
         openTimeCol.setMinWidth(100);
         openTimeCol.setCellValueFactory(
             new PropertyValueFactory<>("openTime"));
-        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConvertor()));
+        openTimeCol.setCellFactory(TextFieldTableCell.forTableColumn(new TimeToStringConverter()));
         openTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setOpenTime(t.getNewValue()));
 
@@ -178,7 +178,7 @@ public class AdminSceneController implements Initializable {
         closeTimeCol.setMinWidth(100);
         closeTimeCol.setCellValueFactory(
             new PropertyValueFactory<>("closeTime"));
-        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConvertor())));
+        closeTimeCol.setCellFactory((TextFieldTableCell.forTableColumn(new TimeToStringConverter())));
         closeTimeCol.setOnEditCommit((TableColumn.CellEditEvent<Building, LocalTime> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setCloseTime(t.getNewValue()));
 
@@ -323,14 +323,14 @@ public class AdminSceneController implements Initializable {
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
-        buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConvertor()));
+        buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConverter()));
 
         TableColumn<Occasion, LocalDate> dayCol =
                 new TableColumn<>("Day");
         dayCol.setMinWidth(100);
         dayCol.setCellValueFactory(
                 new PropertyValueFactory<>("date"));
-        dayCol.setCellFactory(TextFieldTableCell.forTableColumn(new DateToStringConvertor()));
+        dayCol.setCellFactory(TextFieldTableCell.forTableColumn(new DateToStringConverter()));
         dayCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Occasion, LocalDate> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setDate(t.getNewValue()));
@@ -340,7 +340,7 @@ public class AdminSceneController implements Initializable {
         openHolidayTimeCol.setMinWidth(100);
         openHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("openTime"));
-        openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
+        openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
         openHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -352,7 +352,7 @@ public class AdminSceneController implements Initializable {
         closeHolidayTimeCol.setMinWidth(100);
         closeHolidayTimeCol.setCellValueFactory(
                 new PropertyValueFactory<>("closeTime"));
-        closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConvertor())));
+        closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
         closeHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -511,7 +511,7 @@ public class AdminSceneController implements Initializable {
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
             new PropertyValueFactory<>("building"));
-        buildingNameCol.setCellFactory(TextFieldTableCell.<Room, String>forTableColumn(new BuildingToStringConvertor()));
+        buildingNameCol.setCellFactory(TextFieldTableCell.<Room, String>forTableColumn(new BuildingToStringConverter()));
 
         ObservableList<Room> roomData = FXCollections.observableList(RoomCommunication.getRooms());
         tableRoom.setItems(roomData);
@@ -640,7 +640,7 @@ public class AdminSceneController implements Initializable {
         buildingNameRestaurantCol.setMinWidth(100);
         buildingNameRestaurantCol.setCellValueFactory(
             new PropertyValueFactory<>("building"));
-        buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConvertor()));
+        buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConverter()));
         buildingNameRestaurantCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
@@ -650,7 +650,7 @@ public class AdminSceneController implements Initializable {
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeOpen"));
-        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeOpenCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                 t.getTableView().getItems().get(
@@ -662,7 +662,7 @@ public class AdminSceneController implements Initializable {
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
                 new PropertyValueFactory<>("timeClose"));
-        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConvertor())));
+        timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeCloseCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
                 t.getTableView().getItems().get(
