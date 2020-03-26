@@ -144,6 +144,9 @@ public class RoomReservationController {
      */
     public boolean timeIsValid(LocalTime startTime, LocalTime endTime, List<RoomReservation> allRoomReservations) {
         // TODO open times of the building
+        // TODO user should not be able to book more than one room at a time + issue
+        // TODO users two weeks in advance
+        // TODO ROLE_EMPLOYEE?
         if (startTime.compareTo(endTime) > 0) {
             return false;
         }
