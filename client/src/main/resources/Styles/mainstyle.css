@@ -21,6 +21,13 @@
   -fx-background-color: #66CCFF;
 }
 
+.menu-button {
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
+  -fx-background-radius: 0;
+  -fx-border-width: 2 0 0 0;
+  -fx-border-color: #CCCCCC;
+}
+
 .table-pane > .content {
   -fx-text-fill: white;
   -fx-background-color: #6699CC;
@@ -32,6 +39,8 @@
 
 .table-pane > .title {
   -fx-background-color: #336699;
+  -fx-border-width: 2 0 0 0;
+  -fx-border-color: #CCCCCC;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 0, 2);
   -fx-padding: 10px;
   -fx-text-fill: white;

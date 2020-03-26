@@ -29,6 +29,7 @@
 
 .exit-button {
   -fx-background-color: #6699CC;
+  -fx-background-radius: 20;
   -fx-text-fill: white;
   -fx-text-font: Arial;
   -fx-font-size: 12px;

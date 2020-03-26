@@ -6,7 +6,7 @@ public abstract class Authenticator {
     static long ID = 0;
     static String USERNAME = "";
 
-    static boolean isAdmin() {
+    public static boolean isAdmin() {
         return ROLE.contains("ADMIN");
     }
 }

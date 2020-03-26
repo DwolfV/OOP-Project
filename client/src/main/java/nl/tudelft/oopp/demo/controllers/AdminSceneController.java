@@ -60,6 +60,25 @@ public class AdminSceneController implements Initializable {
     @FXML
     private Accordion ac;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        ac.setPrefWidth(screenBounds.getWidth() - 200);
+
+        ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
+        buildingTP.getStyleClass().setAll("table-pane");
+        roomsTP.getStyleClass().setAll("table-pane");
+        restaurantsTP.getStyleClass().setAll("table-pane");
+
+        buildingView();
+        roomView();
+        restaurantView();
+    }
+
+    public void setControllers(MainSceneController mainSceneController) {
+        this.mainSceneController = mainSceneController;
+    }
+
     /**
      * The method below is implemented for the update button under the building section in the admin scene.
      * When the user double clicks on a specific section of a row one will be able to change the details, and
@@ -775,24 +794,5 @@ public class AdminSceneController implements Initializable {
         ScrollPane scrollPaneRestaurant = new ScrollPane();
         scrollPaneRestaurant.setContent(veBoxRestaurantTP);
         restaurantsTP.setContent(scrollPaneRestaurant);
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        ac.setPrefWidth(screenBounds.getWidth() - 200);
-
-        ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
-        buildingTP.getStyleClass().setAll("table-pane");
-        roomsTP.getStyleClass().setAll("table-pane");
-        restaurantsTP.getStyleClass().setAll("table-pane");
-
-        buildingView();
-        roomView();
-        restaurantView();
-    }
-
-    public void setControllers(MainSceneController mainSceneController) {
-        this.mainSceneController = mainSceneController;
     }
 }

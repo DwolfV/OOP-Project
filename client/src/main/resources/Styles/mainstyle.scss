@@ -6,6 +6,7 @@ $d-grey: #878787;
 $b-blue: #66CCFF;
 $l-grey: #CCCCCC;
 
+// Panes and Faces
 .primary-pane {
     -fx-background-color: $d-blue;
 }
@@ -18,6 +19,7 @@ $l-grey: #CCCCCC;
     -fx-background-color: $l-blue;
 }
 
+// Buttons
 .button {
     -fx-background-color: $d-blue;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 2, 2);
@@ -27,6 +29,13 @@ $l-grey: #CCCCCC;
 
 .button:hover {
     -fx-background-color: $b-blue;
+}
+
+.menu-button {
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: $l-grey;
 }
 
 // The titled panes inside the admin
@@ -41,6 +50,8 @@ $l-grey: #CCCCCC;
 
 .table-pane > .title{
     -fx-background-color: $d-blue;
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: $l-grey;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
     -fx-padding: 10px;
     -fx-text-fill: white;

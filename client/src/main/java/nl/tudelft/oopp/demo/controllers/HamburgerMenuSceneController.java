@@ -3,10 +3,14 @@ package nl.tudelft.oopp.demo.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 
 public class HamburgerMenuSceneController implements Initializable {
 
@@ -20,6 +24,8 @@ public class HamburgerMenuSceneController implements Initializable {
     private Parent sidebarFilterRoot;
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
+
+    @FXML public Button adminButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,6 +45,10 @@ public class HamburgerMenuSceneController implements Initializable {
         }
         restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
+        adminSceneController.setControllers(mainSceneController);
+        if (!Authenticator.isAdmin()) {
+            adminButton.setVisible(false);
+        }
     }
 
     /**
@@ -87,7 +97,6 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openAdminPanel(MouseEvent event) {
-        adminSceneController.setControllers(mainSceneController);
         mainSceneController.changeCenter(adminPanelRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
