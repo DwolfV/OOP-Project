@@ -1,26 +1,29 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class RoomReservation {
 
     private long id;
-    private Date date;
-    private Time startTime;
-    private Time endTime;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private User user;
+    private Room room;
+
+    public RoomReservation() {
+    }
 
     /**
      * Create a new Building instance.
      *
-     * @param id        The unique identifier for Building
      * @param date      The date of the room reservation
      * @param startTime The starting time of the reservation
      * @param endTime   The time when the reservation ends
      * @param user      The user who owns the reservation
      */
-    public RoomReservation(Date date, Time startTime, Time endTime, User user) {
+    public RoomReservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -35,27 +38,27 @@ public class RoomReservation {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -65,6 +68,14 @@ public class RoomReservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
@@ -82,10 +93,10 @@ public class RoomReservation {
     @Override
     public String toString() {
         return "RoomReservation{"
-                + ", date=" + date
-                + ", startTime=" + startTime
-                + ", endTime=" + endTime
-                + ", user=" + user
-                + '}';
+            + ", date=" + date
+            + ", startTime=" + startTime
+            + ", endTime=" + endTime
+            + ", user=" + user
+            + '}';
     }
 }

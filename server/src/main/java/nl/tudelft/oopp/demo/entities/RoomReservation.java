@@ -1,17 +1,23 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.lang.Nullable;
-
-import java.sql.Time;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "Room_Reservation")
@@ -24,7 +30,7 @@ public class RoomReservation {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @NotNull
     @ManyToOne
@@ -33,11 +39,11 @@ public class RoomReservation {
 
     @NotNull
     @Column(name = "start_time", nullable = false)
-    private Time startTime;
+    private LocalTime startTime;
 
     @NotNull
     @Column(name = "end_time", nullable = false)
-    private Time endTime;
+    private LocalTime endTime;
 
     @NotNull
     @ManyToOne
@@ -48,12 +54,23 @@ public class RoomReservation {
     @Nullable
     private Set<Order> orders = new HashSet<>();
 
-    public RoomReservation() {}
+    public RoomReservation() {
+    }
 
-    public RoomReservation(Date date,
+    /**
+     * Create a new RoomReservation instance.
+     *
+     * @param date      Te date for which the Room is reserved.
+     * @param room      The room that is reserved.
+     * @param startTime The start time of the RoomReservation.
+     * @param endTime   The end time of the RoomReservation.
+     * @param user      The user that has reserved the room.
+     */
+
+    public RoomReservation(LocalDate date,
                            Room room,
-                           Time startTime,
-                           Time endTime,
+                           LocalTime startTime,
+                           LocalTime endTime,
                            User user) {
         this.date = date;
         this.room = room;
@@ -61,22 +78,23 @@ public class RoomReservation {
         this.endTime = endTime;
         this.user = user;
     }
+
     /**
      * Create a new RoomReservation instance.
      *
-     * @param id A unique identifier of the RoomReservation.
-     * @param date Te date for which the Room is reserved.
-     * @param room The room that is reserved.
+     * @param id        A unique identifier of the RoomReservation.
+     * @param date      Te date for which the Room is reserved.
+     * @param room      The room that is reserved.
      * @param startTime The start time of the RoomReservation.
-     * @param endTime The end time of the RoomReservation.
-     * @param user The user that has reserved the room.
+     * @param endTime   The end time of the RoomReservation.
+     * @param user      The user that has reserved the room.
      */
 
     public RoomReservation(long id,
-                           Date date,
+                           LocalDate date,
                            Room room,
-                           Time startTime,
-                           Time endTime,
+                           LocalTime startTime,
+                           LocalTime endTime,
                            User user) {
         this.id = id;
         this.date = date;
@@ -94,11 +112,11 @@ public class RoomReservation {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -110,19 +128,19 @@ public class RoomReservation {
         this.room = room;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -134,6 +152,7 @@ public class RoomReservation {
         this.user = user;
     }
 
+    @JsonIgnore
     @Nullable
     public Set<Order> getOrders() {
         return orders;

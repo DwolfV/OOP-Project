@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface DishOrderRepository extends JpaRepository<DishOrder, Long> {
-    public List<DishOrder> findAllByOrderId(long id);
+    List<DishOrder> findAllByOrderId(long id);
 }

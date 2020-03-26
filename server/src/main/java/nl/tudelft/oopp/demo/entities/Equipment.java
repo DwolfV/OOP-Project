@@ -3,8 +3,6 @@ package nl.tudelft.oopp.demo.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "Equipment")
@@ -41,6 +38,14 @@ public class Equipment {
     public Equipment() {
 
     }
+
+    /**
+     * Create a new Equipment instance.
+     *
+     * @param item The item for the Equipment.
+     * @param amount The amount of the Equipment that is in stock.
+     * @param room The room for the Equipment.
+     */
 
     public Equipment(Room room, Item item, int amount) {
         this.room = room;

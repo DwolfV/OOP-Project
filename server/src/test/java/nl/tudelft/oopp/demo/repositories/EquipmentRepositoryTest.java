@@ -3,11 +3,14 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import nl.tudelft.oopp.demo.entities.*;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
+import nl.tudelft.oopp.demo.entities.Room;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +55,8 @@ public class EquipmentRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("build1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("build2", "s2", "sNo2", "z2", "c2");
+        b1 = new Building("build1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
+        b2 = new Building("build2", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s2", "sNo2", "z2", "c2");
         buildRep.save(b1);
         buildRep.save(b2);
 
@@ -136,9 +139,9 @@ public class EquipmentRepositoryTest {
         List<Equipment> equipmentList1 = new ArrayList<Equipment>(List.of(e1, e2));
         List<Equipment> equipmentList2 = new ArrayList<Equipment>(List.of(e3, e4, e5));
         assertEquals(equipmentList1,
-                equipRep.findByRoomId(equipmentList1.get(0).getRoom().getId()));
+            equipRep.findByRoomId(equipmentList1.get(0).getRoom().getId()));
         assertEquals(equipmentList2,
-                equipRep.findByRoomId(equipmentList2.get(0).getRoom().getId()));
+            equipRep.findByRoomId(equipmentList2.get(0).getRoom().getId()));
         assertEquals(fullList.size(), equipmentList1.size() + equipmentList2.size());
     }
 }

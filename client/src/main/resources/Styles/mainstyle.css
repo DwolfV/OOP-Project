@@ -1,0 +1,71 @@
+.primary-pane {
+  -fx-background-color: #336699;
+}
+
+.secondary-pane {
+  -fx-background-color: #6699CC;
+}
+
+.hamburger-menu {
+  -fx-background-color: #6699CC;
+}
+
+.button {
+  -fx-background-color: #336699;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}
+
+.button:hover {
+  -fx-background-color: #66CCFF;
+}
+
+.menu-button {
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
+  -fx-background-radius: 0;
+  -fx-border-width: 2 0 0 0;
+  -fx-border-color: #CCCCCC;
+}
+
+.table-pane > .content {
+  -fx-text-fill: white;
+  -fx-background-color: #6699CC;
+}
+
+.table-pane {
+  -fx-text-fill: white;
+}
+
+.table-pane > .title {
+  -fx-background-color: #336699;
+  -fx-border-width: 2 0 0 0;
+  -fx-border-color: #CCCCCC;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 0, 2);
+  -fx-padding: 10px;
+  -fx-text-fill: white;
+}
+
+.table-view {
+  -fx-background-color: -fx-table-cell-border-color, white;
+  -fx-background-insets: 0, 0 0 0 0;
+  -fx-padding: 0em;
+}
+
+.table-view .column-header {
+  -fx-background-color: #336699;
+}
+
+.table-view .column-header-background .label {
+  -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+  -fx-background-color: #D8EEFF;
+}
+
+.table-row-cell:even {
+  -fx-background-color: #A4CFF2;
+}
+
+/*# sourceMappingURL=mainstyle.css.map */

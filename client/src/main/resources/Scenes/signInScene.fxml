@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="signInId" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="334.0" prefWidth="326.0" styleClass="secondary-pane" stylesheets="@/Styles/loginstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.SignInSceneController">
+
+    <center>
+        <AnchorPane fx:id="signInPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="334.0" prefWidth="326.0" styleClass="secondary-pane" xmlns:fx="http://javafx.com/fxml/1">
+            <TextField fx:id="usernameField" layoutX="47.0" layoutY="102.0" prefHeight="31.0" prefWidth="233.0" promptText="Username"/>
+            <PasswordField fx:id="passwordField" layoutX="47.0" layoutY="141.0" prefHeight="31.0" prefWidth="233.0" promptText="Password"/>
+
+            <Label fx:id="signingInLabel" layoutX="131.0" layoutY="176.0" mnemonicParsing="false" text="Logging in..." visible="false" />
+            <Label fx:id="signedInLabel" layoutX="131.0" layoutY="176.0" mnemonicParsing="false" text="Log in Success" visible="false" />
+            <Label fx:id="failedSignInLabel" layoutX="78.0" layoutY="176.0" mnemonicParsing="false" text="Incorrect password or username" visible="false" />
+
+            <Button fx:id="signInButton" layoutX="47.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#handleLoginButton" prefHeight="31.0" prefWidth="233.0" text="Log in" />
+
+            <Text fill="WHITE" layoutX="104.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
+                <font>
+                    <Font name="Verdana" size="36.0" />
+                </font>
+            </Text>
+
+            <Hyperlink layoutX="104.0" layoutY="237.0" text="Forgot Password?" />
+
+            <Button layoutX="47.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#selectUI" prefHeight="31.0" prefWidth="233.0" text="Sign up" />
+        </AnchorPane>
+    </center>
+</BorderPane>

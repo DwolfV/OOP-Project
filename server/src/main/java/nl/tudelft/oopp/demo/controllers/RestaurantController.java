@@ -102,8 +102,8 @@ public class RestaurantController {
         return restaurantRepository.findById(id).map(restaurant -> {
             restaurant.setName(newRestaurant.getName());
             restaurant.setBuilding(newRestaurant.getBuilding());
-            restaurant.settClose(newRestaurant.gettClose());
-            restaurant.settOpen(newRestaurant.gettOpen());
+            restaurant.setTimeClose(newRestaurant.getTimeClose());
+            restaurant.setTimeOpen(newRestaurant.getTimeOpen());
 
             return new ResponseEntity<>(restaurantRepository.save(restaurant), HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

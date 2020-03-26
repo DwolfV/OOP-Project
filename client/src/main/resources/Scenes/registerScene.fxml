@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="registerId" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="334.0" prefWidth="326.0" styleClass="secondary-pane" stylesheets="@/Styles/loginstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.RegisterSceneController">
+
+    <center>
+        <AnchorPane fx:id="registerPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="334.0" prefWidth="326.0" styleClass="secondary-pane" xmlns:fx="http://javafx.com/fxml/1">
+            <TextField fx:id="firstNameField" layoutX="47.0" layoutY="73.0" prefHeight="31.0" prefWidth="110.0" promptText="First Name"/>
+            <TextField fx:id="lastNameField" layoutX="170.0" layoutY="73.0" prefHeight="31.0" prefWidth="110.0" promptText="Last Name"/>
+            <TextField fx:id="usernameField" layoutX="47.0" layoutY="113.0" prefHeight="31.0" prefWidth="233.0" promptText="Username"/>
+            <PasswordField fx:id="passwordField" layoutX="47.0" layoutY="156.0" prefHeight="31.0" prefWidth="233.0" promptText="Password"/>
+            <PasswordField fx:id="passwordConfirmField" layoutX="47.0" layoutY="196.0" prefHeight="31.0" prefWidth="233.0" promptText="Confirm Password"/>
+
+            <Hyperlink layoutX="119.0" layoutY="237.0" onMouseClicked="#selectUI" text="Back to Login" />
+
+            <Text fill="WHITE" layoutX="94.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
+                <font>
+                    <Font name="Verdana" size="36.0" />
+                </font>
+            </Text>
+
+            <Button layoutX="47.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#selectUI" prefHeight="31.0" prefWidth="233.0" styleClass="sign-up-button" text="Sign Up" />
+
+        </AnchorPane>
+    </center>
+</BorderPane>
