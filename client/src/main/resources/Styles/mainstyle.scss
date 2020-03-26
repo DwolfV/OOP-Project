@@ -5,6 +5,8 @@ $d-blue: #336699;
 $d-grey: #878787;
 $b-blue: #66CCFF;
 $l-grey: #CCCCCC;
+$el-grey: #EEEEEE;
+$sun-orange: #F7E9E1;
 
 // Panes and Faces
 .primary-pane {
@@ -17,6 +19,36 @@ $l-grey: #CCCCCC;
 
 .hamburger-menu {
     -fx-background-color: $l-blue;
+}
+
+// ADMIN
+.scroll-pane-admin {
+    -fx-background-color: $sun-orange;
+}
+
+.admin-center {
+    -fx-padding: 3.0em;
+}
+
+.admin-right {
+    -fx-background-color: $l-blue;
+    -fx-padding: 3.0em;
+}
+
+.admin-bottom {
+    -fx-padding: 1.0em;
+    -fx-spacing: 10;
+}
+
+.admin-pane-button {
+    -fx-text-fill: white;
+    -fx-background-color: $d-blue;
+    -fx-background-radius: 0;
+    -fx-padding: 1em 5em 1em 5em;
+}
+
+.admin-pane-button:hover {
+    -fx-background-color: $b-blue;
 }
 
 // Buttons
@@ -59,13 +91,16 @@ $l-grey: #CCCCCC;
 
 // The table inside the titled panes in admin scene
 .table-view {
-    -fx-background-color: -fx-table-cell-border-color, white;
+    -fx-background-color: white;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-padding: 0.0em;
+    -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
     -fx-background-color: $d-blue;
+    -fx-border-width: 0 1 0 1;
+    -fx-border-color: $l-grey;
 }
 
 .table-view .column-header-background .label {
