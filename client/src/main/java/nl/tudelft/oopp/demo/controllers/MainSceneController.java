@@ -201,6 +201,7 @@ public class MainSceneController implements Initializable {
                     }
                 }
 
+
                 ObservableList<String> from = FXCollections.observableArrayList(timeFrom);
                 ObservableList<String> to = FXCollections.observableArrayList(timeTo);
 
@@ -217,12 +218,16 @@ public class MainSceneController implements Initializable {
 
                         Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                         Button button1 = new Button("Reserve");
+                        String bname = buildingData.get(i).getName();
+                        String rname = showRooms.get(j).getName();
                         buttons.add(button1);
 
                         ComboBox<String> cb = new ComboBox<>();
                         cb.setItems(from);
                         ComboBox<String> cbb = new ComboBox<>();
                         cbb.setItems(to);
+
+                        button1.setOnAction(e -> {System.out.println("building: " + bname + " room " + rname);});
 
 
                         hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
