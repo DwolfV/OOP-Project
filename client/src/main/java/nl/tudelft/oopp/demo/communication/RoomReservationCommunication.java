@@ -72,10 +72,13 @@ public class RoomReservationCommunication {
      */
     public static void addRoomReservation(LocalDate date,
                                           LocalTime startTime,
-                                          LocalTime endTime,
-                                          User user) {
+                                          LocalTime endTime) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+
+        User user = new User();
+        user.setId(Authenticator.ID);
+        user.setUsername(Authenticator.USERNAME);
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
         try {
@@ -103,9 +106,13 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
+    public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+
+        User user = new User();
+        user.setId(Authenticator.ID);
+        user.setUsername(Authenticator.USERNAME);
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
         String jsonRoomReservation = "";
         try {
