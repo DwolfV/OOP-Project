@@ -12,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Order;
+import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 
 public class OrderCommunication {
 
@@ -99,5 +100,39 @@ public class OrderCommunication {
 
         return order;
     }
+
+    /**
+     * Adds an order.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+
+    public static void addOrder(RoomReservation roomReservation) {
+        ObjectMapper mapper = new ObjectMapper();
+        Order order = new Order(roomReservation);
+        String jsonOrder = "";
+        try {
+            jsonOrder = mapper.writeValueAsString(order);
+            System.out.println(jsonOrder);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonOrder)).uri(URI.create("http://localhost:8080/order")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+    }
+
 
 }
