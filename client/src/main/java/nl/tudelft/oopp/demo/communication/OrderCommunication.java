@@ -134,5 +134,38 @@ public class OrderCommunication {
         }
     }
 
+    /**
+     * Updates an order.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+
+    public static void updateOrder(long id, RoomReservation roomReservation) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        Order order = new Order(roomReservation);
+        String jsonOrder = "";
+        try {
+            jsonOrder = mapper.writeValueAsString(order);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonOrder)).uri(URI.create(String.format("http://localhost:8080/order/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+    }
+
 
 }
