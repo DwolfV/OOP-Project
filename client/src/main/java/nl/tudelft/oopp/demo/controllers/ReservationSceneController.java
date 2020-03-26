@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.net.URL;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,7 +12,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,11 +25,6 @@ import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
-import java.net.URL;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class ReservationSceneController implements Initializable {
 
@@ -62,7 +66,8 @@ public class ReservationSceneController implements Initializable {
                 String startTime = String.valueOf(bTime.get(0));
                 String endTime = String.valueOf(bTime.get(1));
                 System.out.println(startTime + " " + endTime);
-                int st, et;
+                int st;
+                int et;
 
                 String[] time = startTime.split(":",2);
                 String check = time[0];
@@ -74,23 +79,24 @@ public class ReservationSceneController implements Initializable {
                 System.out.println(st + " " + et);
 
                 //Start time
-                for(int b = st; b <et; b++){
+                for (int b = st; b < et; b++) {
                     timeFrom.add(b + ":00");
                     timeFrom.add(b + ":30");
 
                 }
 
                 //End time
-                for(int b = st; b <= et; b++){
-                    if(b!=st && b!=et){
+                for (int b = st; b <= et; b++) {
+                    if (b != st && b != et) {
                         timeTo.add(b + ":00");
                         timeTo.add(b + ":30");
-                    }else if(b==st) {
-                        timeTo.add(b + ":30");
-                    }
-                    else if(b==et){
-                        timeTo.add(b+":00");
-                    }
+                    } else
+                        if (b == st) {
+                            timeTo.add(b + ":30");
+                        }
+                        else if (b == et) {
+                            timeTo.add(b + ":00");
+                        }
                 }
 
 
@@ -122,10 +128,9 @@ public class ReservationSceneController implements Initializable {
 
                     EventHandler<ActionEvent> event =
                             new EventHandler<ActionEvent>() {
-                                public void handle(ActionEvent e)
-                                {
-                                    stt[0] = cb.getValue();
-                                }
+                        public void handle(ActionEvent e) {
+                            stt[0] = cb.getValue();
+                        }
                             };
 
                     // Set on action
@@ -133,17 +138,17 @@ public class ReservationSceneController implements Initializable {
 
                     EventHandler<ActionEvent> event1 =
                             new EventHandler<ActionEvent>() {
-                                public void handle(ActionEvent e)
-                                {
+                                public void handle(ActionEvent e) {
                                     ett[0] = cbb.getValue();
                                 }
-                            };
+                    };
 
                     // Set on action
                     cbb.setOnAction(event1);
 
 
-                    button1.setOnAction(e -> {System.out.println("building: " + bname + " room " + rname + " Time from:" + stt[0] + " Time to " + ett[0]);});
+                    button1.setOnAction(e -> {
+                        System.out.println("building: " + bname + " room " + rname + " Time from:" + stt[0] + " Time to " + ett[0]); });
 
                     hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                     hBox.setSpacing(150);
