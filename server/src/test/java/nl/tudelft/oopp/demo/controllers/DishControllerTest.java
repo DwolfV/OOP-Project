@@ -1,5 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +19,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class DishControllerTest {
@@ -59,7 +59,7 @@ class DishControllerTest {
 
     @Test
     void getAllDishes() {
-        List<Dish> expectedList = new ArrayList<>(List.of(d1,d2,d3,d4));
+        List<Dish> expectedList = new ArrayList<>(List.of(d1, d2, d3, d4));
         when(dishRepository.findAll()).thenReturn(expectedList);
         List<Dish> actualList = dishController.getAllDishes();
 
@@ -113,8 +113,8 @@ class DishControllerTest {
 
     @Test
     void deleteDish() {
-        List<Dish> actualList = new ArrayList<Dish>(List.of(d1,d4,d3));
-        List<Dish> expected = new ArrayList<>(List.of(d1,d2,d3,d4));
+        List<Dish> actualList = new ArrayList<Dish>(List.of(d1, d4, d3));
+        List<Dish> expected = new ArrayList<>(List.of(d1, d2, d3, d4));
 
         Optional<Dish> optionalDish = Optional.of(d2);
         ResponseEntity<Dish> dishResponseEntity = ResponseEntity.of(optionalDish);

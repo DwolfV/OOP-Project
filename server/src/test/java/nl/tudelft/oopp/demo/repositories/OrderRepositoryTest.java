@@ -1,18 +1,21 @@
 package nl.tudelft.oopp.demo.repositories;
 
-import nl.tudelft.oopp.demo.entities.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Order;
+import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 public class OrderRepositoryTest {
@@ -50,7 +53,7 @@ public class OrderRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
         buildRep.save(b1);
         roomRep.save(r1);
@@ -79,8 +82,8 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void testFindOrdersByRoomReservationId(){
-        List<Order> orderList = new ArrayList<Order>(List.of(o1,o2));
+    public void testFindOrdersByRoomReservationId() {
+        List<Order> orderList = new ArrayList<Order>(List.of(o1, o2));
         assertEquals(orderList, orderRepository.findOrdersByRoomReservationId(rr1.getId()));
     }
 }
