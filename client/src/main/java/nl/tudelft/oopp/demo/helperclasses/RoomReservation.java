@@ -22,12 +22,14 @@ public class RoomReservation {
      * @param startTime The starting time of the reservation
      * @param endTime   The time when the reservation ends
      * @param user      The user who owns the reservation
+     * @param room      The room that the reservation is linked to
      */
-    public RoomReservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
+    public RoomReservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user, Room room) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.user = user;
+        this.room = room;
     }
 
     public long getId() {

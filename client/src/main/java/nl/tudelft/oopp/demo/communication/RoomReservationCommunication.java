@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
 
@@ -72,14 +73,26 @@ public class RoomReservationCommunication {
      */
     public static void addRoomReservation(LocalDate date,
                                           LocalTime startTime,
-                                          LocalTime endTime) {
+                                          LocalTime endTime,
+                                          long roomId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
         User user = new User();
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
-        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
+
+        // TODO get rooms by id
+        Room room = null;
+        for (Room r : RoomCommunication.getRooms()) {
+            if (r.getId() == roomId) {
+                room = r;
+                break;
+            }
+        }
+
+
+        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
         String jsonRoomReservation = "";
         try {
             jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);
@@ -106,14 +119,25 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime) {
+    public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime, long roomId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
         User user = new User();
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
-        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
+
+        // TODO get rooms by id
+        Room room = null;
+        for (Room r : RoomCommunication.getRooms()) {
+            if (r.getId() == roomId) {
+                room = r;
+                break;
+            }
+        }
+
+
+        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
         String jsonRoomReservation = "";
         try {
             jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);
