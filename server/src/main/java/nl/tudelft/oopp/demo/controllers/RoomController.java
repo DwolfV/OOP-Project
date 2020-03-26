@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
-import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
@@ -12,7 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -41,7 +47,7 @@ public class RoomController {
      * @return a list of the rooms in the building {@link Room}.
      */
     @GetMapping("rooms/{building_id}")
-    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value="building_id") long id) {
+    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value = "building_id") long id) {
         return rooms.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rooms.findByBuildingId(id), HttpStatus.OK);
     }
 
@@ -65,26 +71,36 @@ public class RoomController {
         List<Room> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Room> roomList = rooms.filterRoom(id, capacity);
-        if(!(e1 == null)) filters.add(e1);
-        if(!(e2 == null)) filters.add(e2);
-        if(!(e3 == null)) filters.add(e3);
-        if(!(e4 == null)) filters.add(e4);
+        if (!(e1 == null)) {
+            filters.add(e1);
+        }
+        if (!(e2 == null)) {
+            filters.add(e2);
+        }
+        if (!(e3 == null)) {
+            filters.add(e3);
+        }
+        if (!(e4 == null)) {
+            filters.add(e4);
+        }
         int expected = 0;
         //count the filters;
-        for(String s : filters) {
+        for (String s : filters) {
             expected++;
         }
 
-        if(expected == 0) return roomList;
+        if (expected == 0) {
+            return roomList;
+        }
 
-        for(Room room : roomList){
+        for (Room room : roomList) {
             List<Equipment> equipmentList = room.getEquipment();
             int count = 0; //to count how many filters the room satisfies
             for (Equipment equipment : equipmentList) {
-                if(filters.contains(equipment.getItem().getName())) {
+                if (filters.contains(equipment.getItem().getName())) {
                     count++; //increment the filter counter
                 }
-                if(count == expected) { //the rooms has reached the expected amount of filters, thus
+                if (count == expected) { //the rooms has reached the expected amount of filters, thus
                     result.add(room); //add the room
                     break; //break the loop
                 }
@@ -100,7 +116,7 @@ public class RoomController {
      * @param newRoom The new room to add.
      * @return The added room {@link Room}.
      */
-    @PostMapping(value="/rooms", consumes = {"application/json"})
+    @PostMapping(value = "/rooms", consumes = {"application/json"})
     public ResponseEntity<Room> newRoom(@Valid @RequestBody Room newRoom, UriComponentsBuilder b) {
         rooms.save(newRoom);
         UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
@@ -112,23 +128,24 @@ public class RoomController {
     /**
      * PUT Endpoint to update the entry of a given room.
      *
-     * @param room_id Unique identifier of the room that is to be updated.
+     * @param roomId Unique identifier of the room that is to be updated.
      * @param newRoom The updated version of the room.
      * @return the new room that is updated {@link Room}.
      */
     @PutMapping("rooms/{room_id}")
-    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable long room_id, UriComponentsBuilder b) {
+    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable long roomId, UriComponentsBuilder b) {
 
-        UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(room_id);
+        UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(roomId);
 
-        Room updatedRoom = rooms.findById(room_id)
-            .map( room -> {
+        Room updatedRoom = rooms.findById(roomId)
+            .map(room -> {
                 room.setName(newRoom.getName());
                 room.setBuilding(newRoom.getBuilding());
                 room.setCapacity(newRoom.getCapacity());
                 return rooms.save(room);
             })
-            .orElseGet(() -> {newRoom.setId(room_id);
+            .orElseGet(() -> {
+                newRoom.setId(roomId);
                 return rooms.save(newRoom);
             });
 
@@ -138,11 +155,11 @@ public class RoomController {
     /**
      * DELETE Endpoint to delete the entry of a given room.
      *
-     * @param room_id Unique identifier of the room that is to be deleted. {@link Room}
+     * @param roomId Unique identifier of the room that is to be deleted. {@link Room}
      */
     @DeleteMapping("rooms/{room_id}")
-    public ResponseEntity<?> deleteRoom(@PathVariable long room_id) {
-        rooms.deleteById(room_id);
+    public ResponseEntity<?> deleteRoom(@PathVariable long roomId) {
+        rooms.deleteById(roomId);
 
         return ResponseEntity.noContent().build();
     }

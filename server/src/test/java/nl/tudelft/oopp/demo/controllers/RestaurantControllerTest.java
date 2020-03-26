@@ -1,6 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.sql.Time;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +21,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class RestaurantControllerTest {
@@ -44,11 +44,11 @@ class RestaurantControllerTest {
 
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("b2", "s1", "sNo2", "z2", "c1");
-        r1 = new Restaurant("r1", b1, new Time(1), new Time(2));
-        r2 = new Restaurant("r2", b2, new Time(1), new Time(3));
-        r3 = new Restaurant("r3", b1, new Time(4), new Time(2));
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo2", "z2", "c1");
+        r1 = new Restaurant("r1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
+        r2 = new Restaurant("r2", b2, LocalTime.parse("13:00"), LocalTime.parse("15:00"));
+        r3 = new Restaurant("r3", b1, LocalTime.parse("16:00"), LocalTime.parse("17:30"));
     }
 
     /**
@@ -63,7 +63,7 @@ class RestaurantControllerTest {
 
     @Test
     void testGetAllRestaurants() {
-        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1,r2,r3));
+        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1, r2, r3));
         when(restaurantRepository.findAll()).thenReturn(expectedList);
 
         List<Restaurant> actualList = restaurantController.getAllRestaurants();
@@ -101,21 +101,25 @@ class RestaurantControllerTest {
     @Test
     void testCreateNewRestaurant() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
-        Restaurant restaurant = new Restaurant("r1", b1, new Time(1), new Time(2));
+
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Restaurant restaurant = new Restaurant("r1", b1, LocalTime.parse("09:00"), LocalTime.parse("12:00"));
+
         Optional<Restaurant> optionalRestaurant = Optional.of(restaurant);
 
         when(restaurantRepository.save(restaurant)).thenReturn(restaurant);
 
         assertEquals(restaurant, restaurantController.createNewRestaurant(
-                restaurant, uriComponentsBuilder).getBody());
+            restaurant, uriComponentsBuilder).getBody());
     }
 
     @Test
     void testUpdateRestaurant() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
-        Restaurant restaurant = new Restaurant("r1", b1, new Time(1), new Time(2));
+
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Restaurant restaurant = new Restaurant("r1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
+
         Optional<Restaurant> optionalRestaurant = Optional.of(r1);
 
         ResponseEntity<Restaurant> entity = ResponseEntity.of(optionalRestaurant);
@@ -131,8 +135,8 @@ class RestaurantControllerTest {
 
     @Test
     void testDeleteRestaurant() {
-        List<Restaurant> actualList = new ArrayList<Restaurant>(List.of(r1,r3));
-        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1,r2,r3));
+        List<Restaurant> actualList = new ArrayList<Restaurant>(List.of(r1, r3));
+        List<Restaurant> expectedList = new ArrayList<Restaurant>(List.of(r1, r2, r3));
 
         Optional<Restaurant> optionalRestaurant = Optional.of(r2);
         ResponseEntity<Restaurant> responseEntity = ResponseEntity.of(optionalRestaurant);

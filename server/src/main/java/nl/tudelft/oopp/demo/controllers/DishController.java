@@ -52,7 +52,7 @@ public class DishController {
      */
 
     @GetMapping("/dish/name/{name}")
-    public List<Dish> getAllDishByName(@PathVariable String name){
+    public List<Dish> getAllDishByName(@PathVariable String name) {
         return dishRepository.findByName(name);
     }
 
@@ -77,7 +77,7 @@ public class DishController {
 
     @PutMapping("/dish/{id}")
     public ResponseEntity<Dish> updateDish(@PathVariable long id, @RequestBody Dish newDish) {
-        return dishRepository.findById(id).map( dish -> {
+        return dishRepository.findById(id).map(dish -> {
             dish.setDescription(newDish.getDescription());
             dish.setName(newDish.getName());
             dish.setPrice(newDish.getPrice());

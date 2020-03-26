@@ -1,12 +1,12 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
-
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
@@ -35,6 +35,7 @@ public class RoomReservationController {
     UserRepository users;
 
     // TODO get mappings for get room reservation times only (per room of course, but no info for users)!
+
     /**
      * GET Endpoint to retrieve a list of all room reservations.
      *
@@ -59,12 +60,12 @@ public class RoomReservationController {
      */
     @GetMapping(value = "room_reservations_times/{room_id}", consumes = {"application/json"})
     public @ResponseBody
-    ResponseEntity<Map<String, String>> getRoomReservationTimesByRoomAndDay(@PathVariable(value = "room_id") long roomId, @Valid @RequestBody Date date) {
+    ResponseEntity<Map<String, String>> getRoomReservationTimesByRoomAndDay(@PathVariable(value = "room_id") long roomId, @Valid @RequestBody LocalDate date) {
         Map<String, String> unavailableTimes = new HashMap<>();
 
         for (Object[] times : reservations.findStartAndEndTimesByRoomIdAndDate(roomId, date)) {
-            Time startTime = (Time) times[0];
-            Time endTime = (Time) times[1];
+            LocalTime startTime = (LocalTime) times[0];
+            LocalTime endTime = (LocalTime) times[1];
             unavailableTimes.put(startTime.toString(), endTime.toString());
         }
 
@@ -77,9 +78,9 @@ public class RoomReservationController {
      * @return a list of the room reservations for the given user {@link RoomReservation}.
      */
     @GetMapping("room_reservations/user/{user_id}")
-    public @ResponseBody ResponseEntity<List<RoomReservation>>
-        getRoomReservationsByUser(@PathVariable(value = "user_id") long userId,
-                                  Authentication authentication) {
+    public @ResponseBody
+    ResponseEntity<List<RoomReservation>> getRoomReservationsByUser(@PathVariable(value = "user_id") long userId,
+                                                                    Authentication authentication) {
         System.out.println(authentication.getName());
         return users.findByUsername(authentication.getName()).map(user -> {
             if (user.getId() == userId) {
@@ -96,8 +97,9 @@ public class RoomReservationController {
      * @return The requested room reservation {@link RoomReservation}.
      */
     @GetMapping("room_reservations/{room_reservation_id}")
-    public @ResponseBody ResponseEntity<RoomReservation>
-            getRoomReservationById(@PathVariable(value = "room_reservation_id") long roomReservationId, Authentication authentication) {
+    public @ResponseBody
+    ResponseEntity<RoomReservation> getRoomReservationById(@PathVariable(value = "room_reservation_id") long roomReservationId,
+                                                           Authentication authentication) {
         RoomReservation toReturn = reservations.findById(roomReservationId).orElseGet(() -> null);
         if (toReturn == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -118,9 +120,10 @@ public class RoomReservationController {
      * @return a list of the room reservations in the room by the user {@link RoomReservation}.
      */
     @GetMapping("room_reservations/{user_id}/{room_id}")
-    public @ResponseBody ResponseEntity<List<RoomReservation>> getRoomReservationsByUserAndRoom(@PathVariable(value = "user_id") long userId,
-                                                                                                @PathVariable(value = "room_id") long roomId,
-                                                                                                Authentication authentication) {
+    public @ResponseBody
+    ResponseEntity<List<RoomReservation>> getRoomReservationsByUserAndRoom(@PathVariable(value = "user_id") long userId,
+                                                                           @PathVariable(value = "room_id") long roomId,
+                                                                           Authentication authentication) {
         return users.findByUsername(authentication.getName()).map(user -> {
             if (user.getId() == userId) {
                 return reservations.findByUserIdAndRoomId(userId, roomId).isEmpty()
@@ -133,23 +136,24 @@ public class RoomReservationController {
 
     /**
      * Checks if a given time frame is valid and available.
-     * @param startTime The start of the time period
-     * @param endTime The end of the time period
+     *
+     * @param startTime           The start of the time period
+     * @param endTime             The end of the time period
      * @param allRoomReservations A list of all room reservations that have all unavailable time periods
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
-    public boolean timeIsValid(Time startTime, Time endTime, List<RoomReservation> allRoomReservations) {
+    public boolean timeIsValid(LocalTime startTime, LocalTime endTime, List<RoomReservation> allRoomReservations) {
         // TODO open times of the building
         if (startTime.compareTo(endTime) > 0) {
             return false;
         }
 
-        String sTime = startTime.toString();
-        String eTime = endTime.toString();
-        String startSec = sTime.split(":")[2];
-        String startMin = sTime.split(":")[1];
-        String endSec = eTime.split(":")[2];
-        String endMin = eTime.split(":")[1];
+        String startTimeString = startTime.format(DateTimeFormatter.ISO_TIME);
+        String endTimeString = endTime.format(DateTimeFormatter.ISO_TIME);
+        String startSec = startTimeString.split(":")[2];
+        String startMin = startTimeString.split(":")[1];
+        String endSec = endTimeString.split(":")[2];
+        String endMin = endTimeString.split(":")[1];
 
         if (!startSec.equals("00") || !endSec.equals("00")) {
             return false;
@@ -217,7 +221,7 @@ public class RoomReservationController {
     /**
      * PUT Endpoint to update the entry of a given room reservation.
      *
-     * @param roomReservationId Unique identifier of the room reservation that is to be updated.
+     * @param roomReservationId  Unique identifier of the room reservation that is to be updated.
      * @param newRoomReservation The updated version of the room reservation.
      * @return the new room reservation that is updated {@link RoomReservation}.
      */
@@ -231,7 +235,7 @@ public class RoomReservationController {
         return reservations.findById(roomReservationId)
                 .map(roomReservation -> {
                     if (users.findByUsername(authentication.getName()).isEmpty() || newRoomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()
-                        || roomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()) {
+                            || roomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()) {
                         return new ResponseEntity<RoomReservation>(HttpStatus.UNAUTHORIZED);
                     }
 

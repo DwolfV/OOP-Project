@@ -40,22 +40,23 @@ public class SupplyReservationController {
      * GET Endpoint to retrieve a list of all supply reservations for a user.
      *
      * @return a list of the supply reservation for the given user {@link SupplyReservation}
-     *
      */
     @GetMapping("supply_reservations/{user_id}")
-    public @ResponseBody List<SupplyReservation>  getSupplyReservationsByUser(@PathVariable(value="user_id") long userId) {
+    public @ResponseBody
+    List<SupplyReservation> getSupplyReservationsByUser(@PathVariable(value = "user_id") long userId) {
         return supplyReservationRepository.findByUserId(userId);
     }
 
     /**
      * GET Endpoint to retrieve the reservation for a supply by ID.
      *
-     * @param supply_reservation_id Unique identifier of the equipment.
+     * @param supplyReservationId Unique identifier of the equipment.
      * @return The requested equipment {@link SupplyReservation}.
      */
     @GetMapping("supply_reservations/{supply_reservation_id}")
-    public @ResponseBody ResponseEntity<SupplyReservation>  getRoomReservationById(@PathVariable(value = "id") long supply_reservation_id) {
-        SupplyReservation toReturn = supplyReservationRepository.findById(supply_reservation_id).orElseGet(() -> null);
+    public @ResponseBody
+    ResponseEntity<SupplyReservation> getRoomReservationById(@PathVariable(value = "id") long supplyReservationId) {
+        SupplyReservation toReturn = supplyReservationRepository.findById(supplyReservationId).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
@@ -77,15 +78,17 @@ public class SupplyReservationController {
     /**
      * PUT Endpoint to update the entry of a given supply reservation.
      *
-     * @param supply_reservation_id Unique identifier of the supply reservation that is to be uploaded.
-     * @param newSupplyReservation The updated version of the supply reservation.
+     * @param supplyReservationId Unique identifier of the supply reservation that is to be uploaded.
+     * @param newSupplyReservation  The updated version of the supply reservation.
      * @return the new supply reservation that is updated {@link SupplyReservation}.
      */
 
     @PutMapping("supply_reservation/{supply_reservation_id}")
-    public ResponseEntity<SupplyReservation> replaceSupplyReservation(@RequestBody SupplyReservation newSupplyReservation, @PathVariable(value = "supply_reservation_id") long supply_reservation_id, UriComponentsBuilder b){
-        UriComponents uriComponents = b.path("supply_reservation/{supply_reservation_id}").buildAndExpand(supply_reservation_id);
-        SupplyReservation updated = supplyReservationRepository.findById(supply_reservation_id).map(supplyReservation -> {
+    public ResponseEntity<SupplyReservation> replaceSupplyReservation(@RequestBody SupplyReservation newSupplyReservation,
+                                                                      @PathVariable(value = "supply_reservation_id") long supplyReservationId,
+                                                                      UriComponentsBuilder b) {
+        UriComponents uriComponents = b.path("supply_reservation/{supply_reservation_id}").buildAndExpand(supplyReservationId);
+        SupplyReservation updated = supplyReservationRepository.findById(supplyReservationId).map(supplyReservation -> {
             supplyReservation.setAmount(newSupplyReservation.getAmount());
             supplyReservation.setDate(newSupplyReservation.getDate());
             supplyReservation.setSupply(newSupplyReservation.getSupply());
@@ -93,7 +96,7 @@ public class SupplyReservationController {
 
             return supplyReservationRepository.save(supplyReservation);
         }).orElseGet(() -> {
-            newSupplyReservation.setId(supply_reservation_id);
+            newSupplyReservation.setId(supplyReservationId);
             return supplyReservationRepository.save(newSupplyReservation);
         });
 
@@ -103,12 +106,12 @@ public class SupplyReservationController {
     /**
      * DELETE Endpoint to delete the entry of a given supply reservation.
      *
-     * @param supply_reservation_id Unique identifier of the supply reservation that is to be deleted. {@link SupplyReservation}
+     * @param supplyReservationId Unique identifier of the supply reservation that is to be deleted. {@link SupplyReservation}
      */
 
     @DeleteMapping("supply_reservation/{supply_reservation_id}")
-    public ResponseEntity<?> delete(@PathVariable long supply_reservation_id) {
-        supplyReservationRepository.deleteById(supply_reservation_id);
+    public ResponseEntity<?> delete(@PathVariable long supplyReservationId) {
+        supplyReservationRepository.deleteById(supplyReservationId);
 
         return ResponseEntity.noContent().build();
     }

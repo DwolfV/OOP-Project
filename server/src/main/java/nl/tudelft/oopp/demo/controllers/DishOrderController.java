@@ -1,17 +1,22 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.List;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.DishOrder;
 import nl.tudelft.oopp.demo.repositories.DishOrderRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/dish_order")
@@ -44,8 +49,8 @@ public class DishOrderController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<DishOrder> getDishOrderById(@PathVariable long id) {
-        return repository.findById(id).map( dishOrder -> ResponseEntity.ok(dishOrder))
-                .orElseGet( () -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return repository.findById(id).map(dishOrder -> ResponseEntity.ok(dishOrder))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -62,14 +67,14 @@ public class DishOrderController {
     }
 
     /**
-     * Update a DishOrder
+     * Update a DishOrder.
      * @param id - the id of the dishOrder that is going to be changed
      * @param newDishOrder - the dish that has the newly updated attributes
      * @return a response entity
      */
     @PutMapping("/{id}")
     public ResponseEntity<DishOrder> updateDishOrder(@PathVariable long id, @RequestBody DishOrder newDishOrder) {
-        return repository.findById(id).map( dishOrder -> {
+        return repository.findById(id).map(dishOrder -> {
             dishOrder.setOrder(newDishOrder.getOrder());
             dishOrder.setDish(newDishOrder.getDish());
             dishOrder.setAmount(newDishOrder.getAmount());
@@ -79,15 +84,15 @@ public class DishOrderController {
     }
 
     /**
-     * Delete a DishOrder
+     * Delete a DishOrder.
      * @param id - the id of the DishOrder that needs to be deleted
      * @return a status code
      */
     @DeleteMapping("/{id}")
     public ResponseEntity deleteDishOrder(@PathVariable long id) {
-        return repository.findById(id).map( dishOrder -> {
+        return repository.findById(id).map(dishOrder -> {
             repository.delete(dishOrder);
             return new ResponseEntity("The dish order has been deleted successfully", HttpStatus.OK);
-        }).orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND));
+        }).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 }

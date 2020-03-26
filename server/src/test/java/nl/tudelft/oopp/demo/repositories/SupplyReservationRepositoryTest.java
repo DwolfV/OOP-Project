@@ -1,7 +1,10 @@
 package nl.tudelft.oopp.demo.repositories;
 
-import java.sql.Date;
-import java.sql.Time;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -12,9 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 public class SupplyReservationRepositoryTest {
@@ -52,9 +52,9 @@ public class SupplyReservationRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("build1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("build2", "s2", "sNo2", "z2", "c2");
-        b3 = new Building("build3", "s3", "sNo3", "z3", "c2");
+        b1 = new Building("build1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("build2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        b3 = new Building("build3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s3", "sNo3", "z3", "c2");
         buildingRepository.save(b1);
         buildingRepository.save(b2);
         buildingRepository.save(b3);
@@ -66,17 +66,17 @@ public class SupplyReservationRepositoryTest {
         supplyRepository.save(s2);
         supplyRepository.save(s3);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("email2", "employee", "fn2", "ln2", new Date(2000), "user2");
-        u3 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user3");
+        u1 = new User("email1", "student", "fn1", "ln1", "user1");
+        u2 = new User("email2", "employee", "fn2", "ln2", "user2");
+        u3 = new User("email1", "student", "fn1", "ln1", "user3");
 
         userRepository.save(u1);
         userRepository.save(u2);
         userRepository.save(u3);
 
-        sr1 = new SupplyReservation(new Date(1), new Time(1), new Time(2), 11, s1, u1);
-        sr2 = new SupplyReservation(new Date(2),new Time(1), new Time(2), 22, s1, u1);
-        sr3 = new SupplyReservation(new Date(1),new Time(2), new Time(3), 33, s3, u1);
+        sr1 = new SupplyReservation(LocalDate.parse("2000-01-01"), LocalTime.parse("10:00"), LocalTime.parse("15:00"), 11, s1, u1);
+        sr2 = new SupplyReservation(LocalDate.parse("2001-01-01"), LocalTime.parse("11:00"), LocalTime.parse("12:00"), 22, s1, u1);
+        sr3 = new SupplyReservation(LocalDate.parse("2002-01-01"), LocalTime.parse("13:00"), LocalTime.parse("14:00"), 33, s3, u1);
 
         supplyReservationRepository.save(sr1);
         supplyReservationRepository.save(sr2);
@@ -114,7 +114,7 @@ public class SupplyReservationRepositoryTest {
 
     @Test
     void findByUserId() {
-        List<SupplyReservation> list1 = new ArrayList<>(List.of(sr1, sr2,sr3));
+        List<SupplyReservation> list1 = new ArrayList<>(List.of(sr1, sr2, sr3));
         assertEquals(list1, supplyReservationRepository.findByUserId(sr1.getUser().getId()));
     }
 

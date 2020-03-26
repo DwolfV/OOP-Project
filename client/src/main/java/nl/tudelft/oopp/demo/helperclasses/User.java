@@ -7,6 +7,7 @@ public class User {
     private String role;
     private String firstName;
     private String lastName;
+    private String username;
 
     public User(){
 
@@ -15,7 +16,6 @@ public class User {
     /**
      * Create a new User instance.
      *
-     * @param id A unique ID for the User.
      * @param email The email of the User.
      * @param role The role of the User, like student, employee, admin.
      * @param firstName The first name of the User.
@@ -69,6 +69,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

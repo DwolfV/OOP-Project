@@ -1,11 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.sun.istack.NotNull;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.util.Objects;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,15 +32,15 @@ public class Event {
 
     //@NotBlank
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     //@NotBlank
     @Column(name = "startTime", nullable = false)
-    private Time startTime;
+    private LocalTime startTime;
 
     //@NotBlank
     @Column(name = "endTime", nullable = false)
-    private Time endTime;
+    private LocalTime endTime;
 
     @NotNull
     @ManyToOne
@@ -57,18 +54,18 @@ public class Event {
     /**
      * Constructor for the Event entity.
      *
-     * @param name - The name of the event
+     * @param name        - The name of the event
      * @param description - A description of the event
-     * @param date - The date of the event
-     * @param startTime - The start time of the event
-     * @param endTime - The end time of the event
-     * @param user - The user who created the event
+     * @param date        - The date of the event
+     * @param startTime   - The start time of the event
+     * @param endTime     - The end time of the event
+     * @param user        - The user who created the event
      */
     public Event(String name,
                  String description,
-                 Date date,
-                 Time startTime,
-                 Time endTime,
+                 LocalDate date,
+                 LocalTime startTime,
+                 LocalTime endTime,
                  User user) {
         this.id = id;
         this.name = name;
@@ -103,27 +100,27 @@ public class Event {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -150,13 +147,13 @@ public class Event {
     @Override
     public String toString() {
         return "Event{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", description='" + description + '\''
-                + ", date=" + date
-                + ", startTime=" + startTime
-                + ", endTime=" + endTime
-                + ", user=" + user
-                + '}';
+            + "id=" + id
+            + ", name='" + name + '\''
+            + ", description='" + description + '\''
+            + ", date=" + date
+            + ", startTime=" + startTime
+            + ", endTime=" + endTime
+            + ", user=" + user
+            + '}';
     }
 }

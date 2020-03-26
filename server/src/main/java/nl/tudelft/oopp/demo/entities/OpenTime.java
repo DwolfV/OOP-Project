@@ -28,21 +28,34 @@ public class OpenTime {
 
     @NotNull
     @Column (name = "t_open")
-    private Time t_open;
+    private Time openTime;
 
     @NotNull
     @Column (name = "t_close")
-    private Time t_close;
+    private Time closeTime;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 
-    public OpenTime(String day, Time t_open, Time t_close, Building building) {
+    public OpenTime() {
+
+    }
+
+    /**
+     * Create a new OpenTime instance.
+     *
+     * @param closeTime The closing time of a building.
+     * @param openTime The opening time of a building.
+     * @param day The day of the week corresponding to a specific openTime.
+     * @param building The building's ID for the OpenTime.
+     */
+
+    public OpenTime(String day, Time openTime, Time closeTime, Building building) {
         this.day = day;
-        this.t_open = t_open;
-        this.t_close = t_close;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
         this.building = building;
 
     }
@@ -50,17 +63,17 @@ public class OpenTime {
      * Create a new OpenTime instance.
      *
      * @param id A unique ID for the OpenTime.
-     * @param t_close The closing time of a building.
-     * @param t_open The opening time of a building.
-     * @param building The building for the OpenTime.
-     * @param building_id The building's ID for the OpenTime.
+     * @param closeTime The closing time of a building.
+     * @param openTime The opening time of a building.
+     * @param day The day of the week corresponding to a specific openTime.
+     * @param building The building's ID for the OpenTime.
      */
 
-    public OpenTime(long id, String day, Time t_open, Time t_close, Building building) {
+    public OpenTime(long id, String day, Time openTime, Time closeTime, Building building) {
         this.id = id;
         this.day = day;
-        this.t_open = t_open;
-        this.t_close = t_close;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
         this.building = building;
 
     }
@@ -81,20 +94,20 @@ public class OpenTime {
         this.day = day;
     }
 
-    public Time getT_open() {
-        return t_open;
+    public Time getOpenTime() {
+        return openTime;
     }
 
-    public void setT_open(Time t_open) {
-        this.t_open = t_open;
+    public void setOpenTime(Time openTime) {
+        this.openTime = openTime;
     }
 
-    public Time getT_close() {
-        return t_close;
+    public Time getCloseTime() {
+        return closeTime;
     }
 
-    public void setT_close(Time t_close) {
-        this.t_close = t_close;
+    public void setCloseTime(Time closeTime) {
+        this.closeTime = closeTime;
     }
 
     public Building getBuilding() {
@@ -114,12 +127,12 @@ public class OpenTime {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        OpenTime open_time = (OpenTime) o;
-        return getId() == open_time.getId()
-                && Objects.equals(getDay(), open_time.getDay())
-                && Objects.equals(getT_open(), open_time.getT_open())
-                && Objects.equals(getT_close(), open_time.getT_close())
-                && Objects.equals(getBuilding(), open_time.getBuilding());
+        OpenTime openTime = (OpenTime) o;
+        return getId() == openTime.getId()
+                && Objects.equals(getDay(), openTime.getDay())
+                && Objects.equals(getOpenTime(), openTime.getOpenTime())
+                && Objects.equals(getCloseTime(), openTime.getCloseTime())
+                && Objects.equals(getBuilding(), openTime.getBuilding());
     }
 
 }
