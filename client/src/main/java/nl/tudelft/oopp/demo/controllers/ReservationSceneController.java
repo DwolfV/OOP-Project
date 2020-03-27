@@ -18,12 +18,11 @@ import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static java.time.LocalDate.now;
 
 
 public class ReservationSceneController implements Initializable {
@@ -42,6 +41,8 @@ public class ReservationSceneController implements Initializable {
 
         TitledPane[] tps = new TitledPane[buildingData.size()];
         List<Button> buttons = new ArrayList<>();
+
+        SidebarSceneController ctrl = mainSceneController.sidebarLoader.getController();
 
         int c = 0; // count - for lists, c - for tps
 
@@ -159,9 +160,11 @@ public class ReservationSceneController implements Initializable {
 
                     long rId = showRooms.get(j).getId();
 
+                    LocalDate cDate = ctrl.onPickDate();
+
                     button1.setOnAction(e -> {
-                        RoomReservationCommunication.addRoomReservation(now(), stt[0], ett[0], rId);
-                        System.out.println(now() + " " + stt[0] + " " + ett[0] + " " + rId);
+                        RoomReservationCommunication.addRoomReservation(cDate, stt[0], ett[0], rId);
+                        System.out.println(cDate + " " + stt[0] + " " + ett[0] + " " + rId);
                     });
 
 
