@@ -21,9 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.converter.IntegerStringConverter;
@@ -71,7 +69,7 @@ public class AdminSceneController implements Initializable {
         restaurantView();
 
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        ac.setPrefWidth(screenBounds.getWidth() - 200);
+        ac.setPrefWidth(screenBounds.getWidth() - 400);
         ac.getPanes().addAll(buildingTP, roomsTP, restaurantsTP);
     }
 
@@ -181,7 +179,7 @@ public class AdminSceneController implements Initializable {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
         VBox vbox = new VBox();
-        vbox.setSpacing(40);
+        vbox.setPadding(new Insets(0, 0, 50, 0));
         BorderPane buildingInfoBP = getBuildingInfoBP();
         BorderPane buildingTimesBP = getBuildingTimesBP();
         buildingInfoBP.getStyleClass().setAll("border-pane-admin");
@@ -190,10 +188,21 @@ public class AdminSceneController implements Initializable {
         buildingTimesBP.setPrefWidth(screenBounds.getWidth() - 300);
         vbox.getChildren().setAll(buildingInfoBP, buildingTimesBP);
 
+        GridPane gridPane = new GridPane();
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(15);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(70);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(15);
+        gridPane.getColumnConstraints().addAll(col1, col2, col3);
+
+        gridPane.add(vbox, 1,0);
+        gridPane.setMaxWidth(screenBounds.getWidth() - 5);
+
         ScrollPane scroll = new ScrollPane();
         scroll.setMaxHeight(screenBounds.getHeight() - 300);
-        scroll.setContent(vbox);
-        scroll.setPadding(new Insets(30));
+        scroll.setContent(gridPane);
         scroll.getStyleClass().setAll("scroll-pane-admin");
         buildingTP.setContent(scroll);
     }
@@ -213,6 +222,7 @@ public class AdminSceneController implements Initializable {
         TableColumn<Building, Long> idCol = new TableColumn<>("id");
         idCol.setMinWidth(100);
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idCol.getStyleClass().setAll("first-col");
 
         TableColumn<Building, String> buildingCol = new TableColumn<>("Building Name");
         buildingCol.setMinWidth(100);
@@ -269,6 +279,7 @@ public class AdminSceneController implements Initializable {
         cityCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setCity(t.getNewValue()));
+        cityCol.getStyleClass().setAll("last-col");
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
@@ -354,13 +365,14 @@ public class AdminSceneController implements Initializable {
         centerScroll.getStyleClass().setAll("admin-center");
         hboxBottom.getStyleClass().setAll("admin-bottom");
         vboxRight.getStyleClass().setAll("admin-right");
-        addButtonBuilding.getStyleClass().setAll("admin-pane-button");
-        deleteButtonBuilding.getStyleClass().setAll("admin-pane-button");
-        updateButtonBuilding.getStyleClass().setAll("admin-pane-button");
+        addButtonBuilding.getStyleClass().add("admin-pane-button");
+        deleteButtonBuilding.getStyleClass().add("admin-pane-button");
+        updateButtonBuilding.getStyleClass().add("admin-pane-button");
 
         tableBuilding.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         // Return BorderPane
         BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(tableBuilding);
         borderPane.setBottom(hboxBottom);
         borderPane.setRight(vboxRight);
@@ -519,11 +531,15 @@ public class AdminSceneController implements Initializable {
         centerScroll.getStyleClass().setAll("admin-center");
         hboxBottom.getStyleClass().setAll("admin-bottom");
         vboxRight.getStyleClass().setAll("admin-right");
+        addOpenTime.getStyleClass().add("admin-pane-button");
+        deleteTimeBuilding.getStyleClass().add("admin-pane-button");
+        updateTimeBuilding.getStyleClass().add("admin-pane-button");
 
-        // Return border pane
+        tableHoliday.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        // Return BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().setAll("admin-border-pane");
-        borderPane.setCenter(centerScroll);
+        borderPane.setCenter(tableHoliday);
         borderPane.setBottom(hboxBottom);
         borderPane.setRight(vboxRight);
         return borderPane;

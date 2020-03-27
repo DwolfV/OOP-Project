@@ -98,7 +98,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openAdminPanel(MouseEvent event) {
         mainSceneController.changeCenter(adminPanelRoot);
-        mainSceneController.sidebar = (sidebarRoot);
+        mainSceneController.sidebar = (null);
         headerSceneController.changeLeft();
     }
 }

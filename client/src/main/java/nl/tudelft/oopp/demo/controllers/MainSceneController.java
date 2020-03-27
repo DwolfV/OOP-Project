@@ -24,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -63,6 +64,8 @@ public class MainSceneController implements Initializable {
         }
         borderPane.setTop(headerRoot);
         borderPane.setLeft(sidebarRoot);
+        Pane emptyRight = new Pane();
+        borderPane.setRight(emptyRight);
         sidebar = sidebarRoot;
         borderPane.setCenter(calendarRoot);
 
