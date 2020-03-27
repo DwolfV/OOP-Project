@@ -28,11 +28,12 @@ import static java.time.LocalDate.now;
 
 public class ReservationSceneController implements Initializable {
 
+    public MainSceneController mainSceneController;
+
     @FXML
     private BorderPane bPane;
     @FXML
     private Accordion ac = new Accordion();
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -185,6 +186,9 @@ public class ReservationSceneController implements Initializable {
 
         }
 
+    }
 
+    public void setControllers(MainSceneController mainSceneController) {
+        this.mainSceneController = mainSceneController;
     }
 }

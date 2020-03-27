@@ -17,6 +17,7 @@ public class HamburgerMenuSceneController implements Initializable {
     private MainSceneController mainSceneController;
     private HeaderSceneController headerSceneController;
     private RestaurantSceneController restaurantSceneController;
+    private ReservationSceneController reservationSceneController;
     private AdminSceneController adminSceneController;
 
     private Parent reservationRoot;
@@ -43,8 +44,12 @@ public class HamburgerMenuSceneController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
+
+        reservationSceneController.setControllers(mainSceneController);
         adminSceneController.setControllers(mainSceneController);
         if (!Authenticator.isAdmin()) {
             adminButton.setVisible(false);
