@@ -167,6 +167,7 @@ public class RoomReservationController {
         }
 
         for (RoomReservation roomReservation : allRoomReservations) {
+            // TODO break, if roomReservation is the same as the room reservation, whose times are checked below
             boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) > 0
                     && startTime.compareTo(roomReservation.getEndTime()) > 0;
 
