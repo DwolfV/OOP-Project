@@ -16,6 +16,8 @@ dependencies {
     compile group: 'com.calendarfx', name: 'view', version: '11.8.3'
 
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.3'
+    testCompile group: 'org.mock-server', name: 'mockserver-netty', version: '5.10.0'
+    compile group: 'org.mock-server', name: 'mockserver-client-java', version: '5.10.0'
 }
 
 
