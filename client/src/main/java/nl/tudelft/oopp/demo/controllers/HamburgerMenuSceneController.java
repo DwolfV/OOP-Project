@@ -96,7 +96,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openRestaurants(MouseEvent event) {
         mainSceneController.changeCenter(restaurantRoot);
-        mainSceneController.sidebar = (sidebarFilterRoot);
+        mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }
 
