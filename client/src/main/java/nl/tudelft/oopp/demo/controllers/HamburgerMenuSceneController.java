@@ -26,12 +26,14 @@ public class HamburgerMenuSceneController implements Initializable {
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
 
+    public FXMLLoader sidebarFilterLoader;
+
     @FXML public Button adminButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         FXMLLoader reservationLoader = new FXMLLoader(getClass().getResource("/Scenes/reservationScene.fxml"));
-        FXMLLoader sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
+        sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
@@ -49,7 +51,8 @@ public class HamburgerMenuSceneController implements Initializable {
         restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
 
-        reservationSceneController.setControllers(mainSceneController);
+        reservationSceneController.setControllers(this);
+        reservationSceneController.init();
         adminSceneController.setControllers(mainSceneController);
         if (!Authenticator.isAdmin()) {
             adminButton.setVisible(false);

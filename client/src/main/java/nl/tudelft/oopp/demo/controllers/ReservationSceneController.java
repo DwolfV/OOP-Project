@@ -1,5 +1,11 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,7 +13,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,17 +27,10 @@ import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 
 public class ReservationSceneController implements Initializable {
 
-    public MainSceneController mainSceneController;
+    public HamburgerMenuSceneController hamburgerMenuSceneController;
 
     @FXML
     private BorderPane bPane;
@@ -36,13 +39,17 @@ public class ReservationSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void init() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
         TitledPane[] tps = new TitledPane[buildingData.size()];
         List<Button> buttons = new ArrayList<>();
 
-        SidebarSceneController ctrl = mainSceneController.sidebarLoader.getController();
+        SidebarSceneController ctrl = hamburgerMenuSceneController.sidebarFilterLoader.getController();
 
         int c = 0; // count - for lists, c - for tps
 
@@ -70,10 +77,10 @@ public class ReservationSceneController implements Initializable {
                 System.out.println(startTime + " " + endTime);
                 int st, et;
 
-                String[] time = startTime.split(":",2);
+                String[] time = startTime.split(":", 2);
                 String check = time[0];
                 st = Integer.valueOf(check);
-                time = endTime.split(":",2);
+                time = endTime.split(":", 2);
                 check = time[0];
                 et = Integer.valueOf(check);
 
@@ -81,33 +88,32 @@ public class ReservationSceneController implements Initializable {
 
                 //Start time
                 for (int b = st; b < et; b++) {
-                    if(b<10){
-                        timeFrom.add(LocalTime.parse("0"+b + ":00"));
-                        timeFrom.add(LocalTime.parse("0"+b + ":30") );
-                    }else{
+                    if (b < 10) {
+                        timeFrom.add(LocalTime.parse("0" + b + ":00"));
+                        timeFrom.add(LocalTime.parse("0" + b + ":30"));
+                    } else {
                         timeFrom.add(LocalTime.parse(b + ":00"));
-                        timeFrom.add(LocalTime.parse(b + ":30") );
+                        timeFrom.add(LocalTime.parse(b + ":30"));
                     }
 
                 }
 
                 //End time
                 for (int b = st; b <= et; b++) {
-                    if(b<10){
+                    if (b < 10) {
                         if (b != st && b != et) {
-                            timeTo.add(LocalTime.parse("0"+b + ":00"));
-                            timeTo.add(LocalTime.parse("0"+b + ":30"));
+                            timeTo.add(LocalTime.parse("0" + b + ":00"));
+                            timeTo.add(LocalTime.parse("0" + b + ":30"));
                         } else if (b == st) {
-                            timeTo.add(LocalTime.parse("0"+b + ":30"));
+                            timeTo.add(LocalTime.parse("0" + b + ":30"));
                         }
-                    }else{
+                    } else {
                         if (b != st && b != et) {
                             timeTo.add(LocalTime.parse(b + ":00"));
                             timeTo.add(LocalTime.parse(b + ":30"));
                         } else if (b == st) {
                             timeTo.add(LocalTime.parse(b + ":30"));
-                        }
-                        else if (b == et) {
+                        } else if (b == et) {
                             timeTo.add(LocalTime.parse(b + ":00"));
                         }
                     }
@@ -138,21 +144,21 @@ public class ReservationSceneController implements Initializable {
                     final LocalTime[] ett = new LocalTime[1];
 
                     EventHandler<ActionEvent> event =
-                            new EventHandler<ActionEvent>() {
-                        public void handle(ActionEvent e) {
-                            stt[0] = cb.getValue();
-                        }
-                            };
+                        new EventHandler<ActionEvent>() {
+                            public void handle(ActionEvent e) {
+                                stt[0] = cb.getValue();
+                            }
+                        };
 
                     // Set on action
                     cb.setOnAction(event);
 
                     EventHandler<ActionEvent> event1 =
-                            new EventHandler<ActionEvent>() {
-                                public void handle(ActionEvent e) {
-                                    ett[0] = cbb.getValue();
-                                }
-                    };
+                        new EventHandler<ActionEvent>() {
+                            public void handle(ActionEvent e) {
+                                ett[0] = cbb.getValue();
+                            }
+                        };
 
                     // Set on action
                     cbb.setOnAction(event1);
@@ -160,9 +166,8 @@ public class ReservationSceneController implements Initializable {
 
                     long rId = showRooms.get(j).getId();
 
-                    LocalDate cDate = ctrl.onPickDate();
-
                     button1.setOnAction(e -> {
+                        LocalDate cDate = ctrl.onPickDate();
                         RoomReservationCommunication.addRoomReservation(cDate, stt[0], ett[0], rId);
                         System.out.println(cDate + " " + stt[0] + " " + ett[0] + " " + rId);
                     });
@@ -171,8 +176,8 @@ public class ReservationSceneController implements Initializable {
                     hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                     hBox.setSpacing(150);
                     hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                            + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+                        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                        + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
                     vBox.getChildren().add(hBox);
                 }
                 tps[c].setText(buildingData.get(i).getName());
@@ -191,7 +196,7 @@ public class ReservationSceneController implements Initializable {
 
     }
 
-    public void setControllers(MainSceneController mainSceneController) {
-        this.mainSceneController = mainSceneController;
+    public void setControllers(HamburgerMenuSceneController hamburgerMenuSceneController) {
+        this.hamburgerMenuSceneController = hamburgerMenuSceneController;
     }
 }
