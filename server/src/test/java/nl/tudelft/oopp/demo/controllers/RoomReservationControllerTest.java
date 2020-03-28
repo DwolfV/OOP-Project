@@ -14,6 +14,7 @@ import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,6 +56,9 @@ class RoomReservationControllerTest {
 
     @Mock
     private UserRepository users;
+
+    @Mock
+    private BuildingRepository buildings;
 
     @Mock
     private JdbcUserDetailsManager jdbcUserDetailsManager;
@@ -269,6 +273,7 @@ class RoomReservationControllerTest {
 
         when(roomReservationRepository.save(roomReservation)).thenReturn(roomReservation);
         when(users.findByUsername(u1.getUsername())).thenReturn(Optional.of(u1));
+        when(buildings.findById(b1.getId())).thenReturn(Optional.of(b1));
 
         assertEquals(roomReservation, roomReservationController.newRoomReservation(
             roomReservation, uriComponentsBuilder, new Authentication() {
