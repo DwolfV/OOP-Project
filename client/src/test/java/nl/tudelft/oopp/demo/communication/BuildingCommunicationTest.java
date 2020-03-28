@@ -15,28 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
 
 public class BuildingCommunicationTest {
-//    public class TestMockServer {
-//        private void createExpectationForInvalidAuth() {
-//            new MockServerClient("127.0.0.1", 1080)
-//                .when(
-//                    request()
-//                        .withMethod("POST")
-//                        .withPath("/validate")
-//                        .withHeader("\"Content-type\", \"application/json\"")
-//                        .withBody(exact("{username: 'foo', password: 'bar'}")),
-//                    exactly(1))
-//                .respond(
-//                    response()
-//                        .withStatusCode(401)
-//                        .withHeaders(
-//                            new Header("Content-Type", "application/json; charset=utf-8"),
-//                            new Header("Cache-Control", "public, max-age=86400"))
-//                        .withBody("{ message: 'incorrect username and password combination' }")
-//                        .withDelay(TimeUnit.SECONDS,1)
-//                );
-//        }
-//        // ...
-//    }
 
     private ClientAndServer mockServer;
 
@@ -65,9 +43,6 @@ public class BuildingCommunicationTest {
             )
             .respond(
                 response()
-                    .withHeaders(
-                        //new Header(CONTENT_TYPE.toString(), MediaType.APPLICATION_JSON_VALUE)
-                    )
                     .withBody(body)
             );
 
