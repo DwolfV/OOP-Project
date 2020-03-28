@@ -9,9 +9,9 @@
 - **Tip:** 
 
 ### Atanas
-- **Top:** 
+- **Top:** We fixed all checkstyle issues, worked better as a team and divided our work more evenly. The new GUI of the application is great and we have fixed a lot of bugs. 
 
-- **Tip:** 
+- **Tip:** We have to add more issues on the issue board and document our communication better. Also, some key features are still missing from the application, so we should work on that as well.
 
 ### Daniel 
 - **Top:** This week we trully improved our team skills, everyone communicated better, we made sure to add new board issues to stay on task. And overall, the team seems to be going to the right direction.
