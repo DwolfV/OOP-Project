@@ -147,7 +147,7 @@ public class RoomReservationController {
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
     public boolean timeIsValid(RoomReservation newRoomReservation, List<RoomReservation> allRoomReservations) {
-        // TODO users can only book two weeks in advance
+        // TODO users can only book two weeks in advance + do not allow past dates and times
         // TODO ROLE_EMPLOYEE?
 
         LocalTime startTime = newRoomReservation.getStartTime();
