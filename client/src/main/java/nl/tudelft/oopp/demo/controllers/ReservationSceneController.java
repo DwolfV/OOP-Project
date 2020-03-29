@@ -30,8 +30,6 @@ import java.util.ResourceBundle;
 
 
 
-
-
 public class ReservationSceneController implements Initializable {
 
     public HamburgerMenuSceneController hamburgerMenuSceneController;
@@ -47,6 +45,9 @@ public class ReservationSceneController implements Initializable {
 
     }
 
+    /**
+     * Loads all the available rooms.
+     */
     public void init() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
@@ -169,12 +170,12 @@ public class ReservationSceneController implements Initializable {
                     // Set on action
                     cbb.setOnAction(event1);
 
-                    long rId = showRooms.get(j).getId();
+                    long roomId = showRooms.get(j).getId();
 
                     button1.setOnAction(e -> {
-                        LocalDate cDate = ctrl.onPickDate();
-                        RoomReservationCommunication.addRoomReservation(cDate, stt[0], ett[0], rId);
-                        System.out.println(cDate + " " + stt[0] + " " + ett[0] + " " + rId);
+                        LocalDate chosenDate = ctrl.onPickDate();
+                        RoomReservationCommunication.addRoomReservation(chosenDate, stt[0], ett[0], roomId);
+                        System.out.println(chosenDate + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
 
 
@@ -192,8 +193,8 @@ public class ReservationSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vBox = new VBox(ac);
-            borderPane.setCenter(vBox);
+            VBox verticalBox = new VBox(ac);
+            borderPane.setCenter(verticalBox);
             borderPane.setPadding(new Insets(30, 5, 5, 10));
             //rootScene.setCenter(bPane);
 
