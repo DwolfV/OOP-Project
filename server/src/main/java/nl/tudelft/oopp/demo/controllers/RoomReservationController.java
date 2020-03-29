@@ -147,7 +147,6 @@ public class RoomReservationController {
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
     public boolean timeIsValid(RoomReservation newRoomReservation, List<RoomReservation> allRoomReservations) {
-        // TODO users can only book two weeks in advance + do not allow past dates and times
         // TODO ROLE_EMPLOYEE?
 
         LocalTime startTime = newRoomReservation.getStartTime();
@@ -208,6 +207,26 @@ public class RoomReservationController {
             }
         }
 
+        LocalDate dateNow = LocalDate.now();
+        // if the date in the room reservation is in the past
+        if (newRoomReservation.getDate().compareTo(dateNow) < 0){
+            return false;
+        }
+
+        // if the date is more than two weeks from now
+        LocalDate dateTwoWeeksFromNow = dateNow.plusWeeks(2);
+        if (newRoomReservation.getDate().compareTo(dateTwoWeeksFromNow) > 0) {
+            return false;
+        }
+
+        // if the room reservation is for today
+        if (newRoomReservation.getDate().equals(dateNow)) {
+            // if the start time is in the past
+            LocalTime timeNow = LocalTime.now();
+            if (newRoomReservation.getStartTime().compareTo(timeNow) < 0) {
+                return false;
+            }
+        }
         return true;
     }
 

@@ -266,7 +266,7 @@ class RoomReservationControllerTest {
         Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
         RoomReservation roomReservation = new RoomReservation(
-            LocalDate.parse("2020-01-03"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
+            LocalDate.now().plusDays(1), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
 
         Optional<RoomReservation> optionalRoomReservation = Optional.of(roomReservation);
         ResponseEntity<RoomReservation> responseEntity = ResponseEntity.of(optionalRoomReservation);
