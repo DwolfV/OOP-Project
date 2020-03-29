@@ -209,7 +209,7 @@ public class RoomReservationController {
 
         LocalDate dateNow = LocalDate.now();
         // if the date in the room reservation is in the past
-        if (newRoomReservation.getDate().compareTo(dateNow) < 0){
+        if (newRoomReservation.getDate().compareTo(dateNow) < 0) {
             return false;
         }
 
@@ -223,9 +223,7 @@ public class RoomReservationController {
         if (newRoomReservation.getDate().equals(dateNow)) {
             // if the start time is in the past
             LocalTime timeNow = LocalTime.now();
-            if (newRoomReservation.getStartTime().compareTo(timeNow) < 0) {
-                return false;
-            }
+            return newRoomReservation.getStartTime().compareTo(timeNow) >= 0;
         }
         return true;
     }
