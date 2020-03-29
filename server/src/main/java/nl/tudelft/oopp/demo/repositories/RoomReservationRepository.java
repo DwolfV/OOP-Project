@@ -13,6 +13,8 @@ public interface RoomReservationRepository extends JpaRepository<RoomReservation
 
     List<RoomReservation> findByUserIdAndRoomId(long userId, long roomId);
 
+    List<RoomReservation> findByUserIdAndDate(long userId, LocalDate date);
+
     List<RoomReservation> findByDate(LocalDate date);
 
     List<RoomReservation> findByDateAndRoomId(LocalDate date, long roomId);
