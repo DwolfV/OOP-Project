@@ -4,9 +4,9 @@
 - **Tip:** 
 
 ### Alena
-- **Top:** 
+- **Top:** We worked really well as a team. Helped each other a lot when someone encountered a problem.
 
-- **Tip:** 
+- **Tip:** Still need to work more efficiently and solve issues faster.
 
 ### Atanas
 - **Top:** We fixed all checkstyle issues, worked better as a team and divided our work more evenly. The new GUI of the application is great and we have fixed a lot of bugs. 
