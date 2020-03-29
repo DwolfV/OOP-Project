@@ -10,6 +10,35 @@
   -fx-background-color: #6699CC;
 }
 
+.scroll-pane-admin {
+  -fx-background-color: #F7E9E1;
+}
+
+.admin-center {
+  -fx-padding: 3em;
+}
+
+.admin-right {
+  -fx-background-color: #6699CC;
+  -fx-padding: 3em;
+}
+
+.admin-bottom {
+  -fx-padding: 1em;
+  -fx-spacing: 10;
+}
+
+.admin-pane-button {
+  -fx-text-fill: white;
+  -fx-background-color: #336699;
+  -fx-background-radius: 0;
+  -fx-padding: 1em 5em 1em 5em;
+}
+
+.admin-pane-button:hover {
+  -fx-background-color: #66CCFF;
+}
+
 .button {
   -fx-background-color: #336699;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
@@ -47,13 +76,16 @@
 }
 
 .table-view {
-  -fx-background-color: -fx-table-cell-border-color, white;
+  -fx-background-color: white;
   -fx-background-insets: 0, 0 0 0 0;
   -fx-padding: 0em;
+  -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
   -fx-background-color: #336699;
+  -fx-border-width: 0 1 0 1;
+  -fx-border-color: #CCCCCC;
 }
 
 .table-view .column-header-background .label {

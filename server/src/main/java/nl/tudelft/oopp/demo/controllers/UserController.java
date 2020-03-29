@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.entities.UserInfo;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     JdbcUserDetailsManager jdbcUserDetailsManager;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /**
      * GET Endpoint to retrieve a list of all users.
@@ -53,7 +58,7 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<User> getUserById(@PathVariable long userId) {
         return rep.findById(userId).map(user -> ResponseEntity.ok(user))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 
@@ -115,8 +120,9 @@ public class UserController {
 
     /**
      * Login and authenticate.
+     *
      * @param authentication authentication
-     * @return response entity list of usernames
+     * @return response entity list of username, authority and user id
      */
     @GetMapping(value = "login")
     public ResponseEntity<List<String>> logIn(Authentication authentication) {
@@ -127,5 +133,30 @@ public class UserController {
             }
         }
         return new ResponseEntity<>(Arrays.asList(jdbcUserDetailsManager.loadUserByUsername(authentication.getName()).getAuthorities().toString(), id), HttpStatus.OK);
+    }
+
+    /**
+     * POST request mapping to handle the sign up feature.
+     *
+     * @param userInfo The user information that is to be added to the database
+     * @return on success it will return the User object that is added to the database (it does not have the password)
+     */
+    @PostMapping(value = "signup", consumes = {"application/json"})
+    public ResponseEntity<User> signUp(@Valid @RequestBody UserInfo userInfo, UriComponentsBuilder b) {
+        // TODO sanitize the input strings?
+
+        if (jdbcUserDetailsManager.userExists(userInfo.getUsername())) {
+            return new ResponseEntity("User already exists.", HttpStatus.CONFLICT);
+        }
+
+        User newUser = new User(userInfo.getEmail(), "ROLE_USER", userInfo.getFirstName(), userInfo.getLastName(), userInfo.getUsername());
+
+        newUser = rep.save(newUser);
+        UriComponents uri = b.path("signup/{user_id}").buildAndExpand(newUser.getId());
+
+        jdbcUserDetailsManager.createUser(org.springframework.security.core.userdetails.User.withUsername(userInfo.getUsername())
+            .password(passwordEncoder.encode(userInfo.getPassword())).roles("USER").build());
+
+        return ResponseEntity.created(uri.toUri()).body(newUser);
     }
 }

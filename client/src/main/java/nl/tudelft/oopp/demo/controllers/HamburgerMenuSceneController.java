@@ -43,7 +43,6 @@ public class HamburgerMenuSceneController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
         adminSceneController.setControllers(mainSceneController);
         if (!Authenticator.isAdmin()) {
@@ -88,7 +87,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openRestaurants(MouseEvent event) {
         mainSceneController.changeCenter(restaurantRoot);
-        mainSceneController.sidebar = (sidebarFilterRoot);
+        mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }
 

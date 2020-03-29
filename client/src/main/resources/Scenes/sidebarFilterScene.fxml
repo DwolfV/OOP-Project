@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
 <AnchorPane prefWidth="200.0" maxWidth="200.0" styleClass="secondary-pane" stylesheets="@/Styles/mainstyle.css"
-            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.ReservationSceneController">
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.SidebarSceneController">
 
     <VBox prefWidth="200.0">
         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
