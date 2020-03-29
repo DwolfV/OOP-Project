@@ -1,5 +1,11 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,16 +27,6 @@ import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
-
-
-
 
 public class ReservationSceneController implements Initializable {
 
@@ -47,6 +43,9 @@ public class ReservationSceneController implements Initializable {
 
     }
 
+    /**
+     * The method is used to set up the reservation scene when a user clicks on the "Reservations" button.
+     */
     public void init() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
@@ -169,12 +168,12 @@ public class ReservationSceneController implements Initializable {
                     // Set on action
                     cbb.setOnAction(event1);
 
-                    long rId = showRooms.get(j).getId();
+                    long roomId = showRooms.get(j).getId();
 
                     button1.setOnAction(e -> {
-                        LocalDate cDate = ctrl.onPickDate();
-                        RoomReservationCommunication.addRoomReservation(cDate, stt[0], ett[0], rId);
-                        System.out.println(cDate + " " + stt[0] + " " + ett[0] + " " + rId);
+                        LocalDate date = ctrl.onPickDate();
+                        RoomReservationCommunication.addRoomReservation(date, stt[0], ett[0], roomId);
+                        System.out.println(date + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
 
 
@@ -192,8 +191,8 @@ public class ReservationSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox vBox = new VBox(ac);
-            borderPane.setCenter(vBox);
+            VBox box = new VBox(ac);
+            borderPane.setCenter(box);
             borderPane.setPadding(new Insets(30, 5, 5, 10));
             //rootScene.setCenter(bPane);
 
