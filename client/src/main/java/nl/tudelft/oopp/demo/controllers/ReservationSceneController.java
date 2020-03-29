@@ -1,5 +1,11 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,13 +27,6 @@ import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 
 
 public class ReservationSceneController implements Initializable {
@@ -46,7 +45,7 @@ public class ReservationSceneController implements Initializable {
     }
 
     /**
-     * Loads all the available rooms.
+     * The method is used to set up the reservation scene when a user clicks on the "Reservations" button.
      */
     public void init() {
         ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
@@ -173,9 +172,9 @@ public class ReservationSceneController implements Initializable {
                     long roomId = showRooms.get(j).getId();
 
                     button1.setOnAction(e -> {
-                        LocalDate chosenDate = ctrl.onPickDate();
-                        RoomReservationCommunication.addRoomReservation(chosenDate, stt[0], ett[0], roomId);
-                        System.out.println(chosenDate + " " + stt[0] + " " + ett[0] + " " + roomId);
+                        LocalDate date = ctrl.onPickDate();
+                        RoomReservationCommunication.addRoomReservation(date, stt[0], ett[0], roomId);
+                        System.out.println(date + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
 
 
@@ -193,8 +192,8 @@ public class ReservationSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox verticalBox = new VBox(ac);
-            borderPane.setCenter(verticalBox);
+            VBox box = new VBox(ac);
+            borderPane.setCenter(box);
             borderPane.setPadding(new Insets(30, 5, 5, 10));
             //rootScene.setCenter(bPane);
 
