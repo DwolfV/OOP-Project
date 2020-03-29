@@ -7,7 +7,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,12 +29,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
+
+
+
 public class ReservationSceneController implements Initializable {
 
     public HamburgerMenuSceneController hamburgerMenuSceneController;
 
     @FXML
-    private BorderPane bPane;
+    private BorderPane borderPane;
+
     @FXML
     private Accordion ac = new Accordion();
 
@@ -68,11 +76,12 @@ public class ReservationSceneController implements Initializable {
                 ArrayList<LocalTime> timeFrom = new ArrayList<>();
                 ArrayList<LocalTime> timeTo = new ArrayList<>();
 
-                List<LocalTime> bTime = BuildingCommunication.getTimebyBuildingId(buildingData.get(i).getId());
-                String startTime = String.valueOf(bTime.get(0));
-                String endTime = String.valueOf(bTime.get(1));
+                List<LocalTime> buildingTime = BuildingCommunication.getTimebyBuildingId(buildingData.get(i).getId());
+                String startTime = String.valueOf(buildingTime.get(0));
+                String endTime = String.valueOf(buildingTime.get(1));
                 System.out.println(startTime + " " + endTime);
-                int st, et;
+                int st;
+                int et;
 
                 String[] time = startTime.split(":", 2);
                 String check = time[0];
@@ -120,11 +129,11 @@ public class ReservationSceneController implements Initializable {
                 ObservableList<LocalTime> from = FXCollections.observableArrayList(timeFrom);
                 ObservableList<LocalTime> to = FXCollections.observableArrayList(timeTo);
 
-                VBox vBox = new VBox();
+                VBox vertBox = new VBox();
                 tps[c] = new TitledPane();
 
                 for (int j = 0; j < showRooms.size(); j++) {
-                    HBox hBox = new HBox();
+                    HBox horizBox = new HBox();
 
                     Label label1 = new Label(showRooms.get(j).getName());
                     label1.setStyle("-fx-font-weight: bold");
@@ -169,23 +178,23 @@ public class ReservationSceneController implements Initializable {
                     });
 
 
-                    hBox.getChildren().addAll(label1, label2, cb, cbb, button1);
-                    hBox.setSpacing(150);
-                    hBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+                    horizBox.getChildren().addAll(label1, label2, cb, cbb, button1);
+                    horizBox.setSpacing(150);
+                    horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                         + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                         + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
-                    vBox.getChildren().add(hBox);
+                    vertBox.getChildren().add(horizBox);
                 }
                 tps[c].setText(buildingData.get(i).getName());
-                tps[c].setContent(vBox);
+                tps[c].setContent(vertBox);
                 ac.getPanes().add(tps[c]);
                 c++;
             }
 
             // load the accordion into the scene
             VBox vBox = new VBox(ac);
-            bPane.setCenter(vBox);
-            bPane.setPadding(new Insets(30, 5, 5, 10));
+            borderPane.setCenter(vBox);
+            borderPane.setPadding(new Insets(30, 5, 5, 10));
             //rootScene.setCenter(bPane);
 
         }
