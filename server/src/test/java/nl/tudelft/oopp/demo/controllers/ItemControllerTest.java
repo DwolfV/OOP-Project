@@ -32,6 +32,9 @@ public class ItemControllerTest {
     @InjectMocks
     private ItemController itemController;
 
+    /**
+     * Sets up the items, so that they can be used later in the tests.
+     */
     @BeforeEach
     public void save() {
         i1 = new Item("projector");

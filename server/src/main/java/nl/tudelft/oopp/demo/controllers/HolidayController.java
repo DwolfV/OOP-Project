@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 
+
 public class HolidayController {
     @Autowired
     HolidayRepository holidays;
@@ -50,17 +51,16 @@ public class HolidayController {
     }
 
     /**
-     * GET Endpoint to retrieve holiday by ID.
+    * GET Endpoint to retrieve holiday by ID.
      *
      * @param holidayId Unique identifier of the equipment.
      * @return The requested equipment {@link Holiday}.
      */
     @GetMapping("holidays/{holiday_id}")
-    public @ResponseBody
-    ResponseEntity<Holiday> getHolidayById(@PathVariable(value = "holiday_id") long holidayId) {
+    public @ResponseBody ResponseEntity<Holiday> getHolidayById(@PathVariable long holidayId) {
         Holiday toReturn = holidays.findById(holidayId).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-            : new ResponseEntity<>(toReturn, HttpStatus.OK);
+                : new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
     /**
@@ -73,14 +73,14 @@ public class HolidayController {
 
     @PutMapping("holidays/{holiday_id}")
     public ResponseEntity<Holiday> replaceHoliday(@RequestBody Holiday newHoliday,
-                                                  @PathVariable(value = "holiday_id") long holidayId, UriComponentsBuilder b) {
+                                               @PathVariable long holidayId, UriComponentsBuilder b) {
         UriComponents uri = b.path("holidays/{holiday_id}").buildAndExpand(holidayId);
 
         Holiday updatedHoliday = holidays.findById(holidayId).map(holiday -> {
             holiday.setDate(newHoliday.getDate());
             holiday.setName(newHoliday.getName());
-            holiday.setTimeClose(newHoliday.getTimeClose());
-            holiday.setTimeOpen(newHoliday.getTimeOpen());
+            holiday.setT_close(newHoliday.getT_close());
+            holiday.setT_open(newHoliday.getT_open());
             return holidays.save(holiday);
         }).orElseGet(() -> {
             newHoliday.setId(holidayId);
@@ -96,7 +96,7 @@ public class HolidayController {
      */
 
     @DeleteMapping("holidays/{holiday_id}")
-    public ResponseEntity<?> deleteHoliday(@PathVariable(value = "holiday_id") long holidayId) {
+    public ResponseEntity<?> deleteHoliday(@PathVariable long holidayId) {
         holidays.deleteById(holidayId);
 
         return ResponseEntity.noContent().build();

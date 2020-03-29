@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,11 +33,11 @@ public class Restaurant {
 
     @NotNull
     @Column(name = "t_close")
-    private Time timeClose;
+    private LocalTime timeClose;
 
     @NotNull
     @Column(name = "t_open")
-    private Time timeOpen;
+    private LocalTime timeOpen;
 
     public Restaurant() {
 
@@ -51,7 +51,7 @@ public class Restaurant {
      * @param timeOpen    The opening time of the Restaurant.
      */
 
-    public Restaurant(String name, Building building, Time timeClose, Time timeOpen) {
+    public Restaurant(String name, Building building, LocalTime timeClose, LocalTime timeOpen) {
         this.name = name;
         this.building = building;
         this.timeClose = timeClose;
@@ -68,7 +68,7 @@ public class Restaurant {
      * @param timeOpen    The opening time of the Restaurant.
      */
 
-    public Restaurant(long id, String name, Building building, Time timeClose, Time timeOpen) {
+    public Restaurant(long id, String name, Building building, LocalTime timeClose, LocalTime timeOpen) {
         this.id = id;
         this.name = name;
         this.building = building;
@@ -101,19 +101,19 @@ public class Restaurant {
         this.building = building;
     }
 
-    public Time getTimeClose() {
+    public LocalTime getTimeClose() {
         return timeClose;
     }
 
-    public void setTimeClose(Time timeClose) {
+    public void setTimeClose(LocalTime timeClose) {
         this.timeClose = timeClose;
     }
 
-    public Time getTimeOpen() {
+    public LocalTime getTimeOpen() {
         return timeOpen;
     }
 
-    public void setTimeOpen(Time timeOpen) {
+    public void setTimeOpen(LocalTime timeOpen) {
         this.timeOpen = timeOpen;
     }
 
@@ -127,10 +127,10 @@ public class Restaurant {
         }
         Restaurant that = (Restaurant) o;
         return id == that.id
-            && Objects.equals(name, that.name)
-            && Objects.equals(building, that.building)
-            && Objects.equals(timeClose, that.timeClose)
-            && Objects.equals(timeOpen, that.timeOpen);
+                && Objects.equals(name, that.name)
+                && Objects.equals(building, that.building)
+                && Objects.equals(timeClose, that.timeClose)
+                && Objects.equals(timeOpen, that.timeOpen);
     }
 
 }

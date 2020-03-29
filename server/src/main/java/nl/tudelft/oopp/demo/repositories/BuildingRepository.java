@@ -12,8 +12,8 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
     List<Building> findByName(String name);
 
     @Query(" select distinct b from Building b inner join b.rooms r inner join r.equipment e "
-        + " WHERE (?1 is null OR r.capacity >= ?1) "
-        + " order by r.capacity asc")
+            + " WHERE (?1 is null OR r.capacity >= ?1) "
+            + " order by r.capacity asc")
     List<Building> filterBuilding(Integer capacity);
 
 }

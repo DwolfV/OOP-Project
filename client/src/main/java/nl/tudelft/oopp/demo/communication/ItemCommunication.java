@@ -1,14 +1,16 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+
 import nl.tudelft.oopp.demo.helperclasses.Item;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 public class ItemCommunication {
 
@@ -16,7 +18,6 @@ public class ItemCommunication {
 
     /**
      * Retrieves a list of items from the server.
-     *
      * @return the body of a get request to the server.
      * @throws Exception if communication with the server fails.
      */
@@ -35,11 +36,11 @@ public class ItemCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Item> items = null;
         // TODO handle exception
         try {
-            items = mapper.readValue(response.body(), new TypeReference<List<Item>>() {
-            });
+            items = mapper.readValue(response.body(), new TypeReference<List<Item>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,11 +50,11 @@ public class ItemCommunication {
 
     /**
      * Adds an item.
-     *
      * @param name - the name of the item
      */
     public static void addItem(String name) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
         String jsonItem = "";
         try {
@@ -78,11 +79,11 @@ public class ItemCommunication {
 
     /**
      * Updates a Item.
-     *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
     public static void updateItem(long id, String name) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
         String jsonItem = "";
         try {

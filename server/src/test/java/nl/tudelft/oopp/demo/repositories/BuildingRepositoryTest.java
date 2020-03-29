@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +32,11 @@ public class BuildingRepositoryTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("name2", "s2", "sNo2", "z2", "c2");
-        b3 = new Building("name3", "s3", "sNo3", "z3", "c3");
-        b4 = new Building("name4", "s4", "sNo4", "z4", "c4");
-        b5 = new Building("name5", "s5", "sNo5", "z5", "c5");
+        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        b3 = new Building("name3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s3", "sNo3", "z3", "c3");
+        b4 = new Building("name4", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s4", "sNo4", "z4", "c4");
+        b5 = new Building("name5", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s5", "sNo5", "z5", "c5");
         buildRep.save(b1);
         buildRep.save(b2);
         buildRep.save(b3);

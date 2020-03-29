@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,9 +42,9 @@ public class Equipment {
     /**
      * Create a new Equipment instance.
      *
-     * @param item   The item for the Equipment.
+     * @param item The item for the Equipment.
      * @param amount The amount of the Equipment that is in stock.
-     * @param room   The room for the Equipment.
+     * @param room The room for the Equipment.
      */
 
     public Equipment(Room room, Item item, int amount) {
@@ -55,10 +56,10 @@ public class Equipment {
     /**
      * Create a new Equipment instance.
      *
-     * @param id     A unique identifier for the Equipment.
-     * @param item   The item for the Equipment.
+     * @param id A unique identifier for the Equipment.
+     * @param item The item for the Equipment.
      * @param amount The amount of the Equipment that is in stock.
-     * @param room   The room for the Equipment.
+     * @param room The room for the Equipment.
      */
 
     public Equipment(long id, Room room, Item item, int amount) {

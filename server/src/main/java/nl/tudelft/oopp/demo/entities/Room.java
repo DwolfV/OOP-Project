@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -53,7 +55,7 @@ public class Room {
     /**
      * Create a new Room instance.
      *
-     * @param name     The name of the Room.
+     * @param name The name of the Room.
      * @param capacity The capacity of the room.
      * @param building The building, in which the room is located.
      */
@@ -67,8 +69,8 @@ public class Room {
     /**
      * Create a new Room instance.
      *
-     * @param id       The unique ID of the Room that is used to identify it.
-     * @param name     The name of the Room.
+     * @param id The unique ID of the Room that is used to identify it.
+     * @param name The name of the Room.
      * @param capacity The capacity of the room.
      * @param building The building, in which the room is located.
      */
@@ -132,9 +134,9 @@ public class Room {
         }
         Room room = (Room) o;
         return id == room.id
-            && capacity == room.capacity
-            && Objects.equals(name, room.name)
-            && Objects.equals(building, room.building);
+                && capacity == room.capacity
+                && Objects.equals(name, room.name)
+                && Objects.equals(building, room.building);
     }
 
 }

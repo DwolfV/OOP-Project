@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +45,10 @@ class SupplyControllerTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
-        b2 = new Building("name2", "s2", "sNo2", "z2", "c2");
-        b3 = new Building("name3", "s3", "sNo3", "z3", "c3");
-        b4 = new Building("name4", "s4", "sNo4", "z4", "c4");
+        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
+        b3 = new Building("name3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s3", "sNo3", "z3", "c3");
+        b4 = new Building("name4", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s4", "sNo4", "z4", "c4");
 
         s1 = new Supply(b1, "s1", 7);
         s2 = new Supply(b2, "s2", 11);
@@ -108,7 +109,7 @@ class SupplyControllerTest {
     @Test
     void testNewSupply() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Supply supply = new Supply(b1, "s1", 7);
 
         Optional<Supply> optionalSupply = Optional.of(supply);
@@ -122,7 +123,7 @@ class SupplyControllerTest {
     @Test
     void testUpdateSupply() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("name1", "s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Supply supply = new Supply(b1, "s1", 7);
 
         Optional<Supply> optionalSupply = Optional.of(s1);

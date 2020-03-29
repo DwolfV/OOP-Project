@@ -38,15 +38,16 @@ public class EventController {
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventsById(@PathVariable long id) {
         return rep.findById(id).map(event -> new ResponseEntity<>(event, HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
-     * POST Endpoint to add a new Event.
+     * POST Endpoint to add a new event.
      *
-     * @param event The event to be added.
-     * @return The added Event.
+     * @param event the new event to be added
+     * @return the added event
      */
+
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
         rep.save(event);
@@ -55,14 +56,14 @@ public class EventController {
     }
 
     /**
-     * PUT Endpoint to modify an existing Event.
+     * Updates an Event.
      *
-     * @param id The id of the event that is to be modified.
-     * @return A response entity with the modified Event on success.
+     * @throws Exception if communication with the server fails or if the response is not proper json.
      */
+
     @PutMapping("/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable long id,
-                                             @RequestBody Event newEvent) {
+                                                   @RequestBody Event newEvent) {
         return rep.findById(id).map(event -> {
             event.setName(newEvent.getName());
             event.setDescription(newEvent.getDescription());
@@ -75,11 +76,11 @@ public class EventController {
     }
 
     /**
-     * DELETE Endpoint to delete an existing Event.
+     * DELETE Endpoint to delete the entry of a given event.
      *
-     * @param id The id of the event that is to be deleted.
-     * @return A ResponseEntity with the corresponding HTTP status.
+     * @param id unique identifier of the user that is to be deleted.
      */
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEvent(@PathVariable long id) {
         return rep.findById(id).map(event -> {

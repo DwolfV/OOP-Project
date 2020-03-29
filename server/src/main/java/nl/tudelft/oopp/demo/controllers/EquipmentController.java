@@ -42,8 +42,7 @@ public class EquipmentController {
      * @return The requested equipment {@link Equipment}.
      */
     @GetMapping("equipment/{id}")
-    public @ResponseBody
-    ResponseEntity<Equipment> getEquipmentById(@PathVariable(value = "id") long id) {
+    public @ResponseBody ResponseEntity<Equipment> getEquipmentById(@PathVariable(value = "id") long id) {
         Equipment toReturn = equipment.findById(id).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
@@ -55,8 +54,7 @@ public class EquipmentController {
      * @return List of the requested equipment {@link Equipment}.
      */
     @GetMapping("equipment/name/{name}")
-    public @ResponseBody
-    ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable(value = "name") String equipmentName) {
+    public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable(value = "name") String equipmentName) {
         return equipment.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipment.findByItemName(equipmentName), HttpStatus.OK);
     }
 
@@ -67,8 +65,7 @@ public class EquipmentController {
      * @return List of the requested equipment {@link Equipment}.
      */
     @GetMapping("equipment/room/{room_id}")
-    public @ResponseBody
-    ResponseEntity<List<Equipment>> getEquipmentByRoomId(@PathVariable(value = "room_id") long roomId) {
+    public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByRoomId(@PathVariable(value = "room_id") long roomId) {
         return equipment.findByRoomId(roomId).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipment.findByRoomId(roomId), HttpStatus.OK);
     }
 
@@ -84,14 +81,14 @@ public class EquipmentController {
         equipment.save(newEquipment);
         UriComponents uri = b.path("/equipment/{id}").buildAndExpand(newEquipment.getId());
         return ResponseEntity
-            .created(uri.toUri())
-            .body(newEquipment);
+                .created(uri.toUri())
+                .body(newEquipment);
     }
 
     /**
      * PUT Endpoint to update the entry of a given equipment.
      *
-     * @param id           Unique identifier of the equipment that is to be updated.
+     * @param id Unique identifier of the equipment that is to be updated.
      * @param newEquipment The updated version of the equipment.
      * @return the new equipment that is updated {@link Equipment}.
      */
@@ -101,16 +98,16 @@ public class EquipmentController {
         UriComponents uri = b.path("/equipment/{id}").buildAndExpand(id);
 
         Equipment updatedEquipment = equipment.findById(id)
-            .map(equipment -> {
-                equipment.setItem(newEquipment.getItem());
-                equipment.setRoom(newEquipment.getRoom());
-                equipment.setAmount(newEquipment.getAmount());
-                return this.equipment.save(equipment);
-            })
-            .orElseGet(() -> {
-                newEquipment.setId(id);
-                return this.equipment.save(newEquipment);
-            });
+                .map(equipment -> {
+                    equipment.setItem(newEquipment.getItem());
+                    equipment.setRoom(newEquipment.getRoom());
+                    equipment.setAmount(newEquipment.getAmount());
+                    return this.equipment.save(equipment);
+                })
+                .orElseGet(() -> {
+                    newEquipment.setId(id);
+                    return this.equipment.save(newEquipment);
+                });
 
         return ResponseEntity.created(uri.toUri()).body(updatedEquipment);
     }

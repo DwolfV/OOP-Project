@@ -22,7 +22,6 @@ public class Order {
     @Column(name = "id")
     private long id;
 
-    //@NotBlank
     @ManyToOne
     @JoinColumn(name = "room_reservation_id", referencedColumnName = "id", nullable = false)
     private RoomReservation roomReservation;
@@ -30,7 +29,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<DishOrder> dishOrders = new HashSet<>();
 
-    public Order() {
+    public Order(){
 
     }
 

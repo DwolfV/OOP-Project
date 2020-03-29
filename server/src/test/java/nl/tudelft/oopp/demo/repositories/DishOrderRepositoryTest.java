@@ -3,8 +3,8 @@ package nl.tudelft.oopp.demo.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -83,17 +83,17 @@ class DishOrderRepositoryTest {
 
     @BeforeEach
     public void save() {
-        b1 = new Building("b1", "s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         r1 = new Room("room1", 1, b1);
         buildingRepository.save(b1);
         roomRepository.save(r1);
 
-        u1 = new User("email1", "student", "fn1", "ln1", new Date(1000), "user");
+        u1 = new User("email1", "student", "fn1", "ln1", "user");
         userRepository.save(u1);
 
 
-        rr1 = new RoomReservation(new Date(1000), r1, new Time(1000), new Time(1500), u1);
-        rr2 = new RoomReservation(new Date(2000), r1, new Time(2000), new Time(2500), u1);
+        rr1 = new RoomReservation(LocalDate.parse("2000-11-11"), r1, LocalTime.parse("10:20"), LocalTime.parse("15:20"), u1);
+        rr2 = new RoomReservation(LocalDate.parse("2010-12-12"), r1, LocalTime.parse("16:20"), LocalTime.parse("19:00"), u1);
         roomReservationRepository.save(rr1);
         roomReservationRepository.save(rr2);
 
@@ -107,7 +107,7 @@ class DishOrderRepositoryTest {
         dishRepository.save(d1);
         dishRepository.save(d2);
 
-        res1 = new Restaurant("res1", b1, new Time(1), new Time(2));
+        res1 = new Restaurant("res1", b1, LocalTime.parse("13:00"), LocalTime.parse("14:00"));
         restaurantRepository.save(res1);
 
         rd1 = new RestaurantDish(res1, d1);

@@ -69,11 +69,6 @@ public class DishRepositoryTest {
     void findById() {
         assertEquals(Optional.of(d1), dishRepository.findById(d1.getId()));
     }
-    //  @Test
-    //    public void testFindByName() {
-    //        assertEquals(Optional.of(i1), itemRepository.findByName("projector"));
-    //    }
-    //}
 
     @Test
     void findByName() {

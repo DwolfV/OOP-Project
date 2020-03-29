@@ -50,7 +50,6 @@ public class ItemController {
 
     /**
      * GET endpoint to retrieve a an item by its name.
-     *
      * @param name - the name of the item that we are looking for
      * @return an Item
      */
@@ -64,7 +63,7 @@ public class ItemController {
      * POST endpoint to add a new item to the database.
      *
      * @param item - the item that needs to be added
-     * @param uri  - the path through which we retrieve the new item
+     * @param uri - the path through which we retrieve the new item
      * @return the newly created item
      */
     @PostMapping(value = "/add", consumes = {"application/json"})
@@ -77,13 +76,13 @@ public class ItemController {
     /**
      * PUT endpoint to update the details of an item.
      *
-     * @param id      - the id of the item that is going to be modified
+     * @param id - the id of the item that is going to be modified
      * @param newItem - the item with the updated details
      * @return - the 200 status http code and the updated object if the update succeeded, 404 if the item was not found
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable long id,
-                                           @RequestBody Item newItem) {
+                                                   @RequestBody Item newItem) {
         return itemRepository.findById(id).map(item -> {
             item.setName(newItem.getName());
 

@@ -1,15 +1,15 @@
 package nl.tudelft.oopp.demo.communication;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-
 import nl.tudelft.oopp.demo.helperclasses.Room;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 public class RoomCommunication {
 
@@ -36,6 +36,7 @@ public class RoomCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Room> room = null;
         // TODO handle exception
         try {
@@ -70,6 +71,7 @@ public class RoomCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Room> room = null;
         // TODO handle exception
         try {
@@ -121,6 +123,7 @@ public class RoomCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         List<Room> room = null;
         // TODO handle exception
         try {
@@ -140,6 +143,7 @@ public class RoomCommunication {
      */
     public static void addRoom(String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
         String jsonRoom = "";
         try {
@@ -169,6 +173,7 @@ public class RoomCommunication {
      */
     public static void updateRoom(long id, String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
         String jsonRoom = "";
         try {

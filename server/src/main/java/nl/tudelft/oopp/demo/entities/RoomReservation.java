@@ -1,7 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
-import java.sql.Date;
-import java.sql.Time;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class RoomReservation {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @NotNull
     @ManyToOne
@@ -38,11 +39,11 @@ public class RoomReservation {
 
     @NotNull
     @Column(name = "start_time", nullable = false)
-    private Time startTime;
+    private LocalTime startTime;
 
     @NotNull
     @Column(name = "end_time", nullable = false)
-    private Time endTime;
+    private LocalTime endTime;
 
     @NotNull
     @ManyToOne
@@ -66,10 +67,10 @@ public class RoomReservation {
      * @param user      The user that has reserved the room.
      */
 
-    public RoomReservation(Date date,
+    public RoomReservation(LocalDate date,
                            Room room,
-                           Time startTime,
-                           Time endTime,
+                           LocalTime startTime,
+                           LocalTime endTime,
                            User user) {
         this.date = date;
         this.room = room;
@@ -90,10 +91,10 @@ public class RoomReservation {
      */
 
     public RoomReservation(long id,
-                           Date date,
+                           LocalDate date,
                            Room room,
-                           Time startTime,
-                           Time endTime,
+                           LocalTime startTime,
+                           LocalTime endTime,
                            User user) {
         this.id = id;
         this.date = date;
@@ -111,11 +112,11 @@ public class RoomReservation {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -127,19 +128,19 @@ public class RoomReservation {
         this.room = room;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -151,6 +152,7 @@ public class RoomReservation {
         this.user = user;
     }
 
+    @JsonIgnore
     @Nullable
     public Set<Order> getOrders() {
         return orders;
@@ -170,10 +172,10 @@ public class RoomReservation {
         }
         RoomReservation that = (RoomReservation) o;
         return id == that.id
-            && Objects.equals(date, that.date)
-            && Objects.equals(room, that.room)
-            && Objects.equals(startTime, that.startTime)
-            && Objects.equals(endTime, that.endTime)
-            && Objects.equals(user, that.user);
+                && Objects.equals(date, that.date)
+                && Objects.equals(room, that.room)
+                && Objects.equals(startTime, that.startTime)
+                && Objects.equals(endTime, that.endTime)
+                && Objects.equals(user, that.user);
     }
 }

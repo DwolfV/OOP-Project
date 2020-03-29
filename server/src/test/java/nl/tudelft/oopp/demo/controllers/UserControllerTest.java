@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,11 +41,11 @@ public class UserControllerTest {
      */
     @BeforeEach
     public void save() {
-        u1 = new User("user1@email.com", "student", "fn1", "ln1", new Date(1000), "user1");
-        u2 = new User("user2@email.com", "student", "fn2", "ln2", new Date(2000), "user2");
-        u3 = new User("user3@email.com", "student", "fn3", "ln3", new Date(3000), "user3");
-        u4 = new User("user4@email.com", "employee", "fn4", "ln4", new Date(4000), "user4");
-        u5 = new User("user5@email.com", "employee", "fn5", "ln5", new Date(5000), "user5");
+        u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
+        u2 = new User("user2@email.com", "student", "fn2", "ln2", "user2");
+        u3 = new User("user3@email.com", "student", "fn3", "ln3", "user3");
+        u4 = new User("user4@email.com", "employee", "fn4", "ln4","user4");
+        u5 = new User("user5@email.com", "employee", "fn5", "ln5", "user5");
     }
 
     /**
@@ -95,7 +94,7 @@ public class UserControllerTest {
                 "student",
                 "newFn1",
                 "newLn1",
-                new Date(1001), "newuser1");
+                "newuser1");
 
         UriComponentsBuilder b = UriComponentsBuilder.newInstance();
 
@@ -148,7 +147,7 @@ public class UserControllerTest {
         UriComponentsBuilder b = UriComponentsBuilder.newInstance();
 
         // new user and turn User object to Optional and to ResponseEntity
-        User u6 = new User("user6@email.com", "student", "fn6", "ln6", new Date(1000), "newuser1");
+        User u6 = new User("user6@email.com", "student", "fn6", "ln6", "newuser1");
         Optional<User> optionalU6 = Optional.of(u6);
         ResponseEntity<User> entityU6 = ResponseEntity.of(optionalU6);
 

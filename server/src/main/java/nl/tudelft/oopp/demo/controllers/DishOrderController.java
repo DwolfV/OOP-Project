@@ -27,7 +27,6 @@ public class DishOrderController {
 
     /**
      * Retrieve all the dish orders.
-     *
      * @return a list of all dis orders
      */
     @GetMapping("/all")
@@ -37,7 +36,6 @@ public class DishOrderController {
 
     /**
      * Find DishOrder by Order id.
-     *
      * @return a dish order by the order id
      */
     @GetMapping("/order/{id}")
@@ -47,20 +45,18 @@ public class DishOrderController {
 
     /**
      * Find DishOrder by id.
-     *
      * @return a dish order by id
      */
     @GetMapping("/{id}")
     public ResponseEntity<DishOrder> getDishOrderById(@PathVariable long id) {
         return repository.findById(id).map(dishOrder -> ResponseEntity.ok(dishOrder))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
      * Add a new dish order.
-     *
      * @param dishOrder - the dish order to add to the database
-     * @param d         - the uri which helps return the created entity in the request body
+     * @param d - the uri which helps return the created entity in the request body
      * @return a response entity
      */
     @PostMapping(value = "/add", consumes = "application/json")
@@ -72,8 +68,7 @@ public class DishOrderController {
 
     /**
      * Update a DishOrder.
-     *
-     * @param id           - the id of the dishOrder that is going to be changed
+     * @param id - the id of the dishOrder that is going to be changed
      * @param newDishOrder - the dish that has the newly updated attributes
      * @return a response entity
      */
@@ -90,7 +85,6 @@ public class DishOrderController {
 
     /**
      * Delete a DishOrder.
-     *
      * @param id - the id of the DishOrder that needs to be deleted
      * @return a status code
      */

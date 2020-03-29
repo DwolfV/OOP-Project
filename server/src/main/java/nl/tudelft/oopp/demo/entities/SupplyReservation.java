@@ -1,7 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,15 +22,15 @@ public class SupplyReservation {
     private long id;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @NotNull
     @Column(name = "start_time", nullable = false)
-    private Time startTime;
+    private LocalTime startTime;
 
     @NotNull
     @Column(name = "end_time", nullable = false)
-    private Time endTime;
+    private LocalTime endTime;
 
     @Column(name = "amount")
     private int amount;
@@ -49,9 +49,19 @@ public class SupplyReservation {
 
     }
 
-    public SupplyReservation(Date date,
-                             Time startTime,
-                             Time endTime,
+    /**
+     * Creates a new instance of the SupplyReservation entity.
+     * @param date - The date that corresponds to the reservation of a supply.
+     * @param startTime - Since when the reservation for the supply has been made.
+     * @param endTime - Until when the reservation for the supply is made.
+     * @param amount - The amount of the supplies that are rented.
+     * @param supply - The name of the supply that is being reserved.
+     * @param user - The user that made the reservation
+     */
+
+    public SupplyReservation(LocalDate date,
+                             LocalTime startTime,
+                             LocalTime endTime,
                              int amount,
                              Supply supply,
                              User user) {
@@ -74,9 +84,9 @@ public class SupplyReservation {
      */
 
     public SupplyReservation(long id,
-                             Date date,
-                             Time startTime,
-                             Time endTime,
+                             LocalDate date,
+                             LocalTime startTime,
+                             LocalTime endTime,
                              int amount,
                              Supply supply,
                              User user) {
@@ -97,27 +107,27 @@ public class SupplyReservation {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -160,11 +170,11 @@ public class SupplyReservation {
     @Override
     public String toString() {
         return "SupplyReservation{"
-            + "id=" + id
-            + ", date=" + date
-            + ", amount=" + amount
-            + ", supply=" + supply
-            + ", user=" + user
-            + '}';
+                + "id=" + id
+                + ", date=" + date
+                + ", amount=" + amount
+                + ", supply=" + supply
+                + ", user=" + user
+                + '}';
     }
 }

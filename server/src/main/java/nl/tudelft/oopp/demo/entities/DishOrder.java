@@ -28,7 +28,7 @@ public class DishOrder {
     @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
     private RestaurantDish dish;
 
-    public DishOrder() {
+    public DishOrder(){
 
     }
 
@@ -36,8 +36,8 @@ public class DishOrder {
      * Constructor for the DishOrder class.
      *
      * @param amount - Amount of a certain dish
-     * @param order  - The id of the order that the dish is part of
-     * @param dish   - The id of the dish that is included in the order
+     * @param order - The id of the order that the dish is part of
+     * @param dish - The id of the dish that is included in the order
      */
     public DishOrder(int amount,
                      Order order,

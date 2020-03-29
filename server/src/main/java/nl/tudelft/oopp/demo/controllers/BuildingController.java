@@ -63,20 +63,19 @@ public class BuildingController {
 
     /**
      * Filter a list of building with some given parameters.
-     *
      * @param capacity - the capacity of the room
-     * @param e1       - name of a piece of equipment
-     * @param e2       - name of a piece of equipment
-     * @param e3       - name of a piece of equipment
-     * @param e4       - name of a piece of equipment
+     * @param e1 - name of a piece of equipment
+     * @param e2 - name of a piece of equipment
+     * @param e3 - name of a piece of equipment
+     * @param e4 - name of a piece of equipment
      * @return a list of filtered buildings by their room capacity and other equipment pieces
      */
     @GetMapping("/building/filter")
-    public List<Building> getFilteredBuildings(@RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
-                                               @RequestParam(name = "e1", required = false) String e1,
-                                               @RequestParam(name = "e2", required = false) String e2,
-                                               @RequestParam(name = "e3", required = false) String e3,
-                                               @RequestParam(name = "e4", required = false) String e4) {
+    public List<Building> getFilteredBuildings(@RequestParam (name = "capacity", required = false, defaultValue = "0") Integer capacity,
+                                               @RequestParam (name = "e1", required = false) String e1,
+                                               @RequestParam (name = "e2", required = false) String e2,
+                                               @RequestParam (name = "e3", required = false) String e3,
+                                               @RequestParam (name = "e4", required = false) String e4) {
         List<Building> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Building> buildings = rep.filterBuilding(capacity);
@@ -151,6 +150,8 @@ public class BuildingController {
         return rep.findById(id).map(building -> {
             building.setCity(newBuilding.getCity());
             building.setName(newBuilding.getName());
+            building.setOpenTime(newBuilding.getOpenTime());
+            building.setCloseTime(newBuilding.getCloseTime());
             building.setStreetName(newBuilding.getStreetName());
             building.setStreetNumber(newBuilding.getStreetNumber());
 
