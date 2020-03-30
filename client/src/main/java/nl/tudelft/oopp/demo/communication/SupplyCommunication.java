@@ -26,7 +26,7 @@ public class SupplyCommunication {
      */
 
     public static List<Supply> getSupplies() {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/supply/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/supplies/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
 
         try {
@@ -62,7 +62,7 @@ public class SupplyCommunication {
 
     public static Supply getSupplyById(long id) {
         // TODO what if Authenticator.SESSION_COOKIE is not set?
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/supply/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/supplies/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -109,8 +109,6 @@ public class SupplyCommunication {
             jsonSupply = mapper.writeValueAsString(newSupply);
             System.out.println(jsonSupply);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
 
