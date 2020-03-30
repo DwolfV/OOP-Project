@@ -22,7 +22,7 @@
                 </font>
             </Text>
 
-            <Button layoutX="47.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#selectUI" prefHeight="31.0" prefWidth="233.0" styleClass="sign-up-button" text="Sign Up" />
+            <Button layoutX="47.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#handleSignUpButton" prefHeight="31.0" prefWidth="233.0" styleClass="sign-up-button" text="Sign Up" />
 
         </AnchorPane>
     </center>

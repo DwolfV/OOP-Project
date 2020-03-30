@@ -37,6 +37,7 @@ public class MainSceneController implements Initializable {
     public Parent calendarRoot;
     public Parent sidebar;
 
+
     public FXMLLoader headerLoader;
     public FXMLLoader sidebarLoader;
     public FXMLLoader hamburgerMenuLoader;
@@ -45,6 +46,7 @@ public class MainSceneController implements Initializable {
     @FXML public BorderPane borderPane;
     @FXML public VBox vbox;
     @FXML public Pane tempPane;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
