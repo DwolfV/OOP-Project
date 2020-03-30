@@ -346,7 +346,7 @@ public class RoomReservationController {
      * @param roomReservationId Unique identifier of the room that is to be deleted. {@link RoomReservation}
      */
     @DeleteMapping("room_reservations/{room_reservation_id}")
-    public ResponseEntity<?> deleteRoomReservation(@PathVariable long roomReservationId, Authentication authentication) {
+    public ResponseEntity<?> deleteRoomReservation(@PathVariable(value = "room_reservation_id") long roomReservationId, Authentication authentication) {
 
         RoomReservation reservationToDelete = reservations.findById(roomReservationId).orElseGet(() -> null);
 

@@ -30,7 +30,7 @@ public class BuildingCommunicationTest {
     }
 
     @Test
-    public void shouldLoadListOfBooks() throws Exception {
+    public void shouldLoadListOfBuildings() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
