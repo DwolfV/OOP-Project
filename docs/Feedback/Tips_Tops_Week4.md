@@ -19,9 +19,9 @@
 - **Tip:** Myabe work more on communication between front-end and back-end
 
 ###Bogdan
-- **Top:**
+- **Top:** We improved the way we work by properly naming branches and testing is much better
 
-- **Tip:** 
+- **Tip:** Front End and Back end needs to comunicate more 
 
 ###Iulia
 - **Top:** improved branching, started writing tests for the features, meeting the deadlines
