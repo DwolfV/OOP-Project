@@ -157,6 +157,25 @@ public class SupplyCommunication {
             System.out.println("Status: " + response.statusCode());
         }
     }
+    
 
+    /**
+     * Removes a supply.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+    public static void removeSupply(long id) {
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/supplies/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+    }
 
 }
