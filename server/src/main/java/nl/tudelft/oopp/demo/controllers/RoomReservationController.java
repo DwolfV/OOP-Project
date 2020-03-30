@@ -286,9 +286,27 @@ public class RoomReservationController {
     }
 
     private boolean userHasReservedAlready(RoomReservation newRoomReservation) {
+        LocalTime startTime = newRoomReservation.getStartTime();
+        LocalTime endTime = newRoomReservation.getEndTime();
         for (RoomReservation roomReservation : reservations.findByUserIdAndDate(newRoomReservation.getUser().getId(), newRoomReservation.getDate())) {
+            // don't check if the times of the newRoomReservation overlap with itself
+            if (newRoomReservation.getId() == roomReservation.getId()) {
+                continue;
+            }
+
+            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) >= 0
+                && startTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) <= 0
+                && startTime.compareTo(roomReservation.getEndTime()) <= 0;
+
+            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) >= 0
+                && endTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) <= 0
+                && endTime.compareTo(roomReservation.getEndTime()) <= 0;
             // if the user has already booked a room in that time period
-            if (roomReservation.getStartTime().compareTo(newRoomReservation.getStartTime()) <= 0 && roomReservation.getEndTime().compareTo(newRoomReservation.getEndTime()) >= 0) {
+            if (!((startTimeIsAfterReservedTime && endTimeIsAfterReservedTime) || (startTimeIsBeforeReservedTime && endTimeIsBeforeReservedTime))) {
                 return true;
             }
         }
