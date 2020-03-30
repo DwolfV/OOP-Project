@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Supply;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
@@ -69,6 +70,10 @@ public class SupplySceneController implements Initializable {
                 VBox vertBox = new VBox();
                 tps[c] = new TitledPane();
 
+                for (Supply supplies1 : supplies) {
+                    System.out.println(buildings.get(i).getName() + " " + supplies1.getName());
+                }
+
                 for (int j = 0; j < showSupplies.size(); j++) {
                     HBox horizBox = new HBox();
 
@@ -78,6 +83,7 @@ public class SupplySceneController implements Initializable {
                     textFieldItem = new TextField();
                     textFields.add(textFieldItem);
 
+                    // stripping non-numeric from text
                     textFieldItem.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
                         if (!newValue.matches("\\d*")) {
                             textFieldItem.setText(newValue.replaceAll("[^\\d]", ""));
