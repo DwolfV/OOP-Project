@@ -26,29 +26,31 @@ public class SupplyCommunication {
      */
 
     public static List<Supply> getSupplies() {
-                HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/supply/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
-                HttpResponse<String> response = null;
-                try {
-                    response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //return "Communication with server failed";
-                }
-                if (response.statusCode() != 200) {
-                    System.out.println("Status: " + response.statusCode());
-                }
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/supply/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
 
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.registerModule(new JavaTimeModule());
-                List<Supply> supplies = null;
-                // TODO handle exception
-                try {
-                    supplies = mapper.readValue(response.body(), new TypeReference<List<Supply>>(){});
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
 
-                return supplies;
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        List<Supply> supplies = null;
+        // TODO handle exception
+        try {
+            supplies = mapper.readValue(response.body(), new TypeReference<List<Supply>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return supplies;
     }
 
     /**
@@ -75,7 +77,7 @@ public class SupplyCommunication {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        Supply supply= null;
+        Supply supply = null;
         try {
             supply = mapper.readValue(response.body(), new TypeReference<Supply>() {
             });
@@ -130,7 +132,7 @@ public class SupplyCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-//Building building, String name, int stock
+
     public static void updateSupply(long id, long buildingId, String name, int stock) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -157,7 +159,7 @@ public class SupplyCommunication {
             System.out.println("Status: " + response.statusCode());
         }
     }
-    
+
 
     /**
      * Removes a supply.
