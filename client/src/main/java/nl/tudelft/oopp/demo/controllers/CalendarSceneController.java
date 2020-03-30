@@ -18,7 +18,7 @@ public class CalendarSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        calendar.setPrefWidth(screenBounds.getWidth() - 200);
+        calendar.setPrefWidth(screenBounds.getWidth() - 400);
         calendar.setPrefHeight(screenBounds.getHeight() - 170);
     }
 

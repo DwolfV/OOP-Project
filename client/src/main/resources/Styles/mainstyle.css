@@ -28,7 +28,15 @@
   -fx-border-color: #CCCCCC;
 }
 
+.admin-main-pane {
+  -fx-border-width: 0 2 0 2;
+  -fx-border-color: #CCCCCC;
+  -fx-background-color: #EEEEEE;
+}
+
 .scroll-pane-admin {
+  -fx-border-width: 0 2 0 2;
+  -fx-border-color: #CCCCCC;
   -fx-background-color: #EEEEEE;
 }
 
@@ -71,6 +79,10 @@
   -fx-border-color: #CCCCCC;
 }
 
+.table-view .column-header:hover {
+  -fx-background-color: #66CCFF;
+}
+
 .table-view .column-header-background .label {
   -fx-text-fill: white;
 }
@@ -91,22 +103,30 @@
   -fx-border-width: 0 0 0 1;
 }
 
-.table-pane > .content {
+.titled-pane > .content {
   -fx-text-fill: white;
   -fx-background-color: #6699CC;
 }
 
-.table-pane {
+.titled-pane {
   -fx-text-fill: white;
 }
 
-.table-pane > .title {
+.titled-pane > .title {
   -fx-background-color: #336699;
   -fx-border-width: 2 0 0 0;
   -fx-border-color: #CCCCCC;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 0, 2);
   -fx-padding: 10px;
   -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+  -fx-background-color: #66CCFF;
+}
+
+.titled-pane > .title:selected {
+  -fx-background-color: #66CCFF;
 }
 
 /*# sourceMappingURL=mainstyle.css.map */

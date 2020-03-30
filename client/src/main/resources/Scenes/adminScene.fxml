@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Label?>
 <Pane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.AdminSceneController"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@/Styles/mainstyle.css">
-    <Accordion fx:id="ac" >
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@/Styles/mainstyle.css" styleClass="admin-main-pane">
+    <Accordion fx:id="ac" styleClass="admin-accordion">
     </Accordion>
 </Pane>

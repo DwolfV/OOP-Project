@@ -40,9 +40,17 @@ $el-grey: #EEEEEE;
 }
 
 // ADMIN
-.scroll-pane-admin {
+
+.admin-main-pane {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
     -fx-background-color: $el-grey;
-    //-fx-padding: 5.0em 0.0em 5.0em 0.0em;
+}
+
+.scroll-pane-admin {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
+    -fx-background-color: $el-grey;
 }
 
 .admin-center {
@@ -85,6 +93,10 @@ $el-grey: #EEEEEE;
     -fx-border-color: $l-grey;
 }
 
+.table-view .column-header:hover {
+    -fx-background-color: $b-blue;
+}
+
 .table-view .column-header-background .label {
     -fx-text-fill: white;
 }
@@ -106,20 +118,28 @@ $el-grey: #EEEEEE;
 }
 
 // The titled panes inside the admin
-.table-pane > .content {
+.titled-pane > .content {
     -fx-text-fill: white;
     -fx-background-color: $l-blue;
 }
 
-.table-pane {
+.titled-pane {
     -fx-text-fill: white;
 }
 
-.table-pane > .title{
+.titled-pane > .title{
     -fx-background-color: $d-blue;
     -fx-border-width: 2 0 0 0;
     -fx-border-color: $l-grey;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
     -fx-padding: 10px;
     -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: $b-blue;
+}
+
+.titled-pane > .title:selected {
+    -fx-background-color: $b-blue;
 }

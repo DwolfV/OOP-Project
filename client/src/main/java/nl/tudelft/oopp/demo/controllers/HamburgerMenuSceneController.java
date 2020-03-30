@@ -23,6 +23,7 @@ public class HamburgerMenuSceneController implements Initializable {
     private Parent restaurantRoot;
     private Parent sidebarFilterRoot;
     private Parent sidebarRoot;
+    private Parent emptySidebarRoot;
     private Parent adminPanelRoot;
 
     @FXML public Button adminButton;
@@ -32,12 +33,14 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader reservationLoader = new FXMLLoader(getClass().getResource("/Scenes/reservationScene.fxml"));
         FXMLLoader sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
+        FXMLLoader emptySidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/emptySidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
             sidebarRoot = sidebarLoader.load();
+            emptySidebarRoot = emptySidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
             adminPanelRoot = adminPanelLoader.load();
         } catch (IOException e) {
@@ -98,7 +101,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openAdminPanel(MouseEvent event) {
         mainSceneController.changeCenter(adminPanelRoot);
-        mainSceneController.sidebar = (null);
+        mainSceneController.sidebar = (emptySidebarRoot);
         headerSceneController.changeLeft();
     }
 }
