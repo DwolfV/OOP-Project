@@ -158,6 +158,9 @@ public class RoomReservationCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+        }
+        if (response.statusCode() != 201) {
+            System.out.println("Status: " + response.statusCode());
             return false;
         }
         return true;

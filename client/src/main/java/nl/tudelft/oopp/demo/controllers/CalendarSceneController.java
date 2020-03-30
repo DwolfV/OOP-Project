@@ -25,6 +25,8 @@ public class CalendarSceneController implements Initializable {
     private MainSceneController mainSceneController;
     private int flag = 0;
 
+    private EventHandler<CalendarEvent> handler;
+
     @FXML
     private CalendarView calendarView;
 
@@ -36,25 +38,14 @@ public class CalendarSceneController implements Initializable {
         // will get the Default calendar
         Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
 
-        List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
-        for (RoomReservation reservation : reservations) {
-            Interval interval = new Interval(reservation.getDate(), reservation.getStartTime(), reservation.getDate(), reservation.getEndTime());
-            Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
-            calendarEntry.setUserObject(reservation);
-            calendar.addEntry(calendarEntry);
-        }
-
-        //        CalendarSource calendarSource = new CalendarSource("default");
-        //        calendarSource.getCalendars().add(cal);
-        //        calendar.getCalendarSources().add(calendarSource);
         calendarView.setShowAddCalendarButton(false);
 
-        EventHandler<CalendarEvent> handler = event -> {
+        handler = event -> {
+            System.out.println(event);
             if (flag == 0) {
                 // can get old dates and times -> set them if the server responds with a 409 conflict
-                // TODO
+                // TODO too much event.getEntry
                 flag = 1;
-                System.out.println(event);
                 if (event.isEntryRemoved() && event.getCalendar() == null) {
                     RoomReservation reservationToRemove = (RoomReservation) event.getEntry().getUserObject();
                     RoomReservationCommunication.removeRoomReservation(reservationToRemove.getId());
@@ -63,7 +54,7 @@ public class CalendarSceneController implements Initializable {
                     // if the user did not change the calendar of the room
                     RoomReservation reservationToUpdate = (RoomReservation) event.getEntry().getUserObject();
                     boolean succeed = RoomReservationCommunication.updateRoomReservation(reservationToUpdate.getId(),
-                        reservationToUpdate.getDate(), reservationToUpdate.getStartTime(), reservationToUpdate.getEndTime(),
+                        event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime(),
                         reservationToUpdate.getRoom().getId());
                     if (!succeed) {
                         // need to revert the changes from the entry
@@ -74,18 +65,47 @@ public class CalendarSceneController implements Initializable {
                         flag = 0;
                     }
                 }
+                flag = 0;
             }
         };
 
         calendar.addEventHandler(handler);
-        calendarView.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, event -> {
-            System.out.println("viewwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-        });
 
         // add new calendar for unavailable times
-        List<Room> allRooms = RoomCommunication.getRooms();
         CalendarSource calendarSource = new CalendarSource("Unavailable Rooms");
         calendarView.getCalendarSources().add(calendarSource);
+        init();
+    }
+
+    /**
+     * This method is used to load and reload the state of the calendar view when the user switched to the calendar scene.
+     */
+    public void init() {
+        //calendarView.getCalendarSources().get(0).getCalendars().get(0).removeEntries();
+
+        // will get the Default calendar
+        Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+        calendar.removeEventHandler(handler);
+        calendar.clear();
+        calendar.addEventHandler(handler);
+
+        List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
+        for (RoomReservation reservation : reservations) {
+            Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
+            Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
+            calendarEntry.setUserObject(reservation);
+            calendar.addEntry(calendarEntry);
+        }
+
+
+        // load the new calendar for unavailable times
+        List<Room> allRooms = RoomCommunication.getRooms();
+
+        CalendarSource calendarSource = calendarView.getCalendarSources().get(1);
+        // calendarSource.getCalendars().get(0).removeEntries(); try catch?
+
+        calendarSource.getCalendars().clear();
+
         for (Room room : allRooms) {
             Calendar calendarUnavailableRoom = new Calendar(room.getName());
             calendarUnavailableRoom.setReadOnly(true);
@@ -100,7 +120,6 @@ public class CalendarSceneController implements Initializable {
             calendarSource.getCalendars().add(calendarUnavailableRoom);
             calendarView.setCalendarVisibility(calendarUnavailableRoom, false);
         }
-
     }
 
     public void setController(MainSceneController mainSceneController) {
