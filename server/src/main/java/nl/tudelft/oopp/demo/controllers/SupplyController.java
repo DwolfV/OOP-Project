@@ -72,12 +72,12 @@ public class SupplyController {
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-     /**
-         * POST Endpoint to add a new supply.
-         *
-         * @param newSupply The new supply to add.
-         * @return The added supply {@link Supply}.
-         */
+    /**
+     * POST Endpoint to add a new supply.
+     *
+     * @param newSupply The new supply to add.
+     * @return The added supply {@link Supply}.
+     */
 
     @PostMapping(value = "/supply", consumes = {"application/json"})
     public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b) {
@@ -86,16 +86,15 @@ public class SupplyController {
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
 
-     /**
-         * PUT Endpoint to update the entry of a given supply.
-         *
-         * @param supplyId Unique identifier of the supply that is to be updated.
-         * @param newSupply The updated version of the supply.
-         * @return the new room that is updated {@link Supply}.
-         */
+    /**
+     * PUT Endpoint to update the entry of a given supply.
+     * @param supplyId Unique identifier of the supply that is to be updated.
+     * @param newSupply The updated version of the supply.
+     * @return the new room that is updated {@link Supply}.
+     */
     
     @PutMapping("/supply/{supply_id}")
-    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply , @PathVariable long supplyId,
+    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply, @PathVariable long supplyId,
                                                    UriComponentsBuilder builder) {
         UriComponents uriComponents = builder.path("/supply/{supply_id}").buildAndExpand(supplyId);
 
@@ -104,7 +103,7 @@ public class SupplyController {
             supply.setName(newSupply.getName());
             supply.setStock(newSupply.getStock());
             return rep.save(supply);
-        }).orElseGet(()->{
+        }).orElseGet(() -> {
             newSupply.setId(supplyId);
             return rep.save(newSupply);
         });
