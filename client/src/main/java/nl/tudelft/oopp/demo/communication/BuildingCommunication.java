@@ -127,30 +127,27 @@ public class BuildingCommunication {
      * Retrieves a list of filtered buildings from the server.
      *
      * @param capacity - the minimum capacity that a room inside a buildings should have
-     * @param e1       - the name of a piece of equipment that a room inside a buildings should have
-     * @param e2       - the name of a piece of equipment that a room inside a buildings should have
-     * @param e3       - the name of a piece of equipment that a room inside a buildings should have
-     * @param e4       - the name of a piece of equipment that a room inside a buildings should have
+     * @param equipment - a list of Strings defining the filter parameters
      * @return the body of a get request to the server.
      */
-    public static List<Building> getFilteredBuildings(Integer capacity, String e1, String e2, String e3, String e4) {
+    public static List<Building> getFilteredBuildings(Integer capacity, List<String> equipment) {
         String uri = "http://localhost:8080/building/filter";
         if (capacity == null) {
             capacity = 0;
         }
-        uri = "?capacity=" + capacity;
-        if (e1 != null) {
-            uri = "&e1=" + e1;
+        uri = uri + "?capacity=" + capacity;
+
+        //the number of equipment items
+        int count = 0;
+        String baseString = "&e%n"; //base string used for formatting
+        for (String s : equipment) {
+            if (count == 6) { //we don't want to filter more than 6 items
+                break;
+            }
+            count++;//increase the amount of added items
+            uri = uri + String.format(baseString, count) + s; //add the filter to the uri
         }
-        if (e2 != null) {
-            uri = "&e2=" + e2;
-        }
-        if (e3 != null) {
-            uri = "&e3=" + e3;
-        }
-        if (e4 != null) {
-            uri = "&e4=" + e4;
-        }
+
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(uri)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
 
         HttpResponse<String> response = null;
