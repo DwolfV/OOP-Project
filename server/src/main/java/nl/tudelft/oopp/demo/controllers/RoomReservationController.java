@@ -206,7 +206,7 @@ public class RoomReservationController {
         for (RoomReservation roomReservation : allRoomReservations) {
             // don't check if the times of the newRoomReservation overlap with itself
             if (newRoomReservation.getId() == roomReservation.getId()) {
-                break;
+                continue;
             }
 
             boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) >= 0

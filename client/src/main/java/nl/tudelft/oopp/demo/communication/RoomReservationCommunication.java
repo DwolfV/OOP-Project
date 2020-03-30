@@ -138,6 +138,7 @@ public class RoomReservationCommunication {
 
 
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
+        newRoomReservation.setId(id);
         String jsonRoomReservation = "";
         try {
             jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);

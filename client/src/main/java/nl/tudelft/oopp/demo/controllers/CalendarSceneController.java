@@ -46,16 +46,21 @@ public class CalendarSceneController implements Initializable {
                 // can get old dates and times -> set them if the server responds with a 409 conflict
                 // TODO too much event.getEntry
                 flag = 1;
+                Entry entry = event.getEntry();
                 if (event.isEntryRemoved() && event.getCalendar() == null) {
-                    RoomReservation reservationToRemove = (RoomReservation) event.getEntry().getUserObject();
+
+                    RoomReservation reservationToRemove = (RoomReservation) entry.getUserObject();
                     RoomReservationCommunication.removeRoomReservation(reservationToRemove.getId());
+
                 } else if (event.getOldCalendar() == null && event.getEventType() == CalendarEvent.ENTRY_INTERVAL_CHANGED
-                    && !(event.getOldInterval().equals(event.getEntry().getInterval()))) {
+                    && !(event.getOldInterval().equals(entry.getInterval()))) {
+
                     // if the user did not change the calendar of the room
-                    RoomReservation reservationToUpdate = (RoomReservation) event.getEntry().getUserObject();
+                    RoomReservation reservationToUpdate = (RoomReservation) entry.getUserObject();
                     boolean succeed = RoomReservationCommunication.updateRoomReservation(reservationToUpdate.getId(),
-                        event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime(),
+                        entry.getStartDate(), entry.getStartTime(), entry.getEndTime(),
                         reservationToUpdate.getRoom().getId());
+
                     if (!succeed) {
                         // need to revert the changes from the entry
                         Interval oldInterval = event.getOldInterval();
