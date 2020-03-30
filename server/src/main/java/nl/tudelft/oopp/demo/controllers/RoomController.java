@@ -58,7 +58,9 @@ public class RoomController {
      * @param e1 - the name of a piece of equipment that should be present in the room
      * @param e2 - the name of a piece of equipment that should be present in the room
      * @param e3 - the name of a piece of equipment that should be present in the room
-     * @param e4 - the name of a piece of equipment that should be present in the room
+     * @param e4 - the name of a piece of equipment that should be present in the room\
+     * @param e5 - the name of a piece of equipment that should be present in the room
+     * @param e6 - the name of a piece of equipment that should be present in the room
      * @return a list of filtered buildings
      */
     @GetMapping("rooms/filter")
@@ -67,7 +69,9 @@ public class RoomController {
                                        @RequestParam (name = "e1", required = false) String e1,
                                        @RequestParam (name = "e2", required = false) String e2,
                                        @RequestParam (name = "e3", required = false) String e3,
-                                       @RequestParam (name = "e4", required = false) String e4) {
+                                       @RequestParam (name = "e4", required = false) String e4,
+                                       @RequestParam (name = "e4", required = false) String e5,
+                                       @RequestParam (name = "e4", required = false) String e6) {
         List<Room> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Room> roomList = rooms.filterRoom(id, capacity);
@@ -82,6 +86,12 @@ public class RoomController {
         }
         if (!(e4 == null)) {
             filters.add(e4);
+        }
+        if (!(e5 == null)) {
+            filters.add(e5);
+        }
+        if (!(e6 == null)) {
+            filters.add(e6);
         }
         int expected = 0;
         //count the filters;
