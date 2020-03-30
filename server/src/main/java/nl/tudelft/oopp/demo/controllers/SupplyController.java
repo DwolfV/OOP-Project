@@ -42,7 +42,7 @@ public class SupplyController {
      * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
-    @GetMapping("/supply/building")
+    @GetMapping("/supply/building/name/{building_id}")
     public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value = "building_id") long id) {
         return rep.findByBuildingIdAndName(id, name).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
