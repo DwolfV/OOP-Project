@@ -18,11 +18,13 @@ public class HamburgerMenuSceneController implements Initializable {
     private HeaderSceneController headerSceneController;
     private RestaurantSceneController restaurantSceneController;
     private ReservationSceneController reservationSceneController;
+    private SupplySceneController supplySceneController;
     private AdminSceneController adminSceneController;
 
     private Parent reservationRoot;
     private Parent restaurantRoot;
     private Parent sidebarFilterRoot;
+    private Parent suppliesRoot;
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
 
@@ -37,11 +39,13 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
+        FXMLLoader suppliesLoader = new FXMLLoader(getClass().getResource("/Scenes/supplyScene.fxml"));
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
             sidebarRoot = sidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
+            suppliesRoot = suppliesLoader.load();
             adminPanelRoot = adminPanelLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,6 +53,7 @@ public class HamburgerMenuSceneController implements Initializable {
 
         reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
+        supplySceneController = suppliesLoader.getController();
         adminSceneController = adminPanelLoader.getController();
 
         reservationSceneController.setControllers(this);
@@ -106,6 +111,16 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openAdminPanel(MouseEvent event) {
         mainSceneController.changeCenter(adminPanelRoot);
+        mainSceneController.sidebar = (sidebarRoot);
+        headerSceneController.changeLeft();
+    }
+
+    /**
+     * Open supplies page.
+     * @param event mouse click
+     */
+    public void openSupplies(MouseEvent event) {
+        mainSceneController.changeCenter(suppliesRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }
