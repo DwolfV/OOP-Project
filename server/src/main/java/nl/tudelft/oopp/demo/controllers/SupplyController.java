@@ -49,13 +49,13 @@ public class SupplyController {
     }
 
     /**
-         * GET Endpoint to retrieve a list of all rooms in a building.
+         * GET Endpoint to retrieve a list of all supplies in a building.
          *
          * @param id Unique identifier of the building.
          * @return a list of the supplies in the building {@link Supply}.
          */
 
-    @GetMapping("/supply/{building_id}")
+    @GetMapping("/supply/building/{building_id}")
     public @ResponseBody ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value = "building_id") long id) {
         return rep.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rep.findByBuildingId(id), HttpStatus.OK);
     }
@@ -66,18 +66,18 @@ public class SupplyController {
      * @param id - The id of the supply that is to be found
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
-    @GetMapping("/supply/{supply_id}")
+    @GetMapping("/supply/{id}")
     public ResponseEntity<Supply> getSupplyById(@PathVariable long id) {
         return rep.findById(id).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-     /**
-         * POST Endpoint to add a new supply.
-         *
-         * @param newSupply The new supply to add.
-         * @return The added supply {@link Supply}.
-         */
+    /**
+     * POST Endpoint to add a new supply.
+     *
+     * @param newSupply The new supply to add.
+     * @return The added supply {@link Supply}.
+     */
 
     @PostMapping(value = "/supply", consumes = {"application/json"})
     public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b) {
@@ -86,16 +86,15 @@ public class SupplyController {
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
 
-     /**
-         * PUT Endpoint to update the entry of a given supply.
-         *
-         * @param supplyId Unique identifier of the supply that is to be updated.
-         * @param newSupply The updated version of the supply.
-         * @return the new room that is updated {@link Supply}.
-         */
+    /**
+     * PUT Endpoint to update the entry of a given supply.
+     * @param supplyId Unique identifier of the supply that is to be updated.
+     * @param newSupply The updated version of the supply.
+     * @return the new room that is updated {@link Supply}.
+     */
     
-    @PutMapping("/supply/{supply_id}")
-    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply , @PathVariable long supplyId,
+    @PutMapping("/supply/{id}")
+    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply, @PathVariable long supplyId,
                                                    UriComponentsBuilder builder) {
         UriComponents uriComponents = builder.path("/supply/{supply_id}").buildAndExpand(supplyId);
 
@@ -104,7 +103,7 @@ public class SupplyController {
             supply.setName(newSupply.getName());
             supply.setStock(newSupply.getStock());
             return rep.save(supply);
-        }).orElseGet(()->{
+        }).orElseGet(() -> {
             newSupply.setId(supplyId);
             return rep.save(newSupply);
         });
@@ -118,7 +117,7 @@ public class SupplyController {
          * @param supplyId Unique identifier of the supply that is to be deleted. {@link Supply}
          */
 
-    @DeleteMapping("/supply/{supply_id}")
+    @DeleteMapping("/supply/{id}")
     public ResponseEntity deleteSupply(@PathVariable long supplyId) {
         rep.deleteById(supplyId);
 
