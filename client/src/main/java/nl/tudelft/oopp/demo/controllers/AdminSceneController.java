@@ -883,7 +883,7 @@ public class AdminSceneController implements Initializable {
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Supply, Integer> supplyStockCol =
-            new TableColumn<>("Opening Time");
+            new TableColumn<>("Stock");
         supplyStockCol.setMinWidth(100);
         supplyStockCol.setCellValueFactory(
             new PropertyValueFactory<>("stock"));
