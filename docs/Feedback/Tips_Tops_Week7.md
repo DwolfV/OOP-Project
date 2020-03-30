@@ -19,9 +19,9 @@
 - **Tip:** We will have to slightly accelerate our work on the front end side, since we are a bit behind on the retaurant feature.
 
 ### Bogdan
-- **Top:** 
+- **Top:** Task division was very clear this week and members tried to help each other at their best
 
-- **Tip:** 
+- **Tip:** The work on certain features needs to pick up as they are a bit behind
 
 ### Iulia
 - **Top:** 
