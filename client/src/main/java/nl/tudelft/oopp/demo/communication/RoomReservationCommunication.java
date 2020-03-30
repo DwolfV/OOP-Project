@@ -225,6 +225,11 @@ public class RoomReservationCommunication {
         return unavailableTimes;
     }
 
+    /**
+     * Gets the room reservations (without the user information) by a room id.
+     * @param roomId The room id by which the user can get the room reservations.
+     * @return A list of the room reservation of that room.
+     */
     public static List<RoomReservation> getAllRoomReservationTimesPerRoom(long roomId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

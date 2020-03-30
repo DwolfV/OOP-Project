@@ -6,12 +6,8 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
-
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,7 +24,8 @@ public class CalendarSceneController implements Initializable {
 
     private MainSceneController mainSceneController;
 
-    @FXML private CalendarView calendarView;
+    @FXML
+    private CalendarView calendarView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,9 +43,9 @@ public class CalendarSceneController implements Initializable {
             calendar.addEntry(calendarEntry);
         }
 
-//        CalendarSource calendarSource = new CalendarSource("default");
-//        calendarSource.getCalendars().add(cal);
-//        calendar.getCalendarSources().add(calendarSource);
+        //        CalendarSource calendarSource = new CalendarSource("default");
+        //        calendarSource.getCalendars().add(cal);
+        //        calendar.getCalendarSources().add(calendarSource);
         calendarView.setShowAddCalendarButton(false);
 
         // will probably set the calendar to null when deleting entry from calendar
@@ -64,7 +61,8 @@ public class CalendarSceneController implements Initializable {
 
         // add new calendar for unavailable times
         List<Room> allRooms = RoomCommunication.getRooms();
-        CalendarSource calendarSource = calendarView.getCalendarSources().get(0);
+        CalendarSource calendarSource = new CalendarSource("Unavailable Rooms");
+        calendarView.getCalendarSources().add(calendarSource);
         for (Room room : allRooms) {
             Calendar calendarUnavailableRoom = new Calendar(room.getName());
             calendarUnavailableRoom.setReadOnly(true);
