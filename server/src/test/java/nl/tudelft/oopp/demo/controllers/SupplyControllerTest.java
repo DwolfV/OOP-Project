@@ -1,9 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +17,10 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class SupplyControllerTest {
@@ -120,22 +120,17 @@ class SupplyControllerTest {
         assertEquals(supply, supplyController.newSupply(supply, uriComponentsBuilder).getBody());
     }
 
+
     @Test
     void testUpdateSupply() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
         Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Supply supply = new Supply(b1, "s1", 7);
-
         Optional<Supply> optionalSupply = Optional.of(s1);
         ResponseEntity<Supply> entity = ResponseEntity.of(optionalSupply);
 
-        Optional<Supply> newS = Optional.of(supply);
-        ResponseEntity<Supply> newE = ResponseEntity.of(newS);
-
         when(supplyRepository.save(supply)).thenReturn(supply);
-        when(supplyRepository.findById(s1.getId())).thenReturn(optionalSupply);
-
-        assertEquals(newE.getBody(), supplyController.updateSupply(s1.getId(), s1).getBody());
+        assertEquals(supply,supplyController.newSupply(supply, uriComponentsBuilder).getBody());
     }
 
     @Test

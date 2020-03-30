@@ -1,7 +1,7 @@
 ### Andrei
-- **Top:** 
+- **Top:** We further improved communication and helped each other a lot
 
-- **Tip:** 
+- **Tip:** Since we are getting into the last week and last phase of the project, the whole team needs to work at maximum power to make sure that the project will be completed on time
 
 ### Alena
 - **Top:** We worked really well as a team. Helped each other a lot when someone encountered a problem.
@@ -19,9 +19,9 @@
 - **Tip:** We will have to slightly accelerate our work on the front end side, since we are a bit behind on the retaurant feature.
 
 ### Bogdan
-- **Top:** 
+- **Top:** Task division was very clear this week and members tried to help each other at their best
 
-- **Tip:** 
+- **Tip:** The work on certain features needs to pick up as they are a bit behind
 
 ### Iulia
 - **Top:** 

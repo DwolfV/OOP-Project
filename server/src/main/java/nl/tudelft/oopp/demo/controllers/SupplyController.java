@@ -42,20 +42,21 @@ public class SupplyController {
      * @param id - The building id of which the supply is part of
      * @return the supply and 200 status code if the supply is found, 404 status code otherwise
      */
-    @GetMapping("/supply/building")
+    @GetMapping("/supply/building/name/{building_id}")
     public ResponseEntity<Supply> getSupplyByBuildingIdAndName(@RequestParam String name, @PathVariable(value = "building_id") long id) {
         return rep.findByBuildingIdAndName(id, name).map(supply -> ResponseEntity.ok(supply)
         ).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
-     * Find supply by building and name.
-     *
-     * @param id - The building id of which the supply is part of
-     * @return the supply and 200 status code if the supply is found, 404 status code otherwise
-     */
+         * GET Endpoint to retrieve a list of all supplies in a building.
+         *
+         * @param id Unique identifier of the building.
+         * @return a list of the supplies in the building {@link Supply}.
+         */
+
     @GetMapping("/supply/building/{building_id}")
-    public ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value = "building_id") long id) {
+    public @ResponseBody ResponseEntity<List<Supply>> getSupplyByBuildingId(@PathVariable(value = "building_id") long id) {
         return rep.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rep.findByBuildingId(id), HttpStatus.OK);
     }
 
@@ -72,47 +73,55 @@ public class SupplyController {
     }
 
     /**
-     * Create a new supply.
-     * @return message
+     * POST Endpoint to add a new supply.
+     *
+     * @param newSupply The new supply to add.
+     * @return The added supply {@link Supply}.
      */
 
     @PostMapping(value = "/supply", consumes = {"application/json"})
     public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b) {
         rep.save(newSupply);
-        UriComponents uri = b.path("/supply/{id}").buildAndExpand(newSupply.getId());
+        UriComponents uri = b.path("/supply/{supply_id}").buildAndExpand(newSupply.getId());
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
+
     /**
-     * Update a supply.
-     *
-     * @param id          -The id of the supply that is to be updated
-     * @param newSupply - The supply instance that has the modified parameters
-     * @return a response: the updated supply and the status 200 if the update was successful, 404 if the building was not found
+     * PUT Endpoint to update the entry of a given supply.
+     * @param supplyId Unique identifier of the supply that is to be updated.
+     * @param newSupply The updated version of the supply.
+     * @return the new room that is updated {@link Supply}.
      */
     
     @PutMapping("/supply/{id}")
-    public ResponseEntity<Supply> updateSupply(@PathVariable long id,
-                                                   @RequestBody Supply newSupply) {
-        return rep.findById(id).map(supply -> {
-            supply.setStock(newSupply.getStock());
-            supply.setName(newSupply.getName());
+    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply, @PathVariable long supplyId,
+                                                   UriComponentsBuilder builder) {
+        UriComponents uriComponents = builder.path("/supply/{supply_id}").buildAndExpand(supplyId);
 
-            return new ResponseEntity<>(rep.save(supply), HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Supply updatedSupply = rep.findById(supplyId).map(supply -> {
+            supply.setBuilding(newSupply.getBuilding());
+            supply.setName(newSupply.getName());
+            supply.setStock(newSupply.getStock());
+            return rep.save(supply);
+        }).orElseGet(() -> {
+            newSupply.setId(supplyId);
+            return rep.save(newSupply);
+        });
+
+        return ResponseEntity.created(uriComponents.toUri()).body(updatedSupply);
     }
 
     /**
-     * Delete a supply by it's id.
-     *
-     * @param id - The id of the supply that is to be deleted
-     * @return a response status: 200 if the supply has been deleted successfully, 404 if the supply was not found
-     */
+         * DELETE Endpoint to delete the entry of a given supply.
+         *
+         * @param supplyId Unique identifier of the supply that is to be deleted. {@link Supply}
+         */
+
     @DeleteMapping("/supply/{id}")
-    public ResponseEntity deleteSupply(@PathVariable long id) {
-        return rep.findById(id).map(supply -> {
-            rep.delete(supply);
-            return new ResponseEntity("The supply has been deleted successfully", HttpStatus.OK);
-        }).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+    public ResponseEntity deleteSupply(@PathVariable long supplyId) {
+        rep.deleteById(supplyId);
+
+        return ResponseEntity.noContent().build();
     }
 }
 
