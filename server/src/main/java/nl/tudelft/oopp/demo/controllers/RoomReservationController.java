@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,25 @@ public class RoomReservationController {
         }
 
         return new ResponseEntity<>(unavailableTimes, HttpStatus.OK);
+    }
+
+    /**
+     * GET Endpoint to retrieve a map of all room reservation start and end times.
+     *
+     * @return a map of the room reservation times {@link RoomReservation}.
+     */
+    @GetMapping(value = "room_reservations_times/room/{room_id}")
+    public @ResponseBody
+    ResponseEntity<List<RoomReservation>> getRoomReservationTimesByRoom(@PathVariable(value = "room_id") long roomId) {
+        Map<String, String> unavailableTimes = new HashMap<>();
+
+        List<RoomReservation> reservations = new ArrayList<>();
+        for (RoomReservation reservation : this.reservations.findByRoomId(roomId)) {
+            reservation.setUser(null);
+            reservations.add(reservation);
+        }
+
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     /**

@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -222,6 +223,39 @@ public class RoomReservationCommunication {
         }
 
         return unavailableTimes;
+    }
+
+    public static List<RoomReservation> getAllRoomReservationTimesPerRoom(long roomId) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        HttpRequest request = HttpRequest.newBuilder().GET()
+            .uri(URI.create(String.format("http://localhost:8080/room_reservations_times/room/%s", roomId)))
+            .setHeader("Cookie", Authenticator.SESSION_COOKIE)
+            .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+            return new ArrayList<>();
+        }
+
+        List<RoomReservation> reservations = null;
+        try {
+            reservations = mapper.readValue(response.body(),
+                new TypeReference<>() {
+                });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return reservations;
     }
 }
 

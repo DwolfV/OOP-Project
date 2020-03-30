@@ -10,35 +10,46 @@ import com.calendarfx.view.CalendarView;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
+import nl.tudelft.oopp.demo.communication.Authenticator;
+import nl.tudelft.oopp.demo.communication.RoomCommunication;
+import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 
 public class CalendarSceneController implements Initializable {
 
     private MainSceneController mainSceneController;
 
-    @FXML private CalendarView calendar;
+    @FXML private CalendarView calendarView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        calendar.setPrefWidth(screenBounds.getWidth() - 200);
-        calendar.setPrefHeight(screenBounds.getHeight() - 170);
-        Calendar cal = new Calendar();
-        Interval interval = new Interval(LocalDate.parse("2020-03-30"), LocalTime.parse("10:00"), LocalDate.parse("2020-03-30"), LocalTime.parse("11:00"));
-        Entry<RoomReservation> reservation = new Entry<>("Reservation", interval);
-        RoomReservation asdf = new RoomReservation();
-        reservation.setUserObject(asdf);
-        cal.addEntry(reservation);
-        CalendarSource calendarSource = new CalendarSource("default");
-        calendarSource.getCalendars().add(cal);
-        calendar.getCalendarSources().add(calendarSource);
-        calendar.setShowAddCalendarButton(false);
+        calendarView.setPrefWidth(screenBounds.getWidth() - 200);
+        calendarView.setPrefHeight(screenBounds.getHeight() - 170);
+        // will get the Default calendar
+        Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+
+        List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
+        for (RoomReservation reservation : reservations) {
+            Interval interval = new Interval(reservation.getDate(), reservation.getStartTime(), reservation.getDate(), reservation.getEndTime());
+            Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
+            calendarEntry.setUserObject(reservation);
+            calendar.addEntry(calendarEntry);
+        }
+
+//        CalendarSource calendarSource = new CalendarSource("default");
+//        calendarSource.getCalendars().add(cal);
+//        calendar.getCalendarSources().add(calendarSource);
+        calendarView.setShowAddCalendarButton(false);
 
         // will probably set the calendar to null when deleting entry from calendar
         EventHandler<CalendarEvent> handler = event -> {
@@ -46,9 +57,29 @@ public class CalendarSceneController implements Initializable {
             System.out.println(event);
             // can get old dates and times -> set them if the server responds with a 409 conflict
             // also populate the view with unavailable times.
+            // TODO
         };
 
-        cal.addEventHandler(handler);
+        calendar.addEventHandler(handler);
+
+        // add new calendar for unavailable times
+        List<Room> allRooms = RoomCommunication.getRooms();
+        CalendarSource calendarSource = calendarView.getCalendarSources().get(0);
+        for (Room room : allRooms) {
+            Calendar calendarUnavailableRoom = new Calendar(room.getName());
+            calendarUnavailableRoom.setReadOnly(true);
+            Calendar.Style style = Calendar.Style.STYLE2;
+            calendarUnavailableRoom.setStyle(style);
+            for (RoomReservation reservation : RoomReservationCommunication.getAllRoomReservationTimesPerRoom(room.getId())) {
+                Interval interval = new Interval(reservation.getDate(), reservation.getStartTime(), reservation.getDate(), reservation.getEndTime());
+                Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
+                calendarEntry.setUserObject(reservation);
+                calendarUnavailableRoom.addEntry(calendarEntry);
+            }
+            calendarSource.getCalendars().add(calendarUnavailableRoom);
+            calendarView.setCalendarVisibility(calendarUnavailableRoom, false);
+        }
+
     }
 
     public void setController(MainSceneController mainSceneController) {
