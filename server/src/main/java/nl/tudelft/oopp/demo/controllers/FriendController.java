@@ -94,9 +94,9 @@ public class FriendController {
         // construct the list with friends of user from the friendship list
         for (Friend friend : friendships) {
             if (friend.getUser1().equals(user)) {
-                friends.add(friend.getUser1());
-            } else {
                 friends.add(friend.getUser2());
+            } else {
+                friends.add(friend.getUser1());
             }
         }
 
