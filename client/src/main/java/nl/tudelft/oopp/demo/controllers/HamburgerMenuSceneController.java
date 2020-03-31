@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,12 +20,17 @@ public class HamburgerMenuSceneController implements Initializable {
     private RestaurantSceneController restaurantSceneController;
     private ReservationSceneController reservationSceneController;
     private AdminSceneController adminSceneController;
+    private MenuSceneController menuSceneController;
 
     private Parent reservationRoot;
     private Parent restaurantRoot;
     private Parent sidebarFilterRoot;
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
+    private Parent menuRoot;
+//
+//
+//    private Parent menuP;
 
     public FXMLLoader sidebarFilterLoader;
 
@@ -37,12 +43,20 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/Scenes/menuScene.fxml"));
+
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
             sidebarRoot = sidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
             adminPanelRoot = adminPanelLoader.load();
+            menuRoot = menuLoader.load();
+
+//            double width = mainSceneController.getCenter().getScene().getWidth();
+//            double heigh = mainSceneController.getCenter().getScene().getHeight();
+//            menuP = new Parent(menuRoot, width, heigh);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,10 +64,13 @@ public class HamburgerMenuSceneController implements Initializable {
         reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
-
+        restaurantSceneController.setController(mainSceneController, this);
+        menuSceneController = menuLoader.getController();
+        menuSceneController.setController(mainSceneController);
         reservationSceneController.setControllers(this);
         reservationSceneController.init();
         adminSceneController.setControllers(mainSceneController);
+
         if (!Authenticator.isAdmin()) {
             adminButton.setVisible(false);
         }
@@ -108,6 +125,15 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openAdminPanel(MouseEvent event) {
         mainSceneController.changeCenter(adminPanelRoot);
+        mainSceneController.sidebar = (sidebarRoot);
+        headerSceneController.changeLeft();
+    }
+
+    /**
+     * Open a menu for a restaurant page.
+     */
+    public void openMenu(){
+        mainSceneController.changeCenter(menuRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }

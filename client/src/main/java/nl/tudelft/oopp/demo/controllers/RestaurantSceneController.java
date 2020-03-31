@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +9,17 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
@@ -25,6 +29,18 @@ public class RestaurantSceneController implements Initializable {
 
     @FXML
     private Accordion ac;
+    private MainSceneController mainSceneController;
+    private HamburgerMenuSceneController hamburgerMenuSceneController;
+
+  /*  public void initialize(URL location, ResourceBundle resources) {
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/Scenes/specificRestauant.fxml"));
+        try {
+            menuRoot = menuLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } */
+
 
     /**
      * Loads all the content into the tables.
@@ -43,14 +59,6 @@ public class RestaurantSceneController implements Initializable {
         // count - for lists, c - for tps
         int count = 0;
         int c = 0;
-
-        // load the scene
-        //try {
-        //    BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-        //ac.getPanes().setAll()
 
         // fill the accordion
         for (int i = 0; i < buildingData.size(); i++) {
@@ -73,16 +81,21 @@ public class RestaurantSceneController implements Initializable {
                 grid.setVgap(4);
                 grid.setPadding(new Insets(5, 5, 5, 5));
 
-                for (Restaurant restaurant : restaurants) {
+                // prints all restaurants with the building in which is located
+               /* for (Restaurant restaurant : restaurants) {
                     System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
-                }
+                }*/
 
                 for (int j = 0; j < showRestaurants.size(); j++) {
                     Label label1 = new Label(showRestaurants.get(j).getName());
                     labels.add(label1);
-                    Button button1 = new Button("Menu");
+                    Button button1 = new Button(showRestaurants.get(j).getName() + "'s Menu ");
+                    //button1.setId(String.valueOf(showRestaurants.get(j).getId()));
                     buttons.add(button1);
 
+                    button1.setOnAction(event -> {
+                        hamburgerMenuSceneController.openMenu();
+                    });
                     grid.add(labels.get(count), 0, j);
                     grid.add(buttons.get(count), 1, j);
                     count = count + 1;
@@ -94,4 +107,15 @@ public class RestaurantSceneController implements Initializable {
             }
         }
     }
+
+    /**
+     * Set controllers for the class.
+     * @param mainSceneController Main Scene
+     * @param hamburgerMenuSceneController Hamburger Menu Scene
+     */
+    public void setController(MainSceneController mainSceneController, HamburgerMenuSceneController hamburgerMenuSceneController) {
+        this.mainSceneController = mainSceneController;
+        this.hamburgerMenuSceneController = hamburgerMenuSceneController;
+    }
+
 }
