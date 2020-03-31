@@ -1,10 +1,16 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -13,11 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.converter.IntegerStringConverter;
+
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
-
-import java.util.ArrayList;
 
 public class AdminSupplyPane {
 
@@ -49,6 +54,11 @@ public class AdminSupplyPane {
         SupplyCommunication.removeSupply(supply.getId());
     }
 
+    /**
+     * Get the BorderPane of the Supply list.
+     *
+     * @return BorderPane of Supply Time
+     */
     public static BorderPane getSupplyBP(Accordion ac) {
         screenBounds = Screen.getPrimary().getBounds();
 
@@ -77,8 +87,8 @@ public class AdminSupplyPane {
                 new PropertyValueFactory<>("name"));
         supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         supplyNameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Supply, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
+            (TableColumn.CellEditEvent<Supply, String> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Supply, Integer> supplyStockCol =
                 new TableColumn<>("Stock");
@@ -87,8 +97,8 @@ public class AdminSupplyPane {
                 new PropertyValueFactory<>("stock"));
         supplyStockCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         supplyStockCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Supply, Integer> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setStock(t.getNewValue()));
+            (TableColumn.CellEditEvent<Supply, Integer> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setStock(t.getNewValue()));
 
         ObservableList<Supply> suppliesData = FXCollections.observableList(SupplyCommunication.getSupplies());
         tableSupplies.setItems(suppliesData);
