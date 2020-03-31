@@ -1,11 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,11 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,6 +16,13 @@ import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Room;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
 
@@ -48,7 +45,30 @@ public class ReservationSceneController implements Initializable {
      * The method is used to set up the reservation scene when a user clicks on the "Reservations" button.
      */
     public void init() {
-        ObservableList<Room> rooms = FXCollections.observableList(RoomCommunication.getRooms());
+        Label text = new Label("Pick a date, capacity and filters to see the available rooms");
+        borderPane.setCenter(text);
+        text.setStyle("-fx-padding: 50;" + "-fx-font-weight: bold");
+        SidebarSceneController ctrl = hamburgerMenuSceneController.sidebarFilterLoader.getController();
+        Button search = ctrl.searchId;
+
+        search.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                List<String> filters = ctrl.handleSearchClick();
+                int capacity = ctrl.getCapacity();
+                filteredSearch(filters, capacity);
+            }
+        });
+    }
+
+
+    /**
+     * The method is used to show the filtered rooms when a user clicks on the "Search" button.
+     */
+    public void filteredSearch(List<String> filters , int capacity){
+//        String info = filters.toString() + " " + capacity;
+//        Label text = new Label(info);
+//        borderPane.setCenter(text);
+
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
         TitledPane[] tps = new TitledPane[buildingData.size()];
@@ -56,19 +76,14 @@ public class ReservationSceneController implements Initializable {
 
         SidebarSceneController ctrl = hamburgerMenuSceneController.sidebarFilterLoader.getController();
 
-        int c = 0; // count - for lists, c - for tps
+        int c = 0; // c - for tps
+
 
         // fill the accordion
         for (int i = 0; i < buildingData.size(); i++) {
 
-            //Look for rooms for the building i;
-            ObservableList<Room> showRooms = FXCollections.observableArrayList();
-            for (int k = 0; k < rooms.size(); k++) {
-                if (rooms.get(k).getBuilding().getName().equals(buildingData.get(i).getName())) {
-                    showRooms.add(rooms.get(k));
-                }
-            }
-
+            //Look for the rooms of the building i with the filters
+            ObservableList<Room> showRooms = (ObservableList<Room>) RoomCommunication.getFilteredRoomsByBuilding(buildingData.get(i).getId(), capacity, filters);
 
             //if there are rooms for the building i - show them;
             if (showRooms.size() != 0) {
@@ -150,27 +165,25 @@ public class ReservationSceneController implements Initializable {
                     final LocalTime[] ett = new LocalTime[1];
 
                     EventHandler<ActionEvent> event =
-                        new EventHandler<ActionEvent>() {
-                            public void handle(ActionEvent e) {
-                                stt[0] = cb.getValue();
-                            }
-                        };
-
+                            new EventHandler<ActionEvent>() {
+                                public void handle(ActionEvent e) {
+                                    stt[0] = cb.getValue();
+                                }
+                            };
                     // Set on action
                     cb.setOnAction(event);
 
                     EventHandler<ActionEvent> event1 =
-                        new EventHandler<ActionEvent>() {
-                            public void handle(ActionEvent e) {
-                                ett[0] = cbb.getValue();
-                            }
-                        };
-
+                            new EventHandler<ActionEvent>() {
+                                public void handle(ActionEvent e) {
+                                    ett[0] = cbb.getValue();
+                                }
+                            };
                     // Set on action
                     cbb.setOnAction(event1);
 
-                    long roomId = showRooms.get(j).getId();
 
+                    long roomId = showRooms.get(j).getId();
                     button1.setOnAction(e -> {
                         LocalDate date = ctrl.onPickDate();
                         RoomReservationCommunication.addRoomReservation(date, stt[0], ett[0], roomId);
@@ -181,8 +194,8 @@ public class ReservationSceneController implements Initializable {
                     horizBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                     horizBox.setSpacing(150);
                     horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                        + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
+                            + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                            + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
                     vertBox.getChildren().add(horizBox);
                 }
                 tps[c].setText(buildingData.get(i).getName());
