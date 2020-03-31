@@ -27,7 +27,7 @@ public class HeaderSceneController implements Initializable {
     public void changeLeft() {
 
         // If sidebar is null
-        if(mainSceneController.sidebar == null) {
+        if (mainSceneController.sidebar == null) {
 
             if (mainSceneController.borderPane.getLeft() != null) {
 
@@ -49,10 +49,7 @@ public class HeaderSceneController implements Initializable {
                 timeline.getKeyFrames().setAll(keyFrame);
                 timeline.play();
             }
-        }
-
-        // If sidebar is not null
-        else if (mainSceneController.borderPane.getLeft().equals(mainSceneController.hamburgerMenuRoot)) {
+        } else if (mainSceneController.borderPane.getLeft().equals(mainSceneController.hamburgerMenuRoot)) {
 
             mainSceneController.hamburgerMenuRoot.translateXProperty().set(0);
 

@@ -1,23 +1,26 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.stage.Screen;
-import javafx.util.converter.IntegerStringConverter;
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
-import nl.tudelft.oopp.demo.communication.RoomCommunication;
-import nl.tudelft.oopp.demo.controllers.AdminSceneController;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
+import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 
 public class AdminRestaurantPane {
 
@@ -52,7 +55,7 @@ public class AdminRestaurantPane {
      * Get the BorderPane of the Building info list.
      * @return BorderPane of Building Info
      */
-    public static BorderPane getRestaurantBP() {
+    public static BorderPane getRestaurantBP(Accordion ac) {
         //Reset TableView tableRestaurant
         tableRestaurant = new TableView<>();
         tableRestaurant.getColumns().clear();
@@ -71,8 +74,8 @@ public class AdminRestaurantPane {
                 new PropertyValueFactory<>("name"));
         restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         restaurantNameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
+            (TableColumn.CellEditEvent<Restaurant, String> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Restaurant, Building> buildingNameRestaurantCol =
                 new TableColumn<>("Building Name");
@@ -81,8 +84,8 @@ public class AdminRestaurantPane {
                 new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConverter()));
         buildingNameRestaurantCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
+            (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
         TableColumn<Restaurant, LocalTime> timeOpenCol =
                 new TableColumn<>("Opening Time");
@@ -91,10 +94,10 @@ public class AdminRestaurantPane {
                 new PropertyValueFactory<>("timeOpen"));
         timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeOpenCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setTimeOpen(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setTimeOpen(t.getNewValue());
+            });
 
         TableColumn<Restaurant, LocalTime> timeCloseCol =
                 new TableColumn<>("Closing Time");
@@ -103,10 +106,10 @@ public class AdminRestaurantPane {
                 new PropertyValueFactory<>("timeClose"));
         timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeCloseCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setTimeClose(t.getNewValue());
-                });
+            (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
+                t.getTableView().getItems().get(
+                    t.getTablePosition().getRow()).setTimeClose(t.getNewValue());
+            });
         buildingNameRestaurantCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, Building> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
@@ -166,8 +169,8 @@ public class AdminRestaurantPane {
 
         VBox vboxRight = new VBox(5);
         vboxRight.getChildren().addAll(restaurantName, restaurantNameInput,
-                buildingName, choiceBox, openingTime, openingTimeInput,
-                closingTime, closingTimeInput, addRestaurant);
+            buildingName, choiceBox, openingTime, openingTimeInput,
+            closingTime, closingTimeInput, addRestaurant);
 
         addRestaurant.setOnAction(e -> {
             String restaurantNameInputText = restaurantNameInput.getText();
@@ -182,6 +185,8 @@ public class AdminRestaurantPane {
             buildingNameInput.setText(null);
 
             choiceBox.setValue(null);
+            AdminSceneController.loadAdminScene(ac);
+            ac.setExpandedPane(AdminSceneController.restaurantTP);
         });
 
         // HBox for the buttons under the table

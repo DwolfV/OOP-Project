@@ -1,19 +1,26 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
+
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
-
-import java.util.ArrayList;
 
 public class AdminRoomPane {
 
@@ -48,7 +55,7 @@ public class AdminRoomPane {
      * Get the BorderPane of the Building info list.
      * @return BorderPane of Building Info
      */
-    public static BorderPane getRoomBP() {
+    public static BorderPane getRoomBP(Accordion ac) {
         //Reset TableView tableRoom
         tableRoom = new TableView<>();
         tableRoom.getColumns().clear();
@@ -67,8 +74,8 @@ public class AdminRoomPane {
                 new PropertyValueFactory<>("name"));
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
         roomCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
+            (TableColumn.CellEditEvent<Room, String> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Room, Integer> capacityCol =
                 new TableColumn<>("capacityField");
@@ -77,8 +84,8 @@ public class AdminRoomPane {
                 new PropertyValueFactory<>("capacity"));
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         capacityCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Room, Integer> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
+            (TableColumn.CellEditEvent<Room, Integer> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
         capacityCol.setOnEditCommit((TableColumn.CellEditEvent<Room, Integer> t) ->
                 t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
 
@@ -163,6 +170,8 @@ public class AdminRoomPane {
             roomNameField.setText(null);
             capacityField.setText(null);
             choiceBox.setValue(null);
+            AdminSceneController.loadAdminScene(ac);
+            ac.setExpandedPane(AdminSceneController.roomTP);
         });
 
         tableRoom.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

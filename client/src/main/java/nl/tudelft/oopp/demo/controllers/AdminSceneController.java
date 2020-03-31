@@ -2,16 +2,30 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
-import nl.tudelft.oopp.demo.helperclasses.*;
+
+import nl.tudelft.oopp.demo.helperclasses.AdminBuildingPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminRestaurantPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminRoomPane;
 
 public class AdminSceneController implements Initializable {
 
+    public static TitledPane buildingTP;
+    public static TitledPane roomTP;
+    public static TitledPane restaurantTP;
     private static Rectangle2D screenBounds;
     public static BorderPane adminBorderPane;
     public MainSceneController mainSceneController;
@@ -20,53 +34,67 @@ public class AdminSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadAdminScene(ac);
+        ac.setExpandedPane(buildingTP);
+    }
+
+    /**
+     * Load the admin scene.
+     * @param ac Accordion
+     */
+    public static void loadAdminScene(Accordion ac) {
         screenBounds = Screen.getPrimary().getBounds();
 
         // Building TitledPane
-        BorderPane borderPaneInfo = AdminBuildingPane.getBuildingInfoBP();
-        BorderPane borderPaneTime = AdminBuildingPane.getBuildingTimesBP();
-        //AdminBuildingPane.tableBuilding.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //AdminBuildingPane.tableHoliday.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        BorderPane borderPaneInfo = AdminBuildingPane.getBuildingInfoBP(ac);
+        BorderPane borderPaneTime = AdminBuildingPane.getBuildingTimesBP(ac);
 
         VBox vboxBuilding = new VBox();
         vboxBuilding.getChildren().setAll(borderPaneInfo, borderPaneTime);
 
         ScrollPane scrollPaneBuilding = getScrollPane(vboxBuilding);
 
-        TitledPane buildingTP = new TitledPane();
+        buildingTP = new TitledPane();
         buildingTP.setText("Buildings");
         buildingTP.setContent(scrollPaneBuilding);
 
         // Room TitledPane
-        BorderPane borderPaneRoom = AdminRoomPane.getRoomBP();
+        BorderPane borderPaneRoom = AdminRoomPane.getRoomBP(ac);
         VBox vboxRoom = new VBox();
         vboxRoom.getChildren().setAll(borderPaneRoom);
 
         ScrollPane scrollPaneRoom = getScrollPane(vboxRoom);
 
-        TitledPane roomTP = new TitledPane();
+        roomTP = new TitledPane();
         roomTP.setText("Rooms");
         roomTP.setContent(scrollPaneRoom);
 
         // Restaurant TitledPane
-        BorderPane borderPaneRestaurant = AdminRestaurantPane.getRestaurantBP();
+        BorderPane borderPaneRestaurant = AdminRestaurantPane.getRestaurantBP(ac);
         VBox vboxRestaurant = new VBox();
         vboxRestaurant.getChildren().setAll(borderPaneRestaurant);
 
         ScrollPane scrollPaneRestaurant = getScrollPane(vboxRestaurant);
 
-        TitledPane restaurantTP = new TitledPane();
+        restaurantTP = new TitledPane();
         restaurantTP.setText("Restaurants");
         restaurantTP.setContent(scrollPaneRestaurant);
 
         ac.setPrefWidth(screenBounds.getWidth() - 400);
-        ac.getPanes().addAll(buildingTP, roomTP, restaurantTP);
+        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP);
     }
 
     public void setControllers(MainSceneController mainSceneController) {
         this.mainSceneController = mainSceneController;
     }
 
+    /**
+     * Get the border pane.
+     * @param centerPane center of border pane
+     * @param bottomHBox bottom of border pane
+     * @param rightVBox right of border pane
+     * @return
+     */
     public static BorderPane getBorderPane(TableView<Object> centerPane, HBox bottomHBox, VBox rightVBox) {
 
         centerPane.getStyleClass().add("center");
@@ -84,6 +112,11 @@ public class AdminSceneController implements Initializable {
         return borderPane;
     }
 
+    /**
+     * Get the scrollPane of the borderPanes.
+     * @param vbox VBox of the borderPanes
+     * @return ScrollPane
+     */
     public static ScrollPane getScrollPane(VBox vbox) {
 
         // VBox inside GridPane
