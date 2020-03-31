@@ -871,6 +871,7 @@ public class AdminSceneController implements Initializable {
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
             new PropertyValueFactory<>("building"));
+        buildingNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new BuildingToStringConverter()));
 
         TableColumn<Supply, String> supplyNameCol =
             new TableColumn<>("Supply Name");
