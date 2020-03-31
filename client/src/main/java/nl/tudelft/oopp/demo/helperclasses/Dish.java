@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 public class Dish {
 
+    private long id;
     String name;
     String description;
     String type;
@@ -21,6 +22,14 @@ public class Dish {
         this.description = description;
         this.type = type;
         this.price = price;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
