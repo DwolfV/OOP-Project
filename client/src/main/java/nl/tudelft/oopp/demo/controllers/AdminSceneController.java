@@ -60,6 +60,7 @@ public class AdminSceneController implements Initializable {
         buildingTP.getStyleClass().setAll("table-pane");
         roomsTP.getStyleClass().setAll("table-pane");
         restaurantsTP.getStyleClass().setAll("table-pane");
+        suppliesTP.getStyleClass().setAll("table-pane");
 
         buildingView();
         roomView();
@@ -871,9 +872,8 @@ public class AdminSceneController implements Initializable {
         buildingNameCol.setCellValueFactory(
             new PropertyValueFactory<>("building"));
 
-
         TableColumn<Supply, String> supplyNameCol =
-            new TableColumn<>("Opening Time");
+            new TableColumn<>("Supply Name");
         supplyNameCol.setMinWidth(100);
         supplyNameCol.setCellValueFactory(
             new PropertyValueFactory<>("name"));
@@ -948,8 +948,8 @@ public class AdminSceneController implements Initializable {
             buildingNameInput.setText(string[1]);
         });
 
-        veBoxAddSupplies.getChildren().addAll(buildingName, buildingNameInput,
-            supplyName, supplyNameInput, stock, stockInput);
+        veBoxAddSupplies.getChildren().addAll(buildingName, buildingNameInput, choiceBox,
+            supplyName, supplyNameInput, stock, stockInput, addSupplies);
         veBoxAddSupplies.setPadding(new Insets(0, 10, 10, 10));
         veBoxAddSupplies.setSpacing(10);
         borderPaneAddSupplies.setTop(veBoxAddSupplies);
@@ -978,8 +978,8 @@ public class AdminSceneController implements Initializable {
         VBox veBoxSuppliesTP = new VBox();
 
         hoBoxSuppliesTP.getChildren().addAll(tableSupplies, borderPaneAddSupplies);
-        hoBoxSuppliesTP.setPadding(new Insets(20, 20, 20, 20));
-        hoBoxSuppliesTP.getChildren().addAll(hoBoxSuppliesTP, hoBoxAddDeleteUpdateSupplies);
+        veBoxSuppliesTP.setPadding(new Insets(20, 20, 20, 20));
+        veBoxSuppliesTP.getChildren().addAll(hoBoxSuppliesTP, hoBoxAddDeleteUpdateSupplies);
 
         ScrollPane scrollPaneRestaurant = new ScrollPane();
         scrollPaneRestaurant.setContent(veBoxSuppliesTP);
