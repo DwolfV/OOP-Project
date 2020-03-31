@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1750.0" xmlns="http://javafx.com/javafx/8" fx:controller="nl.tudelft.oopp.demo.controllers.MenuSceneController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8" fx:controller="nl.tudelft.oopp.demo.controllers.MenuSceneController">
    <children>
-      <Pane layoutX="1400.0" prefHeight="950.0" prefWidth="350.0" style="-fx-background-color: lightgray;" />
+      <Pane layoutX="1400.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="900.0" prefWidth="350.0" style="-fx-background-color: lightgray;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text fill="#00a6d6" layoutX="106.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Basket()">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+            <Button layoutX="117.0" layoutY="801.0" mnemonicParsing="false" style="-fx-background-color: #00A6D6;" text="Place Order" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children></Pane>
    </children>
 </AnchorPane>
