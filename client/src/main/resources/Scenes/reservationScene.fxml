@@ -8,5 +8,4 @@
    <children>
       <BorderPane fx:id="borderPane"  prefWidth="1080.0" />
    </children>
-
 </AnchorPane>
