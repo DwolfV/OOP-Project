@@ -6,7 +6,7 @@ import nl.tudelft.oopp.demo.entities.Supply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SupplyRepository extends JpaRepository<Supply, Long> {
-
+    List<Supply> findByUserId(long userid);
     Optional<Supply> findByBuildingIdAndName(long buildingId, String name);
 
     List<Supply> findByBuildingId(long buildingId);
