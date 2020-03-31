@@ -19,9 +19,9 @@
 - **Tip:** We still need to work on tests on the client side. Also, we need to know when to stop and change plans, cause last week the front-end wasted a lot of time on figuring it out how to work with open and close time for each room. Next time, a swifter action would be better.
 
 ###Bogdan
-- **Top:**
+- **Top:** Style is a lot better and code reviewing is going smooth.  
 
-- **Tip:**
+- **Tip:** Gitlab features can be used more
 
 ###Iulia
 - **Top:** we improved the style a lot, we’ve done more code reviewing than ever before, the collaboration seemed to have improved too

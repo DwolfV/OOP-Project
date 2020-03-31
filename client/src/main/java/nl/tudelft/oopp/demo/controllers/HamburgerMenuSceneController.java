@@ -17,6 +17,7 @@ public class HamburgerMenuSceneController implements Initializable {
     private MainSceneController mainSceneController;
     private HeaderSceneController headerSceneController;
     private RestaurantSceneController restaurantSceneController;
+    private ReservationSceneController reservationSceneController;
     private AdminSceneController adminSceneController;
 
     private Parent reservationRoot;
@@ -26,12 +27,14 @@ public class HamburgerMenuSceneController implements Initializable {
     private Parent emptySidebarRoot;
     private Parent adminPanelRoot;
 
+    public FXMLLoader sidebarFilterLoader;
+
     @FXML public Button adminButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         FXMLLoader reservationLoader = new FXMLLoader(getClass().getResource("/Scenes/reservationScene.fxml"));
-        FXMLLoader sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
+        sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader emptySidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/emptySidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
@@ -46,8 +49,13 @@ public class HamburgerMenuSceneController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
+
+        reservationSceneController.setControllers(this);
+        reservationSceneController.init();
         adminSceneController.setControllers(mainSceneController);
         if (!Authenticator.isAdmin()) {
             adminButton.setVisible(false);
@@ -83,6 +91,8 @@ public class HamburgerMenuSceneController implements Initializable {
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
+        CalendarSceneController calendarSceneController = mainSceneController.calendarLoader.getController();
+        calendarSceneController.init();
     }
 
     /**
@@ -91,7 +101,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openRestaurants(MouseEvent event) {
         mainSceneController.changeCenter(restaurantRoot);
-        mainSceneController.sidebar = (sidebarFilterRoot);
+        mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }
 

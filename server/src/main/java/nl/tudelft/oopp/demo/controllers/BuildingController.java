@@ -68,6 +68,8 @@ public class BuildingController {
      * @param e2 - name of a piece of equipment
      * @param e3 - name of a piece of equipment
      * @param e4 - name of a piece of equipment
+     * @param e5 - name of a piece of equipment
+     * @param e6 - name of a piece of equipment
      * @return a list of filtered buildings by their room capacity and other equipment pieces
      */
     @GetMapping("/building/filter")
@@ -75,7 +77,9 @@ public class BuildingController {
                                                @RequestParam (name = "e1", required = false) String e1,
                                                @RequestParam (name = "e2", required = false) String e2,
                                                @RequestParam (name = "e3", required = false) String e3,
-                                               @RequestParam (name = "e4", required = false) String e4) {
+                                               @RequestParam (name = "e4", required = false) String e4,
+                                               @RequestParam (name = "e4", required = false) String e5,
+                                               @RequestParam (name = "e4", required = false) String e6) {
         List<Building> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Building> buildings = rep.filterBuilding(capacity);
@@ -91,6 +95,12 @@ public class BuildingController {
         }
         if (!(e4 == null)) {
             filters.add(e4);
+        }
+        if (!(e5 == null)) {
+            filters.add(e5);
+        }
+        if (!(e6 == null)) {
+            filters.add(e6);
         }
         int expected = 0;
         //count the filters;

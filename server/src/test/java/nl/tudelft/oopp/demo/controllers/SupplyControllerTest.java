@@ -45,10 +45,10 @@ class SupplyControllerTest {
      */
     @BeforeEach
     public void save() {
-        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
-        b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c2");
-        b3 = new Building("name3", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s3", "sNo3", "z3", "c3");
-        b4 = new Building("name4", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s4", "sNo4", "z4", "c4");
+        b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
+        b2 = new Building("name2", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s2", "sNo2", "z2", "c2");
+        b3 = new Building("name3", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s3", "sNo3", "z3", "c3");
+        b4 = new Building("name4", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s4", "sNo4", "z4", "c4");
 
         s1 = new Supply(b1, "s1", 7);
         s2 = new Supply(b2, "s2", 11);
@@ -71,7 +71,7 @@ class SupplyControllerTest {
 
     @Test
     void testGetAllSupplies() {
-        List<Supply> expectedList = new ArrayList<Supply>(List.of(s1,s2,s3,s4));
+        List<Supply> expectedList = new ArrayList<Supply>(List.of(s1, s2, s3, s4));
         when(supplyRepository.findAll()).thenReturn(expectedList);
 
         List<Supply> actualList = supplyController.getAllSupplies();
@@ -82,10 +82,10 @@ class SupplyControllerTest {
     void getSupplyByBuildingAndName() {
         Supply s5 = new Supply(b1, "s5", 10);
         when(supplyRepository.findByBuildingIdAndName(
-                b1.getId(), s5.getName())).thenReturn(Optional.of(s5));
+            b1.getId(), s5.getName())).thenReturn(Optional.of(s5));
 
         assertEquals(s5,
-                supplyController.getSupplyByBuildingIdAndName(s5.getName(), b1.getId()).getBody());
+            supplyController.getSupplyByBuildingIdAndName(s5.getName(), b1.getId()).getBody());
     }
 
     @Test
@@ -94,7 +94,7 @@ class SupplyControllerTest {
         when(supplyRepository.findByBuildingId(b1.getId())).thenReturn(List.of(s1, s5));
 
         assertEquals(List.of(s1, s5),
-                supplyController.getSupplyByBuildingId(b1.getId()).getBody());
+            supplyController.getSupplyByBuildingId(b1.getId()).getBody());
     }
 
     @Test
@@ -109,7 +109,7 @@ class SupplyControllerTest {
     @Test
     void testNewSupply() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         Supply supply = new Supply(b1, "s1", 7);
 
         Optional<Supply> optionalSupply = Optional.of(supply);
@@ -120,28 +120,23 @@ class SupplyControllerTest {
         assertEquals(supply, supplyController.newSupply(supply, uriComponentsBuilder).getBody());
     }
 
+
     @Test
     void testUpdateSupply() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("name1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         Supply supply = new Supply(b1, "s1", 7);
-
         Optional<Supply> optionalSupply = Optional.of(s1);
         ResponseEntity<Supply> entity = ResponseEntity.of(optionalSupply);
 
-        Optional<Supply> newS = Optional.of(supply);
-        ResponseEntity<Supply> newE = ResponseEntity.of(newS);
-
         when(supplyRepository.save(supply)).thenReturn(supply);
-        when(supplyRepository.findById(s1.getId())).thenReturn(optionalSupply);
-
-        assertEquals(newE.getBody(), supplyController.updateSupply(s1.getId(), s1).getBody());
+        assertEquals(supply, supplyController.newSupply(supply, uriComponentsBuilder).getBody());
     }
 
     @Test
     void testDeleteSupply() {
-        List<Supply> actualList = new ArrayList<Supply>(List.of(s1,s2,s4));
-        List<Supply> expectedList = new ArrayList<Supply>(List.of(s1,s2,s3,s4));
+        List<Supply> actualList = new ArrayList<Supply>(List.of(s1, s2, s4));
+        List<Supply> expectedList = new ArrayList<Supply>(List.of(s1, s2, s3, s4));
 
         Optional<Supply> optionalSupply = Optional.of(s3);
         ResponseEntity<Supply> supplyResponseEntity = ResponseEntity.of(optionalSupply);

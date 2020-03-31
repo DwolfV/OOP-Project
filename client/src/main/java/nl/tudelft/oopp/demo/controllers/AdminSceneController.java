@@ -20,12 +20,14 @@ import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.helperclasses.AdminBuildingPane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRestaurantPane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRoomPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminSupplyPane;
 
 public class AdminSceneController implements Initializable {
 
     public static TitledPane buildingTP;
     public static TitledPane roomTP;
     public static TitledPane restaurantTP;
+    public static TitledPane supplyTP;
     private static Rectangle2D screenBounds;
     public static BorderPane adminBorderPane;
     public MainSceneController mainSceneController;
@@ -80,8 +82,20 @@ public class AdminSceneController implements Initializable {
         restaurantTP.setText("Restaurants");
         restaurantTP.setContent(scrollPaneRestaurant);
 
+        // Supplies TitledPane
+        BorderPane borderPaneSupply = AdminSupplyPane.getSupplyBP(ac);
+        VBox vboxSupply = new VBox();
+        vboxSupply.getChildren().setAll(borderPaneSupply);
+
+        ScrollPane scrollPaneSupply = getScrollPane(vboxSupply);
+
+        supplyTP = new TitledPane();
+        supplyTP.setText("Supplies");
+        supplyTP.setContent(scrollPaneSupply);
+
+        // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
-        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP);
+        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP);
     }
 
     public void setControllers(MainSceneController mainSceneController) {
@@ -135,7 +149,7 @@ public class AdminSceneController implements Initializable {
 
         // GridPane inside ScrollPane
         ScrollPane scroll = new ScrollPane();
-        scroll.setMaxHeight(screenBounds.getHeight() - 300);
+        scroll.setMaxHeight(screenBounds.getHeight() - 400);
         scroll.setMaxWidth(screenBounds.getWidth());
         scroll.setContent(gridPane);
         scroll.getStyleClass().setAll("scroll-pane");

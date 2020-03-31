@@ -36,6 +36,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
         http
                 //HTTP Basic authentication
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .antMatchers(HttpMethod.GET, "/building/**", "/equipment/**", "/holidays/**",
                         "/openTimes/**", "/restaurant/**", "/rooms/**",
                         "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/occasion/**")
