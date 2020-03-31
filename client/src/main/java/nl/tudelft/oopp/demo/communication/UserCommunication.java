@@ -9,6 +9,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.List;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.User;
 import nl.tudelft.oopp.demo.helperclasses.UserInfo;
 
@@ -59,6 +62,39 @@ public class UserCommunication {
 
         System.out.println(Authenticator.ROLE + "; IS ADMIN - " + Authenticator.isAdmin());
         return true;
+    }
+
+    /**
+     * Get a user by a given username.
+     *
+     * @param username - the username of the user that we are looking for
+     * @return the user
+     */
+    public static User getByUsername(String username) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/user/%s", username))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        User user = null;
+        // TODO handle exception
+        try {
+            user = mapper.readValue(response.body(), new TypeReference<User>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     /**

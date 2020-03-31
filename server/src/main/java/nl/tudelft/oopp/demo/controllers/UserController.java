@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.entities.UserInfo;
@@ -34,6 +35,23 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    /**
+     * GET endpoint to retrieve a user by username.
+     *
+     * @param username - the username of the user
+     * @return a response entity with the user and status code 200 if ok, 404 otherwise
+     */
+    @GetMapping("user/{username}")
+    @ResponseBody
+    public ResponseEntity<User> getByUsername(@PathVariable String username) {
+        Optional<User> optionalUser = rep.findByUsername(username);
+        User user = optionalUser.get();
+        if(user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     /**
      * GET Endpoint to retrieve a list of all users.
