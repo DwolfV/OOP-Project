@@ -72,6 +72,9 @@ public class ReservationSceneController implements Initializable {
         //        Label text = new Label(info);
         //        borderPane.setCenter(text);
 
+        // clear the previous result
+        ac.getPanes().clear();
+
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
         TitledPane[] tps = new TitledPane[buildingData.size()];
