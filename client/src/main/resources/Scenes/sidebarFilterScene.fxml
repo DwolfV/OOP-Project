@@ -40,46 +40,8 @@
                       <Insets left="10.0" top="10.0" />
                   </VBox.margin>
               </Text>
-              <CheckBox fx:id="whiteboardId" mnemonicParsing="false" text="Whiteboard" textFill="WHITE">
-                  <padding>
-                      <Insets left="10.0" />
-                  </padding>
-                  <VBox.margin>
-                      <Insets bottom="5.0" />
-                  </VBox.margin>
-              </CheckBox>
-              <CheckBox fx:id="tableId" mnemonicParsing="false" text="Table" textFill="WHITE">
-                  <padding>
-                      <Insets left="10.0" />
-                  </padding>
-                  <VBox.margin>
-                      <Insets bottom="5.0" />
-                  </VBox.margin>
-              </CheckBox>
-              <CheckBox fx:id="tvId" mnemonicParsing="false" text="TV" textFill="WHITE">
-                  <padding>
-                      <Insets left="10.0" />
-                  </padding>
-                  <VBox.margin>
-                      <Insets bottom="5.0" />
-                  </VBox.margin>
-              </CheckBox>
-              <CheckBox fx:id="projectorId" mnemonicParsing="false" text="Projector" textFill="WHITE">
-                  <padding>
-                      <Insets left="10.0" />
-                  </padding>
-                  <VBox.margin>
-                      <Insets bottom="5.0" />
-                  </VBox.margin>
-              </CheckBox>
-              <CheckBox fx:id="chairsId" mnemonicParsing="false" text="Chairs" textFill="WHITE">
-                  <padding>
-                      <Insets left="10.0" />
-                  </padding>
-                  <VBox.margin>
-                      <Insets bottom="5.0" />
-                  </VBox.margin>
-              </CheckBox>
+          <VBox prefHeight="300" fx:id="box">
+          </VBox>
               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold; -fx-font-size: 20px;" text="Restaurants:">
                   <VBox.margin>
                       <Insets left="10.0" right="5.0" top="10.0" />

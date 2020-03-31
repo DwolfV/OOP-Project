@@ -1,18 +1,23 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import nl.tudelft.oopp.demo.communication.ItemCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Item;
 
 public class SidebarSceneController implements Initializable {
 
@@ -38,77 +43,45 @@ public class SidebarSceneController implements Initializable {
     public CheckBox deliveryId;
     @FXML
     public CheckBox takeAwayId;
+    @FXML
+    private VBox box;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         anchorPane = anchorPane;
+        for (Item i : ItemCommunication.getItems()) {
+            System.out.println("items: " + i);
+            CheckBox item = new CheckBox(i.getName());
+            Insets insets = new Insets(10, 10, 10, 10);
+            item.setPadding(insets);
+            item.setTextFill(Paint.valueOf("white"));
+            box.getChildren().add(item);
+        }
     }
 
     public LocalDate onPickDate() {
         return dp.getValue();
     }
-    public int getCapacity(){ return Integer.parseInt(capacityId.getText());}
 
+    public int getCapacity() {
+        return Integer.parseInt(capacityId.getText());
+    }
+
+    /**
+     * Handles the "Search" button click.
+     * @return A list of the selected items.
+     */
     @FXML
-    public List handleSearchClick(){
-        List<String> result = new ArrayList<>();
-        result.add(whiteboardSelected());
-        result.add(tableSelected());
-        result.add(tvSelected());
-        result.add(projectorSelected());
-        result.add(chairsSelected());
-        result.add(deliverySelected());
-        result.add(takeAwaySelected());
-        return result;
+    public List handleSearchClick() {
+        List<String> selectedItems = new ArrayList<>();
+        for (Node node : box.getChildren()) {
+            CheckBox item = (CheckBox) node;
+            if (item.isSelected()) {
+                selectedItems.add(item.getText());
+            }
+        }
+        return selectedItems;
     }
 
-    private String whiteboardSelected(){
-        if(whiteboardId.isSelected()){
-            return "whiteboard";
-        }
-        return null;
-    }
-
-    private String tableSelected(){
-        if(tableId.isSelected()){
-            return "table";
-        }
-        return null;
-    }
-
-    private String tvSelected(){
-        if(tvId.isSelected()){
-            return "tv";
-        }
-        return null;
-    }
-
-    private String projectorSelected(){
-        if(projectorId.isSelected()){
-            return "projector";
-        }
-        return null;
-    }
-
-    private String chairsSelected(){
-        if(chairsId.isSelected()){
-            return "chairs";
-        }
-        return null;
-    }
-
-    private String deliverySelected(){
-        if(deliveryId.isSelected()){
-            return "delivery";
-        }
-        return null;
-    }
-
-    private String takeAwaySelected(){
-        if(takeAwayId.isSelected()){
-            return "takeAway";
-        }
-        return null;
-    }
 }
