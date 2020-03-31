@@ -122,7 +122,6 @@ public class AdminSceneController implements Initializable {
         borderPane.setRight(rightVBox);
         borderPane.setBottom(bottomHBox);
         adminBorderPane = borderPane;
-
         return borderPane;
     }
 
