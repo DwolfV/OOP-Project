@@ -101,18 +101,20 @@ public class RoomCommunication {
         if (capacity == null) {
             capacity = 0;
         }
-        uri = uri + "?capacity=" + capacity;
+        uri = uri + "&capacity=" + capacity;
 
         //the number of equipment items
         int count = 0;
-        String baseString = "&e%n"; //base string used for formatting
+        String baseString = "&e%d"; //base string used for formatting
         for (String s : equipment) {
+            if (s == null) break;
             if (count == 6) { //we don't want to filter more than 6 items
                 break;
             }
             count++;//increase the amount of added items
-            uri = uri + String.format(baseString, count) + s; //add the filter to the uri
+            uri = uri + String.format(baseString, count) + "=" + s; //add the filter to the uri
         }
+        System.out.println(uri);
 
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(uri)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
 
