@@ -10,6 +10,10 @@ public class Supply {
     private int stock;
     private Set<SupplyReservation> reservations;
 
+    public Supply() {
+
+    }
+
     /**
      * Creates a new instance of the Supply entity.
      * @param building - The building that is linked to a specific supply

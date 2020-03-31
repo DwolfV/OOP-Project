@@ -88,6 +88,8 @@ public class HamburgerMenuSceneController implements Initializable {
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
+        CalendarSceneController calendarSceneController = mainSceneController.calendarLoader.getController();
+        calendarSceneController.init();
     }
 
     /**
