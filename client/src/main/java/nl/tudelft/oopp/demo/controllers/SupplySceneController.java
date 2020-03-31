@@ -7,20 +7,18 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
-import nl.tudelft.oopp.demo.helperclasses.Supply;
+import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
+import nl.tudelft.oopp.demo.helperclasses.*;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
 
 public class SupplySceneController implements Initializable {
 
@@ -40,8 +38,34 @@ public class SupplySceneController implements Initializable {
     @Override
     public void initialize (URL location, ResourceBundle resources) {
         ObservableList<Building> buildings= FXCollections.observableList(BuildingCommunication.getBuildings());
-
         ObservableList<Supply> supplies = FXCollections.observableList(SupplyCommunication.getSupplies());
+
+        ObservableList<SupplyReservation> reservedSupplies = FXCollections.observableList(SupplyReservationCommunication.getSupplyReservationByUserId(Authenticator.ID));
+
+        VBox veBoxDeleteAndList = new VBox();
+
+        // This is a listView to list all the items, I am not sure if this is the best.
+        ListView<SupplyReservation> reservedSuppliesList = new ListView<>();
+        Button removeReservedSupply = new Button("Remove Selected");
+
+        reservedSuppliesList.setItems(reservedSupplies);
+
+        // a method for the remove button
+        removeReservedSupply.setOnAction(event -> {
+            final int selectedIdx = reservedSuppliesList.getSelectionModel().getSelectedIndex();
+            if (selectedIdx != -1) {
+
+                final int newSelectedIdx =
+                    (selectedIdx == reservedSuppliesList.getItems().size() - 1)
+                        ? selectedIdx - 1
+                        : selectedIdx;
+
+                reservedSuppliesList.getItems().remove(selectedIdx);
+                reservedSuppliesList.getSelectionModel().select(newSelectedIdx);
+            }
+        });
+
+        veBoxDeleteAndList.getChildren().addAll(reservedSuppliesList, removeReservedSupply);
 
         TitledPane[] tps = new TitledPane[buildings.size()];
         List<Button> buttons = new ArrayList<>();
@@ -104,7 +128,8 @@ public class SupplySceneController implements Initializable {
                 c++;
             }
             // load the accordion into the scene
-            VBox box = new VBox(ac);
+            VBox box = new VBox(veBoxDeleteAndList, ac);
+            box.setSpacing(20);
             borderPane.setCenter(box);
             borderPane.setPadding(new Insets(30, 5, 5, 10));
         }
