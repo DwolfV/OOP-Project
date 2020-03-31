@@ -1,12 +1,10 @@
 package nl.tudelft.oopp.demo.repositories;
 
-
+import java.util.List;
 import nl.tudelft.oopp.demo.entities.Friend;
 import nl.tudelft.oopp.demo.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend, Long> {
 

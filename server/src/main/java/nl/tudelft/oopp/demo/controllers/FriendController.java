@@ -1,5 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Friend;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.FriendRepository;
@@ -7,14 +11,17 @@ import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/friend")
@@ -32,7 +39,7 @@ public class FriendController {
     @GetMapping("/{id}")
     public ResponseEntity<Friend> getFriendById(@PathVariable long id) {
         return friendRepository.findById(id).map(friend -> new ResponseEntity<>(friend, HttpStatus.OK))
-                .orElseGet( () -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -57,10 +64,10 @@ public class FriendController {
     public ResponseEntity<Friend> getFriendByUser1AndUser2(@RequestParam(name = "user1") User user1,
                                                            @RequestParam(name = "user2") User user2) {
         Friend friend = friendRepository.findByUser1AndUser2(user1, user2);
-        if(friend == null) {
+        if (friend == null) {
             friend = friendRepository.findByUser1AndUser2(user2, user1);
         }
-        if(friend == null) {
+        if (friend == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(friend, HttpStatus.OK);
@@ -70,7 +77,7 @@ public class FriendController {
     UserRepository userRepository;
 
     /**
-     * Retrieve a list of users that are friends with the current user
+     * Retrieve a list of users that are friends with the current user.
      *
      * @param username - the username of a user
      * @return a list of users that represent friends of the current user
@@ -85,8 +92,8 @@ public class FriendController {
         User user = userOptional.get();
 
         // construct the list with friends of user from the friendship list
-        for(Friend friend : friendships) {
-            if(friend.getUser1().equals(user)) {
+        for (Friend friend : friendships) {
+            if (friend.getUser1().equals(user)) {
                 friends.add(friend.getUser1());
             } else {
                 friends.add(friend.getUser2());
@@ -111,7 +118,7 @@ public class FriendController {
     }
 
     /**
-     * Delete a friendship between two users
+     * Delete a friendship between two users.
      *
      * @param user1 - user that is part of the friendship
      * @param user2 - the other user that is part of the friendship
@@ -121,10 +128,10 @@ public class FriendController {
     public ResponseEntity deleteFriend(@RequestParam(name = "user1") User user1,
                                        @RequestParam(name = "user2") User user2) {
         Friend friend = friendRepository.findByUser1AndUser2(user1, user2);
-        if(friend == null) {
+        if (friend == null) {
             friend = friendRepository.findByUser1AndUser2(user2, user1);
         }
-        if(friend == null) {
+        if (friend == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         friendRepository.delete(friend);
