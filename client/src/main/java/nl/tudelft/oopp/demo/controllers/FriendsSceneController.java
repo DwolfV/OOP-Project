@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.jayway.jsonpath.internal.function.numeric.Max;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,11 +8,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.helperclasses.Building;
@@ -20,6 +21,8 @@ import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.User;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FriendsSceneController implements Initializable {
@@ -38,31 +41,45 @@ public class FriendsSceneController implements Initializable {
     @Override
     public void initialize (URL location, ResourceBundle resources) {
 
-        HBox hoBox = new HBox();
-        Button deleteButton = new Button("Delete");
-        Button addButton = new Button("Add");
+        HBox hoBoxAddFriend = new HBox();
+        Button addButton = new Button("Add a friend");
         TextField newFriendTextField = new TextField();
         newFriendTextField.setPromptText("username");
+        hoBoxAddFriend.getChildren().addAll(addButton, newFriendTextField);
+        hoBoxAddFriend.setAlignment(Pos.CENTER);
+        hoBoxAddFriend.setSpacing(10);
 
-        hoBox.getChildren().addAll(deleteButton, addButton, newFriendTextField);
-
-        ListView<User> friendList = new ListView<>();
         ObservableList<User> friends = FXCollections.observableList(FriendCommunication.getFriends(Authenticator.USERNAME));
-        friendList.setItems(friends);
 
-        deleteButton.setOnAction(event -> {
-            final int selectedIdx = friendList.getSelectionModel().getSelectedIndex();
-            if (selectedIdx != -1) {
+        TitledPane[] tps = new TitledPane[friends.size()];
+        List<Button> buttons = new ArrayList<>();
 
-                final int newSelectedIdx =
-                    (selectedIdx == friendList.getItems().size() - 1)
-                        ? selectedIdx - 1
-                        : selectedIdx;
+        VBox veBoxTpAndAdd = new VBox();
 
-                friendList.getSelectionModel().select(newSelectedIdx);
-                friends.remove(selectedIdx);
-            }
-        });
+        int c = 0;
+
+        for (int i = 0; i < friends.size(); i++) {
+            tps[c] = new TitledPane();
+            HBox hoBoxUsernameAndRemove = new HBox();
+
+            Label friendsLabel = new Label(friends.get(i).getUsername());
+
+            Button removeFriendsButton = new Button("Remove");
+            buttons.add(removeFriendsButton);
+
+            removeFriendsButton.setOnAction(event -> {
+//            FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME), UserCommunication.getByUsername());
+            });
+
+            hoBoxUsernameAndRemove.getChildren().addAll(friendsLabel, removeFriendsButton);
+            hoBoxUsernameAndRemove.getChildren().get(1).setTranslateX(780);
+            hoBoxUsernameAndRemove.setSpacing(150);
+            hoBoxUsernameAndRemove.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
+                + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+                + "-fx-border-radius: 5;" + "-fx-border-color: lightblue;");
+            veBoxTpAndAdd.getChildren().add(hoBoxUsernameAndRemove);
+            veBoxTpAndAdd.setPadding(new Insets(20,0,0,0));
+        }
 
         addButton.setOnAction(event -> {
             String newFriendTextFieldText = newFriendTextField.getText();
@@ -72,10 +89,8 @@ public class FriendsSceneController implements Initializable {
             newFriendTextField.setText(null);
         });
 
-        VBox veBox = new VBox();
-        veBox.getChildren().addAll(friendList, hoBox);
-
-        borderPane.setCenter(veBox);
+        borderPane.setCenter(hoBoxAddFriend);
+        borderPane.setBottom(veBoxTpAndAdd);
         borderPane.setPadding(new Insets(30, 5, 5, 10));
     }
 }
