@@ -10,14 +10,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.BorderPane;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.Supply;
@@ -47,11 +45,11 @@ public class SupplySceneController implements Initializable {
 
         TitledPane[] tps = new TitledPane[buildings.size()];
         List<Button> buttons = new ArrayList<>();
-        List<Label> labels = new ArrayList<>();
         List<TextField> textFields = new ArrayList<>();
 
         //c - for tps
         int c = 0;
+        int count = 0;
 
         // fill the accordion
         for (int i = 0; i < buildings.size(); i++) {
@@ -78,9 +76,9 @@ public class SupplySceneController implements Initializable {
                     HBox horizBox = new HBox();
 
                     Label labelItem = new Label(showSupplies.get(j).getName());
-                    labels.add(labelItem);
 
                     textFieldItem = new TextField();
+                    textFieldItem.setPromptText("quantity");
                     textFields.add(textFieldItem);
 
                     // stripping non-numeric from text
@@ -100,7 +98,7 @@ public class SupplySceneController implements Initializable {
                         + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
                     vertBox.getChildren().add(horizBox);
                 }
-                tps[c].setText(supplies.get(i).getName());
+                tps[c].setText(buildings.get(i).getName());
                 tps[c].setContent(vertBox);
                 ac.getPanes().add(tps[c]);
                 c++;
