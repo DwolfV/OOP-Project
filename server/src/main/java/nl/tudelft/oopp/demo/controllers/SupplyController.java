@@ -94,7 +94,7 @@ public class SupplyController {
      */
     
     @PutMapping("/supply/{id}")
-    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply, @PathVariable long supplyId,
+    public ResponseEntity<Supply> updateSupply(@RequestBody Supply newSupply, @PathVariable(value = "id") long supplyId,
                                                    UriComponentsBuilder builder) {
         UriComponents uriComponents = builder.path("/supply/{supply_id}").buildAndExpand(supplyId);
 
@@ -118,7 +118,7 @@ public class SupplyController {
          */
 
     @DeleteMapping("/supply/{id}")
-    public ResponseEntity deleteSupply(@PathVariable long supplyId) {
+    public ResponseEntity deleteSupply(@PathVariable( value = "id") long supplyId) {
         rep.deleteById(supplyId);
 
         return ResponseEntity.noContent().build();
