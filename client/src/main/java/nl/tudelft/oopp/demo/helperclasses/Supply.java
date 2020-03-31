@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class Supply {
 
-    private Long id;
+    private long id;
     private Building building;
     private String name;
     private int stock;
