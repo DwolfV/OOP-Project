@@ -118,7 +118,7 @@ public class SupplyController {
          */
 
     @DeleteMapping("/supply/{id}")
-    public ResponseEntity deleteSupply(@PathVariable( value = "id") long supplyId) {
+    public ResponseEntity deleteSupply(@PathVariable(value = "id") long supplyId) {
         rep.deleteById(supplyId);
 
         return ResponseEntity.noContent().build();
