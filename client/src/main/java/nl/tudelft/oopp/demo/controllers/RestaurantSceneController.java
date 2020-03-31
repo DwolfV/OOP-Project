@@ -26,6 +26,8 @@ public class RestaurantSceneController implements Initializable {
     @FXML
     private Accordion ac;
 
+    public static List<Long> buttonRestaurant;
+
     /**
      * Loads all the content into the tables.
      * @param location  url location
@@ -38,6 +40,7 @@ public class RestaurantSceneController implements Initializable {
 
         TitledPane[] tps = new TitledPane[buildingData.size()];
         List<Button> buttons = new ArrayList<>();
+        buttonRestaurant = new ArrayList<>();
         List<Label> labels = new ArrayList<>();
 
         // count - for lists, c - for tps
@@ -79,13 +82,23 @@ public class RestaurantSceneController implements Initializable {
 
                 for (int j = 0; j < showRestaurants.size(); j++) {
                     Label label1 = new Label(showRestaurants.get(j).getName());
+                    long restaurantId = showRestaurants.get(j).getId();
                     labels.add(label1);
                     Button button1 = new Button("Menu");
                     buttons.add(button1);
+                    buttonRestaurant.add(showRestaurants.get(j).getId());
 
                     grid.add(labels.get(count), 0, j);
                     grid.add(buttons.get(count), 1, j);
                     count = count + 1;
+
+                    button1.setOnAction(e -> {
+                        try {
+                            MenuSceneController.loadMenu(restaurantId);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
                 }
                 tps[c].setText(buildingData.get(i).getName());
                 tps[c].setContent(grid);
