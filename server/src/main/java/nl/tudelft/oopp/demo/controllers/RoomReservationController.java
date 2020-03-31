@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,25 @@ public class RoomReservationController {
         }
 
         return new ResponseEntity<>(unavailableTimes, HttpStatus.OK);
+    }
+
+    /**
+     * GET Endpoint to retrieve a map of all room reservation start and end times.
+     *
+     * @return a map of the room reservation times {@link RoomReservation}.
+     */
+    @GetMapping(value = "room_reservations_times/room/{room_id}")
+    public @ResponseBody
+    ResponseEntity<List<RoomReservation>> getRoomReservationTimesByRoom(@PathVariable(value = "room_id") long roomId) {
+        Map<String, String> unavailableTimes = new HashMap<>();
+
+        List<RoomReservation> reservations = new ArrayList<>();
+        for (RoomReservation reservation : this.reservations.findByRoomId(roomId)) {
+            reservation.setUser(null);
+            reservations.add(reservation);
+        }
+
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     /**
@@ -186,7 +206,7 @@ public class RoomReservationController {
         for (RoomReservation roomReservation : allRoomReservations) {
             // don't check if the times of the newRoomReservation overlap with itself
             if (newRoomReservation.getId() == roomReservation.getId()) {
-                break;
+                continue;
             }
 
             boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) >= 0
@@ -266,9 +286,27 @@ public class RoomReservationController {
     }
 
     private boolean userHasReservedAlready(RoomReservation newRoomReservation) {
+        LocalTime startTime = newRoomReservation.getStartTime();
+        LocalTime endTime = newRoomReservation.getEndTime();
         for (RoomReservation roomReservation : reservations.findByUserIdAndDate(newRoomReservation.getUser().getId(), newRoomReservation.getDate())) {
+            // don't check if the times of the newRoomReservation overlap with itself
+            if (newRoomReservation.getId() == roomReservation.getId()) {
+                continue;
+            }
+
+            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) >= 0
+                && startTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) <= 0
+                && startTime.compareTo(roomReservation.getEndTime()) <= 0;
+
+            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) >= 0
+                && endTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) <= 0
+                && endTime.compareTo(roomReservation.getEndTime()) <= 0;
             // if the user has already booked a room in that time period
-            if (roomReservation.getStartTime().compareTo(newRoomReservation.getStartTime()) <= 0 && roomReservation.getEndTime().compareTo(newRoomReservation.getEndTime()) >= 0) {
+            if (!((startTimeIsAfterReservedTime && endTimeIsAfterReservedTime) || (startTimeIsBeforeReservedTime && endTimeIsBeforeReservedTime))) {
                 return true;
             }
         }
@@ -326,7 +364,7 @@ public class RoomReservationController {
      * @param roomReservationId Unique identifier of the room that is to be deleted. {@link RoomReservation}
      */
     @DeleteMapping("room_reservations/{room_reservation_id}")
-    public ResponseEntity<?> deleteRoomReservation(@PathVariable long roomReservationId, Authentication authentication) {
+    public ResponseEntity<?> deleteRoomReservation(@PathVariable(value = "room_reservation_id") long roomReservationId, Authentication authentication) {
 
         RoomReservation reservationToDelete = reservations.findById(roomReservationId).orElseGet(() -> null);
 
