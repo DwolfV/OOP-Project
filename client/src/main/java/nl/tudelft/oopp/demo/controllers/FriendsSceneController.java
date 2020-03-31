@@ -53,7 +53,6 @@ public class FriendsSceneController implements Initializable {
         deleteButton.setOnAction(event -> {
             final int selectedIdx = friendList.getSelectionModel().getSelectedIndex();
             if (selectedIdx != -1) {
-                User itemToRemove = friendList.getSelectionModel().getSelectedItem();
 
                 final int newSelectedIdx =
                     (selectedIdx == friendList.getItems().size() - 1)
@@ -61,11 +60,7 @@ public class FriendsSceneController implements Initializable {
                         : selectedIdx;
 
                 friendList.getSelectionModel().select(newSelectedIdx);
-                //removes the player for the array
-                System.out.println("selectIdx: " + selectedIdx);
-                System.out.println("item: " + itemToRemove);
                 friends.remove(selectedIdx);
-
             }
         });
 
