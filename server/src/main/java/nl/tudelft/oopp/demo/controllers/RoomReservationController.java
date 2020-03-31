@@ -180,16 +180,14 @@ public class RoomReservationController {
         // get the building from the room
         Building building = buildings.findById(newRoomReservation.getRoom().getBuilding().getId()).get();
 
-        List<Occasion> occasions = occasionRepository.findByBuildingId(building.getId());
+        List<Occasion> occasions = occasionRepository.findByBuildingIdAndDate(building.getId(), newRoomReservation.getDate().plusDays(1));
         LocalTime buildingOpenTime = null;
         LocalTime buildingCloseTime = null;
 
         // if there is a special occasion on the given day, override the building's opening and closing times
         for (Occasion occasion : occasions) {
-            if (occasion.getDate().equals(newRoomReservation.getDate())) {
-                buildingOpenTime = occasion.getOpenTime();
-                buildingCloseTime = occasion.getCloseTime();
-            }
+            buildingOpenTime = occasion.getOpenTime();
+            buildingCloseTime = occasion.getCloseTime();
         }
         if (buildingOpenTime == null || buildingCloseTime == null) {
             buildingOpenTime = building.getOpenTime();
