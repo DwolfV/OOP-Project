@@ -31,6 +31,7 @@ public class RestaurantSceneController implements Initializable {
     private Accordion ac;
     private MainSceneController mainSceneController;
     private HamburgerMenuSceneController hamburgerMenuSceneController;
+    private MenuSceneController menuSceneController;
 
   /*  public void initialize(URL location, ResourceBundle resources) {
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/Scenes/specificRestauant.fxml"));
@@ -90,12 +91,16 @@ public class RestaurantSceneController implements Initializable {
                     Label label1 = new Label(showRestaurants.get(j).getName());
                     labels.add(label1);
                     Button button1 = new Button(showRestaurants.get(j).getName() + "'s Menu ");
-                    //button1.setId(String.valueOf(showRestaurants.get(j).getId()));
-                    buttons.add(button1);
-
+                    int k = j;
                     button1.setOnAction(event -> {
                         hamburgerMenuSceneController.openMenu();
+                        MenuSceneController msc = new MenuSceneController();
+                        msc.setId(showRestaurants.get(k).getId());
+                        msc.setRestaurantBuilding(showRestaurants.get(k).getBuilding().getName());
+                        msc.setRestaurantName(showRestaurants.get(k).getName());
                     });
+                    buttons.add(button1);
+
                     grid.add(labels.get(count), 0, j);
                     grid.add(buttons.get(count), 1, j);
                     count = count + 1;
