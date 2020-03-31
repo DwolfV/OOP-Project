@@ -53,9 +53,9 @@ public class SupplyReservationController {
      * @param supplyReservationId Unique identifier of the equipment.
      * @return The requested equipment {@link SupplyReservation}.
      */
-    @GetMapping("supply_reservations/{supply_reservation_id}")
+    @GetMapping("supply_reservations/reservation/{supply_reservation_id}")
     public @ResponseBody
-    ResponseEntity<SupplyReservation> getRoomReservationById(@PathVariable(value = "id") long supplyReservationId) {
+    ResponseEntity<SupplyReservation> getRoomReservationById(@PathVariable(value = "supply_reservation_id") long supplyReservationId) {
         SupplyReservation toReturn = supplyReservationRepository.findById(supplyReservationId).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(toReturn, HttpStatus.OK);
