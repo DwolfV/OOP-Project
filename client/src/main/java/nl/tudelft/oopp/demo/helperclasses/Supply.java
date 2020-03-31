@@ -7,6 +7,10 @@ public class Supply {
     private String name;
     private int stock;
 
+    public Supply() {
+
+    }
+
     /**
      * Creates a new instance of the Supply entity.
      * @param building - The building that is linked to a specific supply
