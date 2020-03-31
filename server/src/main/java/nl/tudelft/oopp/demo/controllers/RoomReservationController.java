@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Occasion;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
+import nl.tudelft.oopp.demo.repositories.OccasionRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class RoomReservationController {
 
     @Autowired
     BuildingRepository buildings;
+
+    @Autowired
+    OccasionRepository occasionRepository;
 
     // TODO get mappings for get room reservation times only (per room of course, but no info for users)!
 
@@ -175,12 +180,28 @@ public class RoomReservationController {
         // get the building from the room
         Building building = buildings.findById(newRoomReservation.getRoom().getBuilding().getId()).get();
 
+        List<Occasion> occasions = occasionRepository.findByBuildingId(building.getId());
+        LocalTime buildingOpenTime = null;
+        LocalTime buildingCloseTime = null;
+
+        // if there is a special occasion on the given day, override the building's opening and closing times
+        for (Occasion occasion : occasions) {
+            if (occasion.getDate().equals(newRoomReservation.getDate())) {
+                buildingOpenTime = occasion.getOpenTime();
+                buildingCloseTime = occasion.getCloseTime();
+            }
+        }
+        if (buildingOpenTime == null || buildingCloseTime == null) {
+            buildingOpenTime = building.getOpenTime();
+            buildingCloseTime = building.getCloseTime();
+        }
+
         // compare the times of the room reservation to the building's opening and closing times
-        if (building.getOpenTime().compareTo(startTime) > 0 || building.getOpenTime().compareTo(endTime) > 0) {
+        if (buildingOpenTime.compareTo(startTime) > 0 || buildingOpenTime.compareTo(endTime) > 0) {
             return false;
         }
 
-        if (building.getCloseTime().compareTo(startTime) < 0 || building.getCloseTime().compareTo(endTime) < 0) {
+        if (buildingCloseTime.compareTo(startTime) < 0 || buildingCloseTime.compareTo(endTime) < 0) {
             return false;
         }
 

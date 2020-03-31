@@ -503,7 +503,7 @@ public class AdminSceneController implements Initializable {
             LocalTime openHolidayTimeInputText = LocalTime.parse(openHolidayTimeInput.getText());
             LocalTime closeHolidayTimeInputText = LocalTime.parse(closeHolidayTimeInput.getText());
 
-            OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
+            OccasionCommunication.addOccasion(dayInputText.plusDays(1), openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
 
             dayInput.setText(null);
             openHolidayTimeInput.setText(null);
