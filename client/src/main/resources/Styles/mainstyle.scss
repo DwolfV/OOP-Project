@@ -2,8 +2,10 @@ $l-blue: #6699CC;
 $el-blue: #A4CFF2;
 $eel-blue: #D8EEFF;
 $d-blue: #336699;
+$td-blue: #4F88C1;
 $d-grey: #878787;
 $b-blue: #66CCFF;
+$d-grey: #333333;
 $l-grey: #CCCCCC;
 $el-grey: #EEEEEE;
 
@@ -16,8 +18,8 @@ $el-grey: #EEEEEE;
     -fx-background-color: $l-blue;
 }
 
-.hamburger-menu {
-    -fx-background-color: $l-blue;
+.header-pane {
+    -fx-background-color: $d-blue;
 }
 
 // Buttons
@@ -33,14 +35,25 @@ $el-grey: #EEEEEE;
 }
 
 .menu-button {
+    -fx-background-color: linear-gradient(to right, $d-blue, opacify($td-blue, 0.5));
+    -fx-background-color: linear-gradient(0deg, $d-blue 0%, opacify($td-blue, 0.5) 50%, $d-blue 100%);
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
     -fx-background-radius: 0;
     -fx-border-width: 2 0 0 0;
     -fx-border-color: $l-grey;
 }
 
-// ADMIN
+.hamburger-button {
+    -fx-background-color: linear-gradient(to top, $l-blue, transparent);
+    -fx-background-radius: 0;
+}
 
+.hamburger-button:hover {
+    -fx-background-color: linear-gradient(to top, $b-blue, transparent);
+}
+
+/*
+// ADMIN
 .admin-main-pane {
     -fx-border-width: 0 2 0 2;
     -fx-border-color: $l-grey;
@@ -143,3 +156,4 @@ $el-grey: #EEEEEE;
 .titled-pane > .title:selected {
     -fx-background-color: $b-blue;
 }
+*/

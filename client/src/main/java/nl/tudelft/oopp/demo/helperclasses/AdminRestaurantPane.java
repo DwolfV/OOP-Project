@@ -164,11 +164,10 @@ public class AdminRestaurantPane {
             buildingNameInput.setText(string[1]);
         });
 
-        VBox vboxRight = new VBox(10);
+        VBox vboxRight = new VBox(5);
         vboxRight.getChildren().addAll(restaurantName, restaurantNameInput,
-                buildingName, buildingNameInput, choiceBox, openingTime, openingTimeInput,
+                buildingName, choiceBox, openingTime, openingTimeInput,
                 closingTime, closingTimeInput, addRestaurant);
-        vboxRight.setPadding(new Insets(0, 10, 10, 10));
 
         addRestaurant.setOnAction(e -> {
             String restaurantNameInputText = restaurantNameInput.getText();
@@ -186,15 +185,22 @@ public class AdminRestaurantPane {
         });
 
         // HBox for the buttons under the table
-        HBox hboxBottom = new HBox(10);
-        hboxBottom.setPadding(new Insets(20, 20, 20, 0));
+        HBox hboxBottom = new HBox(5);
         hboxBottom.getChildren().setAll(deleteRestaurant, updateRestaurant);
 
         tableRestaurant.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        Pane paneCenter = new GridPane();
-        paneCenter.getChildren().setAll(tableRestaurant);
+        tableRestaurant.getStyleClass().add("center");
+        hboxBottom.getStyleClass().add("bottom");
+        vboxRight.getStyleClass().add("right");
 
-        return AdminSceneController.getBorderPane(paneCenter, hboxBottom, vboxRight);
+        // All elements in BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("border-pane");
+        borderPane.setCenter(tableRestaurant);
+        borderPane.setRight(vboxRight);
+        borderPane.setBottom(hboxBottom);
+
+        return borderPane;
     }
 }

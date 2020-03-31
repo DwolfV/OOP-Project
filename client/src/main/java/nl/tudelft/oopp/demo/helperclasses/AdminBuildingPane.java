@@ -3,23 +3,28 @@ package nl.tudelft.oopp.demo.helperclasses;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 
+import javax.management.ObjectInstance;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AdminBuildingPane {
 
-    private static TableView<Building> tableBuilding;
-    private static TableView<Occasion> tableHoliday;
+    private static Rectangle2D screenBounds;
+    public static TableView<Building> tableBuilding;
+    public static TableView<Occasion> tableHoliday;
     private static Button updateInfoButton = new Button("Update");
     private static Button deleteInfoButton = new Button("Delete");
     private static Button updateTimeButton = new Button("Update");
@@ -55,9 +60,7 @@ public class AdminBuildingPane {
      * @return BorderPane of Building Info
      */
     public static BorderPane getBuildingInfoBP() {
-        // Style
-        updateInfoButton.getStyleClass().add("admin-menu-button");
-        deleteInfoButton.getStyleClass().add("admin-menu-button");
+        screenBounds = Screen.getPrimary().getBounds();
 
         //Reset TableView tableBuilding
         tableBuilding = new TableView<>();
@@ -174,9 +177,7 @@ public class AdminBuildingPane {
 
         Button addButtonBuilding = new Button("Add Building");
 
-        VBox vboxRight = new VBox();
-        vboxRight.setPadding(new Insets(0, 10, 10, 10));
-        vboxRight.setSpacing(10);
+        VBox vboxRight = new VBox(5);
         vboxRight.getChildren().addAll(buildingName, buildingNameInput, openTime, openTimeInput,
                 closeTime, closeTimeInput, streetName, streetNameInput, streetNumber, streetNumberInput,
                 zipCode, zipCodeInput, city, cityInput, addButtonBuilding);
@@ -204,10 +205,18 @@ public class AdminBuildingPane {
 
         tableBuilding.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        Pane paneCenter = new GridPane();
-        paneCenter.getChildren().setAll(tableBuilding);
+        tableBuilding.getStyleClass().add("center");
+        hboxBottom.getStyleClass().add("bottom");
+        vboxRight.getStyleClass().add("right");
 
-        return AdminSceneController.getBorderPane(paneCenter, hboxBottom, vboxRight);
+        // All elements in BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("border-pane");
+        borderPane.setCenter(tableBuilding);
+        borderPane.setRight(vboxRight);
+        borderPane.setBottom(hboxBottom);
+
+        return borderPane;
     }
 
     /**
@@ -238,9 +247,6 @@ public class AdminBuildingPane {
      * @return BorderPane of Building Time
      */
     public static BorderPane getBuildingTimesBP() {
-        // Style
-        updateTimeButton.getStyleClass().add("admin-menu-button");
-        deleteTimeButton.getStyleClass().add("admin-menu-button");
 
         // Reset TableView tableHoliday
         tableHoliday = new TableView<>();
@@ -321,13 +327,11 @@ public class AdminBuildingPane {
             }
         });
 
-        HBox hboxBottom = new HBox(10);
-        hboxBottom.setPadding(new Insets(20, 20, 20, 0));
+        HBox hboxBottom = new HBox(5);
         hboxBottom.getChildren().setAll(deleteTimeButton, updateTimeButton);
 
         // Adding a openTime for a building on a date
         // Right Pane
-        VBox vboxRight = new VBox();
 
         ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
         ArrayList<String> buildingList = new ArrayList<>();
@@ -362,10 +366,9 @@ public class AdminBuildingPane {
 
         });
 
+        VBox vboxRight = new VBox(5);
         vboxRight.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
-                closeHolidayTime, closeHolidayTimeInput, building, buildingInput, choiceBox, addOpenTime);
-        vboxRight.setPadding(new Insets(0, 10, 10, 10));
-        vboxRight.setSpacing(10);
+                closeHolidayTime, closeHolidayTimeInput, building, choiceBox, addOpenTime);
 
         // Add open time button
         addOpenTime.setOnAction(e -> {
@@ -382,16 +385,20 @@ public class AdminBuildingPane {
             choiceBox.setValue(null);
         });
 
-        // Style classes panes
-        ScrollPane centerScroll = new ScrollPane();
-        centerScroll.setContent(tableHoliday);
-
         tableHoliday.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        Pane paneCenter = new GridPane();
-        paneCenter.getChildren().setAll(tableHoliday);
+        tableHoliday.getStyleClass().add("center");
+        hboxBottom.getStyleClass().add("bottom");
+        vboxRight.getStyleClass().add("right");
 
-        return AdminSceneController.getBorderPane(paneCenter, hboxBottom, vboxRight);
+        // All elements in BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("border-pane");
+        borderPane.setCenter(tableHoliday);
+        borderPane.setRight(vboxRight);
+        borderPane.setBottom(hboxBottom);
+
+        return borderPane;
     }
 
 }

@@ -5,10 +5,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.helperclasses.*;
@@ -16,7 +13,7 @@ import nl.tudelft.oopp.demo.helperclasses.*;
 public class AdminSceneController implements Initializable {
 
     private static Rectangle2D screenBounds;
-
+    public static BorderPane adminBorderPane;
     public MainSceneController mainSceneController;
 
     @FXML private Accordion ac;
@@ -28,6 +25,9 @@ public class AdminSceneController implements Initializable {
         // Building TitledPane
         BorderPane borderPaneInfo = AdminBuildingPane.getBuildingInfoBP();
         BorderPane borderPaneTime = AdminBuildingPane.getBuildingTimesBP();
+        //AdminBuildingPane.tableBuilding.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //AdminBuildingPane.tableHoliday.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         VBox vboxBuilding = new VBox();
         vboxBuilding.getChildren().setAll(borderPaneInfo, borderPaneTime);
 
@@ -67,17 +67,19 @@ public class AdminSceneController implements Initializable {
         this.mainSceneController = mainSceneController;
     }
 
-    public static BorderPane getBorderPane(Pane centerPane, HBox bottomHBox, VBox rightVBox) {
+    public static BorderPane getBorderPane(TableView<Object> centerPane, HBox bottomHBox, VBox rightVBox) {
 
-        bottomHBox.getStyleClass().add("admin-bottom");
-        rightVBox.getStyleClass().add("admin-right");
+        centerPane.getStyleClass().add("center");
+        bottomHBox.getStyleClass().add("bottom");
+        rightVBox.getStyleClass().add("right");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("admin-border-pane");
+        borderPane.getStyleClass().add("border-pane");
         borderPane.setCenter(centerPane);
         borderPane.setRight(rightVBox);
         borderPane.setBottom(bottomHBox);
+        adminBorderPane = borderPane;
 
         return borderPane;
     }
@@ -95,7 +97,7 @@ public class AdminSceneController implements Initializable {
         gridPane.getColumnConstraints().addAll(col1, col2, col3);
 
         gridPane.add(vbox, 1,0);
-        gridPane.getStyleClass().add("admin-grid");
+        gridPane.getStyleClass().add("grid");
         gridPane.setPrefWidth(screenBounds.getWidth() - 420);
 
         // GridPane inside ScrollPane
@@ -103,7 +105,7 @@ public class AdminSceneController implements Initializable {
         scroll.setMaxHeight(screenBounds.getHeight() - 300);
         scroll.setMaxWidth(screenBounds.getWidth());
         scroll.setContent(gridPane);
-        scroll.getStyleClass().setAll("scroll-pane-admin");
+        scroll.getStyleClass().setAll("scroll-pane");
 
         // Set scroll speed
         scroll.getContent().setOnScroll(scrollEvent -> {

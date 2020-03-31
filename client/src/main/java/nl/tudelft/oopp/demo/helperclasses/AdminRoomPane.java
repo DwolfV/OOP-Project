@@ -112,8 +112,7 @@ public class AdminRoomPane {
         });
 
         // HBox for the buttons under the table
-        HBox hboxBottom = new HBox(10);
-        hboxBottom.setPadding(new Insets(20, 20, 20, 0));
+        HBox hboxBottom = new HBox(5);
         hboxBottom.getChildren().setAll(deleteRoom, updateRoom);
 
         // adding room scene
@@ -150,9 +149,8 @@ public class AdminRoomPane {
             buildingField.setText(string[1]);
         });
 
-        vboxRight.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, buildingField, choiceBox, addButton);
-        vboxRight.setPadding(new Insets(0, 10, 10, 10));
-        vboxRight.setSpacing(10);
+        vboxRight.getChildren().addAll(roomName, roomNameField, capacity, capacityField, building, choiceBox, addButton);
+        vboxRight.setSpacing(5);
         borderPaneAddRoom.setTop(vboxRight);
 
         addButton.setOnAction(e -> {
@@ -169,9 +167,17 @@ public class AdminRoomPane {
 
         tableRoom.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        Pane paneCenter = new GridPane();
-        paneCenter.getChildren().setAll(tableRoom);
+        tableRoom.getStyleClass().add("center");
+        hboxBottom.getStyleClass().add("bottom");
+        vboxRight.getStyleClass().add("right");
 
-        return AdminSceneController.getBorderPane(paneCenter, hboxBottom, vboxRight);
+        // All elements in BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("border-pane");
+        borderPane.setCenter(tableRoom);
+        borderPane.setRight(vboxRight);
+        borderPane.setBottom(hboxBottom);
+
+        return borderPane;
     }
 }
