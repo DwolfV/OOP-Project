@@ -64,7 +64,7 @@ public class RoomController {
      * @return a list of filtered buildings
      */
     @GetMapping("rooms/filter")
-    public List<Room> getFilteredRooms(@RequestParam (name = "building_id") Long id,
+    public @ResponseBody List<Room> getFilteredRooms(@RequestParam (name = "building_id") Long id,
                                        @RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
                                        @RequestParam (name = "e1", required = false) String e1,
                                        @RequestParam (name = "e2", required = false) String e2,

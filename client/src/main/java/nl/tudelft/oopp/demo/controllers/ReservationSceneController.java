@@ -83,7 +83,7 @@ public class ReservationSceneController implements Initializable {
         for (int i = 0; i < buildingData.size(); i++) {
 
             //Look for the rooms of the building i with the filters
-            ObservableList<Room> showRooms = (ObservableList<Room>) RoomCommunication.getFilteredRoomsByBuilding(buildingData.get(i).getId(), capacity, filters);
+            ObservableList<Room> showRooms = FXCollections.observableList(RoomCommunication.getFilteredRoomsByBuilding(buildingData.get(i).getId(), capacity, filters));
 
             //if there are rooms for the building i - show them;
             if (showRooms.size() != 0) {
