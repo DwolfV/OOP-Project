@@ -40,7 +40,7 @@
                       <Insets left="10.0" top="10.0" />
                   </VBox.margin>
               </Text>
-          <VBox prefHeight="300" fx:id="box">
+          <VBox prefHeight="150" fx:id="box">
           </VBox>
               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold; -fx-font-size: 20px;" text="Restaurants:">
                   <VBox.margin>
