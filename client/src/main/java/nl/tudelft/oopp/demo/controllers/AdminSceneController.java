@@ -95,7 +95,7 @@ public class AdminSceneController implements Initializable {
 
         // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
-        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP);
+        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP);x
     }
 
     public void setControllers(MainSceneController mainSceneController) {
