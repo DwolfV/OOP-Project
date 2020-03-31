@@ -172,4 +172,26 @@ public class SupplyReservationCommunication {
         }
     }
 
+    /**
+     * Removes a supply reservation.
+     *
+     * @throws Exception if communication with the server fails or if the response is not proper json.
+     */
+
+    public static void removeSupplyReservation(long id) {
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/supply_reservations/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+    }
+
 }
