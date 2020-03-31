@@ -70,9 +70,9 @@ public class FriendsSceneController implements Initializable {
         });
 
         addButton.setOnAction(event -> {
-            User newFriendTextFieldText = (User) newFriendTextField.getText();
+            String newFriendTextFieldText = newFriendTextField.getText();
 
-            FriendCommunication.addFriendship(Authenticator.USERNAME, newFriendTextFieldText);
+            FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME), UserCommunication.getByUsername(newFriendTextFieldText));
 
             newFriendTextField.setText(null);
         });
