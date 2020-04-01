@@ -1,7 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -9,6 +12,9 @@ public class MenuSceneController implements Initializable {
     private long id;
     private String restaurantName;
     private String restaurantBuilding;
+
+//    @FXML
+//    private Label restaurantNameLabel;
 
     private MainSceneController mainSceneController;
 
@@ -19,6 +25,7 @@ public class MenuSceneController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+//        restaurantNameLabel.setText(getRestaurantName());
         System.out.println(getId()+" "+getRestaurantBuilding()+" "+getRestaurantName());
     }
 
@@ -55,6 +62,7 @@ public class MenuSceneController implements Initializable {
     public void setRestaurantName(String restaurantName){
         this.restaurantName = restaurantName;
         System.out.println("ala bun " + restaurantName);
+        //restaurantNameLabel.setText(getRestaurantName());
     }
 
     public String getRestaurantBuilding(){
