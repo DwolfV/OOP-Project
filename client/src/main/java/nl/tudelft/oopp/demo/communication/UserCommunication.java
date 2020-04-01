@@ -82,6 +82,7 @@ public class UserCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return null;
         }
 
         ObjectMapper mapper = new ObjectMapper();
