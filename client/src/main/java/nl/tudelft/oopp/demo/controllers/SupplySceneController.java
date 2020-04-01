@@ -104,6 +104,7 @@ public class SupplySceneController implements Initializable {
                     HBox horizBox = new HBox();
 
                     Label labelItem = new Label(showSupplies.get(j).getName());
+                    Label labelQuantity = new Label("Quantity: " + showSupplies.get(j).getStock());
 
                     textFieldItem = new TextField();
                     textFieldItem.setPromptText("quantity");
@@ -119,7 +120,7 @@ public class SupplySceneController implements Initializable {
                     Button buttonItem = new Button("reserve");
                     buttons.add(buttonItem);
 
-                    horizBox.getChildren().addAll(labelItem, textFieldItem, buttonItem);
+                    horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, buttonItem);
                     horizBox.setSpacing(150);
                     horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                         + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
