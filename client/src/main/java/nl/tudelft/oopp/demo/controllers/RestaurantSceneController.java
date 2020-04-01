@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
@@ -23,8 +25,8 @@ import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 
 public class RestaurantSceneController implements Initializable {
 
-    @FXML
-    private Accordion ac;
+    @FXML private Accordion ac;
+    @FXML private Pane pane;
 
     public static List<Long> buttonRestaurant;
 
@@ -94,8 +96,9 @@ public class RestaurantSceneController implements Initializable {
 
                     button1.setOnAction(e -> {
                         try {
-                            MenuSceneController.loadMenu(restaurantId);
-                            System.out.println(restaurantId + ": " + label1.getText());
+                            System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
+                            VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
+                            pane.getChildren().setAll(vbox);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
