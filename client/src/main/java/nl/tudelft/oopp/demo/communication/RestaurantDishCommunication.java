@@ -11,6 +11,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Dish;
+import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.RestaurantDish;
 
 public class RestaurantDishCommunication {
@@ -55,5 +56,36 @@ public class RestaurantDishCommunication {
             e.printStackTrace();
         }
         return dishes;
+    }
+
+    /**
+     * Adds a new link between a restaurant and a dish
+     *
+     * @param dish - a dish
+     * @param restaurant - a restaurant that will have the dish in the menu
+     */
+    public static void addLinkRestaurantDish(Dish dish, Restaurant restaurant) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        RestaurantDish restaurantDish = new RestaurantDish(restaurant, dish);
+        String jsonRd = "";
+        try {
+            jsonRd = mapper.writeValueAsString(restaurantDish);
+            System.out.println(jsonRd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRd)).uri(URI.create("http://localhost:8080/restaurant_dish")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
     }
 }
