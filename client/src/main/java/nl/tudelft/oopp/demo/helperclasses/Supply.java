@@ -1,11 +1,18 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.util.Set;
+
 public class Supply {
 
-    private Long id;
+    private long id;
     private Building building;
     private String name;
     private int stock;
+    private Set<SupplyReservation> reservations;
+
+    public Supply() {
+
+    }
 
     /**
      * Creates a new instance of the Supply entity.
@@ -51,6 +58,14 @@ public class Supply {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public Set<SupplyReservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<SupplyReservation> reservations) {
+        this.reservations = reservations;
     }
 
     @Override
