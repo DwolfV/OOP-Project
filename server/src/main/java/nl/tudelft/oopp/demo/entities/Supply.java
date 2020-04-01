@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -111,6 +112,7 @@ public class Supply {
         this.stock = stock;
     }
 
+    @JsonIgnore
     public Set<SupplyReservation> getReservations() {
         return reservations;
     }
