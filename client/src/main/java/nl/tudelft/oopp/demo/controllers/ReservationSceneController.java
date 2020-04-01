@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -23,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -47,10 +47,29 @@ public class ReservationSceneController implements Initializable {
     public void init() {
         Label text = new Label("Pick a date, capacity and filters to see the available rooms");
         //borderPane.setCenter(text);
-        borderPane.setTop(text);
+        borderPane.setCenter(text);
         text.setStyle("-fx-padding: 50;" + "-fx-font-weight: bold");
         SidebarSceneController ctrl = hamburgerMenuSceneController.sidebarFilterLoader.getController();
         Button search = ctrl.searchId;
+//        long roomId = 71;
+//        LocalDate dt = LocalDate.parse("2020-04-02");
+//        Map<LocalTime, LocalTime> date = RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(roomId, dt);
+//
+//        ArrayList<LocalTime> begin = new ArrayList<>();
+//        ArrayList<LocalTime> end = new ArrayList<>();
+//
+//        if(date!=null){
+//            String str = date.toString();
+//            str  = str.replace("}", "");
+//            str = str.replace("{", "");
+//            String[] timeR = str.split(",");
+//            for(int r=0; r<timeR.length;r++){
+//                String[] temp= timeR[r].split("=");
+//                begin.add(LocalTime.parse(temp[0]));
+//                end.add(LocalTime.parse(temp[1]));
+//            }
+//        }
+//        System.out.println(begin + " " + end);
 
         search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -89,9 +108,6 @@ public class ReservationSceneController implements Initializable {
             //if there are rooms for the building i - show them;
             if (showRooms.size() != 0) {
                 //create time for all the rooms of building i
-                ArrayList<LocalTime> timeFrom = new ArrayList<>();
-                ArrayList<LocalTime> timeTo = new ArrayList<>();
-
                 List<LocalTime> buildingTime = BuildingCommunication.getTimebyBuildingId(buildingData.get(i).getId());
                 String startTime = String.valueOf(buildingTime.get(0));
                 String endTime = String.valueOf(buildingTime.get(1));
@@ -106,49 +122,48 @@ public class ReservationSceneController implements Initializable {
                 check = time[0];
                 et = Integer.valueOf(check);
 
-                System.out.println(st + " " + et);
-
-                //Start time
-                for (int b = st; b < et; b++) {
-                    if (b < 10) {
-                        timeFrom.add(LocalTime.parse("0" + b + ":00"));
-                        timeFrom.add(LocalTime.parse("0" + b + ":30"));
-                    } else {
-                        timeFrom.add(LocalTime.parse(b + ":00"));
-                        timeFrom.add(LocalTime.parse(b + ":30"));
-                    }
-
-                }
-
-                //End time
-                for (int b = st; b <= et; b++) {
-                    if (b < 10) {
-                        if (b != st && b != et) {
-                            timeTo.add(LocalTime.parse("0" + b + ":00"));
-                            timeTo.add(LocalTime.parse("0" + b + ":30"));
-                        } else if (b == st) {
-                            timeTo.add(LocalTime.parse("0" + b + ":30"));
-                        }
-                    } else {
-                        if (b != st && b != et) {
-                            timeTo.add(LocalTime.parse(b + ":00"));
-                            timeTo.add(LocalTime.parse(b + ":30"));
-                        } else if (b == st) {
-                            timeTo.add(LocalTime.parse(b + ":30"));
-                        } else if (b == et) {
-                            timeTo.add(LocalTime.parse(b + ":00"));
-                        }
-                    }
-                }
-
-
-                ObservableList<LocalTime> from = FXCollections.observableArrayList(timeFrom);
-                ObservableList<LocalTime> to = FXCollections.observableArrayList(timeTo);
+                ArrayList<LocalTime> timeFrom;
+                ArrayList<LocalTime> timeTo;
 
                 VBox vertBox = new VBox();
                 tps[c] = new TitledPane();
 
                 for (int j = 0; j < showRooms.size(); j++) {
+
+                    Long roomId = showRooms.get(j).getId();
+                    LocalDate date = ctrl.onPickDate();
+                    Map<LocalTime, LocalTime> reservedTime = RoomReservationCommunication.getAllRoomReservationTimesPerRoomAndDate(roomId, date);
+
+                    ArrayList<LocalTime> tt = new ArrayList<>();
+
+                    if(!reservedTime.isEmpty()){
+                        String str = reservedTime.toString();
+                        str  = str.replace("}", "");
+                        str = str.replace("{", "");
+                        String[] timeR ;
+                        if(str.contains(","))
+                            timeR = str.split(",");
+                        else{
+                            timeR = new String[1];
+                            timeR[0] = str;
+                        }
+                        for(int r=0; r<timeR.length;r++){
+                            String[] temp = timeR[r].split("=");
+                            String one = temp[0];
+                            String two = temp[1];
+                            for (LocalTime tm = LocalTime.parse(one); tm.isBefore(LocalTime.parse(two)); tm = tm.plusMinutes(30)){
+                                tt.add(tm);
+                            }
+                            tt.add(LocalTime.parse(two));
+                        }
+                    }
+
+                    timeFrom = setStartTime(st, et, tt);
+                    timeTo = setEndTime(st, et, tt);
+
+                    ObservableList<LocalTime> from = FXCollections.observableArrayList(timeFrom);
+                    ObservableList<LocalTime> to = FXCollections.observableArrayList(timeTo);
+
                     HBox horizBox = new HBox();
 
                     Label label1 = new Label(showRooms.get(j).getName());
@@ -157,6 +172,7 @@ public class ReservationSceneController implements Initializable {
                     Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                     Button button1 = new Button("Reserve");
                     buttons.add(button1);
+
 
                     ComboBox<LocalTime> cb = new ComboBox<>();
                     cb.setItems(from);
@@ -184,9 +200,7 @@ public class ReservationSceneController implements Initializable {
                     cbb.setOnAction(event1);
 
 
-                    long roomId = showRooms.get(j).getId();
                     button1.setOnAction(e -> {
-                        LocalDate date = ctrl.onPickDate();
                         RoomReservationCommunication.addRoomReservation(date, stt[0], ett[0], roomId);
                         System.out.println(date + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
@@ -206,12 +220,64 @@ public class ReservationSceneController implements Initializable {
             }
 
             // load the accordion into the scene
-            VBox box = new VBox();
-            box.getChildren().addAll(ac);
-            borderPane.setTop(box);
+            VBox box = new VBox(ac);
+            borderPane.setCenter(box);
             borderPane.setPadding(new Insets(20, 0, 0, 50));
         }
 
+    }
+
+    public ArrayList<LocalTime> setStartTime(int st, int et, ArrayList<LocalTime> tt){
+        //Start time
+        ArrayList<LocalTime> timeFrom = new ArrayList<>();
+        for (int b = st; b < et; b++) {
+            if (b < 10) {
+                timeFrom.add(LocalTime.parse("0" + b + ":00"));
+                timeFrom.add(LocalTime.parse("0" + b + ":30"));
+            } else {
+                timeFrom.add(LocalTime.parse(b + ":00"));
+                timeFrom.add(LocalTime.parse(b + ":30"));
+            }
+        }
+        if(tt.size()!=0){
+            for(int h = 0; h<tt.size()-1;h++){
+                timeFrom.remove(tt.get(h));
+            }
+        }
+
+        return timeFrom;
+    }
+
+
+    public ArrayList<LocalTime> setEndTime(int st, int et, ArrayList<LocalTime> tt){
+        //End time
+        ArrayList<LocalTime> timeTo = new ArrayList<>();
+        for (int b = st; b <= et; b++) {
+            if (b < 10) {
+                if (b != st && b != et) {
+                    timeTo.add(LocalTime.parse("0" + b + ":00"));
+                    timeTo.add(LocalTime.parse("0" + b + ":30"));
+                } else if (b == st) {
+                    timeTo.add(LocalTime.parse("0" + b + ":30"));
+                }
+            } else {
+                if (b != st && b != et) {
+                    timeTo.add(LocalTime.parse(b + ":00"));
+                    timeTo.add(LocalTime.parse(b + ":30"));
+                } else if (b == st) {
+                    timeTo.add(LocalTime.parse(b + ":30"));
+                } else if (b == et) {
+                    timeTo.add(LocalTime.parse(b + ":00"));
+                }
+            }
+        }
+        if(tt.size()!=0){
+            for(int h = 1; h<tt.size();h++){
+                timeTo.remove(tt.get(h));
+            }
+        }
+
+        return timeTo;
     }
 
     public void setControllers(HamburgerMenuSceneController hamburgerMenuSceneController) {
