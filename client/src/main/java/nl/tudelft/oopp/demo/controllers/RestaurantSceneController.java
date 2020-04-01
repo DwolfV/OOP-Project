@@ -94,7 +94,8 @@ public class RestaurantSceneController implements Initializable {
 
                     button1.setOnAction(e -> {
                         try {
-                            MenuSceneController.loadMenu(restaurantId);
+                            //MenuSceneController.loadMenu(restaurantId);
+                            System.out.println(restaurantId + ": " + label1.getText());
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

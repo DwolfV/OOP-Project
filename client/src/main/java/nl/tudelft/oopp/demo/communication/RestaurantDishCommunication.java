@@ -46,10 +46,13 @@ public class RestaurantDishCommunication {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         List<Dish> dishes = new ArrayList<>();
-        for (RestaurantDish rd : restaurantDishes) {
-            dishes.add(DishCommunication.getDishById(rd.getDish().getId()));
+        try {
+            for (RestaurantDish rd : restaurantDishes) {
+                dishes.add(DishCommunication.getDishById(rd.getDish().getId()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return dishes;
     }
