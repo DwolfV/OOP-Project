@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -13,12 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Item;
-
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import static java.time.LocalDate.now;
 
