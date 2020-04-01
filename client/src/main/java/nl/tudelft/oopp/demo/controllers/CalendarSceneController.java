@@ -17,8 +17,11 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
+import nl.tudelft.oopp.demo.communication.EventCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
+import nl.tudelft.oopp.demo.communication.UserCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Event;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 
@@ -31,7 +34,9 @@ public class CalendarSceneController implements Initializable {
     private LocalTime previousEndTime;
 
 
-    private EventHandler<CalendarEvent> handler;
+    private EventHandler<CalendarEvent> handlerRoomReservations;
+    private EventHandler<CalendarEvent> handlerEvents;
+
 
     @FXML
     private CalendarView calendarView;
@@ -47,15 +52,16 @@ public class CalendarSceneController implements Initializable {
         calendarRoomReservations.setStyle(Calendar.Style.STYLE3);
         calendarView.getCalendarSources().get(0).getCalendars().add(calendarRoomReservations);
         // will get the Default calendar
-        //Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+        Calendar calendarCustomEvents = calendarView.getCalendarSources().get(0).getCalendars().get(0);
 
         calendarView.setShowAddCalendarButton(false);
 
-        handler = event -> {
+        handlerRoomReservations = event -> {
             System.out.println(flag);
             if (flag == 0 && (!event.getEntry().getStartDate().equals(previousDate)
                 || !event.getEntry().getStartTime().equals(previousStartTime)
-                || !event.getEntry().getEndTime().equals(previousEndTime))) {
+                || !event.getEntry().getEndTime().equals(previousEndTime))
+                && event.getCalendar().getName().equals("Room Reservations")) {
                 flag = 1;
                 Entry entry = event.getEntry();
 
@@ -90,7 +96,25 @@ public class CalendarSceneController implements Initializable {
             }
         };
 
-        calendarRoomReservations.addEventHandler(handler);
+        calendarRoomReservations.addEventHandler(handlerRoomReservations);
+
+        handlerEvents = event -> {
+            // if it is a new event
+            if (event.isEntryAdded()) {
+                Event addedEvent = EventCommunication.addEvent(event.getEntry().getTitle(), event.getEntry().getId(),event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
+                event.getEntry().setId((String.valueOf(addedEvent.getId())));
+                System.out.println("entry added ");
+            } else if (event.isEntryRemoved()) {
+                // if an entry is deleted
+                EventCommunication.removeEvent(Long.parseLong(event.getEntry().getId()));
+                System.out.println("event deleted");
+            } else {
+                EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()), event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
+                System.out.println("event updated");
+            }
+        };
+
+        calendarCustomEvents.addEventHandler(handlerEvents);
 
         // add new calendar for unavailable times
         CalendarSource calendarSource = new CalendarSource("Unavailable Rooms");
@@ -108,9 +132,9 @@ public class CalendarSceneController implements Initializable {
         //Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
         // get the calendar for the room reservations
         Calendar calendarRoomReservations = calendarView.getCalendarSources().get(0).getCalendars().get(1);
-        calendarRoomReservations.removeEventHandler(handler);
+        calendarRoomReservations.removeEventHandler(handlerRoomReservations);
         calendarRoomReservations.clear();
-        calendarRoomReservations.addEventHandler(handler);
+        calendarRoomReservations.addEventHandler(handlerRoomReservations);
 
         List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
         for (RoomReservation reservation : reservations) {
@@ -145,7 +169,12 @@ public class CalendarSceneController implements Initializable {
 
         // get the default calendar and populate it with the custom events
         Calendar calendarCustomEvents = calendarView.getCalendarSources().get(0).getCalendars().get(0);
-
+        for (Event event : EventCommunication.getEventsByUser(Authenticator.ID)) {
+            Interval interval = new Interval(event.getDate().plusDays(1), event.getStartTime(), event.getDate().plusDays(1), event.getEndTime());
+            Entry<Event> calendarEntry = new Entry<>(event.getName(), interval);
+            calendarEntry.setUserObject(event);
+            calendarCustomEvents.addEntry(calendarEntry);
+        }
     }
 
     public void setController(MainSceneController mainSceneController) {

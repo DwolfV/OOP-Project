@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Event;
 import nl.tudelft.oopp.demo.helperclasses.User;
@@ -26,7 +27,7 @@ public class EventCommunication {
      */
     public static List<Event> getEventsByUser(long id) {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/event/%d", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/event/user/%d", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -36,6 +37,7 @@ public class EventCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return new ArrayList<>();
         }
 
         ObjectMapper mapper = new ObjectMapper();
@@ -60,11 +62,13 @@ public class EventCommunication {
      * @param date        - the date of the event
      * @param startTime   - start time of the event
      * @param endTime     - end time fot he new event
-     * @param user        - the user that makes the event
      */
-    public static void addEvent(String name, String description, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
+    public static Event addEvent(String name, String description, LocalDate date, LocalTime startTime, LocalTime endTime) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        User user = new User();
+        user.setUsername(Authenticator.USERNAME);
+        user.setId(Authenticator.ID);
         Event event = new Event(name, description, date, startTime, endTime, user);
         String jsonEvent = "";
         try {
@@ -85,6 +89,16 @@ public class EventCommunication {
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
         }
+
+        Event eventAdded = new Event();
+        try {
+            eventAdded = mapper.readValue(response.body(), new TypeReference<>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return eventAdded;
     }
 
     /**
@@ -96,11 +110,13 @@ public class EventCommunication {
      * @param date        - the date of the event
      * @param startTime   - start time of the event
      * @param endTime     - end time fot he new event
-     * @param user        - the user that makes the event
      */
-    public static void updateEvent(long id, String name, String description, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
+    public static void updateEvent(long id, String name, String description, LocalDate date, LocalTime startTime, LocalTime endTime) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        User user = new User();
+        user.setId(Authenticator.ID);
+        user.setUsername(Authenticator.USERNAME);
         Event newEvent = new Event(name, description, date, startTime, endTime, user);
         String jsonEvent = "";
         try {

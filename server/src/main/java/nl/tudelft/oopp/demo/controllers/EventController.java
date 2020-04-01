@@ -50,9 +50,9 @@ public class EventController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
-        rep.save(event);
+        Event eventAdded = rep.save(event);
         UriComponents uri = e.path("/event/{id}").buildAndExpand(event.getId());
-        return ResponseEntity.created(uri.toUri()).body(event);
+        return ResponseEntity.created(uri.toUri()).body(eventAdded);
     }
 
     /**
