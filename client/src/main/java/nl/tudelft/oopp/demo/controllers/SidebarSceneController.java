@@ -68,7 +68,7 @@ public class SidebarSceneController implements Initializable {
      * @return A date from the datepicker.
      */
     public LocalDate onPickDate() {
-        if(dp.getValue()==null) {
+        if (dp.getValue() == null) {
             return now();
         } else {
             return dp.getValue();
