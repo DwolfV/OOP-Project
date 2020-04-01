@@ -1,24 +1,27 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
-import nl.tudelft.oopp.demo.helperclasses.*;
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.Supply;
+import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class SupplySceneController implements Initializable {
 
@@ -62,6 +65,7 @@ public class SupplySceneController implements Initializable {
 
                 reservedSuppliesList.getItems().remove(selectedIdx);
                 reservedSuppliesList.getSelectionModel().select(newSelectedIdx);
+                SupplyReservationCommunication.removeSupplyReservation(reservedSuppliesList.getSelectionModel().getSelectedItem().getId());
             }
         });
 
