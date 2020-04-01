@@ -59,7 +59,14 @@ public class FriendCommunication {
      * @param user1 - a user that is part of the friendship system
      * @param user2 - the other user that is part of the friendship system
      */
-    public static void addFriendship(User user1, User user2) {
+    public static String addFriendship(User user1, User user2) {
+        if ( user1 == null || user2 == null || user1.getUsername() == null || user2.getUsername() == null
+            || user1.getUsername() == user2.getUsername()) {
+            System.out.println(user1);
+            System.out.println(user2);
+           return "Invalid friend request.";
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
@@ -83,7 +90,13 @@ public class FriendCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+
+            if (response.statusCode() == 409) {
+                return "The user you are trying to add is already your friend";
+            }
         }
+
+        return "The user is now your friend";
     }
 
     /**

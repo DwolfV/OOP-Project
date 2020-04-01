@@ -76,6 +76,7 @@ public class UserCommunication {
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
+            System.out.println("mile1");
             e.printStackTrace();
             //return "Communication with server failed";
         }
@@ -91,6 +92,7 @@ public class UserCommunication {
             user = mapper.readValue(response.body(), new TypeReference<User>() {
             });
         } catch (IOException e) {
+            System.out.println("mile2");
             e.printStackTrace();
         }
 

@@ -105,12 +105,13 @@ public class FriendController {
     @GetMapping("user/{username}")
     @ResponseBody
     public ResponseEntity<User> getByUsername(@PathVariable String username) {
-        Optional<User> optionalUser = userRepository.findByUsername(username);
-        User user = optionalUser.get();
-        if(user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            }
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
