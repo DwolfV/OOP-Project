@@ -7,18 +7,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import nl.tudelft.oopp.demo.communication.Authenticator;
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.SupplyCommunication;
-import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Supply;
-import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
+import nl.tudelft.oopp.demo.communication.*;
+import nl.tudelft.oopp.demo.helperclasses.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,6 +24,7 @@ import java.util.ResourceBundle;
 public class SupplySceneController implements Initializable {
 
     private TextField textFieldItem;
+    private static TableView<SupplyReservation> tableReservedSupplies;
 
     @FXML
     private Accordion ac = new Accordion();;
@@ -40,36 +39,56 @@ public class SupplySceneController implements Initializable {
      */
     @Override
     public void initialize (URL location, ResourceBundle resources) {
+        //Reset TableView tableReservedSupplies
+        tableReservedSupplies = new TableView<>();
+        tableReservedSupplies.getColumns().clear();
+        tableReservedSupplies.setEditable(true);
+
+        TableColumn<SupplyReservation, Long> supplyNameCol =
+            new TableColumn<>("id");
+        supplyNameCol.setMinWidth(100);
+        supplyNameCol.setCellValueFactory(
+            new PropertyValueFactory<>("supply"));
+        supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new SupplyToStringConverter()));
+
+        TableColumn<SupplyReservation, Integer> amountCol =
+            new TableColumn<>("Amount");
+        amountCol.setMinWidth(100);
+        amountCol.setCellValueFactory(
+            new PropertyValueFactory<>("amount"));
+
+        TableColumn<SupplyReservation, LocalDate> dateCol =
+            new TableColumn<>("Order Date");
+        dateCol.setMinWidth(100);
+        dateCol.setCellValueFactory(
+            new PropertyValueFactory<>("date"));
+
+        ObservableList<SupplyReservation> reservedSupplies = FXCollections.observableList(SupplyReservationCommunication.getSupplyReservationByUserId(Authenticator.ID));
+        tableReservedSupplies.setItems(reservedSupplies);
+        tableReservedSupplies.getColumns().addAll(supplyNameCol, amountCol, dateCol);
+        tableReservedSupplies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableReservedSupplies.setPrefHeight(200);
+        tableReservedSupplies.setPlaceholder(new Label("Currently you have made no supply reservations"));
+
         ObservableList<Building> buildings= FXCollections.observableList(BuildingCommunication.getBuildings());
         ObservableList<Supply> supplies = FXCollections.observableList(SupplyCommunication.getSupplies());
 
-        ObservableList<SupplyReservation> reservedSupplies = FXCollections.observableList(SupplyReservationCommunication.getSupplyReservationByUserId(Authenticator.ID));
-
-        VBox veBoxDeleteAndList = new VBox();
-
-        // This is a listView to list all the items, I am not sure if this is the best.
-        ListView<SupplyReservation> reservedSuppliesList = new ListView<>();
         Button removeReservedSupply = new Button("Remove Selected");
-
-        reservedSuppliesList.setItems(reservedSupplies);
 
         // a method for the remove button
         removeReservedSupply.setOnAction(event -> {
-            final int selectedIdx = reservedSuppliesList.getSelectionModel().getSelectedIndex();
-            if (selectedIdx != -1) {
+            ObservableList<SupplyReservation> allReservedSupplies;
+            allReservedSupplies = tableReservedSupplies.getItems();
+            SupplyReservation supplyReservation = tableReservedSupplies.getSelectionModel().getSelectedItem();
 
-                final int newSelectedIdx =
-                    (selectedIdx == reservedSuppliesList.getItems().size() - 1)
-                        ? selectedIdx - 1
-                        : selectedIdx;
-
-                reservedSuppliesList.getItems().remove(selectedIdx);
-                reservedSuppliesList.getSelectionModel().select(newSelectedIdx);
-                SupplyReservationCommunication.removeSupplyReservation(reservedSuppliesList.getSelectionModel().getSelectedItem().getId());
-            }
+            allReservedSupplies.remove(supplyReservation);
+            SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
         });
 
-        veBoxDeleteAndList.getChildren().addAll(reservedSuppliesList, removeReservedSupply);
+        VBox veBoxDeleteAndTable = new VBox();
+        veBoxDeleteAndTable.getChildren().addAll(tableReservedSupplies, removeReservedSupply);
+        veBoxDeleteAndTable.setPrefWidth(400);
+        veBoxDeleteAndTable.setPadding(new Insets(0,300,10,0));
 
         TitledPane[] tps = new TitledPane[buildings.size()];
         List<Button> buttons = new ArrayList<>();
@@ -77,7 +96,6 @@ public class SupplySceneController implements Initializable {
 
         //c - for tps
         int c = 0;
-        int count = 0;
 
         // fill the accordion
         for (int i = 0; i < buildings.size(); i++) {
@@ -91,7 +109,6 @@ public class SupplySceneController implements Initializable {
             }
 
             //if there are items for the building i - show them;
-
             if (showSupplies.size() != 0) {
                 VBox vertBox = new VBox();
                 tps[c] = new TitledPane();
@@ -120,6 +137,11 @@ public class SupplySceneController implements Initializable {
                     Button buttonItem = new Button("reserve");
                     buttons.add(buttonItem);
 
+                    buttonItem.setOnAction(e -> {
+                        LocalDate today = LocalDate.now();
+//                        SupplyReservationCommunication.addSupplyReservation();
+                    });
+
                     horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, buttonItem);
                     horizBox.setSpacing(150);
                     horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
@@ -133,7 +155,7 @@ public class SupplySceneController implements Initializable {
                 c++;
             }
             // load the accordion into the scene
-            VBox box = new VBox(veBoxDeleteAndList, ac);
+            VBox box = new VBox(veBoxDeleteAndTable, ac);
             box.setSpacing(20);
             borderPane.setCenter(box);
             borderPane.setPadding(new Insets(30, 5, 5, 10));
