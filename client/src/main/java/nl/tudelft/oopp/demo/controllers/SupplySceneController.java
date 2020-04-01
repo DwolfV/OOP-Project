@@ -45,7 +45,7 @@ public class SupplySceneController implements Initializable {
         tableReservedSupplies.setEditable(true);
 
         TableColumn<SupplyReservation, Long> supplyNameCol =
-            new TableColumn<>("id");
+            new TableColumn<>("Supply");
         supplyNameCol.setMinWidth(100);
         supplyNameCol.setCellValueFactory(
             new PropertyValueFactory<>("supply"));
