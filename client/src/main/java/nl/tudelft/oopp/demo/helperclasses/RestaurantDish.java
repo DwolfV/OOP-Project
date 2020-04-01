@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class RestaurantDish {
 
-    private Long id;
+    private long id;
     private Dish dish;
     private Restaurant restaurant;
 

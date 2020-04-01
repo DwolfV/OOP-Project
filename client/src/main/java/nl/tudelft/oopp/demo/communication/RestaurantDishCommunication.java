@@ -35,6 +35,7 @@ public class RestaurantDishCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return new ArrayList<>();
         }
 
         ObjectMapper mapper = new ObjectMapper();
@@ -50,7 +51,9 @@ public class RestaurantDishCommunication {
         List<Dish> dishes = new ArrayList<>();
         try {
             for (RestaurantDish rd : restaurantDishes) {
-                dishes.add(DishCommunication.getDishById(rd.getDish().getId()));
+                if(rd.getDish() != null) {
+                    dishes.add(rd.getDish());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
