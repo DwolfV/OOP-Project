@@ -72,10 +72,12 @@ public class RestaurantDish {
     }
 
     @Nullable
+    @JsonIgnore
     public Set<DishOrder> getDishOrders() {
         return dishOrders;
     }
 
+    @JsonIgnore
     public void setDishOrders(@Nullable Set<DishOrder> dishOrders) {
         this.dishOrders = dishOrders;
     }

@@ -7,7 +7,6 @@ public class RestaurantDish {
     private Long id;
     private Dish dish;
     private Restaurant restaurant;
-    private Set<DishOrder> dishOrders;
 
     public RestaurantDish() {
 
@@ -41,14 +40,6 @@ public class RestaurantDish {
 
     public void setDish(Dish dish) {
         this.dish = dish;
-    }
-
-    public Set<DishOrder> getDishOrders() {
-        return dishOrders;
-    }
-
-    public void setDishOrders(Set<DishOrder> dishOrders) {
-        this.dishOrders = dishOrders;
     }
 
     @Override
