@@ -23,12 +23,9 @@ import java.util.ResourceBundle;
 
 public class SupplySceneController implements Initializable {
 
-    private TextField textFieldItem;
     private static TableView<SupplyReservation> tableReservedSupplies;
-
     @FXML
-    private Accordion ac = new Accordion();;
-
+    private Accordion ac = new Accordion();
     @FXML
     private BorderPane borderPane;
 
@@ -123,23 +120,28 @@ public class SupplySceneController implements Initializable {
                     Label labelItem = new Label(showSupplies.get(j).getName());
                     Label labelQuantity = new Label("Quantity: " + showSupplies.get(j).getStock());
 
-                    textFieldItem = new TextField();
+                    TextField textFieldItem = new TextField();
                     textFieldItem.setPromptText("quantity");
                     textFields.add(textFieldItem);
 
                     // stripping non-numeric from text
-                    textFieldItem.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
-                        if (!newValue.matches("\\d*")) {
-                            textFieldItem.setText(newValue.replaceAll("[^\\d]", ""));
-                        }
-                    });
+//                    textFieldItem.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+//                        if (!newValue.matches("\\d*")) {
+//                            textFieldItem.setText(newValue.replaceAll("[^\\d]", ""));
+//                        }
+//                    });
 
                     Button buttonItem = new Button("reserve");
                     buttons.add(buttonItem);
 
+                    int finalJ = j;
                     buttonItem.setOnAction(e -> {
                         LocalDate today = LocalDate.now();
-//                        SupplyReservationCommunication.addSupplyReservation();
+                        int amount = Integer.parseInt(textFieldItem.getText());
+
+                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplies.get(finalJ).getId());
+
+                        textFieldItem.setText(null);
                     });
 
                     horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, buttonItem);
