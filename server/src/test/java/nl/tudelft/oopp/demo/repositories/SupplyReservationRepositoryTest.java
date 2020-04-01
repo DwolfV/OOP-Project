@@ -74,9 +74,9 @@ public class SupplyReservationRepositoryTest {
         userRepository.save(u2);
         userRepository.save(u3);
 
-        sr1 = new SupplyReservation(LocalDate.parse("2000-01-01"), LocalTime.parse("10:00"), LocalTime.parse("15:00"), 11, s1, u1);
-        sr2 = new SupplyReservation(LocalDate.parse("2001-01-01"), LocalTime.parse("11:00"), LocalTime.parse("12:00"), 22, s1, u1);
-        sr3 = new SupplyReservation(LocalDate.parse("2002-01-01"), LocalTime.parse("13:00"), LocalTime.parse("14:00"), 33, s3, u1);
+        sr1 = new SupplyReservation(LocalDate.parse("2000-01-01"), 11, s1, u1);
+        sr2 = new SupplyReservation(LocalDate.parse("2001-01-01"), 22, s1, u1);
+        sr3 = new SupplyReservation(LocalDate.parse("2002-01-01"), 33, s3, u1);
 
         supplyReservationRepository.save(sr1);
         supplyReservationRepository.save(sr2);
