@@ -76,6 +76,7 @@ public class FriendCommunication {
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         } catch (Exception e) {
             e.printStackTrace();
             //return "Communication with server failed";

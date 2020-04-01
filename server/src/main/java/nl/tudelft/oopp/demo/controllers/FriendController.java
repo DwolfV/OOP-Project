@@ -11,14 +11,7 @@ import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -104,6 +97,23 @@ public class FriendController {
     }
 
     /**
+     * GET endpoint to retrieve a user by username.
+     *
+     * @param username - the username of the user
+     * @return a response entity with the user and status code 200 if ok, 404 otherwise
+     */
+    @GetMapping("user/{username}")
+    @ResponseBody
+    public ResponseEntity<User> getByUsername(@PathVariable String username) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        User user = optionalUser.get();
+        if(user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    /**
      * Add a new friendship to the database.
      *
      * @param friend - the friendship that is to be added
@@ -112,6 +122,11 @@ public class FriendController {
      */
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Friend> addFriend(@Valid @RequestBody Friend friend, UriComponentsBuilder f) {
+        Friend existing = friendRepository.findByUser1AndUser2(friend.getUser1(), friend.getUser2());
+        if (existing != null) {
+            return new ResponseEntity("The user that you are trying to add is already your friend", HttpStatus.CONFLICT);
+        }
+
         friendRepository.save(friend);
         UriComponents uri = f.path("/{id}").buildAndExpand(friend.getId());
         return ResponseEntity.created(uri.toUri()).body(friend);
