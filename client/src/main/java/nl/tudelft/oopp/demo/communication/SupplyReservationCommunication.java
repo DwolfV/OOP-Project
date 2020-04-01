@@ -75,8 +75,6 @@ public class SupplyReservationCommunication {
      */
 
     public static void addSupplyReservation(LocalDate date,
-                                            LocalTime startTime,
-                                            LocalTime endTime,
                                             int amount,
                                             long supplyId) {
         ObjectMapper mapper = new ObjectMapper();
@@ -94,7 +92,7 @@ public class SupplyReservationCommunication {
             }
         }
 
-        SupplyReservation supplyReservation = new SupplyReservation(date, startTime, endTime,  amount, supply, user);
+        SupplyReservation supplyReservation = new SupplyReservation(date, amount, supply, user);
         String jsonSupplyReservation = "";
 
         try {
@@ -127,8 +125,6 @@ public class SupplyReservationCommunication {
      */
 
     public static void updateSupplyReservation(LocalDate date,
-                                               LocalTime startTime,
-                                               LocalTime endTime,
                                                int amount,
                                                long supplyId) {
         ObjectMapper mapper = new ObjectMapper();
@@ -146,7 +142,7 @@ public class SupplyReservationCommunication {
             }
         }
 
-        SupplyReservation supplyReservation = new SupplyReservation(date, startTime, endTime, amount, supply, user);
+        SupplyReservation supplyReservation = new SupplyReservation(date, amount, supply, user);
         String jsonSupplyReservation = "";
 
         try {
