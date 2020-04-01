@@ -7,6 +7,8 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
@@ -24,6 +26,10 @@ public class CalendarSceneController implements Initializable {
 
     private MainSceneController mainSceneController;
     private int flag = 0;
+    private LocalDate previousDate;
+    private LocalTime previousStartTime;
+    private LocalTime previousEndTime;
+
 
     private EventHandler<CalendarEvent> handler;
 
@@ -46,12 +52,17 @@ public class CalendarSceneController implements Initializable {
         calendarView.setShowAddCalendarButton(false);
 
         handler = event -> {
-            System.out.println(event);
-            if (flag == 0) {
-                // can get old dates and times -> set them if the server responds with a 409 conflict
-                // TODO too much event.getEntry
+            System.out.println(flag);
+            if (flag == 0 && (!event.getEntry().getStartDate().equals(previousDate)
+                || !event.getEntry().getStartTime().equals(previousStartTime)
+                || !event.getEntry().getEndTime().equals(previousEndTime))) {
                 flag = 1;
                 Entry entry = event.getEntry();
+
+                previousDate = entry.getStartDate();
+                previousStartTime = entry.getStartTime();
+                previousEndTime = entry.getEndTime();
+
                 if (event.isEntryRemoved() && event.getCalendar() == null) {
 
                     RoomReservation reservationToRemove = (RoomReservation) entry.getUserObject();

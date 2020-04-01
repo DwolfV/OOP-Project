@@ -36,7 +36,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEventsById(@PathVariable long id) {
+    public ResponseEntity<Event> getEventById(@PathVariable long id) {
         return rep.findById(id).map(event -> new ResponseEntity<>(event, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
