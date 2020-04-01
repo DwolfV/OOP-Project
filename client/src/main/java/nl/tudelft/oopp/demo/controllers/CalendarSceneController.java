@@ -114,7 +114,6 @@ public class CalendarSceneController implements Initializable {
         List<Room> allRooms = RoomCommunication.getRooms();
 
         CalendarSource calendarSource = calendarView.getCalendarSources().get(1);
-        // calendarSource.getCalendars().get(0).removeEntries(); try catch?
 
         calendarSource.getCalendars().clear();
 
@@ -132,6 +131,10 @@ public class CalendarSceneController implements Initializable {
             calendarSource.getCalendars().add(calendarUnavailableRoom);
             calendarView.setCalendarVisibility(calendarUnavailableRoom, false);
         }
+
+        // get the default calendar and populate it with the custom events
+        Calendar calendarCustomEvents = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+
     }
 
     public void setController(MainSceneController mainSceneController) {
