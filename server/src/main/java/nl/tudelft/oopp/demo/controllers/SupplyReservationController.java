@@ -70,8 +70,10 @@ public class SupplyReservationController {
 
     @PostMapping(value = "supply_reservation", consumes = {"application/json"})
     public ResponseEntity<SupplyReservation> newSupplyReservation(@Valid @RequestBody SupplyReservation newSupplyReservation, UriComponentsBuilder b) {
+        System.out.println("test0");
         supplyReservationRepository.save(newSupplyReservation);
-        UriComponents uriComponents = b.path("supply_reservation/{id}").buildAndExpand(newSupplyReservation.getId());
+        System.out.println("test");
+        UriComponents uriComponents = b.path("supply_reservations/reservation/{id}").buildAndExpand(newSupplyReservation.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(newSupplyReservation);
     }
 

@@ -84,13 +84,14 @@ public class SupplyReservationCommunication {
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
 
-        Supply supply = null;
-        for (Supply s : SupplyCommunication.getSupplies()) {
-            if (s.getId() == supplyId) {
-                supply = s;
-                break;
-            }
-        }
+        Supply supply = SupplyCommunication.getSupplyById(supplyId);
+//        for (Supply s : SupplyCommunication.getSupplies()) {
+//            if (s.getId() == supplyId) {
+//                System.out.println(s.getId());
+//                supply = s;
+//                break;
+//            }
+//        }
 
         SupplyReservation supplyReservation = new SupplyReservation(date, amount, supply, user);
         String jsonSupplyReservation = "";
@@ -102,10 +103,11 @@ public class SupplyReservationCommunication {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonSupplyReservation)).uri(URI.create("http://localhost:8080/supply_reservations")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonSupplyReservation)).uri(URI.create("http://localhost:8080/supply_reservation")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
