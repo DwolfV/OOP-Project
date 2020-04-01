@@ -38,6 +38,10 @@ public class MenuSceneController implements Initializable {
         this.mainSceneController = mainSceneController;
     }
 
+    /**
+     *
+     * @return The id of the restaurant of which the menu is displayed
+     */
     public long getId() {
         return id;
     }
@@ -51,6 +55,10 @@ public class MenuSceneController implements Initializable {
         System.out.println("ala bun " + id);
     }
 
+    /**
+     *
+     * @return The name of the restaurant of which the menu is displayed
+     */
     public String getRestaurantName(){
         return restaurantName;
     }
@@ -65,6 +73,10 @@ public class MenuSceneController implements Initializable {
         //restaurantNameLabel.setText(getRestaurantName());
     }
 
+    /**
+     *
+     * @return The building where the restaurant of which the menu is displayed is located
+     */
     public String getRestaurantBuilding(){
         return restaurantBuilding;
     }
