@@ -105,7 +105,9 @@ public class CalendarSceneController implements Initializable {
             if (event.isEntryAdded()) {
                 // if the scene has already been populated and now a user adds an entry
                 Thread thread = new Thread(() -> {
-                    Event addedEvent = EventCommunication.addEvent(event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
+                    Event addedEvent = EventCommunication.addEvent(event.getEntry().getTitle(),
+                        event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(),
+                        event.getEntry().getEndTime());
                     event.getEntry().setId((String.valueOf(addedEvent.getId())));
                     System.out.println("entry added ");
                 });
@@ -120,7 +122,9 @@ public class CalendarSceneController implements Initializable {
             } else {
                 // if an entry is updated
                 Thread thread = new Thread(() -> {
-                    EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()), event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
+                    EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()),
+                        event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(),
+                        event.getEntry().getStartTime(), event.getEntry().getEndTime());
                     System.out.println("event updated");
                 });
                 thread.start();
