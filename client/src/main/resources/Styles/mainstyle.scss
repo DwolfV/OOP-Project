@@ -2,11 +2,12 @@ $l-blue: #6699CC;
 $el-blue: #A4CFF2;
 $eel-blue: #D8EEFF;
 $d-blue: #336699;
+$td-blue: #4F88C1;
 $d-grey: #878787;
 $b-blue: #66CCFF;
+$d-grey: #333333;
 $l-grey: #CCCCCC;
 $el-grey: #EEEEEE;
-$sun-orange: #F7E9E1;
 
 // Panes and Faces
 .primary-pane {
@@ -17,38 +18,8 @@ $sun-orange: #F7E9E1;
     -fx-background-color: $l-blue;
 }
 
-.hamburger-menu {
-    -fx-background-color: $l-blue;
-}
-
-// ADMIN
-.scroll-pane-admin {
-    -fx-background-color: $sun-orange;
-}
-
-.admin-center {
-    -fx-padding: 3.0em;
-}
-
-.admin-right {
-    -fx-background-color: $l-blue;
-    -fx-padding: 3.0em;
-}
-
-.admin-bottom {
-    -fx-padding: 1.0em;
-    -fx-spacing: 10;
-}
-
-.admin-pane-button {
-    -fx-text-fill: white;
+.header-pane {
     -fx-background-color: $d-blue;
-    -fx-background-radius: 0;
-    -fx-padding: 1em 5em 1em 5em;
-}
-
-.admin-pane-button:hover {
-    -fx-background-color: $b-blue;
 }
 
 // Buttons
@@ -64,43 +35,79 @@ $sun-orange: #F7E9E1;
 }
 
 .menu-button {
+    -fx-background-color: linear-gradient(to right, $d-blue, opacify($td-blue, 0.5));
+    -fx-background-color: linear-gradient(0deg, $d-blue 0%, opacify($td-blue, 0.5) 50%, $d-blue 100%);
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
     -fx-background-radius: 0;
     -fx-border-width: 2 0 0 0;
     -fx-border-color: $l-grey;
 }
 
-// The titled panes inside the admin
-.table-pane > .content {
-    -fx-text-fill: white;
-    -fx-background-color: $l-blue;
+.hamburger-button {
+    -fx-background-color: linear-gradient(to top, $l-blue, transparent);
+    -fx-background-radius: 0;
 }
 
-.table-pane {
-    -fx-text-fill: white;
+.hamburger-button:hover {
+    -fx-background-color: linear-gradient(to top, $b-blue, transparent);
 }
 
-.table-pane > .title{
-    -fx-background-color: $d-blue;
-    -fx-border-width: 2 0 0 0;
+/*
+// ADMIN
+.admin-main-pane {
+    -fx-border-width: 0 2 0 2;
     -fx-border-color: $l-grey;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
-    -fx-padding: 10px;
-    -fx-text-fill: white;
+    -fx-background-color: $el-grey;
+}
+
+.scroll-pane-admin {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
+    -fx-background-color: $el-grey;
+}
+
+.admin-center {
+    -fx-padding: 3.0em;
+}
+
+.admin-right {
+    -fx-background-color: $l-grey;
+    -fx-pref-width: 250;
+    -fx-padding: 3.0em;
+}
+
+.admin-bottom {
+    -fx-background-color: $l-grey;
+    -fx-padding: 1.0em 1.0em 4.0em 3.0em;
+    -fx-spacing: 10;
+}
+
+.admin-border-pane {
+    -fx-background-color: $l-grey;
+}
+
+.admin-pane-button {
+    -fx-pref-width: 180;
+    -fx-pref-height: 40;
+    -fx-background-radius: 0;
 }
 
 // The table inside the titled panes in admin scene
 .table-view {
-    -fx-background-color: white;
+    -fx-background-color: $l-grey;
     -fx-background-insets: 0, 0 0 0 0;
-    -fx-padding: 0.0em;
+    -fx-padding: 3.0em 0.0em 0.0em 3.0em;
     -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
-    -fx-background-color: $d-blue;
+    -fx-background-color: $l-blue;
     -fx-border-width: 0 1 0 1;
     -fx-border-color: $l-grey;
+}
+
+.table-view .column-header:hover {
+    -fx-background-color: $b-blue;
 }
 
 .table-view .column-header-background .label {
@@ -114,3 +121,39 @@ $sun-orange: #F7E9E1;
 .table-row-cell:even {
     -fx-background-color: $el-blue;
 }
+
+.table-view .column-header-background .first-col {
+    -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header-background .last-col {
+    -fx-border-width: 0 0 0 1;
+}
+
+// The titled panes inside the admin
+.titled-pane > .content {
+    -fx-text-fill: white;
+    -fx-background-color: $l-blue;
+}
+
+.titled-pane {
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title{
+    -fx-background-color: $d-blue;
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: $l-grey;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: $b-blue;
+}
+
+.titled-pane > .title:selected {
+    -fx-background-color: $b-blue;
+}
+*/
