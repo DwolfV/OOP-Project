@@ -13,10 +13,19 @@ public class Event {
     private LocalTime endTime;
     private User user;
 
-    public Event () {
+    public Event() {
 
     }
 
+    /**
+     * Creates an instance of a new Event object.
+     * @param name the name of the event
+     * @param description description of the event
+     * @param date date of the event
+     * @param startTime start time of the event
+     * @param endTime end time of the event
+     * @param user user who created the event
+     */
     public Event(String name,
                  String description,
                  LocalDate date,
@@ -103,13 +112,13 @@ public class Event {
     @Override
     public String toString() {
         return "Event{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", description='" + description + '\''
-                + ", date=" + date
-                + ", startTime=" + startTime
-                + ", endTime=" + endTime
-                + ", user=" + user
-                + '}';
+            + "id=" + id
+            + ", name='" + name + '\''
+            + ", description='" + description + '\''
+            + ", date=" + date
+            + ", startTime=" + startTime
+            + ", endTime=" + endTime
+            + ", user=" + user
+            + '}';
     }
 }

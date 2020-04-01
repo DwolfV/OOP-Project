@@ -3,10 +3,6 @@ package nl.tudelft.oopp.demo.communication;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import nl.tudelft.oopp.demo.helperclasses.Event;
-import nl.tudelft.oopp.demo.helperclasses.Occasion;
-import nl.tudelft.oopp.demo.helperclasses.User;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,13 +11,15 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import nl.tudelft.oopp.demo.helperclasses.Event;
+import nl.tudelft.oopp.demo.helperclasses.User;
 
 public class EventCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
-     * Get a list of events for a certain user
+     * Get a list of events for a certain user.
      *
      * @param id - the id of the user
      * @return a list of events
@@ -55,14 +53,14 @@ public class EventCommunication {
     }
 
     /**
-     * Adds a new event in the database
+     * Adds a new event in the database.
      *
-     * @param name - the name of the event
+     * @param name        - the name of the event
      * @param description - the description of the event
-     * @param date - the date of the event
-     * @param startTime - start time of the event
-     * @param endTime - end time fot he new event
-     * @param user - the user that makes the event
+     * @param date        - the date of the event
+     * @param startTime   - start time of the event
+     * @param endTime     - end time fot he new event
+     * @param user        - the user that makes the event
      */
     public static void addEvent(String name, String description, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
@@ -90,15 +88,15 @@ public class EventCommunication {
     }
 
     /**
-     * Updates an existing event from the database
+     * Updates an existing event from the database.
      *
-     * @param id - the id of the event that needs to be updated
-     * @param name - the name of the event
+     * @param id          - the id of the event that needs to be updated
+     * @param name        - the name of the event
      * @param description - the description of the event
-     * @param date - the date of the event
-     * @param startTime - start time of the event
-     * @param endTime - end time fot he new event
-     * @param user - the user that makes the event
+     * @param date        - the date of the event
+     * @param startTime   - start time of the event
+     * @param endTime     - end time fot he new event
+     * @param user        - the user that makes the event
      */
     public static void updateEvent(long id, String name, String description, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
         ObjectMapper mapper = new ObjectMapper();
@@ -126,7 +124,7 @@ public class EventCommunication {
     }
 
     /**
-     * Removes an event from the database
+     * Removes an event from the database.
      *
      * @param id - the id of the event
      */
