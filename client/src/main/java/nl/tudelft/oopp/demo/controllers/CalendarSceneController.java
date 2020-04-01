@@ -28,7 +28,10 @@ import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 public class CalendarSceneController implements Initializable {
 
     private MainSceneController mainSceneController;
+    // this flag is used to prevent an infinite loop of events
     private int flag = 0;
+    // this flag is used to prevent calling the *addEntry* function when the calendar view is populated
+    //private int flagInitiallyPopulatingTheScene = 0;
     private LocalDate previousDate;
     private LocalTime previousStartTime;
     private LocalTime previousEndTime;
@@ -101,16 +104,23 @@ public class CalendarSceneController implements Initializable {
         handlerEvents = event -> {
             // if it is a new event
             if (event.isEntryAdded()) {
+                // if the scene has already been populated and now a user adds an entry
+                    //if (flagInitiallyPopulatingTheScene == 1) {
                 Event addedEvent = EventCommunication.addEvent(event.getEntry().getTitle(), event.getEntry().getId(),event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
                 event.getEntry().setId((String.valueOf(addedEvent.getId())));
                 System.out.println("entry added ");
+                //}
             } else if (event.isEntryRemoved()) {
                 // if an entry is deleted
                 EventCommunication.removeEvent(Long.parseLong(event.getEntry().getId()));
                 System.out.println("event deleted");
             } else {
-                EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()), event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
-                System.out.println("event updated");
+                // if an entry is updated
+                Thread t = new Thread(() -> {
+                    EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()), event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
+                    System.out.println("event updated");
+                });
+                t.start();
             }
         };
 
@@ -126,6 +136,7 @@ public class CalendarSceneController implements Initializable {
      * This method is used to load and reload the state of the calendar view when the user switched to the calendar scene.
      */
     public void init() {
+        //flagInitiallyPopulatingTheScene = 0;
         //calendarView.getCalendarSources().get(0).getCalendars().get(0).removeEntries();
 
         // will get the Default calendar
@@ -143,7 +154,7 @@ public class CalendarSceneController implements Initializable {
             calendarEntry.setUserObject(reservation);
             calendarRoomReservations.addEntry(calendarEntry);
         }
-
+        // TODO move the calendarRoomReservation.addEventHandler here?
 
         // load the new calendar for unavailable times
         List<Room> allRooms = RoomCommunication.getRooms();
@@ -169,12 +180,21 @@ public class CalendarSceneController implements Initializable {
 
         // get the default calendar and populate it with the custom events
         Calendar calendarCustomEvents = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+
+        // remove the entries and handler
+        calendarCustomEvents.removeEventHandler(handlerEvents);
+        calendarCustomEvents.clear();
         for (Event event : EventCommunication.getEventsByUser(Authenticator.ID)) {
             Interval interval = new Interval(event.getDate().plusDays(1), event.getStartTime(), event.getDate().plusDays(1), event.getEndTime());
             Entry<Event> calendarEntry = new Entry<>(event.getName(), interval);
+            calendarEntry.setId(String.valueOf(event.getId()));
             calendarEntry.setUserObject(event);
             calendarCustomEvents.addEntry(calendarEntry);
         }
+        // add the handler to deal with users adding/deleting rooms
+        calendarCustomEvents.addEventHandler(handlerEvents);
+
+        //flagInitiallyPopulatingTheScene = 1;
     }
 
     public void setController(MainSceneController mainSceneController) {
