@@ -134,12 +134,13 @@ public class SupplySceneController implements Initializable {
                     Button buttonItem = new Button("reserve");
                     buttons.add(buttonItem);
 
-                    int finalJ = j;
+                    long supplyID = showSupplies.get(j).getId();
+
                     buttonItem.setOnAction(e -> {
                         LocalDate today = LocalDate.now();
                         int amount = Integer.parseInt(textFieldItem.getText());
 
-                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplies.get(finalJ).getId());
+                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
 
                         textFieldItem.setText(null);
                     });
