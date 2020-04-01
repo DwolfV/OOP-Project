@@ -9,6 +9,10 @@ public class RestaurantDish {
     private Restaurant restaurant;
     private Set<DishOrder> dishOrders;
 
+    public RestaurantDish() {
+
+    }
+
     public RestaurantDish(Restaurant restaurant, Dish dish) {
         this.restaurant = restaurant;
         this.dish = dish;

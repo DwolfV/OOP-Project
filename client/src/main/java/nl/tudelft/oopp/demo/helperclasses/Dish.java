@@ -8,6 +8,10 @@ public class Dish {
     String type;
     float price;
 
+    public Dish() {
+
+    }
+
     /**
      * Create a new Dish instance.
      *
