@@ -20,7 +20,6 @@ import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.EventCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
-import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Event;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
@@ -105,22 +104,26 @@ public class CalendarSceneController implements Initializable {
             // if it is a new event
             if (event.isEntryAdded()) {
                 // if the scene has already been populated and now a user adds an entry
-                    //if (flagInitiallyPopulatingTheScene == 1) {
-                Event addedEvent = EventCommunication.addEvent(event.getEntry().getTitle(), event.getEntry().getId(),event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
-                event.getEntry().setId((String.valueOf(addedEvent.getId())));
-                System.out.println("entry added ");
-                //}
+                Thread thread = new Thread(() -> {
+                    Event addedEvent = EventCommunication.addEvent(event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
+                    event.getEntry().setId((String.valueOf(addedEvent.getId())));
+                    System.out.println("entry added ");
+                });
+                thread.start();
             } else if (event.isEntryRemoved()) {
                 // if an entry is deleted
-                EventCommunication.removeEvent(Long.parseLong(event.getEntry().getId()));
-                System.out.println("event deleted");
+                Thread thread = new Thread(() -> {
+                    EventCommunication.removeEvent(Long.parseLong(event.getEntry().getId()));
+                    System.out.println("event deleted");
+                });
+                thread.start();
             } else {
                 // if an entry is updated
-                Thread t = new Thread(() -> {
+                Thread thread = new Thread(() -> {
                     EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()), event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(), event.getEntry().getEndTime());
                     System.out.println("event updated");
                 });
-                t.start();
+                thread.start();
             }
         };
 
