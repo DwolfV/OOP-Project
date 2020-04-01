@@ -15,10 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.*;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Friend;
-import nl.tudelft.oopp.demo.helperclasses.Room;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.helperclasses.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,9 +47,11 @@ public class FriendsSceneController implements Initializable {
         hoBoxAddFriend.setSpacing(10);
 
         ObservableList<User> friends = FXCollections.observableList(FriendCommunication.getFriends(Authenticator.USERNAME));
+        ObservableList<RoomReservation> reservedRooms = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID));
 
         TitledPane[] tps = new TitledPane[friends.size()];
-        List<Button> buttons = new ArrayList<>();
+        List<Button> buttonsRemove = new ArrayList<>();
+        List<Button> buttonsInvite = new ArrayList<>();
 
         VBox veBoxTpAndAdd = new VBox();
 
@@ -60,22 +59,34 @@ public class FriendsSceneController implements Initializable {
 
         for (int i = 0; i < friends.size(); i++) {
             tps[c] = new TitledPane();
-            HBox hoBoxUsernameAndRemove = new HBox();
 
             Label friendsLabel = new Label(friends.get(i).getUsername());
 
+            Button inviteFriendsButton = new Button("Invite");
+            buttonsInvite.add(inviteFriendsButton);
+
             Button removeFriendsButton = new Button("Remove");
-            buttons.add(removeFriendsButton);
+            buttonsRemove.add(removeFriendsButton);
+
+            ComboBox<RoomReservation> comboBoxReservedRooms = new ComboBox<>();
+            comboBoxReservedRooms.setItems(reservedRooms);
 
             String friendId = friends.get(i).getUsername();
-            
             removeFriendsButton.setOnAction(event -> {
                 FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME), UserCommunication.getByUsername(friendId));
             });
 
-            hoBoxUsernameAndRemove.getChildren().addAll(friendsLabel, removeFriendsButton);
-            hoBoxUsernameAndRemove.getChildren().get(1).setTranslateX(780);
-            hoBoxUsernameAndRemove.setSpacing(150);
+            HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);
+            HBox.setHgrow(removeFriendsButton, Priority.ALWAYS);
+            HBox.setHgrow(friendsLabel, Priority.ALWAYS);
+            inviteFriendsButton.setMinWidth(70);
+            removeFriendsButton.setMinWidth(70);
+            friendsLabel.setMinWidth(100);
+            comboBoxReservedRooms.setMinWidth(75);
+
+            HBox hoBoxUsernameAndRemove = new HBox();
+            hoBoxUsernameAndRemove.setSpacing(50);
+            hoBoxUsernameAndRemove.getChildren().addAll(friendsLabel, comboBoxReservedRooms, inviteFriendsButton, removeFriendsButton);
             hoBoxUsernameAndRemove.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: lightblue;");
