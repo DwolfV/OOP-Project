@@ -67,8 +67,10 @@ public class FriendsSceneController implements Initializable {
             Button removeFriendsButton = new Button("Remove");
             buttons.add(removeFriendsButton);
 
+            String friendId = friends.get(i).getUsername();
+            
             removeFriendsButton.setOnAction(event -> {
-//            FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME), UserCommunication.getByUsername());
+                FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME), UserCommunication.getByUsername(friendId));
             });
 
             hoBoxUsernameAndRemove.getChildren().addAll(friendsLabel, removeFriendsButton);
