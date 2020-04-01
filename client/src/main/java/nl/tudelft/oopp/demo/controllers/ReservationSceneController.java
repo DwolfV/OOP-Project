@@ -211,7 +211,7 @@ public class ReservationSceneController implements Initializable {
             box.getChildren().addAll(ac);
             box.setAlignment(Pos.TOP_RIGHT);
             borderPane.setTop(box);
-            borderPane.setPadding(new Insets(20, 0, 0, 20));S
+            borderPane.setPadding(new Insets(20, 0, 0, 20));
         }
 
     }
