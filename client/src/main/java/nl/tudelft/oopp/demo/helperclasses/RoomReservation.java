@@ -101,4 +101,10 @@ public class RoomReservation {
             + ", user=" + user
             + '}';
     }
+
+    public String invitationString() {
+        return "Building: " + room.getBuilding().getName()
+                + "Room: " + room.getName()
+                + "Date: " + date.toString();
+    }
 }
