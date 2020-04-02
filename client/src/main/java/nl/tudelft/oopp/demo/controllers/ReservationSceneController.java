@@ -76,6 +76,7 @@ public class ReservationSceneController implements Initializable {
     public void filteredSearch(List<String> filters, int capacity) {
         // clear the previous result
         ac.getPanes().clear();
+        int notFound = 0;
 
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
 
@@ -84,7 +85,6 @@ public class ReservationSceneController implements Initializable {
 
         SidebarSceneController ctrl = hamburgerMenuSceneController.sidebarFilterLoader.getController();
 
-
         int c = 0; // c - for tps
 
         // fill the accordion
@@ -92,6 +92,10 @@ public class ReservationSceneController implements Initializable {
 
             //Look for the rooms of the building i with the filters
             ObservableList<Room> showRooms = FXCollections.observableList(RoomCommunication.getFilteredRoomsByBuilding(buildingData.get(i).getId(), capacity, filters));
+
+            if (showRooms.size() == 0) {
+                notFound++;
+            }
 
             //if there are rooms for the building i - show them
             if (showRooms.size() != 0) {
@@ -106,14 +110,12 @@ public class ReservationSceneController implements Initializable {
                 // Check the occasions for the building
                 if (occasions.size() != 0) {
                     for (int oc = 0; oc < occasions.size(); oc++) {
-                        if (occasions.get(oc).getDate() == date) {
+                        if (occasions.get(oc).getDate().isEqual(date)) {
                             startTime = occasions.get(oc).getOpenTime();
                             endTime = occasions.get(oc).getCloseTime();
                         }
                     }
                 }
-
-                System.out.println(startTime + " " + endTime);
 
                 ArrayList<LocalTime> timeFrom;
                 ArrayList<LocalTime> timeTo;
@@ -129,7 +131,6 @@ public class ReservationSceneController implements Initializable {
 
                     if (!reservedTime.isEmpty()) {
                         String str = reservedTime.toString();
-                        System.out.println(str + " " + showRooms.get(j).getName());
                         str  = str.replace("}", "");
                         str = str.replace("{", "");
                         String[] timeR;
@@ -143,8 +144,6 @@ public class ReservationSceneController implements Initializable {
                             String[] temp = timeR[r].split("=");
                             String one = temp[0];
                             String two = temp[1];
-                            System.out.println(r);
-                            System.out.println(one + "-" + two);
                             for (LocalTime tm = LocalTime.parse(one); tm.isBefore(LocalTime.parse(two)); tm = tm.plusMinutes(30)) {
                                 tt.add(tm);
                             }
@@ -154,7 +153,6 @@ public class ReservationSceneController implements Initializable {
 
                     timeFrom = setStartTime(startTime, endTime, tt);
                     timeTo = setEndTime(startTime, endTime, tt);
-
                     ObservableList<LocalTime> from = FXCollections.observableArrayList(timeFrom);
                     ObservableList<LocalTime> to = FXCollections.observableArrayList(timeTo);
 
@@ -213,10 +211,19 @@ public class ReservationSceneController implements Initializable {
                 c++;
             }
 
-            // load the accordion into the scene
-            VBox box = new VBox(ac);
-            borderPane.setCenter(box);
-            borderPane.setPadding(new Insets(20, 0, 0, 50));
+
+            // if there is no available rooms
+            if (notFound == buildingData.size()) {
+                Label text = new Label("There are no available rooms");
+                borderPane.setCenter(text);
+                text.setStyle("-fx-padding: 50;" + "-fx-font-weight: bold");
+            } else {
+                // load the accordion into the scene if there are available rooms
+                VBox box = new VBox(ac);
+                borderPane.setCenter(box);
+                borderPane.setPadding(new Insets(20, 0, 0, 50));
+            }
+
         }
 
     }
