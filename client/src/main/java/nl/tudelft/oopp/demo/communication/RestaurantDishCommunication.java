@@ -19,12 +19,12 @@ public class RestaurantDishCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
-     * Get all the dishes from a restaurant by it's id.
+     * Get a list of all RestaurantDishes for a specific restaurant.
      *
      * @param id - the id of the restaurant
-     * @return the list of dishes for the restaurant
+     * @return a list of RestaurantDishes
      */
-    public static List<Dish> getDishesByRestaurant(long id) {
+    public static List<RestaurantDish> getAllRestaurantDishesByRestaurant(long id) {
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/restaurant_dish/restaurant/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
@@ -48,10 +48,21 @@ public class RestaurantDishCommunication {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return restaurantDishes;
+    }
+
+    /**
+     * Get all the dishes from a restaurant by it's id.
+     *
+     * @param id - the id of the restaurant
+     * @return the list of dishes for the restaurant
+     */
+    public static List<Dish> getDishesByRestaurant(long id) {
+        List<RestaurantDish> restaurantDishes = getAllRestaurantDishesByRestaurant(id);
         List<Dish> dishes = new ArrayList<>();
         try {
             for (RestaurantDish rd : restaurantDishes) {
-                if(rd.getDish() != null) {
+                if (rd.getDish() != null) {
                     dishes.add(rd.getDish());
                 }
             }
@@ -62,7 +73,7 @@ public class RestaurantDishCommunication {
     }
 
     /**
-     * Adds a new link between a restaurant and a dish
+     * Adds a new link between a restaurant and a dish.
      *
      * @param dish - a dish
      * @param restaurant - a restaurant that will have the dish in the menu
@@ -80,6 +91,26 @@ public class RestaurantDishCommunication {
         }
 
         HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRd)).uri(URI.create("http://localhost:8080/restaurant_dish")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+    }
+
+    /**
+     * Removes a link between a restaurant and a dish.
+     *
+     * @param restaurantId - the id of the restaurant
+     * @param dishId - the id of the dish
+     */
+    public static void removeLink(long restaurantId, long dishId) {
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/restaurant_dish/delete/%d/%d", restaurantId, dishId))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
