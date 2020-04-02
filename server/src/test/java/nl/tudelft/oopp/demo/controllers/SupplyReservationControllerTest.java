@@ -1,9 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -24,6 +20,10 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class SupplyReservationControllerTest {
@@ -101,7 +101,7 @@ class SupplyReservationControllerTest {
 
         when(supplyReservationRepository.findById(
             sr1.getId())).thenReturn(optionalSupplyReservation);
-        assertEquals(entity, supplyReservationController.getRoomReservationById(sr1.getId()));
+        assertEquals(entity, supplyReservationController.getSupplyReservationById(sr1.getId()));
     }
 
     @Test
