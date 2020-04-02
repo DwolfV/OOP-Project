@@ -7,7 +7,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -100,9 +104,9 @@ public class ReservationSceneController implements Initializable {
                 LocalTime endTime = buildingTime.get(1);
 
                 // Check the occasions for the building
-                if(occasions.size() != 0){
-                    for(int oc = 0; oc < occasions.size(); oc++){
-                        if(occasions.get(oc).getDate()==date){
+                if (occasions.size() != 0) {
+                    for (int oc = 0; oc < occasions.size(); oc++) {
+                        if (occasions.get(oc).getDate() == date) {
                             startTime = occasions.get(oc).getOpenTime();
                             endTime = occasions.get(oc).getCloseTime();
                         }
@@ -224,7 +228,7 @@ public class ReservationSceneController implements Initializable {
     public ArrayList<LocalTime> setStartTime(LocalTime st, LocalTime et, ArrayList<LocalTime> tt) {
         ArrayList<LocalTime> timeFrom = new ArrayList<>();
 
-        for(LocalTime tm = st; tm.isBefore(et); tm = tm.plusMinutes(30)){
+        for (LocalTime tm = st; tm.isBefore(et); tm = tm.plusMinutes(30)) {
             timeFrom.add(tm);
         }
 
@@ -245,7 +249,7 @@ public class ReservationSceneController implements Initializable {
     public ArrayList<LocalTime> setEndTime(LocalTime st, LocalTime et, ArrayList<LocalTime> tt) {
         ArrayList<LocalTime> timeTo = new ArrayList<>();
 
-        for(LocalTime tm = st.plusMinutes(30); tm.isBefore(et.plusMinutes(30)); tm = tm.plusMinutes(30)){
+        for (LocalTime tm = st.plusMinutes(30); tm.isBefore(et.plusMinutes(30)); tm = tm.plusMinutes(30)) {
             timeTo.add(tm);
         }
 
