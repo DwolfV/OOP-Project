@@ -374,6 +374,11 @@ public class RoomReservationController {
                     return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
                 }
 
+                // users should not be able to delete room reservations for previous days
+                if (newRoomReservation.getDate().compareTo(LocalDate.now()) < 0 || newRoomReservation.getStartTime().compareTo(LocalTime.now()) < 0) {
+                    return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
+                }
+
                 roomReservation.setUser(newRoomReservation.getUser());
                 roomReservation.setRoom(newRoomReservation.getRoom());
                 roomReservation.setDate(newRoomReservation.getDate());
@@ -404,6 +409,11 @@ public class RoomReservationController {
 
         if (!reservationToDelete.getUser().getUsername().equals(authentication.getName())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // users should not be able to delete room reservations for previous days
+        if (reservationToDelete.getDate().compareTo(LocalDate.now()) < 0 || reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         reservations.deleteById(roomReservationId);
