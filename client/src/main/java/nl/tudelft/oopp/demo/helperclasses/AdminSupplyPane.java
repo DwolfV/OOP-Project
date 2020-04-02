@@ -126,7 +126,7 @@ public class AdminSupplyPane {
         BorderPane borderPaneAddSupplies = new BorderPane();
         VBox veBoxAddSupplies = new VBox();
 
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildingNames = AdminBuildingPane.buildingData;
         ArrayList<String> buildingList = new ArrayList<>();
 
         for (Building buildingName : buildingNames) {

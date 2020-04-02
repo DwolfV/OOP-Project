@@ -60,6 +60,7 @@ public class AdminBuildingPane {
         BuildingCommunication.removeBuilding(building.getId());
     }
 
+    static ObservableList<Building> buildingData;
     /**
      * Get the BorderPane of the Building info list.
      *
@@ -137,7 +138,7 @@ public class AdminBuildingPane {
                 t.getTablePosition().getRow()).setCity(t.getNewValue()));
         cityCol.getStyleClass().setAll("last-col");
 
-        ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
+        buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         tableBuilding.setItems(buildingData);
         tableBuilding.getColumns().addAll(idCol, buildingCol, openTimeCol, closeTimeCol, streetNameCol, streetNumCol, zipCodeCol, cityCol);
 
@@ -343,7 +344,7 @@ public class AdminBuildingPane {
         // Adding a openTime for a building on a date
         // Right Pane
 
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildingNames = buildingData;
         ArrayList<String> buildingList = new ArrayList<>();
 
         for (Building name : buildingNames) {

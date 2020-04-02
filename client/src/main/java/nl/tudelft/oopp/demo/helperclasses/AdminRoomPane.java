@@ -123,7 +123,7 @@ public class AdminRoomPane {
         hboxBottom.getChildren().setAll(deleteRoom, updateRoom);
 
         // adding room scene
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildingNames = AdminBuildingPane.buildingData;
         ArrayList<String> buildingList = new ArrayList<>();
 
         for (Building buildingName : buildingNames) {

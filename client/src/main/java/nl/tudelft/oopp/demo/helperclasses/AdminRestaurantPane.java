@@ -135,7 +135,7 @@ public class AdminRestaurantPane {
             }
         });
 
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildingNames = AdminBuildingPane.buildingData;
         ArrayList<String> buildingList = new ArrayList<>();
 
         for (Building name : buildingNames) {
