@@ -86,19 +86,22 @@ public class FriendsSceneController implements Initializable {
             ComboBox<String> comboBoxReservedRooms = new ComboBox<>();
             comboBoxReservedRooms.setItems(reservedRoomsList1);
 
-            final String[] temp = new String[2];
+            final String[] temp = new String[3];
             String delimiter = ", ";
             String secondDelimiter = ": ";
-            final String[] buildingAndRoom = new String[2];
+            final String[] buildingAndRoom = new String[3];
             comboBoxReservedRooms.setOnAction(e -> {
                 temp[0] = (comboBoxReservedRooms.getValue().trim().split(delimiter)[0]);
                 temp[1] = (comboBoxReservedRooms.getValue().trim().split(delimiter)[1]);
+                temp[2] = (comboBoxReservedRooms.getValue().trim().split(delimiter)[2]);
 
                 buildingAndRoom[0] = (temp[0].trim().split(secondDelimiter)[1]);
                 buildingAndRoom[1] = (temp[1].trim().split(secondDelimiter)[1]);
+                buildingAndRoom[2] = (temp[2].trim().split(secondDelimiter)[1]);
 
                 System.out.println(buildingAndRoom[0]);
                 System.out.println(buildingAndRoom[1]);
+                System.out.println(buildingAndRoom[2]);
             });
 
             String friendId = friends.get(i).getUsername();
@@ -113,11 +116,11 @@ public class FriendsSceneController implements Initializable {
             inviteFriendsButton.setOnAction(event -> {
                 List<RoomReservation> reservedList = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
                 for (RoomReservation reservedRooms1: reservedList) {
-//                    System.out.println(reservedRooms1.getRoom().getBuilding().getName());
-//                    System.out.println(reservedRooms1.getRoom().getName());
                     if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0])
-                            && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])) { //add date check
-                            InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId)); // add break
+                            && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
+                            && reservedRooms1.getDate().equals(buildingAndRoom[2])) {
+                        InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
+                        break;
                     }
                 }
             });
