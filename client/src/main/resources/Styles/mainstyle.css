@@ -10,6 +10,10 @@
   -fx-background-color: #336699;
 }
 
+.empty-side-pane {
+  -fx-background-color: #333333;
+}
+
 .button {
   -fx-background-color: #336699;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
@@ -78,71 +82,88 @@
     -fx-pref-height: 40;
     -fx-background-radius: 0;
 }
+*/
+.restaurant-menu {
+  -fx-background-insets: 0, 0 0 0 0;
+  -fx-border-width: 0 0 0 0;
+}
 
-// The table inside the titled panes in admin scene
+.restaurant-menu .column-header {
+  -fx-text-fill: black;
+  -fx-background-color: #6699CC;
+  -fx-border-width: 0 0 0 0;
+  -fx-border-color: #333333;
+}
+
+.restaurant-menu .column-header-background .label {
+  -fx-text-fill: black;
+}
+
+.restaurant-menu-row-cell {
+  -fx-background-color: #EEEEEE;
+}
+
 .table-view {
-    -fx-background-color: $l-grey;
-    -fx-background-insets: 0, 0 0 0 0;
-    -fx-padding: 3.0em 0.0em 0.0em 3.0em;
-    -fx-border-width: 0 0 0 0;
+  -fx-background-color: #EEEEEE;
+  -fx-background-insets: 0, 0 0 0 0;
+  -fx-padding: 3em 0em 0em 3em;
+  -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
-    -fx-background-color: $l-blue;
-    -fx-border-width: 0 1 0 1;
-    -fx-border-color: $l-grey;
+  -fx-background-color: #6699CC;
+  -fx-border-width: 0 1 0 1;
+  -fx-border-color: #333333;
 }
 
 .table-view .column-header:hover {
-    -fx-background-color: $b-blue;
+  -fx-background-color: #66CCFF;
 }
 
 .table-view .column-header-background .label {
-    -fx-text-fill: white;
+  -fx-text-fill: white;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: $eel-blue;
+  -fx-background-color: #D8EEFF;
 }
 
 .table-row-cell:even {
-    -fx-background-color: $el-blue;
+  -fx-background-color: #A4CFF2;
 }
 
 .table-view .column-header-background .first-col {
-    -fx-border-width: 0 1 0 0;
+  -fx-border-width: 0 1 0 0;
 }
 
 .table-view .column-header-background .last-col {
-    -fx-border-width: 0 0 0 1;
+  -fx-border-width: 0 0 0 1;
 }
 
-// The titled panes inside the admin
 .titled-pane > .content {
-    -fx-text-fill: white;
-    -fx-background-color: $l-blue;
+  -fx-text-fill: white;
+  -fx-background-color: #EEEEEE;
 }
 
 .titled-pane {
-    -fx-text-fill: white;
+  -fx-text-fill: white;
 }
 
-.titled-pane > .title{
-    -fx-background-color: $d-blue;
-    -fx-border-width: 2 0 0 0;
-    -fx-border-color: $l-grey;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
-    -fx-padding: 10px;
-    -fx-text-fill: white;
+.titled-pane > .title {
+  -fx-background-color: #336699;
+  -fx-border-width: 2 0 0 0;
+  -fx-border-color: #CCCCCC;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 0, 2);
+  -fx-padding: 10px;
+  -fx-text-fill: white;
 }
 
 .titled-pane > .title:hover {
-    -fx-background-color: $b-blue;
+  -fx-background-color: #66CCFF;
 }
 
 .titled-pane > .title:selected {
-    -fx-background-color: $b-blue;
+  -fx-background-color: #66CCFF;
 }
-*/
 
 /*# sourceMappingURL=mainstyle.css.map */

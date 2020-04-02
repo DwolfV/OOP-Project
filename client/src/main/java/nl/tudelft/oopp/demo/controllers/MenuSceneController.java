@@ -5,12 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+import javafx.util.converter.FloatStringConverter;
 import nl.tudelft.oopp.demo.communication.DishCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantDishCommunication;
@@ -26,7 +31,8 @@ import java.util.ResourceBundle;
 
 public class MenuSceneController implements Initializable {
 
-    private static TableView tableView;
+    public static TableView<Dish> tableView;
+    private static Rectangle2D screenBounds;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,7 +58,8 @@ public class MenuSceneController implements Initializable {
     }
 
     public static VBox loadMenu(Pane pane, long restaurantId) {
-        tableView = new TableView();
+        tableView = new TableView<Dish>();
+        tableView.getStyleClass().setAll("restaurant-menu");
 
         // Name Column
         TableColumn<Dish, String> nameCol = new TableColumn<>("Course");
@@ -63,18 +70,26 @@ public class MenuSceneController implements Initializable {
                         t.getTablePosition().getRow()).setName(t.getNewValue()));
         // Description Column
         TableColumn<Dish, String> descCol = new TableColumn<>();
-        descCol.setCellValueFactory(new PropertyValueFactory<>("desc"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         descCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descCol.setOnEditCommit(
                 (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setDescription(t.getNewValue()));
         // Price Column
-        TableColumn<Dish, String> priceCol = new TableColumn<>("price");
+        TableColumn<Dish, Float> priceCol = new TableColumn<>("price");
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        priceCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
         priceCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setPrice(Float.parseFloat(t.getNewValue())));
+            (TableColumn.CellEditEvent<Dish, Float> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setPrice(t.getNewValue()));
+
+        // Set styleClass to rows
+        tableView.setRowFactory(tv -> {
+            TableRow<Dish> row = new TableRow<Dish>();
+            row.getStyleClass().setAll("restaurant-menu-row");
+            return row;
+            }
+        );
 
         // Set Columns
         tableView.getColumns().addAll(nameCol, descCol, priceCol);
@@ -82,8 +97,13 @@ public class MenuSceneController implements Initializable {
         ObservableList<Dish> dishObservableList = FXCollections.observableArrayList(dishList);
         tableView.setItems(dishObservableList);
 
-        VBox vbox = new VBox();
+        VBox vbox = new VBox(10);
         vbox.getChildren().addAll(tableView);
+        screenBounds = Screen.getPrimary().getBounds();
+        tableView.setPadding(new Insets(20, 20, 20, 20));
+        tableView.setPrefWidth((screenBounds.getWidth()-400)/2);
+        priceCol.setPrefWidth(tableView.getPrefWidth()*0.10);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return vbox;
     }
 }

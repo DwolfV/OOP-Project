@@ -33,7 +33,7 @@ public class CalendarSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        calendarView.setPrefWidth(screenBounds.getWidth() - 200);
+        calendarView.setPrefWidth(screenBounds.getWidth() - 400);
         calendarView.setPrefHeight(screenBounds.getHeight() - 170);
         // will get the Default calendar
         Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);

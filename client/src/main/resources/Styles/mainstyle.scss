@@ -22,6 +22,10 @@ $el-grey: #EEEEEE;
     -fx-background-color: $d-blue;
 }
 
+.empty-side-pane {
+    -fx-background-color: $d-grey;
+}
+
 // Buttons
 .button {
     -fx-background-color: $d-blue;
@@ -91,10 +95,32 @@ $el-grey: #EEEEEE;
     -fx-pref-height: 40;
     -fx-background-radius: 0;
 }
+*/
 
-// The table inside the titled panes in admin scene
+.restaurant-menu {
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-border-width: 0 0 0 0;
+
+}
+
+.restaurant-menu .column-header {
+    -fx-text-fill: black;
+    -fx-background-color: $l-blue;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: $d-grey;
+}
+
+.restaurant-menu .column-header-background .label {
+    -fx-text-fill: black;
+}
+
+.restaurant-menu-row-cell {
+    -fx-background-color: $el-grey;
+}
+
+//The table inside the titled panes in admin scene
 .table-view {
-    -fx-background-color: $l-grey;
+    -fx-background-color: $el-grey;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-padding: 3.0em 0.0em 0.0em 3.0em;
     -fx-border-width: 0 0 0 0;
@@ -103,7 +129,7 @@ $el-grey: #EEEEEE;
 .table-view .column-header {
     -fx-background-color: $l-blue;
     -fx-border-width: 0 1 0 1;
-    -fx-border-color: $l-grey;
+    -fx-border-color: $d-grey;
 }
 
 .table-view .column-header:hover {
@@ -133,7 +159,7 @@ $el-grey: #EEEEEE;
 // The titled panes inside the admin
 .titled-pane > .content {
     -fx-text-fill: white;
-    -fx-background-color: $l-blue;
+    -fx-background-color: $el-grey;
 }
 
 .titled-pane {
@@ -156,4 +182,3 @@ $el-grey: #EEEEEE;
 .titled-pane > .title:selected {
     -fx-background-color: $b-blue;
 }
-*/

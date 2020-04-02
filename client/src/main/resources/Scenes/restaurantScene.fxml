@@ -7,18 +7,20 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.RestaurantSceneController"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@/Styles/mainstyle.css">
-    <HBox>
+<Pane fx:id="mainPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.RestaurantSceneController"
+            prefHeight="400.0" prefWidth="600" stylesheets="@/Styles/mainstyle.css">
+    <HBox fx:id="hbox" prefHeight="400.0" prefWidth="600">
         <children>
-            <Accordion fx:id="ac" BorderPane.alignment="CENTER" prefWidth="1000">
+            <Accordion fx:id="ac" BorderPane.alignment="CENTER">
                 <padding>
                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                 </padding>
             </Accordion>
-            <Pane fx:id="pane">
-
+            <Pane fx:id="pane" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
             </Pane>
         </children>
     </HBox>
-</AnchorPane>
+</Pane>

@@ -24,7 +24,6 @@ public class HamburgerMenuSceneController implements Initializable {
     private Parent restaurantRoot;
     private Parent sidebarFilterRoot;
     private Parent sidebarRoot;
-    private Parent emptySidebarRoot;
     private Parent adminPanelRoot;
 
     public FXMLLoader sidebarFilterLoader;
@@ -36,14 +35,12 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader reservationLoader = new FXMLLoader(getClass().getResource("/Scenes/reservationScene.fxml"));
         sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
-        FXMLLoader emptySidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/emptySidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
             sidebarRoot = sidebarLoader.load();
-            emptySidebarRoot = emptySidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
             adminPanelRoot = adminPanelLoader.load();
         } catch (IOException e) {
@@ -89,7 +86,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openCalendar(MouseEvent event) {
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
-        mainSceneController.sidebar = (sidebarRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
         CalendarSceneController calendarSceneController = mainSceneController.calendarLoader.getController();
         calendarSceneController.init();
@@ -101,7 +98,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openRestaurants(MouseEvent event) {
         mainSceneController.changeCenter(restaurantRoot);
-        mainSceneController.sidebar = (sidebarRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
     }
 
@@ -111,7 +108,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openAdminPanel(MouseEvent event) {
         mainSceneController.changeCenter(adminPanelRoot);
-        mainSceneController.sidebar = (emptySidebarRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
     }
 }

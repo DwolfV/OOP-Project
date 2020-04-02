@@ -10,14 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
@@ -25,9 +21,12 @@ import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 
 public class RestaurantSceneController implements Initializable {
 
+    @FXML private Pane mainPane;
     @FXML private Accordion ac;
     @FXML private Pane pane;
+    @FXML private HBox hbox;
 
+    private static Rectangle2D screenBounds;
     public static List<Long> buttonRestaurant;
 
     /**
@@ -48,14 +47,6 @@ public class RestaurantSceneController implements Initializable {
         // count - for lists, c - for tps
         int count = 0;
         int c = 0;
-
-        // load the scene
-        //try {
-        //    BorderPane rootScene = FXMLLoader.load(getClass().getResource("/restaurantsScene.fxml"));
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-        //ac.getPanes().setAll()
 
         // fill the accordion
         for (int i = 0; i < buildingData.size(); i++) {
@@ -110,5 +101,13 @@ public class RestaurantSceneController implements Initializable {
                 c++;
             }
         }
+        screenBounds = Screen.getPrimary().getBounds();
+        double mainPaneWidth = screenBounds.getWidth()-400;
+        //TableView tableView = MenuSceneController.tableView;
+        //tableView.setPrefWidth(mainPaneWidth*0.50);
+        mainPane.setPrefWidth(mainPaneWidth);
+        hbox.setPrefWidth(mainPaneWidth);
+        ac.setPrefWidth(mainPaneWidth*0.50);
+        pane.setPrefWidth(mainPaneWidth*0.50);
     }
 }
