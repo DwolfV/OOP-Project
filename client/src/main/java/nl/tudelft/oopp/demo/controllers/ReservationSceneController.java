@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,6 +22,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
@@ -30,6 +32,8 @@ import nl.tudelft.oopp.demo.helperclasses.Room;
 
 
 public class ReservationSceneController implements Initializable {
+
+    private static Rectangle2D screenBounds;
 
     public HamburgerMenuSceneController hamburgerMenuSceneController;
 
@@ -194,7 +198,8 @@ public class ReservationSceneController implements Initializable {
             // load the accordion into the scene
             VBox box = new VBox(ac);
             borderPane.setCenter(box);
-            borderPane.setPadding(new Insets(30, 5, 5, 10));
+            screenBounds = Screen.getPrimary().getBounds();
+            borderPane.setPrefWidth(screenBounds.getWidth()-400);
             //rootScene.setCenter(bPane);
 
         }

@@ -11,10 +11,10 @@
 }
 
 .empty-side-pane {
-  -fx-background-color: #555555;
+  -fx-background-color: transparent;
 }
 
-.filter-box {
+.filter-vbox {
   -fx-background-color: #6699CC;
   -fx-padding: 10;
 }
@@ -45,6 +45,12 @@
 
 .hamburger-button:hover {
   -fx-background-color: #66CCFF;
+}
+
+.search-button {
+  -fx-background-color: #336699;
+  -fx-background-radius: 0;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
 }
 
 /*
@@ -88,7 +94,7 @@
 }
 */
 .restaurant-menu {
-  -fx-background-color: #EEEEEE;
+  -fx-background-color: #F5F5F5;
   -fx-background-insets: 0, 0 0 0 0;
   -fx-border-width: 1 1 1 1;
   -fx-border-color: #555555;
@@ -108,7 +114,7 @@
 
 .restaurant-menu-row-cell {
   -fx-padding: 3;
-  -fx-background-color: #EEEEEE;
+  -fx-background-color: #F5F5F5;
 }
 
 .price-col {
@@ -121,7 +127,7 @@
 }
 
 .table-view {
-  -fx-background-color: #EEEEEE;
+  -fx-background-color: #F5F5F5;
   -fx-background-insets: 0, 0 0 0 0;
   -fx-padding: 3em 0em 0em 3em;
   -fx-border-width: 0 0 0 0;
@@ -159,7 +165,7 @@
 
 .titled-pane > .content {
   -fx-text-fill: white;
-  -fx-background-color: #EEEEEE;
+  -fx-background-color: #F5F5F5;
 }
 
 .titled-pane {

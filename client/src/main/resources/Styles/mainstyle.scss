@@ -7,7 +7,7 @@ $d-grey: #878787;
 $b-blue: #66CCFF;
 $d-grey: #555555;
 $l-grey: #BBBBBB;
-$el-grey: #EEEEEE;
+$el-grey: #F5F5F5;
 
 // Panes and Faces
 .primary-pane {
@@ -23,10 +23,10 @@ $el-grey: #EEEEEE;
 }
 
 .empty-side-pane {
-    -fx-background-color: $d-grey;
+    -fx-background-color: transparent;
 }
 
-.filter-box {
+.filter-vbox {
     -fx-background-color: $l-blue;
     -fx-padding: 10;
 }
@@ -58,6 +58,12 @@ $el-grey: #EEEEEE;
 
 .hamburger-button:hover {
     -fx-background-color: $b-blue;
+}
+
+.search-button {
+    -fx-background-color: $d-blue;
+    -fx-background-radius: 0;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
 }
 
 /*

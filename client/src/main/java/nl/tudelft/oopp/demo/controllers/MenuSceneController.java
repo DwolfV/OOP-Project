@@ -38,25 +38,6 @@ public class MenuSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public static void loadDishes() {
-        // Get list of dishes and get Restaurant 249
-        Restaurant restaurant = RestaurantCommunication.getRestaurantById(249);
-        // Add all dishes to restaurant 249
-        for(int i = 0; i < 10; i++) {
-            DishCommunication.addDish("name" + i, "desc of [name" + i + "]", "food", 10 + i);
-            List<Dish> dishes = DishCommunication.getDishes();
-            Dish dish = dishes.get(i);
-            RestaurantDishCommunication.addLinkRestaurantDish(dish, restaurant);
-        }
-
-        // Get list of all dishes
-        List<Dish> dishes = DishCommunication.getDishes();
-        System.out.println("DishList: " + dishes);
-        // Get list of all dishes in restaurant 249
-        List<Dish> resDishes = RestaurantDishCommunication.getDishesByRestaurant(249);
-        System.out.println("RestaurantDishList: " + RestaurantDishCommunication.getDishesByRestaurant(249));
-    }
-
     public static VBox loadMenu(Pane pane, long restaurantId) {
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");

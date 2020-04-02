@@ -101,6 +101,7 @@ public class RestaurantSceneController implements Initializable {
                 c++;
             }
         }
+        MenuSceneController.loadMenu(pane, -1);
         screenBounds = Screen.getPrimary().getBounds();
         double mainPaneWidth = screenBounds.getWidth()-400;
         //TableView tableView = MenuSceneController.tableView;
