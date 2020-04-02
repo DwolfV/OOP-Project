@@ -69,6 +69,7 @@ public class MainSceneController implements Initializable {
         borderPane.setTop(headerRoot);
         borderPane.setLeft(emptySidebarLeftRoot);
         borderPane.setRight(emptySidebarRightRoot);
+        borderPane.getRight().setPickOnBounds(false); // TESTING
         sidebar = emptySidebarLeftRoot;
         borderPane.setCenter(calendarRoot);
 

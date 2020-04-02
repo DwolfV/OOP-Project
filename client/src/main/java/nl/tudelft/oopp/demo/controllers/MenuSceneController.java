@@ -82,6 +82,7 @@ public class MenuSceneController implements Initializable {
         priceCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Dish, Float> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setPrice(t.getNewValue()));
+        priceCol.getStyleClass().add("price-col");
 
         // Set styleClass to rows
         tableView.setRowFactory(tv -> {
@@ -97,12 +98,11 @@ public class MenuSceneController implements Initializable {
         ObservableList<Dish> dishObservableList = FXCollections.observableArrayList(dishList);
         tableView.setItems(dishObservableList);
 
-        VBox vbox = new VBox(10);
+        VBox vbox = new VBox();
         vbox.getChildren().addAll(tableView);
         screenBounds = Screen.getPrimary().getBounds();
-        tableView.setPadding(new Insets(20, 20, 20, 20));
         tableView.setPrefWidth((screenBounds.getWidth()-400)/2);
-        priceCol.setPrefWidth(tableView.getPrefWidth()*0.10);
+        tableView.setPrefHeight(screenBounds.getHeight()-200);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return vbox;
     }

@@ -67,7 +67,7 @@ public class RestaurantSceneController implements Initializable {
                 colConst.setPercentWidth(100 / 2);
                 grid.getColumnConstraints().add(colConst);
                 grid.setVgap(4);
-                grid.setPadding(new Insets(5, 5, 5, 5));
+                //grid.setPadding(new Insets(5, 5, 5, 5));
 
                 for (Restaurant restaurant : restaurants) {
                     System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
@@ -107,6 +107,7 @@ public class RestaurantSceneController implements Initializable {
         //tableView.setPrefWidth(mainPaneWidth*0.50);
         mainPane.setPrefWidth(mainPaneWidth);
         hbox.setPrefWidth(mainPaneWidth);
+        hbox.setPrefHeight(screenBounds.getHeight()-200);
         ac.setPrefWidth(mainPaneWidth*0.50);
         pane.setPrefWidth(mainPaneWidth*0.50);
     }

@@ -5,8 +5,8 @@ $d-blue: #336699;
 $td-blue: #4F88C1;
 $d-grey: #878787;
 $b-blue: #66CCFF;
-$d-grey: #333333;
-$l-grey: #CCCCCC;
+$d-grey: #555555;
+$l-grey: #BBBBBB;
 $el-grey: #EEEEEE;
 
 // Panes and Faces
@@ -26,6 +26,11 @@ $el-grey: #EEEEEE;
     -fx-background-color: $d-grey;
 }
 
+.filter-box {
+    -fx-background-color: $l-blue;
+    -fx-padding: 10;
+}
+
 // Buttons
 .button {
     -fx-background-color: $d-blue;
@@ -39,8 +44,7 @@ $el-grey: #EEEEEE;
 }
 
 .menu-button {
-    -fx-background-color: linear-gradient(to right, $d-blue, opacify($td-blue, 0.5));
-    -fx-background-color: linear-gradient(0deg, $d-blue 0%, opacify($td-blue, 0.5) 50%, $d-blue 100%);
+    -fx-background-color: $l-blue;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
     -fx-background-radius: 0;
     -fx-border-width: 2 0 0 0;
@@ -48,12 +52,12 @@ $el-grey: #EEEEEE;
 }
 
 .hamburger-button {
-    -fx-background-color: linear-gradient(to top, $l-blue, transparent);
+    -fx-background-color: $d-blue;
     -fx-background-radius: 0;
 }
 
 .hamburger-button:hover {
-    -fx-background-color: linear-gradient(to top, $b-blue, transparent);
+    -fx-background-color: $b-blue;
 }
 
 /*
@@ -98,16 +102,19 @@ $el-grey: #EEEEEE;
 */
 
 .restaurant-menu {
+    -fx-background-color: $el-grey;
     -fx-background-insets: 0, 0 0 0 0;
-    -fx-border-width: 0 0 0 0;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: $d-grey;
 
 }
 
 .restaurant-menu .column-header {
     -fx-text-fill: black;
-    -fx-background-color: $l-blue;
-    -fx-border-width: 0 0 0 0;
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 1 0;
     -fx-border-color: $d-grey;
+    -fx-padding: 10;
 }
 
 .restaurant-menu .column-header-background .label {
@@ -115,7 +122,17 @@ $el-grey: #EEEEEE;
 }
 
 .restaurant-menu-row-cell {
+    -fx-padding: 3;
     -fx-background-color: $el-grey;
+}
+
+.price-col {
+    -fx-alignment: center-right;
+}
+
+.price-col .label {
+    -fx-alignment: center-right;
+    -fx-padding: 5;
 }
 
 //The table inside the titled panes in admin scene
@@ -127,7 +144,7 @@ $el-grey: #EEEEEE;
 }
 
 .table-view .column-header {
-    -fx-background-color: $l-blue;
+    -fx-background-color: $l-grey;
     -fx-border-width: 0 1 0 1;
     -fx-border-color: $d-grey;
 }
@@ -163,14 +180,15 @@ $el-grey: #EEEEEE;
 }
 
 .titled-pane {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .titled-pane > .title{
-    -fx-background-color: $d-blue;
-    -fx-border-width: 2 0 0 0;
-    -fx-border-color: $l-grey;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: $d-grey;
+    //-fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
     -fx-padding: 10px;
     -fx-text-fill: white;
 }

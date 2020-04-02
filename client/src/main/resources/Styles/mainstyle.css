@@ -11,7 +11,12 @@
 }
 
 .empty-side-pane {
-  -fx-background-color: #333333;
+  -fx-background-color: #555555;
+}
+
+.filter-box {
+  -fx-background-color: #6699CC;
+  -fx-padding: 10;
 }
 
 .button {
@@ -26,21 +31,20 @@
 }
 
 .menu-button {
-  -fx-background-color: linear-gradient(to right, #336699, #4f88c1);
-  -fx-background-color: linear-gradient(0deg, #336699 0%, #4f88c1 50%, #336699 100%);
+  -fx-background-color: #6699CC;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
   -fx-background-radius: 0;
   -fx-border-width: 2 0 0 0;
-  -fx-border-color: #CCCCCC;
+  -fx-border-color: #BBBBBB;
 }
 
 .hamburger-button {
-  -fx-background-color: linear-gradient(to top, #6699CC, transparent);
+  -fx-background-color: #336699;
   -fx-background-radius: 0;
 }
 
 .hamburger-button:hover {
-  -fx-background-color: linear-gradient(to top, #66CCFF, transparent);
+  -fx-background-color: #66CCFF;
 }
 
 /*
@@ -84,15 +88,18 @@
 }
 */
 .restaurant-menu {
+  -fx-background-color: #EEEEEE;
   -fx-background-insets: 0, 0 0 0 0;
-  -fx-border-width: 0 0 0 0;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-color: #555555;
 }
 
 .restaurant-menu .column-header {
   -fx-text-fill: black;
-  -fx-background-color: #6699CC;
-  -fx-border-width: 0 0 0 0;
-  -fx-border-color: #333333;
+  -fx-background-color: #BBBBBB;
+  -fx-border-width: 0 0 1 0;
+  -fx-border-color: #555555;
+  -fx-padding: 10;
 }
 
 .restaurant-menu .column-header-background .label {
@@ -100,7 +107,17 @@
 }
 
 .restaurant-menu-row-cell {
+  -fx-padding: 3;
   -fx-background-color: #EEEEEE;
+}
+
+.price-col {
+  -fx-alignment: center-right;
+}
+
+.price-col .label {
+  -fx-alignment: center-right;
+  -fx-padding: 5;
 }
 
 .table-view {
@@ -111,9 +128,9 @@
 }
 
 .table-view .column-header {
-  -fx-background-color: #6699CC;
+  -fx-background-color: #BBBBBB;
   -fx-border-width: 0 1 0 1;
-  -fx-border-color: #333333;
+  -fx-border-color: #555555;
 }
 
 .table-view .column-header:hover {
@@ -146,14 +163,14 @@
 }
 
 .titled-pane {
-  -fx-text-fill: white;
+  -fx-text-fill: black;
 }
 
 .titled-pane > .title {
-  -fx-background-color: #336699;
-  -fx-border-width: 2 0 0 0;
-  -fx-border-color: #CCCCCC;
-  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 0, 2);
+  -fx-background-color: #BBBBBB;
+  -fx-border-width: 0 0 2 0;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-color: #555555;
   -fx-padding: 10px;
   -fx-text-fill: white;
 }

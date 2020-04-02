@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<Pane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="200.0" styleClass="empty-side-pane" stylesheets="/Styles/mainstyle.css">
 
-</AnchorPane>
+</Pane>
