@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static java.time.LocalDate.now;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,8 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Item;
-
-import static java.time.LocalDate.now;
 
 public class SidebarSceneController implements Initializable {
 
