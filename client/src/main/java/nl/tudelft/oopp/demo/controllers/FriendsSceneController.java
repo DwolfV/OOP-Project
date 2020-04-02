@@ -113,8 +113,11 @@ public class FriendsSceneController implements Initializable {
             inviteFriendsButton.setOnAction(event -> {
                 List<RoomReservation> reservedList = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
                 for (RoomReservation reservedRooms1: reservedList) {
-                    if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0]) && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])) {
-                            InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
+//                    System.out.println(reservedRooms1.getRoom().getBuilding().getName());
+//                    System.out.println(reservedRooms1.getRoom().getName());
+                    if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0])
+                            && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])) { //add date check
+                            InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId)); // add break
                     }
                 }
             });
