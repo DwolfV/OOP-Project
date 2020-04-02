@@ -374,7 +374,9 @@ public class RoomReservationController {
                 }
 
                 // users should not be able to delete room reservations for previous days
-                if (newRoomReservation.getDate().compareTo(LocalDate.now()) < 0 || (LocalDate.now().equals(newRoomReservation.getDate()) && newRoomReservation.getStartTime().compareTo(LocalTime.now()) < 0)) {
+                if (newRoomReservation.getDate().compareTo(LocalDate.now()) < 0
+                    || (LocalDate.now().equals(newRoomReservation.getDate())
+                    && newRoomReservation.getStartTime().compareTo(LocalTime.now()) < 0)) {
                     return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
                 }
 
@@ -411,7 +413,9 @@ public class RoomReservationController {
         }
 
         // users should not be able to delete room reservations for previous days
-        if (reservationToDelete.getDate().plusDays(1).compareTo(LocalDate.now()) < 0 || (LocalDate.now().equals(reservationToDelete.getDate().plusDays(1)) && reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0)) {
+        if (reservationToDelete.getDate().plusDays(1).compareTo(LocalDate.now()) < 0
+            || (LocalDate.now().equals(reservationToDelete.getDate().plusDays(1))
+            && reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0)) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
