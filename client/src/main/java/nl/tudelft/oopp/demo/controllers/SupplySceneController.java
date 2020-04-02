@@ -1,25 +1,35 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import nl.tudelft.oopp.demo.communication.*;
-import nl.tudelft.oopp.demo.helperclasses.*;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import nl.tudelft.oopp.demo.communication.Authenticator;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.SupplyCommunication;
+import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.helperclasses.Supply;
+import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
+import nl.tudelft.oopp.demo.helperclasses.SupplyToStringConverter;
 
 public class SupplySceneController implements Initializable {
 
@@ -36,11 +46,14 @@ public class SupplySceneController implements Initializable {
      * @param resources resource bundle
      */
     @Override
-    public void initialize (URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {
         loadReservedSupply();
         loadSuppliesAccordion();
     }
 
+    /**
+     * The method is used to set up the reserved supply of a user.
+     */
     public void loadReservedSupply() {
         //Reset TableView tableReservedSupplies
         tableReservedSupplies = new TableView<>();
@@ -91,8 +104,11 @@ public class SupplySceneController implements Initializable {
         veBoxDeleteAndTable.setPadding(new Insets(0,300,10,0));
     }
 
+    /**
+     * The method is used to set up the supplies the user can reserve.
+     */
     public void loadSuppliesAccordion() {
-        ObservableList<Building> buildings= FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildings = FXCollections.observableList(BuildingCommunication.getBuildings());
         ObservableList<Supply> supplies = FXCollections.observableList(SupplyCommunication.getSupplies());
 
         TitledPane[] tps = new TitledPane[buildings.size()];
