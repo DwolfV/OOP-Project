@@ -7,9 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.JdbcUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -24,8 +27,8 @@ public class Authentication extends WebSecurityConfigurerAdapter {
     // add two demo users
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource);
+        JdbcUserDetailsManagerConfigurer manager = auth.jdbcAuthentication()
+                .dataSource(dataSource).usersByUsernameQuery("select username, password, enabled from users where binary username = ?");
     }
 
 
@@ -36,15 +39,18 @@ public class Authentication extends WebSecurityConfigurerAdapter {
         http
                 //HTTP Basic authentication
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .antMatchers(HttpMethod.GET, "/building/**", "/equipment/**", "/holidays/**",
                         "/openTimes/**", "/restaurant/**", "/rooms/**",
-                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/occasion/**")
+                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/occasion/**", "/event/**", "/supply_reservations/**")
                         .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
+
                 .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/room_reservations/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/room_reservations/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/room_reservations/**").hasAnyRole("USER", "ADMIN")
+
+                .antMatchers(HttpMethod.POST, "/room_reservations/**", "/event/**", "/supply_reservations/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/room_reservations/**", "/event/**", "/supply_reservations/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/room_reservations/**", "/event/**", "/supply_reservations/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")

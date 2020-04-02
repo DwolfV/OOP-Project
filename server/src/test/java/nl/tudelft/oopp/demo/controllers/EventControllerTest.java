@@ -80,7 +80,7 @@ public class EventControllerTest {
         ResponseEntity<Event> entity = ResponseEntity.of(optionalEvent);
 
         when(eventRepository.findById(e1.getId())).thenReturn(optionalEvent);
-        assertEquals(entity, eventController.getEventsById(e1.getId()));
+        assertEquals(entity, eventController.getEventById(e1.getId()));
     }
 
     @Test

@@ -24,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -37,6 +38,7 @@ public class MainSceneController implements Initializable {
     public Parent calendarRoot;
     public Parent sidebar;
 
+
     public FXMLLoader headerLoader;
     public FXMLLoader sidebarLoader;
     public FXMLLoader hamburgerMenuLoader;
@@ -45,6 +47,7 @@ public class MainSceneController implements Initializable {
     @FXML public BorderPane borderPane;
     @FXML public VBox vbox;
     @FXML public Pane tempPane;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,6 +66,9 @@ public class MainSceneController implements Initializable {
         }
         borderPane.setTop(headerRoot);
         borderPane.setLeft(sidebarRoot);
+        Pane emptyRight = new Pane();
+        emptyRight.setPrefWidth(200);
+        borderPane.setRight(emptyRight);
         sidebar = sidebarRoot;
         borderPane.setCenter(calendarRoot);
 

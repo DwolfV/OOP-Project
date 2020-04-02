@@ -26,7 +26,31 @@ public class HeaderSceneController implements Initializable {
      */
     public void changeLeft() {
 
-        if (mainSceneController.borderPane.getLeft().equals(mainSceneController.hamburgerMenuRoot)) {
+        // If sidebar is null
+        if (mainSceneController.sidebar == null) {
+
+            if (mainSceneController.borderPane.getLeft() != null) {
+
+                Timeline timeline = new Timeline();
+                KeyValue key = new KeyValue(mainSceneController.hamburgerMenuRoot.translateXProperty(), -200, Interpolator.EASE_IN);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.1), key);
+                timeline.getKeyFrames().add(keyFrame);
+                timeline.setOnFinished(event -> {
+                    mainSceneController.borderPane.setLeft(null);
+                });
+                timeline.play();
+            } else {
+                mainSceneController.hamburgerMenuRoot.translateXProperty().set(-200);
+                mainSceneController.borderPane.setLeft(mainSceneController.hamburgerMenuRoot);
+
+                Timeline timeline = new Timeline();
+                KeyValue key = new KeyValue(mainSceneController.hamburgerMenuRoot.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.2), key);
+                timeline.getKeyFrames().setAll(keyFrame);
+                timeline.play();
+            }
+        } else if (mainSceneController.borderPane.getLeft().equals(mainSceneController.hamburgerMenuRoot)) {
+
             mainSceneController.hamburgerMenuRoot.translateXProperty().set(0);
 
             Timeline timeline = new Timeline();
@@ -43,10 +67,8 @@ public class HeaderSceneController implements Initializable {
                 KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.2), key1);
                 timeline1.getKeyFrames().setAll(keyFrame1);
                 timeline1.play();
-
             });
             timeline.play();
-
         } else {
             //Pull Menu in
             mainSceneController.sidebar.translateXProperty().set(0);

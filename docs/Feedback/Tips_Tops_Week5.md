@@ -19,9 +19,9 @@
 - **Tip:** I think giving tasks on the front-end still needs to improve like divide to small tasks, otherwise 1-2 peopel end up doing a lot.
 
 ###Bogdan
-- **Top:**
+- **Top:** Merge requests started to happen in a nice way
 
-- **Tip:** 
+- **Tip:** Need to get comunication on our team on point now that we need to change our approach because we can't meet face to face anymore.
 
 ###Iulia
 - **Top:** good communication between front end team and backend team, lots of meetings, the filters are done all the way up to the communication part 

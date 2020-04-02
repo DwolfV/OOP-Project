@@ -10,10 +10,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
 
@@ -35,7 +37,7 @@ public class RoomReservationCommunication {
      * @return the body of a get request to the server.
      * @throws Exception if communication with the server fails.
      */
-    public static List<RoomReservation> getRoomReservationsByUserId(long id) {
+    public static List<RoomReservation> getRoomReservationsByUserId(Long id) {
 
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/room_reservations/user/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
@@ -55,12 +57,11 @@ public class RoomReservationCommunication {
         // TODO handle exception
         try {
             roomReservations = mapper.readValue(response.body(),
-                new TypeReference<List<RoomReservation>>() {
+                new TypeReference<>() {
                 });
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return roomReservations;
     }
 
@@ -73,10 +74,25 @@ public class RoomReservationCommunication {
     public static void addRoomReservation(LocalDate date,
                                           LocalTime startTime,
                                           LocalTime endTime,
-                                          User user) {
+                                          Long roomId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
+
+        User user = new User();
+        user.setId(Authenticator.ID);
+        user.setUsername(Authenticator.USERNAME);
+
+        // TODO get rooms by id
+        Room room = null;
+        for (Room r : RoomCommunication.getRooms()) {
+            if (r.getId() == roomId) {
+                room = r;
+                break;
+            }
+        }
+
+
+        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
         String jsonRoomReservation = "";
         try {
             jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);
@@ -103,16 +119,33 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoomReservation(long id, LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
+    public static boolean updateRoomReservation(Long id, LocalDate date, LocalTime startTime, LocalTime endTime, Long roomId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user);
+
+        User user = new User();
+        user.setId(Authenticator.ID);
+        user.setUsername(Authenticator.USERNAME);
+
+        // TODO get rooms by id
+        Room room = null;
+        for (Room r : RoomCommunication.getRooms()) {
+            if (r.getId() == roomId) {
+                room = r;
+                break;
+            }
+        }
+
+
+        RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
+        newRoomReservation.setId(id);
         String jsonRoomReservation = "";
         try {
             jsonRoomReservation = mapper.writeValueAsString(newRoomReservation);
             System.out.println(jsonRoomReservation);
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonRoomReservation)).uri(URI.create(String.format("http://localhost:8080/room_reservations/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
@@ -122,10 +155,16 @@ public class RoomReservationCommunication {
         } catch (Exception e) {
             e.printStackTrace();
             //return "Communication with server failed";
+            return false;
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
         }
+        if (response.statusCode() != 201) {
+            System.out.println("Status: " + response.statusCode());
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -133,7 +172,7 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void removeRoomReservation(long id) {
+    public static void removeRoomReservation(Long id) {
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/room_reservations/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
@@ -152,7 +191,7 @@ public class RoomReservationCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static Map<LocalTime, LocalTime> getAllRoomReservationTimesPerRoomAndDate(long roomId, LocalDate date) {
+    public static Map<LocalTime, LocalTime> getAllRoomReservationTimesPerRoomAndDate(Long roomId, LocalDate date) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String jsonDate = "";
@@ -191,6 +230,44 @@ public class RoomReservationCommunication {
         }
 
         return unavailableTimes;
+    }
+
+    /**
+     * Gets the room reservations (without the user information) by a room id.
+     * @param roomId The room id by which the user can get the room reservations.
+     * @return A list of the room reservation of that room.
+     */
+    public static List<RoomReservation> getAllRoomReservationTimesPerRoom(Long roomId) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        HttpRequest request = HttpRequest.newBuilder().GET()
+            .uri(URI.create(String.format("http://localhost:8080/room_reservations_times/room/%s", roomId)))
+            .setHeader("Cookie", Authenticator.SESSION_COOKIE)
+            .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+            return new ArrayList<>();
+        }
+
+        List<RoomReservation> reservations = null;
+        try {
+            reservations = mapper.readValue(response.body(),
+                new TypeReference<>() {
+                });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return reservations;
     }
 }
 
