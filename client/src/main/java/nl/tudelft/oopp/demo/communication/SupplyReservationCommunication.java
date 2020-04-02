@@ -74,27 +74,30 @@ public class SupplyReservationCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addSupplyReservation(LocalDate date,
-                                            LocalTime startTime,
-                                            LocalTime endTime,
-                                            int amount,
+    public static String addSupplyReservation(LocalDate date,
+                                            Integer amount,
                                             long supplyId) {
+        if (amount == 0) { // user cannot get 0 items
+            return "The amount you want to reserve should be greater than 0.";
+        }
+        if (amount == null) { //the default amount is 1
+            amount = 1;
+        }
+        Supply supply = SupplyCommunication.getSupplyById(supplyId); // get the supply
+        int stock = supply.getStock(); //get the stock
+        if (stock < amount) { //check if there are enough items in stock
+            return "The requested amount is larger than the stock";
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-
+        //get the user
         User user = new User();
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
 
-        Supply supply = null;
-        for (Supply s : SupplyCommunication.getSupplies()) {
-            if (s.getId() == supplyId) {
-                supply = s;
-                break;
-            }
-        }
 
-        SupplyReservation supplyReservation = new SupplyReservation(date, startTime, endTime,  amount, supply, user);
+        SupplyReservation supplyReservation = new SupplyReservation(date, amount, supply, user);
         String jsonSupplyReservation = "";
 
         try {
@@ -104,10 +107,11 @@ public class SupplyReservationCommunication {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonSupplyReservation)).uri(URI.create("http://localhost:8080/supply_reservations")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonSupplyReservation)).uri(URI.create("http://localhost:8080/supply_reservations/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -116,8 +120,11 @@ public class SupplyReservationCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+        } else {
+            //update the stock for the supply
+            SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(), stock - amount);
         }
-
+        return "The item has been saved successfully";
     }
 
     /**
@@ -127,8 +134,6 @@ public class SupplyReservationCommunication {
      */
 
     public static void updateSupplyReservation(LocalDate date,
-                                               LocalTime startTime,
-                                               LocalTime endTime,
                                                int amount,
                                                long supplyId) {
         ObjectMapper mapper = new ObjectMapper();
@@ -146,7 +151,7 @@ public class SupplyReservationCommunication {
             }
         }
 
-        SupplyReservation supplyReservation = new SupplyReservation(date, startTime, endTime, amount, supply, user);
+        SupplyReservation supplyReservation = new SupplyReservation(date, amount, supply, user);
         String jsonSupplyReservation = "";
 
         try {
