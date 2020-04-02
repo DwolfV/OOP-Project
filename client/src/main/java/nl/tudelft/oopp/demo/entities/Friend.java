@@ -1,6 +1,4 @@
-package nl.tudelft.oopp.demo.helperclasses;
-
-import java.util.Objects;
+package nl.tudelft.oopp.demo.entities;
 
 public class Friend {
 

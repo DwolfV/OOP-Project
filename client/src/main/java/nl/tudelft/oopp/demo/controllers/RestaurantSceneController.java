@@ -18,8 +18,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Restaurant;
 
 public class RestaurantSceneController implements Initializable {
 

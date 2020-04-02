@@ -12,7 +12,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Supply;
+import nl.tudelft.oopp.demo.entities.Supply;
 
 public class SupplyCommunication {
 

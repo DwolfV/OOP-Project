@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
 import org.junit.jupiter.api.Test;
 

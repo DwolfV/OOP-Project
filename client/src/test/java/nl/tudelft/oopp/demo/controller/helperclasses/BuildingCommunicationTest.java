@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.entities.Building;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
-import org.mockserver.model.HttpStatusCode;
 
 public class BuildingCommunicationTest {
 

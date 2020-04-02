@@ -26,9 +26,9 @@ import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Supply;
-import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Supply;
+import nl.tudelft.oopp.demo.entities.SupplyReservation;
 import nl.tudelft.oopp.demo.helperclasses.SupplyToStringConverter;
 
 public class SupplySceneController implements Initializable {

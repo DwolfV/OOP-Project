@@ -9,8 +9,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Friend;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.Friend;
+import nl.tudelft.oopp.demo.entities.User;
 
 
 public class FriendCommunication {

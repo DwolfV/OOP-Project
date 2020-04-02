@@ -9,9 +9,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Invitation;
-import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.Invitation;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
 
 public class InvitationCommunication {
 

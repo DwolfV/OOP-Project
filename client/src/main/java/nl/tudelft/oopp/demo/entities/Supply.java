@@ -1,6 +1,4 @@
-package nl.tudelft.oopp.demo.helperclasses;
-
-import java.util.Set;
+package nl.tudelft.oopp.demo.entities;
 
 public class Supply {
 

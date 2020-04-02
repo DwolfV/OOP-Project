@@ -1,6 +1,7 @@
-package nl.tudelft.oopp.demo.helperclasses;
+package nl.tudelft.oopp.demo.entities;
 
 import java.time.LocalTime;
+import nl.tudelft.oopp.demo.entities.Building;
 
 public class Restaurant {
 

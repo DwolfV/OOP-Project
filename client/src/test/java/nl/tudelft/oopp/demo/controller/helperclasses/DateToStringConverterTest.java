@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.helperclasses.DateToStringConverter;
-import nl.tudelft.oopp.demo.helperclasses.Occasion;
+import nl.tudelft.oopp.demo.entities.Occasion;
 import org.junit.jupiter.api.Test;
 
 public class DateToStringConverterTest {

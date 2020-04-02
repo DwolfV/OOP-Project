@@ -11,7 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Dish;
+import nl.tudelft.oopp.demo.entities.Dish;
 
 public class DishCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
