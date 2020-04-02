@@ -6,8 +6,6 @@ import java.time.LocalTime;
 public class SupplyReservation {
 
     private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
     private long id;
     private int amount;
     private Supply supply;
@@ -20,22 +18,16 @@ public class SupplyReservation {
     /**
      * Creates a new instance of the SupplyReservation entity.
      * @param date - The date that corresponds to the reservation of a supply.
-     * @param startTime - Since when the reservation for the supply has been made.
-     * @param endTime - Until when the reservation for the supply is made.
      * @param amount - The amount of the supplies that are rented.
      * @param supply - The name of the supply that is being reserved.
      * @param user - The user that made the reservation
      */
 
     public SupplyReservation(LocalDate date,
-                             LocalTime startTime,
-                             LocalTime endTime,
                              int amount,
                              Supply supply,
                              User user) {
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.amount = amount;
         this.supply = supply;
         this.user = user;
@@ -53,15 +45,11 @@ public class SupplyReservation {
 
     public SupplyReservation(long id,
                              LocalDate date,
-                             LocalTime startTime,
-                             LocalTime endTime,
                              int amount,
                              Supply supply,
                              User user) {
         this.id = id;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.amount = amount;
         this.supply = supply;
         this.user = user;
@@ -81,22 +69,6 @@ public class SupplyReservation {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public int getAmount() {
