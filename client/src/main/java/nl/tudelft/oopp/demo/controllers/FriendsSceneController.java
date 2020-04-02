@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import com.jayway.jsonpath.internal.function.numeric.Max;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +42,13 @@ public class FriendsSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        HBox hoBoxAddFriend = new HBox();
+        VBox veBoxTpAndAdd = new VBox();
+
         Button addButton = new Button("Add a friend");
         TextField newFriendTextField = new TextField();
         newFriendTextField.setPromptText("username");
+
+        HBox hoBoxAddFriend = new HBox();
         hoBoxAddFriend.getChildren().addAll(addButton, newFriendTextField);
         hoBoxAddFriend.setAlignment(Pos.CENTER);
         hoBoxAddFriend.setSpacing(10);
@@ -57,8 +59,6 @@ public class FriendsSceneController implements Initializable {
         TitledPane[] tps = new TitledPane[friends.size()];
         List<Button> buttonsRemove = new ArrayList<>();
         List<Button> buttonsInvite = new ArrayList<>();
-
-        VBox veBoxTpAndAdd = new VBox();
 
         int c = 0;
 
@@ -77,8 +77,16 @@ public class FriendsSceneController implements Initializable {
             comboBoxReservedRooms.setItems(reservedRooms);
 
             String friendId = friends.get(i).getUsername();
+
+            // remove a friend
             removeFriendsButton.setOnAction(event -> {
-                FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME), UserCommunication.getByUsername(friendId));
+                FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
+                    UserCommunication.getByUsername(friendId));
+            });
+
+            // invite a friend to a reserved room
+            inviteFriendsButton.setOnAction(event -> {
+
             });
 
             HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);
@@ -95,10 +103,12 @@ public class FriendsSceneController implements Initializable {
             hoBoxUsernameAndRemove.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
                 + "-fx-border-radius: 5;" + "-fx-border-color: lightblue;");
+
             veBoxTpAndAdd.getChildren().add(hoBoxUsernameAndRemove);
             veBoxTpAndAdd.setPadding(new Insets(20,0,0,0));
         }
 
+        // add a friend
         addButton.setOnAction(event -> {
             String newFriendTextFieldText = newFriendTextField.getText();
 
