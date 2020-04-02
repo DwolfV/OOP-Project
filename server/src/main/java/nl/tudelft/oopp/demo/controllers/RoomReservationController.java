@@ -411,7 +411,7 @@ public class RoomReservationController {
         }
 
         // users should not be able to delete room reservations for previous days
-        if (reservationToDelete.getDate().compareTo(LocalDate.now()) < 0 || (LocalDate.now().equals(reservationToDelete.getDate()) && reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0)) {
+        if (reservationToDelete.getDate().plusDays(1).compareTo(LocalDate.now()) < 0 || (LocalDate.now().equals(reservationToDelete.getDate().plusDays(1)) && reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0)) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 

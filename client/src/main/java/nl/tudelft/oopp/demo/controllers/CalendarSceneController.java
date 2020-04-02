@@ -156,7 +156,7 @@ public class CalendarSceneController implements Initializable {
         List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
         for (RoomReservation reservation : reservations) {
             // if it is an old reservation, don't display it
-            if (reservation.getDate().compareTo(LocalDate.now()) < 0) {
+            if (reservation.getDate().plusDays(1).compareTo(LocalDate.now()) < 0) {
                 continue;
             }
             Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
@@ -180,7 +180,7 @@ public class CalendarSceneController implements Initializable {
             calendarUnavailableRoom.setStyle(style);
             for (RoomReservation reservation : RoomReservationCommunication.getAllRoomReservationTimesPerRoom(room.getId())) {
                 // if it is an old reservation, don't display it
-                if (reservation.getDate().compareTo(LocalDate.now()) < 0) {
+                if (reservation.getDate().plusDays(1).compareTo(LocalDate.now()) < 0) {
                     continue;
                 }
                 Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
