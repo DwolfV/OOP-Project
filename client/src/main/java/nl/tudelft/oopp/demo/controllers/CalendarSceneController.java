@@ -59,10 +59,11 @@ public class CalendarSceneController implements Initializable {
         calendarView.setShowAddCalendarButton(false);
 
         handlerRoomReservations = event -> {
-            System.out.println(flag);
+            System.out.println(flag + " " + event.isEntryRemoved() + " " + event.getCalendar());
             if (flag == 0 && (!event.getEntry().getStartDate().equals(previousDate)
                 || !event.getEntry().getStartTime().equals(previousStartTime)
-                || !event.getEntry().getEndTime().equals(previousEndTime))) {
+                || !event.getEntry().getEndTime().equals(previousEndTime))
+                && !event.isEntryRemoved()) {
                 flag = 1;
                 Entry entry = event.getEntry();
 
@@ -88,8 +89,7 @@ public class CalendarSceneController implements Initializable {
                     }
                 }
                 flag = 0;
-            }
-            else if (flag == 0 && event.isEntryRemoved() && event.getCalendar() == null) {
+            } else if (flag == 0 && event.isEntryRemoved() && event.getCalendar() == null) {
                 flag = 1;
                 RoomReservation reservationToRemove = (RoomReservation) event.getEntry().getUserObject();
                 RoomReservationCommunication.removeRoomReservation(reservationToRemove.getId());

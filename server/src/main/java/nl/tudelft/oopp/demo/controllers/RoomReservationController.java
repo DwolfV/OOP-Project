@@ -335,8 +335,8 @@ public class RoomReservationController {
         // if the user has reserved this room at some point during the week
         int weekOfNewReservation = newRoomReservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
         for (RoomReservation reservation : reservations.findByUserIdAndRoomId(newRoomReservation.getUser().getId(), newRoomReservation.getRoom().getId())){
-            int weekOfRes = reservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
-            if (weekOfNewReservation == weekOfRes && reservation.getId() != newRoomReservation.getId()) {
+            int weekOfRes = reservation.getDate().plusDays(1).get(WeekFields.ISO.weekOfWeekBasedYear());
+            if (weekOfNewReservation == weekOfRes && reservation.getId() != newRoomReservation.getId() && reservation.getDate().getYear() == newRoomReservation.getDate().getYear()) {
                 return true;
             }
         }
