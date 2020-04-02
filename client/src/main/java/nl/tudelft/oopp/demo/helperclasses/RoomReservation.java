@@ -113,7 +113,9 @@ public class RoomReservation {
                 + ", Date: " + date.toString();
     }
 
-    public String buildingString() {
-        return room.getBuilding().getName();
+    public String invitationString2() {
+        return room.getBuilding().getName()
+            + ", " + room.getName()
+            + ", " + date.toString();
     }
 }

@@ -86,12 +86,19 @@ public class FriendsSceneController implements Initializable {
             ComboBox<String> comboBoxReservedRooms = new ComboBox<>();
             comboBoxReservedRooms.setItems(reservedRoomsList1);
 
-            final List<String>[] temp = new List[]{new ArrayList<>()};
-            String delimiter = ",";
+            final String[] temp = new String[2];
+            String delimiter = ", ";
+            String secondDelimiter = ": ";
+            final String[] buildingAndRoom = new String[2];
             comboBoxReservedRooms.setOnAction(e -> {
-                temp[0] = Arrays.asList(comboBoxReservedRooms.getValue().trim().split(delimiter));
-                System.out.println(temp[0].get(0));
-                System.out.println(temp[0].get(1));
+                temp[0] = (comboBoxReservedRooms.getValue().trim().split(delimiter)[0]);
+                temp[1] = (comboBoxReservedRooms.getValue().trim().split(delimiter)[1]);
+
+                buildingAndRoom[0] = (temp[0].trim().split(secondDelimiter)[1]);
+                buildingAndRoom[1] = (temp[1].trim().split(secondDelimiter)[1]);
+
+                System.out.println(buildingAndRoom[0]);
+                System.out.println(buildingAndRoom[1]);
             });
 
             String friendId = friends.get(i).getUsername();
@@ -106,10 +113,8 @@ public class FriendsSceneController implements Initializable {
             inviteFriendsButton.setOnAction(event -> {
                 List<RoomReservation> reservedList = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
                 for (RoomReservation reservedRooms1: reservedList) {
-                    for (int n = 0; n < reservedList.size(); n++) {
-                        if (reservedRooms1.getRoom().getBuilding().getName().equals(temp[0].get(0)) && reservedRooms1.getRoom().getName().equals(temp[0].get(1))) {
+                    if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0]) && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])) {
                             InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
-                        }
                     }
                 }
             });
@@ -123,7 +128,7 @@ public class FriendsSceneController implements Initializable {
             comboBoxReservedRooms.setMinWidth(75);
 
             HBox hoBoxUsernameAndRemove = new HBox();
-            hoBoxUsernameAndRemove.setSpacing(50);
+            hoBoxUsernameAndRemove.setSpacing(150);
             hoBoxUsernameAndRemove.getChildren().addAll(friendsLabel, comboBoxReservedRooms, inviteFriendsButton, removeFriendsButton);
             hoBoxUsernameAndRemove.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
