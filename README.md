@@ -24,11 +24,17 @@ Therefore, we have developed a new application dedicated to reserving rooms arou
 <!-- - (please make sure the photos have the same size) --> 
 
 ## How to run it
+run ```./gradlew build``` in the directory of the project.
+    Then to start the server type
+    ```./gradlew bootRun```
+    To start the client type
+    ```./gradlew run```
+
 
 ## How to contribute to it
-1.Fork the repository
-2.Make your changes
-4.Push the code to your fork
-5.Submit a Pull request
+1. Fork the repository
+2. Make your changes
+4. Push the code to your fork
+5. Submit a Pull request
 
 ## Copyright / License (opt.)
