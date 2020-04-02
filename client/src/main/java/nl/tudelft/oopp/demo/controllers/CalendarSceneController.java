@@ -62,21 +62,14 @@ public class CalendarSceneController implements Initializable {
             System.out.println(flag);
             if (flag == 0 && (!event.getEntry().getStartDate().equals(previousDate)
                 || !event.getEntry().getStartTime().equals(previousStartTime)
-                || !event.getEntry().getEndTime().equals(previousEndTime))
-                && event.getCalendar().getName().equals("Room Reservations")) {
+                || !event.getEntry().getEndTime().equals(previousEndTime))) {
                 flag = 1;
                 Entry entry = event.getEntry();
 
                 previousDate = entry.getStartDate();
                 previousStartTime = entry.getStartTime();
                 previousEndTime = entry.getEndTime();
-
-                if (event.isEntryRemoved() && event.getCalendar() == null) {
-
-                    RoomReservation reservationToRemove = (RoomReservation) entry.getUserObject();
-                    RoomReservationCommunication.removeRoomReservation(reservationToRemove.getId());
-
-                } else if (event.getOldCalendar() == null && event.getEventType() == CalendarEvent.ENTRY_INTERVAL_CHANGED
+                if (event.getOldCalendar() == null && event.getEventType() == CalendarEvent.ENTRY_INTERVAL_CHANGED
                     && !(event.getOldInterval().equals(entry.getInterval()))) {
 
                     // if the user did not change the calendar of the room
@@ -94,6 +87,12 @@ public class CalendarSceneController implements Initializable {
                         flag = 0;
                     }
                 }
+                flag = 0;
+            }
+            else if (flag == 0 && event.isEntryRemoved() && event.getCalendar() == null) {
+                flag = 1;
+                RoomReservation reservationToRemove = (RoomReservation) event.getEntry().getUserObject();
+                RoomReservationCommunication.removeRoomReservation(reservationToRemove.getId());
                 flag = 0;
             }
         };

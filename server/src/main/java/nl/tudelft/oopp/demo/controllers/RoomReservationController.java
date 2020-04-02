@@ -1,8 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -326,6 +328,15 @@ public class RoomReservationController {
                 && endTime.compareTo(roomReservation.getEndTime()) <= 0;
             // if the user has already booked a room in that time period
             if (!((startTimeIsAfterReservedTime && endTimeIsAfterReservedTime) || (startTimeIsBeforeReservedTime && endTimeIsBeforeReservedTime))) {
+                return true;
+            }
+        }
+
+        // if the user has reserved this room at some point during the week
+        int weekOfNewReservation = newRoomReservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
+        for (RoomReservation reservation : reservations.findByUserIdAndRoomId(newRoomReservation.getUser().getId(), newRoomReservation.getRoom().getId())){
+            int weekOfRes = reservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
+            if (weekOfNewReservation == weekOfRes && reservation.getId() != newRoomReservation.getId()) {
                 return true;
             }
         }
