@@ -136,54 +136,63 @@ public class CalendarSceneController implements Initializable {
         // add new calendar for unavailable times
         CalendarSource calendarSource = new CalendarSource("Unavailable Rooms");
         calendarView.getCalendarSources().add(calendarSource);
-        init();
+        try {
+            init();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * This method is used to load and reload the state of the calendar view when the user switched to the calendar scene.
-     */
-    public void init() {
+//    List<RoomReservation> reservations;
+//    List<Room> allRooms;
+//    List<Event> events;
+
+
+    public void init() throws InterruptedException {
         //flagInitiallyPopulatingTheScene = 0;
         //calendarView.getCalendarSources().get(0).getCalendars().get(0).removeEntries();
 
         // will get the Default calendar
         //Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
-        // get the calendar for the room reservations
-        Calendar calendarRoomReservations = calendarView.getCalendarSources().get(0).getCalendars().get(1);
-        calendarRoomReservations.removeEventHandler(handlerRoomReservations);
-        calendarRoomReservations.clear();
-        calendarRoomReservations.addEventHandler(handlerRoomReservations);
-
-        List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
-        for (RoomReservation reservation : reservations) {
-            Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
-            Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
-            calendarEntry.setUserObject(reservation);
-            calendarRoomReservations.addEntry(calendarEntry);
-        }
-        // TODO move the calendarRoomReservation.addEventHandler here?
-
-        // load the new calendar for unavailable times
-        List<Room> allRooms = RoomCommunication.getRooms();
 
         CalendarSource calendarSource = calendarView.getCalendarSources().get(1);
 
         calendarSource.getCalendars().clear();
 
-        for (Room room : allRooms) {
-            Calendar calendarUnavailableRoom = new Calendar(room.getName());
-            calendarUnavailableRoom.setReadOnly(true);
-            Calendar.Style style = Calendar.Style.STYLE2;
-            calendarUnavailableRoom.setStyle(style);
-            for (RoomReservation reservation : RoomReservationCommunication.getAllRoomReservationTimesPerRoom(room.getId())) {
+        // load the new calendar for unavailable times
+        Thread loadUnavailableRooms = new Thread(()->{
+            List<Room> allRooms = RoomCommunication.getRooms();
+            for (Room room : allRooms) {
+                Calendar calendarUnavailableRoom = new Calendar(room.getName());
+                calendarUnavailableRoom.setReadOnly(true);
+                Calendar.Style style = Calendar.Style.STYLE2;
+                calendarUnavailableRoom.setStyle(style);
+                for (RoomReservation reservation : RoomReservationCommunication.getAllRoomReservationTimesPerRoom(room.getId())) {
+                    Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
+                    Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
+                    calendarEntry.setUserObject(reservation);
+                    calendarUnavailableRoom.addEntry(calendarEntry);
+                }
+                calendarSource.getCalendars().add(calendarUnavailableRoom);
+                calendarView.setCalendarVisibility(calendarUnavailableRoom, false);
+            }});
+
+        // get the calendar for the room reservations
+        Calendar calendarRoomReservations = calendarView.getCalendarSources().get(0).getCalendars().get(1);
+        calendarRoomReservations.removeEventHandler(handlerRoomReservations);
+        calendarRoomReservations.clear();
+
+        Thread loadReservations = new Thread(()-> {
+            List<RoomReservation> reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
+            for (RoomReservation reservation : reservations) {
                 Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
                 Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
                 calendarEntry.setUserObject(reservation);
-                calendarUnavailableRoom.addEntry(calendarEntry);
+                calendarRoomReservations.addEntry(calendarEntry);
             }
-            calendarSource.getCalendars().add(calendarUnavailableRoom);
-            calendarView.setCalendarVisibility(calendarUnavailableRoom, false);
-        }
+            calendarRoomReservations.addEventHandler(handlerRoomReservations);
+        });
+
 
         // get the default calendar and populate it with the custom events
         Calendar calendarCustomEvents = calendarView.getCalendarSources().get(0).getCalendars().get(0);
@@ -191,7 +200,10 @@ public class CalendarSceneController implements Initializable {
         // remove the entries and handler
         calendarCustomEvents.removeEventHandler(handlerEvents);
         calendarCustomEvents.clear();
-        for (Event event : EventCommunication.getEventsByUser(Authenticator.ID)) {
+
+        Thread loadEvents = new Thread(()->{
+        List<Event> events = EventCommunication.getEventsByUser(Authenticator.ID);
+        for (Event event : events) {
             Interval interval = new Interval(event.getDate().plusDays(1), event.getStartTime(), event.getDate().plusDays(1), event.getEndTime());
             Entry<Event> calendarEntry = new Entry<>(event.getName(), interval);
             calendarEntry.setId(String.valueOf(event.getId()));
@@ -200,7 +212,15 @@ public class CalendarSceneController implements Initializable {
         }
         // add the handler to deal with users adding/deleting rooms
         calendarCustomEvents.addEventHandler(handlerEvents);
+        });
 
+        loadUnavailableRooms.start();
+        loadEvents.start();
+        loadReservations.start();
+
+        loadEvents.join();
+        loadReservations.join();
+        loadUnavailableRooms.join();
         //flagInitiallyPopulatingTheScene = 1;
     }
 
@@ -208,3 +228,87 @@ public class CalendarSceneController implements Initializable {
         this.mainSceneController = mainSceneController;
     }
 }
+
+
+        /**
+         * This method is used to load and reload the state of the calendar view when the user switched to the calendar scene.
+         */
+//    public void init() throws InterruptedException {
+//        //flagInitiallyPopulatingTheScene = 0;
+//        //calendarView.getCalendarSources().get(0).getCalendars().get(0).removeEntries();
+//
+//        // will get the Default calendar
+//        //Calendar calendar = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+//        // get the calendar for the room reservations
+//        Calendar calendarRoomReservations = calendarView.getCalendarSources().get(0).getCalendars().get(1);
+//        calendarRoomReservations.removeEventHandler(handlerRoomReservations);
+//        calendarRoomReservations.clear();
+//        calendarRoomReservations.addEventHandler(handlerRoomReservations);
+//        Thread loadReservations = new Thread(()->{
+//            reservations = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
+//        });
+//        loadReservations.start();
+//        Thread loadRooms = new Thread(()->{
+//            // load the new calendar for unavailable times
+//            allRooms = RoomCommunication.getRooms();
+//        });
+//        loadRooms.start();
+//        Thread loadEvents = new Thread(()->{
+//            events = EventCommunication.getEventsByUser(Authenticator.ID);
+//        });
+//        loadEvents.start();
+//
+//        loadReservations.join();
+//        for (RoomReservation reservation : reservations) {
+//            Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
+//            Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
+//            calendarEntry.setUserObject(reservation);
+//            calendarRoomReservations.addEntry(calendarEntry);
+//        }
+//        // TODO move the calendarRoomReservation.addEventHandler here?
+//
+//
+//        CalendarSource calendarSource = calendarView.getCalendarSources().get(1);
+//
+//        calendarSource.getCalendars().clear();
+//
+//        loadRooms.join();
+//        for (Room room : allRooms) {
+//            Calendar calendarUnavailableRoom = new Calendar(room.getName());
+//            calendarUnavailableRoom.setReadOnly(true);
+//            Calendar.Style style = Calendar.Style.STYLE2;
+//            calendarUnavailableRoom.setStyle(style);
+//            for (RoomReservation reservation : RoomReservationCommunication.getAllRoomReservationTimesPerRoom(room.getId())) {
+//                Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
+//                Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName(), interval);
+//                calendarEntry.setUserObject(reservation);
+//                calendarUnavailableRoom.addEntry(calendarEntry);
+//            }
+//            calendarSource.getCalendars().add(calendarUnavailableRoom);
+//            calendarView.setCalendarVisibility(calendarUnavailableRoom, false);
+//        }
+//
+//        // get the default calendar and populate it with the custom events
+//        Calendar calendarCustomEvents = calendarView.getCalendarSources().get(0).getCalendars().get(0);
+//
+//        // remove the entries and handler
+//        calendarCustomEvents.removeEventHandler(handlerEvents);
+//        calendarCustomEvents.clear();
+//        loadEvents.join();
+//        for (Event event : events) {
+//            Interval interval = new Interval(event.getDate().plusDays(1), event.getStartTime(), event.getDate().plusDays(1), event.getEndTime());
+//            Entry<Event> calendarEntry = new Entry<>(event.getName(), interval);
+//            calendarEntry.setId(String.valueOf(event.getId()));
+//            calendarEntry.setUserObject(event);
+//            calendarCustomEvents.addEntry(calendarEntry);
+//        }
+//        // add the handler to deal with users adding/deleting rooms
+//        calendarCustomEvents.addEventHandler(handlerEvents);
+//
+//        //flagInitiallyPopulatingTheScene = 1;
+//    }
+//
+//    public void setController(MainSceneController mainSceneController) {
+//        this.mainSceneController = mainSceneController;
+//    }
+//}

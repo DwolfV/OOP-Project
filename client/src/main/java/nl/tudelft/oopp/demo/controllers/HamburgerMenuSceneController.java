@@ -87,7 +87,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * Open calendar page.
      * @param event mouse click
      */
-    public void openCalendar(MouseEvent event) {
+    public void openCalendar(MouseEvent event) throws InterruptedException {
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
