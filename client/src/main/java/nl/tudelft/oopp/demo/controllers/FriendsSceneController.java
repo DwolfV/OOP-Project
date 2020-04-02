@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.FriendCommunication;
+import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
@@ -56,6 +58,14 @@ public class FriendsSceneController implements Initializable {
         ObservableList<User> friends = FXCollections.observableList(FriendCommunication.getFriends(Authenticator.USERNAME));
         ObservableList<RoomReservation> reservedRooms = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID));
 
+        List<String> reservedRoomsList = new ArrayList<>();
+        for (int m = 0; m < reservedRooms.size(); m++) {
+            reservedRoomsList.add(reservedRooms.get(m).invitationString());
+        }
+        ObservableList<String> reservedRoomsList1 = FXCollections.observableArrayList(reservedRoomsList);
+        System.out.println(reservedRoomsList1);
+
+
         TitledPane[] tps = new TitledPane[friends.size()];
         List<Button> buttonsRemove = new ArrayList<>();
         List<Button> buttonsInvite = new ArrayList<>();
@@ -73,8 +83,16 @@ public class FriendsSceneController implements Initializable {
             Button removeFriendsButton = new Button("Remove");
             buttonsRemove.add(removeFriendsButton);
 
-            ComboBox<RoomReservation> comboBoxReservedRooms = new ComboBox<>();
-            comboBoxReservedRooms.setItems(reservedRooms);
+            ComboBox<String> comboBoxReservedRooms = new ComboBox<>();
+            comboBoxReservedRooms.setItems(reservedRoomsList1);
+
+            final List<String>[] temp = new List[]{new ArrayList<>()};
+            String delimiter = ",";
+            comboBoxReservedRooms.setOnAction(e -> {
+                temp[0] = Arrays.asList(comboBoxReservedRooms.getValue().trim().split(delimiter));
+                System.out.println(temp[0].get(0));
+                System.out.println(temp[0].get(1));
+            });
 
             String friendId = friends.get(i).getUsername();
 
@@ -86,7 +104,14 @@ public class FriendsSceneController implements Initializable {
 
             // invite a friend to a reserved room
             inviteFriendsButton.setOnAction(event -> {
-
+                List<RoomReservation> reservedList = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
+                for (RoomReservation reservedRooms1: reservedList) {
+                    for (int n = 0; n < reservedList.size(); n++) {
+                        if (reservedRooms1.getRoom().getBuilding().getName().equals(temp[0].get(0)) && reservedRooms1.getRoom().getName().equals(temp[0].get(1))) {
+                            InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
+                        }
+                    }
+                }
             });
 
             HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);

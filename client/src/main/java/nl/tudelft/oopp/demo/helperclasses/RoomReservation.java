@@ -109,7 +109,11 @@ public class RoomReservation {
      */
     public String invitationString() {
         return "Building: " + room.getBuilding().getName()
-                + "Room: " + room.getName()
-                + "Date: " + date.toString();
+                + ", Room: " + room.getName()
+                + ", Date: " + date.toString();
+    }
+
+    public String buildingString() {
+        return room.getBuilding().getName();
     }
 }
