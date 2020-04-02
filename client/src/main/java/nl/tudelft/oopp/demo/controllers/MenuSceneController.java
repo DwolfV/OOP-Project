@@ -24,8 +24,6 @@ public class MenuSceneController implements Initializable {
 
     public static TableView<Dish> tableView;
     private static Rectangle2D screenBounds;
-//    @FXML
-//    private Button Button;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -119,4 +117,5 @@ public class MenuSceneController implements Initializable {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return vbox;
     }
+
 }

@@ -19,12 +19,14 @@ public class HamburgerMenuSceneController implements Initializable {
     private RestaurantSceneController restaurantSceneController;
     private ReservationSceneController reservationSceneController;
     private AdminSceneController adminSceneController;
+    private OrderSceneController orderSceneController;
 
     private Parent reservationRoot;
     private Parent restaurantRoot;
     private Parent sidebarFilterRoot;
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
+    private Parent orderRoot;
 
     public FXMLLoader sidebarFilterLoader;
 
@@ -37,12 +39,16 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
+        FXMLLoader orderLoader = new FXMLLoader(getClass().getResource("/Scenes/orderScene.fxml"));
+
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
             sidebarRoot = sidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
             adminPanelRoot = adminPanelLoader.load();
+            orderRoot = orderLoader.load();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,6 +56,8 @@ public class HamburgerMenuSceneController implements Initializable {
         reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
         adminSceneController = adminPanelLoader.getController();
+
+        restaurantSceneController.setController(mainSceneController, this);
 
         reservationSceneController.setControllers(this);
         reservationSceneController.init();
@@ -75,6 +83,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openReservations(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(reservationRoot);
         mainSceneController.sidebar = (sidebarFilterRoot);
         headerSceneController.changeLeft();
@@ -85,6 +94,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openCalendar(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
         mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
@@ -97,6 +107,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openRestaurants(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(restaurantRoot);
         mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
@@ -107,8 +118,16 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openAdminPanel(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(adminPanelRoot);
         mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
+    }
+
+    /**
+     * Open Basket scene
+     */
+    public void openOrder(){
+        mainSceneController.borderPane.setRight(orderRoot);
     }
 }

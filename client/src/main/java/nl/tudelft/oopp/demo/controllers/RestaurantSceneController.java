@@ -32,6 +32,9 @@ public class RestaurantSceneController implements Initializable {
     @FXML private Pane pane;
     @FXML private HBox hbox;
 
+    private MainSceneController mainSceneController;
+    private HamburgerMenuSceneController hamburgerMenuSceneController;
+
     private static Rectangle2D screenBounds;
     public static List<Long> buttonRestaurant;
 
@@ -98,6 +101,7 @@ public class RestaurantSceneController implements Initializable {
                             VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
                             pane.getChildren().setAll(vbox);
                             ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
+                            hamburgerMenuSceneController.openOrder();
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -116,5 +120,10 @@ public class RestaurantSceneController implements Initializable {
         hbox.setPrefHeight(screenBounds.getHeight() - 200);
         ac.setPrefWidth(screenBounds.getWidth());
         pane.setPrefWidth(mainPaneWidth * 0.50);
+    }
+
+    public void setController(MainSceneController mainSceneController, HamburgerMenuSceneController hamburgerMenuSceneController){
+        this.mainSceneController = mainSceneController;
+        this.hamburgerMenuSceneController = hamburgerMenuSceneController;
     }
 }
