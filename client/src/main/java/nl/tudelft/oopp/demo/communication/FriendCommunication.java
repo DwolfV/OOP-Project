@@ -60,11 +60,11 @@ public class FriendCommunication {
      * @param user2 - the other user that is part of the friendship system
      */
     public static String addFriendship(User user1, User user2) {
-        if ( user1 == null || user2 == null || user1.getUsername() == null || user2.getUsername() == null
+        if (user1 == null || user2 == null || user1.getUsername() == null || user2.getUsername() == null
             || user1.getUsername() == user2.getUsername()) {
             System.out.println(user1);
             System.out.println(user2);
-           return "Invalid friend request.";
+            return "Invalid friend request.";
         }
 
         ObjectMapper mapper = new ObjectMapper();
