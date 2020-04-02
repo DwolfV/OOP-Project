@@ -9,10 +9,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
@@ -36,6 +42,7 @@ public class RestaurantSceneController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        screenBounds = Screen.getPrimary().getBounds();
         ObservableList<Building> buildingData = FXCollections.observableList(BuildingCommunication.getBuildings());
         ObservableList<Restaurant> restaurants = FXCollections.observableList(RestaurantCommunication.getRestaurants());
 
@@ -90,6 +97,7 @@ public class RestaurantSceneController implements Initializable {
                             System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
                             VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
                             pane.getChildren().setAll(vbox);
+                            ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -102,14 +110,11 @@ public class RestaurantSceneController implements Initializable {
             }
         }
         MenuSceneController.loadMenu(pane, -1);
-        screenBounds = Screen.getPrimary().getBounds();
-        double mainPaneWidth = screenBounds.getWidth()-400;
-        //TableView tableView = MenuSceneController.tableView;
-        //tableView.setPrefWidth(mainPaneWidth*0.50);
+        double mainPaneWidth = screenBounds.getWidth() - 400;
         mainPane.setPrefWidth(mainPaneWidth);
         hbox.setPrefWidth(mainPaneWidth);
-        hbox.setPrefHeight(screenBounds.getHeight()-200);
-        ac.setPrefWidth(mainPaneWidth*0.50);
-        pane.setPrefWidth(mainPaneWidth*0.50);
+        hbox.setPrefHeight(screenBounds.getHeight() - 200);
+        ac.setPrefWidth(screenBounds.getWidth());
+        pane.setPrefWidth(mainPaneWidth * 0.50);
     }
 }

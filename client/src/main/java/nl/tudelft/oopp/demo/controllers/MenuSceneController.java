@@ -1,11 +1,12 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.beans.property.ReadOnlyStringWrapper;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -16,18 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.util.converter.FloatStringConverter;
-import nl.tudelft.oopp.demo.communication.DishCommunication;
-import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantDishCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Dish;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
-import nl.tudelft.oopp.demo.helperclasses.RestaurantDish;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class MenuSceneController implements Initializable {
 
@@ -38,6 +29,12 @@ public class MenuSceneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * Load the menu in a table.
+     * @param pane Pane it should be loaded into
+     * @param restaurantId Id of the restaurant to get the menu from
+     * @return A VBox with a table inside
+     */
     public static VBox loadMenu(Pane pane, long restaurantId) {
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
@@ -47,15 +44,15 @@ public class MenuSceneController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         nameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
+            (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setName(t.getNewValue()));
         // Description Column
         TableColumn<Dish, String> descCol = new TableColumn<>();
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         descCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setDescription(t.getNewValue()));
+            (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setDescription(t.getNewValue()));
         // Price Column
         TableColumn<Dish, Float> priceCol = new TableColumn<>("price");
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -82,8 +79,8 @@ public class MenuSceneController implements Initializable {
         VBox vbox = new VBox();
         vbox.getChildren().addAll(tableView);
         screenBounds = Screen.getPrimary().getBounds();
-        tableView.setPrefWidth((screenBounds.getWidth()-400)/2);
-        tableView.setPrefHeight(screenBounds.getHeight()-200);
+        tableView.setPrefWidth((screenBounds.getWidth() - 400) / 2);
+        tableView.setPrefHeight(screenBounds.getHeight() - 200);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return vbox;
     }

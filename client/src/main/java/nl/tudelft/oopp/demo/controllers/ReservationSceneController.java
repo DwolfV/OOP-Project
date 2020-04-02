@@ -199,11 +199,8 @@ public class ReservationSceneController implements Initializable {
             VBox box = new VBox(ac);
             borderPane.setCenter(box);
             screenBounds = Screen.getPrimary().getBounds();
-            borderPane.setPrefWidth(screenBounds.getWidth()-400);
-            //rootScene.setCenter(bPane);
-
+            borderPane.setPrefWidth(screenBounds.getWidth() - 400);
         }
-
     }
 
     public void setControllers(HamburgerMenuSceneController hamburgerMenuSceneController) {
