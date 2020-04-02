@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class SupplySceneController implements Initializable {
 
     private static TableView<SupplyReservation> tableReservedSupplies;
+    private static VBox veBoxDeleteAndTable;
     @FXML
     private Accordion ac = new Accordion();
     @FXML
@@ -36,6 +37,11 @@ public class SupplySceneController implements Initializable {
      */
     @Override
     public void initialize (URL location, ResourceBundle resources) {
+        loadReservedSupply();
+        loadSuppliesAccordion();
+    }
+
+    public void loadReservedSupply() {
         //Reset TableView tableReservedSupplies
         tableReservedSupplies = new TableView<>();
         tableReservedSupplies.getColumns().clear();
@@ -67,9 +73,6 @@ public class SupplySceneController implements Initializable {
         tableReservedSupplies.setPrefHeight(200);
         tableReservedSupplies.setPlaceholder(new Label("Currently you have made no supply reservations"));
 
-        ObservableList<Building> buildings= FXCollections.observableList(BuildingCommunication.getBuildings());
-        ObservableList<Supply> supplies = FXCollections.observableList(SupplyCommunication.getSupplies());
-
         Button removeReservedSupply = new Button("Remove Selected");
 
         // a method for the remove button
@@ -82,10 +85,15 @@ public class SupplySceneController implements Initializable {
             SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
         });
 
-        VBox veBoxDeleteAndTable = new VBox();
+        veBoxDeleteAndTable = new VBox();
         veBoxDeleteAndTable.getChildren().addAll(tableReservedSupplies, removeReservedSupply);
         veBoxDeleteAndTable.setPrefWidth(400);
         veBoxDeleteAndTable.setPadding(new Insets(0,300,10,0));
+    }
+
+    public void loadSuppliesAccordion() {
+        ObservableList<Building> buildings= FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Supply> supplies = FXCollections.observableList(SupplyCommunication.getSupplies());
 
         TitledPane[] tps = new TitledPane[buildings.size()];
         List<Button> buttons = new ArrayList<>();
@@ -124,28 +132,23 @@ public class SupplySceneController implements Initializable {
                     textFieldItem.setPromptText("quantity");
                     textFields.add(textFieldItem);
 
-                    // stripping non-numeric from text
-//                    textFieldItem.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
-//                        if (!newValue.matches("\\d*")) {
-//                            textFieldItem.setText(newValue.replaceAll("[^\\d]", ""));
-//                        }
-//                    });
-
-                    Button buttonItem = new Button("reserve");
-                    buttons.add(buttonItem);
+                    Button reserveSupplyButton = new Button("reserve");
+                    buttons.add(reserveSupplyButton);
 
                     long supplyID = showSupplies.get(j).getId();
 
-                    buttonItem.setOnAction(e -> {
+                    reserveSupplyButton.setOnAction(e -> {
                         LocalDate today = LocalDate.now();
                         int amount = Integer.parseInt(textFieldItem.getText());
 
                         SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
 
                         textFieldItem.setText(null);
+
+                        loadReservedSupply();
                     });
 
-                    horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, buttonItem);
+                    horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, reserveSupplyButton);
                     horizBox.setSpacing(150);
                     horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
                         + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
@@ -164,4 +167,5 @@ public class SupplySceneController implements Initializable {
             borderPane.setPadding(new Insets(30, 5, 5, 10));
         }
     }
+
 }
