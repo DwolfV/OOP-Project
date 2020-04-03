@@ -2,10 +2,15 @@ package nl.tudelft.oopp.demo.entities;
 
 public class Dish {
 
+    private long id;
     String name;
     String description;
     String type;
     float price;
+
+    public Dish() {
+
+    }
 
     /**
      * Create a new Dish instance.
@@ -21,6 +26,14 @@ public class Dish {
         this.description = description;
         this.type = type;
         this.price = price;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import nl.tudelft.oopp.demo.entities.Occasion;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.OccasionRepository;
+import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class RoomReservationController {
 
     @Autowired
     BuildingRepository buildings;
+
+    @Autowired
+    RoomRepository rooms;
 
     @Autowired
     OccasionRepository occasionRepository;
@@ -178,7 +183,7 @@ public class RoomReservationController {
         LocalTime endTime = newRoomReservation.getEndTime();
 
         // get the building from the room
-        Building building = buildings.findById(newRoomReservation.getRoom().getBuilding().getId()).get();
+        Building building = buildings.findById(rooms.findById(newRoomReservation.getRoom().getId()).get().getBuilding().getId()).get();
 
         List<Occasion> occasions = occasionRepository.findByBuildingIdAndDate(building.getId(), newRoomReservation.getDate().plusDays(1));
         LocalTime buildingOpenTime = null;
@@ -329,6 +334,15 @@ public class RoomReservationController {
                 return true;
             }
         }
+
+        // if the user has reserved this room at some point during the week
+        int weekOfNewReservation = newRoomReservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
+        for (RoomReservation reservation : reservations.findByUserIdAndRoomId(newRoomReservation.getUser().getId(), newRoomReservation.getRoom().getId())) {
+            int weekOfRes = reservation.getDate().plusDays(1).get(WeekFields.ISO.weekOfWeekBasedYear());
+            if (weekOfNewReservation == weekOfRes && reservation.getId() != newRoomReservation.getId() && reservation.getDate().getYear() == newRoomReservation.getDate().getYear()) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -363,6 +377,13 @@ public class RoomReservationController {
                     return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
                 }
 
+                // users should not be able to delete room reservations for previous days
+                if (newRoomReservation.getDate().compareTo(LocalDate.now()) < 0
+                    || (LocalDate.now().equals(newRoomReservation.getDate())
+                    && newRoomReservation.getStartTime().compareTo(LocalTime.now()) < 0)) {
+                    return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
+                }
+
                 roomReservation.setUser(newRoomReservation.getUser());
                 roomReservation.setRoom(newRoomReservation.getRoom());
                 roomReservation.setDate(newRoomReservation.getDate());
@@ -393,6 +414,13 @@ public class RoomReservationController {
 
         if (!reservationToDelete.getUser().getUsername().equals(authentication.getName())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // users should not be able to delete room reservations for previous days
+        if (reservationToDelete.getDate().plusDays(1).compareTo(LocalDate.now()) < 0
+            || (LocalDate.now().equals(reservationToDelete.getDate().plusDays(1))
+            && reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0)) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         reservations.deleteById(roomReservationId);

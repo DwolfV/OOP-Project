@@ -4,9 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReservationSceneController">
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReservationSceneController" stylesheets="@/Styles/mainstyle.css">
+
    <children>
-      <BorderPane fx:id="borderPane"  prefWidth="1080.0" />
+      <BorderPane fx:id="borderPane" prefWidth="1200.0" />
    </children>
 
-</AnchorPane>
+</Pane>

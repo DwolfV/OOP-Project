@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +54,7 @@ public class Item {
         this.name = name;
     }
 
+    @JsonIgnore
     public List<Equipment> getEquipment() {
         return equipment;
     }

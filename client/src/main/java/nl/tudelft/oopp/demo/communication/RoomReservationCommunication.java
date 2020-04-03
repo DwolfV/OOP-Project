@@ -82,15 +82,8 @@ public class RoomReservationCommunication {
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
 
-        // TODO get rooms by id
-        Room room = null;
-        for (Room r : RoomCommunication.getRooms()) {
-            if (r.getId() == roomId) {
-                room = r;
-                break;
-            }
-        }
-
+        Room room = new Room();
+        room.setId(roomId);
 
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
         String jsonRoomReservation = "";
@@ -127,15 +120,8 @@ public class RoomReservationCommunication {
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
 
-        // TODO get rooms by id
-        Room room = null;
-        for (Room r : RoomCommunication.getRooms()) {
-            if (r.getId() == roomId) {
-                room = r;
-                break;
-            }
-        }
-
+        Room room = new Room();
+        room.setId(roomId);
 
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
         newRoomReservation.setId(id);

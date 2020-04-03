@@ -101,4 +101,15 @@ public class RoomReservation {
             + ", user=" + user
             + '}';
     }
+
+    /**
+     * Human friendly string.
+     *
+     * @return string for friend invitation.
+     */
+    public String invitationString() {
+        return "Building: " + room.getBuilding().getName()
+                + ", Room: " + room.getName()
+                + ", Date: " + date.toString();
+    }
 }

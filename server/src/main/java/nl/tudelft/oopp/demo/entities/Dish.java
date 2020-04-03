@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -52,7 +54,6 @@ public class Dish {
 
 
     public Dish(String name, String description, String type, float price) {
-        this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -99,6 +100,7 @@ public class Dish {
         this.price = price;
     }
 
+    @JsonIgnore
     public Set<RestaurantDish> getRestaurantDishes() {
         return restaurantDishes;
     }

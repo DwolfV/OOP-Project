@@ -5,9 +5,9 @@ $d-blue: #336699;
 $td-blue: #4F88C1;
 $d-grey: #878787;
 $b-blue: #66CCFF;
-$d-grey: #333333;
-$l-grey: #CCCCCC;
-$el-grey: #EEEEEE;
+$d-grey: #555555;
+$l-grey: #BBBBBB;
+$el-grey: #F5F5F5;
 
 // Panes and Faces
 .primary-pane {
@@ -20,6 +20,15 @@ $el-grey: #EEEEEE;
 
 .header-pane {
     -fx-background-color: $d-blue;
+}
+
+.empty-side-pane {
+    -fx-background-color: transparent;
+}
+
+.filter-vbox {
+    -fx-background-color: $l-blue;
+    -fx-padding: 10;
 }
 
 // Buttons
@@ -35,8 +44,7 @@ $el-grey: #EEEEEE;
 }
 
 .menu-button {
-    -fx-background-color: linear-gradient(to right, $d-blue, opacify($td-blue, 0.5));
-    -fx-background-color: linear-gradient(0deg, $d-blue 0%, opacify($td-blue, 0.5) 50%, $d-blue 100%);
+    -fx-background-color: $l-blue;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
     -fx-background-radius: 0;
     -fx-border-width: 2 0 0 0;
@@ -44,66 +52,66 @@ $el-grey: #EEEEEE;
 }
 
 .hamburger-button {
-    -fx-background-color: linear-gradient(to top, $l-blue, transparent);
+    -fx-background-color: $d-blue;
     -fx-background-radius: 0;
 }
 
 .hamburger-button:hover {
-    -fx-background-color: linear-gradient(to top, $b-blue, transparent);
+    -fx-background-color: $b-blue;
 }
 
-/*
-// ADMIN
-.admin-main-pane {
-    -fx-border-width: 0 2 0 2;
-    -fx-border-color: $l-grey;
-    -fx-background-color: $el-grey;
-}
-
-.scroll-pane-admin {
-    -fx-border-width: 0 2 0 2;
-    -fx-border-color: $l-grey;
-    -fx-background-color: $el-grey;
-}
-
-.admin-center {
-    -fx-padding: 3.0em;
-}
-
-.admin-right {
-    -fx-background-color: $l-grey;
-    -fx-pref-width: 250;
-    -fx-padding: 3.0em;
-}
-
-.admin-bottom {
-    -fx-background-color: $l-grey;
-    -fx-padding: 1.0em 1.0em 4.0em 3.0em;
-    -fx-spacing: 10;
-}
-
-.admin-border-pane {
-    -fx-background-color: $l-grey;
-}
-
-.admin-pane-button {
-    -fx-pref-width: 180;
-    -fx-pref-height: 40;
+.search-button {
+    -fx-background-color: $d-blue;
     -fx-background-radius: 0;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
 }
 
-// The table inside the titled panes in admin scene
-.table-view {
+.restaurant-menu {
+    -fx-background-color: $el-grey;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: $d-grey;
+
+}
+
+.restaurant-menu .column-header {
+    -fx-text-fill: black;
     -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: $d-grey;
+    -fx-padding: 10;
+}
+
+.restaurant-menu .column-header-background .label {
+    -fx-text-fill: black;
+}
+
+.restaurant-menu-row-cell {
+    -fx-padding: 3;
+    -fx-background-color: $el-grey;
+}
+
+.price-col {
+    -fx-alignment: center-right;
+}
+
+.price-col .label {
+    -fx-alignment: center-right;
+    -fx-padding: 5;
+}
+
+//The table inside the titled panes in admin scene
+.table-view {
+    -fx-background-color: $el-grey;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-padding: 3.0em 0.0em 0.0em 3.0em;
     -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
-    -fx-background-color: $l-blue;
+    -fx-background-color: $l-grey;
     -fx-border-width: 0 1 0 1;
-    -fx-border-color: $l-grey;
+    -fx-border-color: $d-grey;
 }
 
 .table-view .column-header:hover {
@@ -133,18 +141,19 @@ $el-grey: #EEEEEE;
 // The titled panes inside the admin
 .titled-pane > .content {
     -fx-text-fill: white;
-    -fx-background-color: $l-blue;
+    -fx-background-color: $el-grey;
 }
 
 .titled-pane {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .titled-pane > .title{
-    -fx-background-color: $d-blue;
-    -fx-border-width: 2 0 0 0;
-    -fx-border-color: $l-grey;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: $d-grey;
+    //-fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
     -fx-padding: 10px;
     -fx-text-fill: white;
 }
@@ -156,4 +165,3 @@ $el-grey: #EEEEEE;
 .titled-pane > .title:selected {
     -fx-background-color: $b-blue;
 }
-*/

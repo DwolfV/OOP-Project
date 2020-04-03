@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
+
     private Long id;
     private String name;
-    private List<Equipment> equipmentList;
+    private List<Equipment> equipment;
 
     public Item() {
 
@@ -16,9 +17,9 @@ public class Item {
         this.name = name;
     }
 
-    public Item(String name, ArrayList<Equipment> equipmentList) {
+    public Item(String name, ArrayList<Equipment> equipment) {
         this.name = name;
-        this.equipmentList = equipmentList;
+        this.equipment = equipment;
     }
 
     public Long getId() {
@@ -38,11 +39,11 @@ public class Item {
     }
 
     public List<Equipment> getEquipmentList() {
-        return equipmentList;
+        return equipment;
     }
 
-    public void setEquipmentList(List<Equipment> equipmentList) {
-        this.equipmentList = equipmentList;
+    public void setEquipmentList(List<Equipment> equipment) {
+        this.equipment = equipment;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class Item {
         return "Item{"
                 + "id=" + id
                 + ", name='" + name + '\''
-                + ", equipmentList=" + equipmentList
+                + ", equipmentList=" + equipment
                 + '}';
     }
 }

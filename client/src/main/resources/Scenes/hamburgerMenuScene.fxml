@@ -3,15 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="150.0" styleClass="secondary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HamburgerMenuSceneController">
+<AnchorPane prefHeight="400.0" prefWidth="200.0" styleClass="empty-side-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HamburgerMenuSceneController">
    <children>
       <VBox fx:id="vBox" prefHeight="400.0" prefWidth="200.0">
          <children>
              <Button mnemonicParsing="false" onMouseClicked="#openCalendar" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Home" />
              <Button mnemonicParsing="false" onMouseClicked="#openReservations" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Reservations" />
              <Button mnemonicParsing="false" onMouseClicked="#openRestaurants" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Restaurants" />
+             <Button mnemonicParsing="false" onMouseClicked="#openFriends" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Friends" />
              <Button mnemonicParsing="false" onMouseClicked="#openSupplies" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Supplies" />
-             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Friends" />
              <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Settings" />
 
              <!-- Must be last Button -->
