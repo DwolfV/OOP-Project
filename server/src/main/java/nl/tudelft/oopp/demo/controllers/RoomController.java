@@ -143,7 +143,7 @@ public class RoomController {
      * @return the new room that is updated {@link Room}.
      */
     @PutMapping("rooms/{room_id}")
-    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable long roomId, UriComponentsBuilder b) {
+    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable(value="room_id") long roomId, UriComponentsBuilder b) {
 
         UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(roomId);
 
@@ -168,7 +168,7 @@ public class RoomController {
      * @param roomId Unique identifier of the room that is to be deleted. {@link Room}
      */
     @DeleteMapping("rooms/{room_id}")
-    public ResponseEntity<?> deleteRoom(@PathVariable long roomId) {
+    public ResponseEntity<?> deleteRoom(@PathVariable(value = "room_id") long roomId) {
         rooms.deleteById(roomId);
 
         return ResponseEntity.noContent().build();
