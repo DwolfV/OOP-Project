@@ -48,6 +48,9 @@ public class FriendsSceneController implements Initializable {
         friendList();
     }
 
+    /**
+     * The method is used to set to add friends to the list.
+     */
     public void addFriends() {
         Button addButton = new Button("Add a friend");
         TextField newFriendTextField = new TextField();
@@ -71,7 +74,9 @@ public class FriendsSceneController implements Initializable {
         });
     }
 
-
+    /**
+     * The method is used to set up the friends list for the user.
+     */
     public void friendList() {
         VBox veBoxTpAndAdd = new VBox();
 
