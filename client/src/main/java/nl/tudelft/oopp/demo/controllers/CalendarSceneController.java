@@ -18,9 +18,11 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.EventCommunication;
+import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Event;
+import nl.tudelft.oopp.demo.helperclasses.Invitation;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 
@@ -29,8 +31,6 @@ public class CalendarSceneController implements Initializable {
     private MainSceneController mainSceneController;
     // this flag is used to prevent an infinite loop of events
     private int flag = 0;
-    // this flag is used to prevent calling the *addEntry* function when the calendar view is populated
-    //private int flagInitiallyPopulatingTheScene = 0;
     private LocalDate previousDate;
     private LocalTime previousStartTime;
     private LocalTime previousEndTime;
@@ -135,6 +135,13 @@ public class CalendarSceneController implements Initializable {
         // add new calendar for unavailable times
         CalendarSource calendarSource = new CalendarSource("Unavailable Rooms");
         calendarView.getCalendarSources().add(calendarSource);
+
+        // create a new calendar for Invitations
+        Calendar invitations = new Calendar("Invitations");
+        invitations.setStyle(Calendar.Style.STYLE4);
+        invitations.setReadOnly(true);
+        calendarView.getCalendarSources().get(0).getCalendars().add(invitations);
+
         init();
     }
 
@@ -142,7 +149,6 @@ public class CalendarSceneController implements Initializable {
      * This method is used to load and reload the state of the calendar view when the user switched to the calendar scene.
      */
     public void init() {
-        //flagInitiallyPopulatingTheScene = 0;
         //calendarView.getCalendarSources().get(0).getCalendars().get(0).removeEntries();
 
         // will get the Default calendar
@@ -208,7 +214,20 @@ public class CalendarSceneController implements Initializable {
         // add the handler to deal with users adding/deleting rooms
         calendarCustomEvents.addEventHandler(handlerEvents);
 
-        //flagInitiallyPopulatingTheScene = 1;
+        // get the invitations calendar from the view
+        Calendar calendarInvitations = calendarView.getCalendarSources().get(0).getCalendars().get(2);
+
+        // clear the calendar when refreshing
+        calendarInvitations.clear();
+        for (RoomReservation reservation : InvitationCommunication.getInvitations(Authenticator.USERNAME)) {
+            // don't display invitations from before today
+            if (reservation.getDate().plusDays(1).compareTo(LocalDate.now()) < 0) {
+                continue;
+            }
+            Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
+            Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName() + " with " + reservation.getUser().getUsername(), interval);
+            calendarInvitations.addEntry(calendarEntry);
+        }
     }
 
     public void setController(MainSceneController mainSceneController) {

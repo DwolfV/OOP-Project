@@ -82,7 +82,6 @@ public class RoomReservationCommunication {
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
 
-        // TODO get rooms by id
         Room room = new Room();
         room.setId(roomId);
 
@@ -121,10 +120,8 @@ public class RoomReservationCommunication {
         user.setId(Authenticator.ID);
         user.setUsername(Authenticator.USERNAME);
 
-        // TODO get rooms by id
         Room room = new Room();
         room.setId(roomId);
-
 
         RoomReservation newRoomReservation = new RoomReservation(date, startTime, endTime, user, room);
         newRoomReservation.setId(id);
