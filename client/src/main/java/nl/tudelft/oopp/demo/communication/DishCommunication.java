@@ -5,14 +5,16 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.tudelft.oopp.demo.entities.Dish;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+
+import nl.tudelft.oopp.demo.entities.Dish;
+
+
 
 public class DishCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
