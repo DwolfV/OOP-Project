@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import nl.tudelft.oopp.demo.helperclasses.Dish;
 
@@ -24,7 +25,7 @@ public class DishCommunication {
      */
 
     public static List<Dish> getDishes() {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/building")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/dish")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -34,6 +35,7 @@ public class DishCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return new ArrayList<>();
         }
 
         ObjectMapper mapper = new ObjectMapper();
@@ -73,6 +75,7 @@ public class DishCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return null;
         }
 
         ObjectMapper mapper = new ObjectMapper();
