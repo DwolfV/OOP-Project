@@ -39,7 +39,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
                 .antMatchers(HttpMethod.GET, "/building/**", "/equipment/**", "/holidays/**",
                         "/openTimes/**", "/restaurant/**", "/rooms/**",
-                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/occasion/**")
+                        "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/occasion/**", "/dish/**", "/restaurant_dish/**")
                         .hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
