@@ -30,6 +30,7 @@ import nl.tudelft.oopp.demo.helperclasses.User;
 
 public class FriendsSceneController implements Initializable {
 
+    private static HBox hoBoxAddFriend;
     @FXML
     private BorderPane borderPane;
 
@@ -43,17 +44,36 @@ public class FriendsSceneController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        addFriends();
+        friendList();
+    }
 
-        VBox veBoxTpAndAdd = new VBox();
-
+    public void addFriends() {
         Button addButton = new Button("Add a friend");
         TextField newFriendTextField = new TextField();
         newFriendTextField.setPromptText("username");
 
-        HBox hoBoxAddFriend = new HBox();
+        hoBoxAddFriend = new HBox();
         hoBoxAddFriend.getChildren().addAll(addButton, newFriendTextField);
         hoBoxAddFriend.setAlignment(Pos.CENTER);
         hoBoxAddFriend.setSpacing(10);
+
+        // add a friend
+        addButton.setOnAction(event -> {
+            String newFriendTextFieldText = newFriendTextField.getText();
+
+            System.out.println(FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
+                UserCommunication.getByUsername(newFriendTextFieldText)));
+
+            newFriendTextField.setText(null);
+
+            friendList();
+        });
+    }
+
+
+    public void friendList() {
+        VBox veBoxTpAndAdd = new VBox();
 
         ObservableList<User> friends = FXCollections.observableList(FriendCommunication.getFriends(Authenticator.USERNAME));
         ObservableList<RoomReservation> reservedRooms = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID));
@@ -106,6 +126,7 @@ public class FriendsSceneController implements Initializable {
             removeFriendsButton.setOnAction(event -> {
                 FriendCommunication.removeFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
                     UserCommunication.getByUsername(friendId));
+                friendList();
             });
 
             // invite a friend to a reserved room
@@ -113,8 +134,8 @@ public class FriendsSceneController implements Initializable {
                 List<RoomReservation> reservedList = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
                 for (RoomReservation reservedRooms1: reservedList) {
                     if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0])
-                            && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
-                            && reservedRooms1.getDate().toString().equals(buildingAndRoom[2])) {
+                        && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
+                        && reservedRooms1.getDate().toString().equals(buildingAndRoom[2])) {
                         InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
                         break;
                     }
@@ -139,17 +160,6 @@ public class FriendsSceneController implements Initializable {
             veBoxTpAndAdd.getChildren().add(hoBoxUsernameAndRemove);
             veBoxTpAndAdd.setPadding(new Insets(20,0,0,0));
         }
-
-        // add a friend
-        addButton.setOnAction(event -> {
-            String newFriendTextFieldText = newFriendTextField.getText();
-
-            System.out.println(FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
-                UserCommunication.getByUsername(newFriendTextFieldText)));
-
-            newFriendTextField.setText(null);
-        });
-
         borderPane.setCenter(hoBoxAddFriend);
         borderPane.setBottom(veBoxTpAndAdd);
         borderPane.setPadding(new Insets(30, 5, 5, 10));
