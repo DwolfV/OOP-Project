@@ -11,8 +11,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
     List<Invitation> findByRoomReservationId(long id);
 
-    @Query("select i from Invitation i " +
-            "where i.guest.username = ?1")
+    @Query("select i from Invitation i "
+        + "where i.guest.username = ?1")
     List<Invitation> findByGuestUsername(String name);
 
     Invitation findByRoomReservationAndGuest(RoomReservation roomReservation, User user);
