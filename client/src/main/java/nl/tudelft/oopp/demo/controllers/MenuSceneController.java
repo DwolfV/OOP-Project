@@ -3,7 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -18,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.util.converter.FloatStringConverter;
 import nl.tudelft.oopp.demo.communication.RestaurantDishCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Dish;
+import nl.tudelft.oopp.demo.entities.Dish;
 
 public class MenuSceneController implements Initializable {
 
