@@ -122,9 +122,6 @@ class RestaurantDishRepositoryTest {
 
     @Test
     void findByRestaurantIdAndDishId() {
-        List<RestaurantDish> list = new ArrayList<RestaurantDish>();
-        list.add(rd2);
-
-        assertEquals(list, restaurantDishRepository.findByRestaurantIdAndDishId(r1.getId(), d2.getId()));
+        assertEquals(rd2, restaurantDishRepository.findByRestaurantIdAndDishId(r1.getId(), d2.getId()));
     }
 }

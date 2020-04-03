@@ -46,7 +46,6 @@ public class RestaurantDish {
         this.dish = dish;
     }
 
-    @JsonIgnore
     public long getId() {
         return id;
     }
@@ -72,6 +71,7 @@ public class RestaurantDish {
     }
 
     @Nullable
+    @JsonIgnore
     public Set<DishOrder> getDishOrders() {
         return dishOrders;
     }

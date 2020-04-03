@@ -1,0 +1,203 @@
+$l-blue: #6699CC;
+$el-blue: #A4CFF2;
+$eel-blue: #D8EEFF;
+$d-blue: #336699;
+$td-blue: #4F88C1;
+$d-grey: #878787;
+$b-blue: #66CCFF;
+$d-grey: #555555;
+$l-grey: #BBBBBB;
+$el-grey: #F5F5F5;
+
+// Panes
+.main-pane {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
+}
+
+.border-pane {
+    -fx-background-color: $el-grey;
+}
+
+.center {
+    -fx-padding: 3.0em;
+}
+
+.right {
+    -fx-background-color: $el-grey;
+    -fx-pref-width: 250;
+    -fx-padding: 3.0em;
+}
+
+.bottom {
+    -fx-background-color: $el-grey;
+    -fx-padding: 1.0em 1.0em 4.0em 3.0em;
+    -fx-spacing: 10;
+}
+
+.scroll-pane {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
+}
+
+.v-boxes {
+    -fx-background-color: $el-grey;
+}
+
+.titles {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 0.5em 3em 0em 3em;
+}
+
+// Scroll bar
+.scroll-bar:horizontal  {
+    -fx-border-width: 0 0 0 0;
+}
+
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: $l-blue;
+    -fx-background-radius: 0;
+}
+
+// Actions
+.button {
+    -fx-background-color: $d-blue;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 2, 2);
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+
+    -fx-pref-width: 180;
+    -fx-pref-height: 40;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+    -fx-background-color: $b-blue;
+}
+
+.choice-box {
+    -fx-background-color: white;
+    -fx-background-radius: 1;
+    -fx-mark-color: $d-blue;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: $l-grey;
+
+    -fx-pref-width: 180;
+    -fx-pref-height: 30;
+}
+
+.choice-box .context-menu {
+    -fx-pref-width: 180;
+    -fx-pref-height: 200;
+}
+
+// The table inside the titled panes in admin scene
+.table-view {
+    -fx-background-color: $el-grey;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-border-width: 0 0 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: $l-blue;
+    -fx-border-width: 0 1 0 1;
+    -fx-border-color: $d-grey;
+}
+
+.table-view .column-header:hover {
+    -fx-background-color: $b-blue;
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: $eel-blue;
+}
+
+.table-row-cell:even {
+    -fx-background-color: $el-blue;
+}
+
+.table-view .column-header-background .first-col {
+    -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header-background .last-col {
+    -fx-border-width: 0 0 0 1;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: white;
+ }
+ .table-row-cell:selected .text {
+        -fx-fill: black;
+
+ }
+
+// The titled panes inside the admin
+.titled-pane > .content {
+    -fx-text-fill: white;
+    -fx-background-color: $l-grey;
+}
+
+.titled-pane {
+    -fx-text-fill: black;
+}
+
+.titled-pane > .title{
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: $d-grey;
+    //-fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: $b-blue;
+}
+
+.titled-pane > .title:selected {
+    -fx-background-color: $b-blue;
+}
+
+// TitledPane Arrow
+.titled-pane > .title > .arrow-button {
+    -fx-background-color: null;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0.0em 0.25em 0.0em 0.0em; /* 0 3 0 0 */
+}
+
+.titled-pane > .title > .arrow-button .arrow {
+    -fx-background-color: white;
+    -fx-mark-highlight-color: white;
+    -fx-mark-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0.25em 0.3125em 0.25em 0.3125em; /* 3 3.75 3 3.75 */
+    -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+}
+
+.titled-pane:collapsed > .title > .arrow-button .arrow {
+    -fx-rotate: -90;
+}
+
+.titled-pane > *.content {
+    //-fx-background-color:
+    //-fx-box-border,
+    //linear-gradient(to bottom, derive(-fx-color,-02%), derive(-fx-color,65%) 12%, derive(-fx-color,23%) 88%, derive(-fx-color,50%) 99%, -fx-box-border);
+    -fx-padding: 0.167em;
+ }
+
+.titled-pane:focused > .title > .arrow-button .arrow{
+    -fx-background-color: white;
+}

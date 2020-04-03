@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="100.0" prefWidth="600.0" styleClass="primary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HeaderSceneController">
+<AnchorPane prefHeight="100.0" prefWidth="600.0" styleClass="header-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HeaderSceneController">
    <children>
-      <Button layoutX="31.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#changeLeft" prefHeight="56.0" prefWidth="82.0" styleClass="hamburger-menu" text="Menu" />
+      <Pane layoutX="14.0" layoutY="36.0" onMouseClicked="#changeLeft" prefHeight="50.0" prefWidth="150.0" styleClass="hamburger-button">
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="5.0" layoutX="14.0" layoutY="23.0" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="5.0" layoutX="14.0" layoutY="13.0" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="5.0" layoutX="14.0" layoutY="33.0" width="30.0" />
+         <Text fill="WHITE" layoutX="56.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" wrappingWidth="43.6328125">
+            <font>
+               <Font name="System Bold" size="16.0" />
+            </font>
+         </Text>
+      </Pane>
    </children>
 </AnchorPane>

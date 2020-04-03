@@ -3,42 +3,70 @@ package nl.tudelft.oopp.demo.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 
 public class HamburgerMenuSceneController implements Initializable {
 
     private MainSceneController mainSceneController;
     private HeaderSceneController headerSceneController;
     private RestaurantSceneController restaurantSceneController;
+    private FriendsSceneController friendsSceneController;
+    private ReservationSceneController reservationSceneController;
+    private SupplySceneController supplySceneController;
     private AdminSceneController adminSceneController;
 
     private Parent reservationRoot;
     private Parent restaurantRoot;
+    private Parent friendsRoot;
     private Parent sidebarFilterRoot;
+    private Parent suppliesRoot;
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
+
+    public FXMLLoader sidebarFilterLoader;
+
+    @FXML public Button adminButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         FXMLLoader reservationLoader = new FXMLLoader(getClass().getResource("/Scenes/reservationScene.fxml"));
-        FXMLLoader sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
+        sidebarFilterLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarFilterScene.fxml"));
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
+        FXMLLoader friendsLoader = new FXMLLoader(getClass().getResource("/Scenes/friendsScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
+        FXMLLoader suppliesLoader = new FXMLLoader(getClass().getResource("/Scenes/supplyScene.fxml"));
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
             sidebarRoot = sidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
+            friendsRoot = friendsLoader.load();
+            suppliesRoot = suppliesLoader.load();
             adminPanelRoot = adminPanelLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
+        friendsSceneController = friendsLoader.getController();
+        supplySceneController = suppliesLoader.getController();
         adminSceneController = adminPanelLoader.getController();
+
+        reservationSceneController.setControllers(this);
+        reservationSceneController.init();
+        adminSceneController.setControllers(mainSceneController);
+        if (!Authenticator.isAdmin()) {
+            adminButton.setVisible(false);
+        }
     }
 
     /**
@@ -68,8 +96,10 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openCalendar(MouseEvent event) {
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
-        mainSceneController.sidebar = (sidebarRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
+        CalendarSceneController calendarSceneController = mainSceneController.calendarLoader.getController();
+        calendarSceneController.init();
     }
 
     /**
@@ -78,7 +108,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openRestaurants(MouseEvent event) {
         mainSceneController.changeCenter(restaurantRoot);
-        mainSceneController.sidebar = (sidebarFilterRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
     }
 
@@ -87,8 +117,27 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openAdminPanel(MouseEvent event) {
-        adminSceneController.setControllers(mainSceneController);
         mainSceneController.changeCenter(adminPanelRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
+        headerSceneController.changeLeft();
+    }
+
+    /**
+     * Open friends page.
+     * @param event mouse click
+     */
+    public void openFriends(MouseEvent event) {
+        mainSceneController.changeCenter(friendsRoot);
+        mainSceneController.sidebar = (sidebarRoot);
+        headerSceneController.changeLeft();
+    }
+
+    /**
+     * Open supplies page.
+     * @param event mouse click
+     */
+    public void openSupplies(MouseEvent event) {
+        mainSceneController.changeCenter(suppliesRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }

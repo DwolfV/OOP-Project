@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class RoomReservation {
 
-    private long id;
+    private Long id;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -22,19 +22,21 @@ public class RoomReservation {
      * @param startTime The starting time of the reservation
      * @param endTime   The time when the reservation ends
      * @param user      The user who owns the reservation
+     * @param room      The room that the reservation is linked to
      */
-    public RoomReservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user) {
+    public RoomReservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user, Room room) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.user = user;
+        this.room = room;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -98,5 +100,16 @@ public class RoomReservation {
             + ", endTime=" + endTime
             + ", user=" + user
             + '}';
+    }
+
+    /**
+     * Human friendly string.
+     *
+     * @return string for friend invitation.
+     */
+    public String invitationString() {
+        return "Building: " + room.getBuilding().getName()
+                + ", Room: " + room.getName()
+                + ", Date: " + date.toString();
     }
 }

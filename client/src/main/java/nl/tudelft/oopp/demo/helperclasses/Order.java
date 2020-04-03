@@ -14,7 +14,7 @@ public class Order {
      * @param roomReservation - The room reservation to which the order is linked
      */
 
-    Order(RoomReservation roomReservation) {
+    public Order(RoomReservation roomReservation) {
         this.roomReservation = roomReservation;
     }
 

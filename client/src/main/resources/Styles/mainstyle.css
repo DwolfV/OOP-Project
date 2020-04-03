@@ -6,8 +6,17 @@
   -fx-background-color: #6699CC;
 }
 
-.hamburger-menu {
+.header-pane {
+  -fx-background-color: #336699;
+}
+
+.empty-side-pane {
+  -fx-background-color: transparent;
+}
+
+.filter-vbox {
   -fx-background-color: #6699CC;
+  -fx-padding: 10;
 }
 
 .button {
@@ -21,30 +30,117 @@
   -fx-background-color: #66CCFF;
 }
 
-.table-pane > .content {
-  -fx-text-fill: white;
+.menu-button {
   -fx-background-color: #6699CC;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
+  -fx-background-radius: 0;
+  -fx-border-width: 2 0 0 0;
+  -fx-border-color: #BBBBBB;
 }
 
-.table-pane {
-  -fx-text-fill: white;
-}
-
-.table-pane > .title {
+.hamburger-button {
   -fx-background-color: #336699;
-  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 0, 2);
-  -fx-padding: 10px;
-  -fx-text-fill: white;
+  -fx-background-radius: 0;
+}
+
+.hamburger-button:hover {
+  -fx-background-color: #66CCFF;
+}
+
+.search-button {
+  -fx-background-color: #336699;
+  -fx-background-radius: 0;
+  -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
+}
+
+/*
+// ADMIN
+.admin-main-pane {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
+    -fx-background-color: $el-grey;
+}
+
+.scroll-pane-admin {
+    -fx-border-width: 0 2 0 2;
+    -fx-border-color: $l-grey;
+    -fx-background-color: $el-grey;
+}
+
+.admin-center {
+    -fx-padding: 3.0em;
+}
+
+.admin-right {
+    -fx-background-color: $l-grey;
+    -fx-pref-width: 250;
+    -fx-padding: 3.0em;
+}
+
+.admin-bottom {
+    -fx-background-color: $l-grey;
+    -fx-padding: 1.0em 1.0em 4.0em 3.0em;
+    -fx-spacing: 10;
+}
+
+.admin-border-pane {
+    -fx-background-color: $l-grey;
+}
+
+.admin-pane-button {
+    -fx-pref-width: 180;
+    -fx-pref-height: 40;
+    -fx-background-radius: 0;
+}
+*/
+.restaurant-menu {
+  -fx-background-color: #F5F5F5;
+  -fx-background-insets: 0, 0 0 0 0;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-color: #555555;
+}
+
+.restaurant-menu .column-header {
+  -fx-text-fill: black;
+  -fx-background-color: #BBBBBB;
+  -fx-border-width: 0 0 1 0;
+  -fx-border-color: #555555;
+  -fx-padding: 10;
+}
+
+.restaurant-menu .column-header-background .label {
+  -fx-text-fill: black;
+}
+
+.restaurant-menu-row-cell {
+  -fx-padding: 3;
+  -fx-background-color: #F5F5F5;
+}
+
+.price-col {
+  -fx-alignment: center-right;
+}
+
+.price-col .label {
+  -fx-alignment: center-right;
+  -fx-padding: 5;
 }
 
 .table-view {
-  -fx-background-color: -fx-table-cell-border-color, white;
+  -fx-background-color: #F5F5F5;
   -fx-background-insets: 0, 0 0 0 0;
-  -fx-padding: 0em;
+  -fx-padding: 3em 0em 0em 3em;
+  -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
-  -fx-background-color: #336699;
+  -fx-background-color: #BBBBBB;
+  -fx-border-width: 0 1 0 1;
+  -fx-border-color: #555555;
+}
+
+.table-view .column-header:hover {
+  -fx-background-color: #66CCFF;
 }
 
 .table-view .column-header-background .label {
@@ -57,6 +153,40 @@
 
 .table-row-cell:even {
   -fx-background-color: #A4CFF2;
+}
+
+.table-view .column-header-background .first-col {
+  -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header-background .last-col {
+  -fx-border-width: 0 0 0 1;
+}
+
+.titled-pane > .content {
+  -fx-text-fill: white;
+  -fx-background-color: #F5F5F5;
+}
+
+.titled-pane {
+  -fx-text-fill: black;
+}
+
+.titled-pane > .title {
+  -fx-background-color: #BBBBBB;
+  -fx-border-width: 0 0 2 0;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-color: #555555;
+  -fx-padding: 10px;
+  -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+  -fx-background-color: #66CCFF;
+}
+
+.titled-pane > .title:selected {
+  -fx-background-color: #66CCFF;
 }
 
 /*# sourceMappingURL=mainstyle.css.map */

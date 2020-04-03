@@ -2,10 +2,14 @@ $l-blue: #6699CC;
 $el-blue: #A4CFF2;
 $eel-blue: #D8EEFF;
 $d-blue: #336699;
+$td-blue: #4F88C1;
 $d-grey: #878787;
 $b-blue: #66CCFF;
-$l-grey: #CCCCCC;
+$d-grey: #555555;
+$l-grey: #BBBBBB;
+$el-grey: #F5F5F5;
 
+// Panes and Faces
 .primary-pane {
     -fx-background-color: $d-blue;
 }
@@ -14,10 +18,20 @@ $l-grey: #CCCCCC;
     -fx-background-color: $l-blue;
 }
 
-.hamburger-menu {
-    -fx-background-color: $l-blue;
+.header-pane {
+    -fx-background-color: $d-blue;
 }
 
+.empty-side-pane {
+    -fx-background-color: transparent;
+}
+
+.filter-vbox {
+    -fx-background-color: $l-blue;
+    -fx-padding: 10;
+}
+
+// Buttons
 .button {
     -fx-background-color: $d-blue;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 2, 2);
@@ -29,32 +43,79 @@ $l-grey: #CCCCCC;
     -fx-background-color: $b-blue;
 }
 
-// The titled panes inside the admin
-.table-pane > .content {
-    -fx-text-fill: white;
+.menu-button {
     -fx-background-color: $l-blue;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-border-width: 2 0 0 0;
+    -fx-border-color: $l-grey;
 }
 
-.table-pane {
-    -fx-text-fill: white;
-}
-
-.table-pane > .title{
+.hamburger-button {
     -fx-background-color: $d-blue;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
-    -fx-padding: 10px;
-    -fx-text-fill: white;
+    -fx-background-radius: 0;
 }
 
-// The table inside the titled panes in admin scene
-.table-view {
-    -fx-background-color: -fx-table-cell-border-color, white;
+.hamburger-button:hover {
+    -fx-background-color: $b-blue;
+}
+
+.search-button {
+    -fx-background-color: $d-blue;
+    -fx-background-radius: 0;
+    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0), 0, 0, 0, 0);
+}
+
+.restaurant-menu {
+    -fx-background-color: $el-grey;
     -fx-background-insets: 0, 0 0 0 0;
-    -fx-padding: 0.0em;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: $d-grey;
+
+}
+
+.restaurant-menu .column-header {
+    -fx-text-fill: black;
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: $d-grey;
+    -fx-padding: 10;
+}
+
+.restaurant-menu .column-header-background .label {
+    -fx-text-fill: black;
+}
+
+.restaurant-menu-row-cell {
+    -fx-padding: 3;
+    -fx-background-color: $el-grey;
+}
+
+.price-col {
+    -fx-alignment: center-right;
+}
+
+.price-col .label {
+    -fx-alignment: center-right;
+    -fx-padding: 5;
+}
+
+//The table inside the titled panes in admin scene
+.table-view {
+    -fx-background-color: $el-grey;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-padding: 3.0em 0.0em 0.0em 3.0em;
+    -fx-border-width: 0 0 0 0;
 }
 
 .table-view .column-header {
-    -fx-background-color: $d-blue;
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 1 0 1;
+    -fx-border-color: $d-grey;
+}
+
+.table-view .column-header:hover {
+    -fx-background-color: $b-blue;
 }
 
 .table-view .column-header-background .label {
@@ -67,4 +128,40 @@ $l-grey: #CCCCCC;
 
 .table-row-cell:even {
     -fx-background-color: $el-blue;
+}
+
+.table-view .column-header-background .first-col {
+    -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header-background .last-col {
+    -fx-border-width: 0 0 0 1;
+}
+
+// The titled panes inside the admin
+.titled-pane > .content {
+    -fx-text-fill: white;
+    -fx-background-color: $el-grey;
+}
+
+.titled-pane {
+    -fx-text-fill: black;
+}
+
+.titled-pane > .title{
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: $d-grey;
+    //-fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-padding: 10px;
+    -fx-text-fill: white;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: $b-blue;
+}
+
+.titled-pane > .title:selected {
+    -fx-background-color: $b-blue;
 }

@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.RestaurantDish;
 import nl.tudelft.oopp.demo.repositories.RestaurantDishRepository;
@@ -111,6 +112,20 @@ public class RestaurantDishController {
         return ResponseEntity.created(uri.toUri()).body(restaurantDish);
     }
 
+    /**
+     * DELETE Endpoint to delete the entry of a given restaurant's dish.
+     *
+     * @param restaurantId - the id of the restaurant
+     * @param dishId - the id of the dish
+     */
+
+    @DeleteMapping("restaurant_dish/delete/{restaurant_id}/{dish_id}")
+    public ResponseEntity<?> deleteRestaurantDishByIds(@PathVariable(value = "restaurant_id") long restaurantId,
+                                                       @PathVariable(value = "dish_id") long dishId) {
+        RestaurantDish rd = restaurantDishRepository.findByRestaurantIdAndDishId(restaurantId, dishId);
+        restaurantDishRepository.delete(rd);
+        return ResponseEntity.noContent().build();
+    }
 
     /**
      * DELETE Endpoint to delete the entry of a given restaurant's dish.

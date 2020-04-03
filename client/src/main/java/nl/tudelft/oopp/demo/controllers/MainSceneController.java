@@ -24,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -32,38 +33,44 @@ import nl.tudelft.oopp.demo.views.MainDisplay;
 public class MainSceneController implements Initializable {
 
     public Parent headerRoot;
-    public Parent sidebarRoot;
     public Parent hamburgerMenuRoot;
     public Parent calendarRoot;
-    public Parent sidebar;
+    public static Parent emptySidebarLeftRoot;
+    public static Parent emptySidebarRightRoot;
 
     public FXMLLoader headerLoader;
-    public FXMLLoader sidebarLoader;
+    public FXMLLoader emptySidebarLoaderLeft;
+    public FXMLLoader emptySidebarLoaderRight;
     public FXMLLoader hamburgerMenuLoader;
     public FXMLLoader calendarLoader;
 
+    public Parent sidebar;
+
     @FXML public BorderPane borderPane;
-    @FXML public VBox vbox;
-    @FXML public Pane tempPane;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("initialize StartupScene");
         headerLoader = new FXMLLoader(getClass().getResource("/Scenes/headerScene.fxml"));
-        sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
+        emptySidebarLoaderLeft = new FXMLLoader(getClass().getResource("/Scenes/emptySidebarScene.fxml"));
+        emptySidebarLoaderRight = new FXMLLoader(getClass().getResource("/Scenes/emptySidebarSceneRight.fxml"));
         hamburgerMenuLoader = new FXMLLoader(getClass().getResource("/Scenes/hamburgerMenuScene.fxml"));
         calendarLoader = new FXMLLoader(getClass().getResource("/Scenes/calendarScene.fxml"));
         try {
             headerRoot = headerLoader.load();
-            sidebarRoot = sidebarLoader.load();
+            emptySidebarLeftRoot = emptySidebarLoaderLeft.load();
+            emptySidebarRightRoot = emptySidebarLoaderRight.load();
             hamburgerMenuRoot = hamburgerMenuLoader.load();
             calendarRoot = calendarLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
         borderPane.setTop(headerRoot);
-        borderPane.setLeft(sidebarRoot);
-        sidebar = sidebarRoot;
+        borderPane.setLeft(emptySidebarLeftRoot);
+        borderPane.setRight(emptySidebarRightRoot);
+        borderPane.getRight().setPickOnBounds(false); // TESTING
+        sidebar = emptySidebarLeftRoot;
         borderPane.setCenter(calendarRoot);
 
         HeaderSceneController headerSceneController = headerLoader.getController();

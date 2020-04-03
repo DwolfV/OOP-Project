@@ -11,9 +11,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Occasion;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
+import nl.tudelft.oopp.demo.repositories.OccasionRepository;
+import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +61,16 @@ class RoomReservationControllerTest {
     private UserRepository users;
 
     @Mock
+    private BuildingRepository buildings;
+
+    @Mock
+    private RoomRepository rooms;
+
+    @Mock
     private JdbcUserDetailsManager jdbcUserDetailsManager;
+
+    @Mock
+    private OccasionRepository occasionRepository;
 
     /**
      * Creates all roomReservations before each test.
@@ -261,14 +274,18 @@ class RoomReservationControllerTest {
         User u1 = new User("user1@email.com", "student", "fn1", "ln1", "user1");
         Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
         Room r1 = new Room("r1", 11, b1);
+        LocalDate date = LocalDate.now().plusDays(1);
         RoomReservation roomReservation = new RoomReservation(
-            LocalDate.parse("2020-01-03"), r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
+            date, r1, LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1);
 
         Optional<RoomReservation> optionalRoomReservation = Optional.of(roomReservation);
         ResponseEntity<RoomReservation> responseEntity = ResponseEntity.of(optionalRoomReservation);
 
         when(roomReservationRepository.save(roomReservation)).thenReturn(roomReservation);
         when(users.findByUsername(u1.getUsername())).thenReturn(Optional.of(u1));
+        when(buildings.findById(b1.getId())).thenReturn(Optional.of(b1));
+        when(rooms.findById(r1.getId())).thenReturn(Optional.of(r1));
+        when(occasionRepository.findByBuildingIdAndDate(b1.getId(), date)).thenReturn(new ArrayList<Occasion>());
 
         assertEquals(roomReservation, roomReservationController.newRoomReservation(
             roomReservation, uriComponentsBuilder, new Authentication() {

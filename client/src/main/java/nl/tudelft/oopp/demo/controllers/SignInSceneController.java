@@ -35,6 +35,7 @@ public class SignInSceneController implements Initializable {
     @FXML private Label signingInLabel;
     @FXML private Label failedSignInLabel;
     @FXML private Label signedInLabel;
+    @FXML private Label failedSignInLabelNoInternet;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,14 +86,23 @@ public class SignInSceneController implements Initializable {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (!UserCommunication.authenticate(username, password)) {
+        int authenticationFlag = UserCommunication.authenticate(username, password);
+        if (authenticationFlag == 0) {
+            // wrong password
+            failedSignInLabelNoInternet.setVisible(false);
             failedSignInLabel.setVisible(true);
             passwordField.clear();
             passwordField.requestFocus();
             return;
+        } else if (authenticationFlag == 2) {
+            // then the user has connection issues
+            failedSignInLabel.setVisible(false);
+            failedSignInLabelNoInternet.setVisible(true);
+            return;
         }
 
         failedSignInLabel.setVisible(false);
+        failedSignInLabelNoInternet.setVisible(false);
         signedInLabel.setVisible(true);
         openMainStage();
     }
@@ -117,6 +127,7 @@ public class SignInSceneController implements Initializable {
         stage.setTitle("TU Delft reservations");
         stage.setScene(scene);
         stage.setMaximized(true);
+        stage.setResizable(false);
         stage.show();
     }
 }

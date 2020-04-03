@@ -59,9 +59,9 @@ class SupplyReservationControllerTest {
         Supply s2 = new Supply(b2, "s2", 11);
         Supply s3 = new Supply(b3, "s3", 52);
 
-        sr1 = new SupplyReservation(LocalDate.parse("2020-12-12"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);
-        sr2 = new SupplyReservation(LocalDate.parse("2020-12-13"), LocalTime.parse("20:00"), LocalTime.parse("21:00"), 22, s2, u2);
-        sr3 = new SupplyReservation(LocalDate.parse("2020-12-14"), LocalTime.parse("13:30"), LocalTime.parse("14:30"), 33, s3, u3);
+        sr1 = new SupplyReservation(LocalDate.parse("2020-12-12"), 11, s1, u1);
+        sr2 = new SupplyReservation(LocalDate.parse("2020-12-13"), 22, s2, u2);
+        sr3 = new SupplyReservation(LocalDate.parse("2020-12-14"), 33, s3, u3);
     }
 
     /**
@@ -101,7 +101,7 @@ class SupplyReservationControllerTest {
 
         when(supplyReservationRepository.findById(
             sr1.getId())).thenReturn(optionalSupplyReservation);
-        assertEquals(entity, supplyReservationController.getRoomReservationById(sr1.getId()));
+        assertEquals(entity, supplyReservationController.getSupplyReservationById(sr1.getId()));
     }
 
     @Test
@@ -113,7 +113,7 @@ class SupplyReservationControllerTest {
         Supply s1 = new Supply(b1, "s1", 7);
 
         SupplyReservation supplyReservation = new SupplyReservation(
-            LocalDate.parse("2020-05-05"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);
+            LocalDate.parse("2020-05-05"), 11, s1, u1);
         Optional<SupplyReservation> osr = Optional.of(supplyReservation);
         ResponseEntity<SupplyReservation> reservationResponseEntity = ResponseEntity.of(osr);
 
@@ -132,7 +132,7 @@ class SupplyReservationControllerTest {
 
         Supply s1 = new Supply(b1, "s1", 7);
         SupplyReservation supplyReservation = new SupplyReservation(
-            LocalDate.parse("2020-05-05"), LocalTime.parse("10:00"), LocalTime.parse("11:00"), 11, s1, u1);
+            LocalDate.parse("2020-05-05"), 11, s1, u1);
 
         Optional<SupplyReservation> optionalSupplyReservation = Optional.of(sr1);
         ResponseEntity<SupplyReservation> entity = ResponseEntity.of(optionalSupplyReservation);
