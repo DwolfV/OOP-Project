@@ -1,10 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,8 +24,11 @@ import nl.tudelft.oopp.demo.communication.FriendCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
+import nl.tudelft.oopp.demo.helperclasses.Invitation;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
+
+import static java.util.function.Predicate.not;
 
 public class FriendsSceneController implements Initializable {
 
@@ -83,13 +85,11 @@ public class FriendsSceneController implements Initializable {
         ObservableList<User> friends = FXCollections.observableList(FriendCommunication.getFriends(Authenticator.USERNAME));
         ObservableList<RoomReservation> reservedRooms = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID));
 
+        // This changes the observable list to a more human readable list
         List<String> reservedRoomsList = new ArrayList<>();
         for (int m = 0; m < reservedRooms.size(); m++) {
             reservedRoomsList.add(reservedRooms.get(m).invitationString());
         }
-        ObservableList<String> reservedRoomsList1 = FXCollections.observableArrayList(reservedRoomsList);
-        System.out.println(reservedRoomsList1);
-
 
         TitledPane[] tps = new TitledPane[friends.size()];
         List<Button> buttonsRemove = new ArrayList<>();
@@ -101,6 +101,7 @@ public class FriendsSceneController implements Initializable {
             tps[c] = new TitledPane();
 
             Label friendsLabel = new Label(friends.get(i).getUsername());
+            String friendId = friends.get(i).getUsername();
 
             Button inviteFriendsButton = new Button("Invite");
             buttonsInvite.add(inviteFriendsButton);
@@ -109,7 +110,25 @@ public class FriendsSceneController implements Initializable {
             buttonsRemove.add(removeFriendsButton);
 
             ComboBox<String> comboBoxReservedRooms = new ComboBox<>();
-            comboBoxReservedRooms.setItems(reservedRoomsList1);
+
+            // add all the reserved invitations by the friend's ID
+            ObservableList<RoomReservation> reservedRoomsInvitations = FXCollections.observableList(InvitationCommunication.getInvitations(friendId));
+            List<String> invitedRoomsList = new ArrayList<>();
+            for (int m = 0; m < reservedRoomsInvitations.size(); m++) {
+                invitedRoomsList.add(reservedRoomsInvitations.get(m).invitationString());
+            }
+
+            // filtering the reserved room list to show reserved rooms that weren't invited to by the user
+            List<String> filteredRoomsList = new ArrayList<>();
+            Set<String> result = reservedRoomsList.stream()
+                .distinct()
+                .filter(not(invitedRoomsList::contains))
+                .collect(Collectors.toSet());
+            filteredRoomsList.addAll(result);
+
+            ObservableList<String> readableReservedRoomsList = FXCollections.observableArrayList(filteredRoomsList);
+
+            comboBoxReservedRooms.setItems(readableReservedRoomsList);
 
             final String[] temp = new String[3];
             final String[] buildingAndRoom = new String[3];
@@ -124,8 +143,6 @@ public class FriendsSceneController implements Initializable {
                 buildingAndRoom[1] = (temp[1].trim().split(secondDelimiter)[1]);
                 buildingAndRoom[2] = (temp[2].trim().split(secondDelimiter)[1]);
             });
-
-            String friendId = friends.get(i).getUsername();
 
             // remove a friend
             removeFriendsButton.setOnAction(event -> {
@@ -142,9 +159,11 @@ public class FriendsSceneController implements Initializable {
                         && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
                         && reservedRooms1.getDate().toString().equals(buildingAndRoom[2])) {
                         InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
+                        readableReservedRoomsList.remove(comboBoxReservedRooms.getValue());
                         break;
                     }
                 }
+                friendList();
             });
 
             HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);
