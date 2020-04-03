@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +27,12 @@ import nl.tudelft.oopp.demo.communication.FriendCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
-import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
 
 import static java.util.function.Predicate.not;
+
+
 
 public class FriendsSceneController implements Initializable {
 
