@@ -69,8 +69,8 @@ public class MenuSceneController implements Initializable {
 //        addCol.setCellValueFactory(button1);
 
         TableColumn addCol = new TableColumn();
-        Callback<TableColumn<Dish, String>, TableCell<Dish, String>> cellFactory = (param) -> {
-            //Make tablecell including the button
+        Callback<TableColumn<Dish, String>, TableCell<Dish, String>> addCellFactory = (param) -> {
+            //Make table cell including the button
             final TableCell<Dish, String> cell = new TableCell<Dish, String>() {
 
                 @Override
@@ -99,8 +99,40 @@ public class MenuSceneController implements Initializable {
             };
             return cell;
         };
-        addCol.setCellFactory(cellFactory);
+        addCol.setCellFactory(addCellFactory);
 
+        TableColumn removeCol = new TableColumn();
+        Callback<TableColumn<Dish, String>, TableCell<Dish, String>> removeCellFactory = (param) -> {
+            //Make table cell including the button
+            final TableCell<Dish, String> cell = new TableCell<Dish, String>() {
+
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+                    }
+                    else {
+                        final Button addButton = new Button("Remove 1 from basket");
+                        addButton.setOnAction(event -> {
+                            try {
+                                Dish d = getTableView().getItems().get(getIndex());
+                                System.out.println("Dish to be removed is: " + d.getId() + " " + d.getName());
+                                OrderSceneController.removeFromBasket(d);
+                                hamburgerMenuSceneController.openOrder();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        });
+                        setGraphic(addButton);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        };
+        removeCol.setCellFactory(removeCellFactory);
 
         // Set styleClass to rows
         tableView.setRowFactory(tv -> {
@@ -111,7 +143,7 @@ public class MenuSceneController implements Initializable {
         );
 
         // Set Columns
-        tableView.getColumns().addAll(nameCol, descCol, priceCol, addCol);
+        tableView.getColumns().addAll(nameCol, descCol, priceCol, addCol, removeCol);
         List<Dish> dishList = RestaurantDishCommunication.getDishesByRestaurant(restaurantId);
         ObservableList<Dish> dishObservableList = FXCollections.observableArrayList(dishList);
         tableView.setItems(dishObservableList);

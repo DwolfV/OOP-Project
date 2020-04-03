@@ -27,6 +27,7 @@ import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 
 public class RestaurantSceneController implements Initializable {
 
+    private static Restaurant restaurant;
     @FXML private Pane mainPane;
     @FXML private Accordion ac;
     @FXML private Pane pane;
@@ -37,6 +38,7 @@ public class RestaurantSceneController implements Initializable {
 
     private static Rectangle2D screenBounds;
     public static List<Long> buttonRestaurant;
+
 
     /**
      * Loads all the content into the tables.
@@ -90,6 +92,7 @@ public class RestaurantSceneController implements Initializable {
                     Button button1 = new Button("Menu");
                     buttons.add(button1);
                     buttonRestaurant.add(showRestaurants.get(j).getId());
+                    restaurant = showRestaurants.get(j);
 
                     grid.add(labels.get(count), 0, j);
                     grid.add(buttons.get(count), 1, j);
@@ -101,6 +104,9 @@ public class RestaurantSceneController implements Initializable {
                             VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
                             pane.getChildren().setAll(vbox);
                             ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
+                            OrderSceneController orderSceneController = new OrderSceneController();
+                            orderSceneController.clearBasket();
+                            orderSceneController.setRestaurant(restaurant);
                             hamburgerMenuSceneController.openOrder();
                         } catch (Exception ex) {
                             ex.printStackTrace();
