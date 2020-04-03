@@ -1,11 +1,11 @@
-package nl.tudelft.oopp.demo.controller.helperclasses;
+package nl.tudelft.oopp.demo.helperclasses;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import nl.tudelft.oopp.demo.entities.Building;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
-import nl.tudelft.oopp.demo.entities.Building;
-import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConverter;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuildingToStringConverterTest {
 

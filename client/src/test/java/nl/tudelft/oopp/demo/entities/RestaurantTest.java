@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.controller.helperclasses;
+package nl.tudelft.oopp.demo.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
