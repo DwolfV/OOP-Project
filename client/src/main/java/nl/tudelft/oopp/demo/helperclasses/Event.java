@@ -3,41 +3,66 @@ package nl.tudelft.oopp.demo.helperclasses;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class RoomReservation {
+public class Event {
 
-    private Long id;
+    private long id;
+    private String name;
+    private String description;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private User user;
-    private Room room;
 
-    public RoomReservation() {
+    public Event() {
+
     }
 
     /**
-     * Create a new Building instance.
-     *
-     * @param date      The date of the room reservation
-     * @param startTime The starting time of the reservation
-     * @param endTime   The time when the reservation ends
-     * @param user      The user who owns the reservation
-     * @param room      The room that the reservation is linked to
+     * Creates an instance of a new Event object.
+     * @param name the name of the event
+     * @param description description of the event
+     * @param date date of the event
+     * @param startTime start time of the event
+     * @param endTime end time of the event
+     * @param user user who created the event
      */
-    public RoomReservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user, Room room) {
+    public Event(String name,
+                 String description,
+                 LocalDate date,
+                 LocalTime startTime,
+                 LocalTime endTime,
+                 User user) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.user = user;
-        this.room = room;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDate getDate() {
@@ -72,14 +97,6 @@ public class RoomReservation {
         this.user = user;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,28 +105,20 @@ public class RoomReservation {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RoomReservation that = (RoomReservation) o;
-        return id == that.id;
+        Event event = (Event) o;
+        return id == event.id;
     }
 
     @Override
     public String toString() {
-        return "RoomReservation{"
+        return "Event{"
+            + "id=" + id
+            + ", name='" + name + '\''
+            + ", description='" + description + '\''
             + ", date=" + date
             + ", startTime=" + startTime
             + ", endTime=" + endTime
             + ", user=" + user
             + '}';
-    }
-
-    /**
-     * Human friendly string.
-     *
-     * @return string for friend invitation.
-     */
-    public String invitationString() {
-        return "Building: " + room.getBuilding().getName()
-                + ", Room: " + room.getName()
-                + ", Date: " + date.toString();
     }
 }

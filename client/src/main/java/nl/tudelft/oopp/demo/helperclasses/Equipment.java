@@ -2,56 +2,46 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 public class Equipment {
 
-    int pc;
-    int whiteboard;
-    int beamer;
-    int microphone;
+    private Room room;
+    private Item item;
+    private int amount;
 
-    /**
-     * Create a new Equipment instance.
-     *
-     * @param pc         A counter for available pc.Caused by: java.net.ConnectException: Connection refused: no further information
-     * @param whiteboard A counter for available whiteboards.
-     * @param beamer     A counter for available beamers.
-     * @param microphone A counter for available microphones.
-     */
-
-    public Equipment(int pc, int whiteboard, int beamer, int microphone) {
-        this.pc = pc;
-        this.whiteboard = whiteboard;
-        this.beamer = beamer;
-        this.microphone = microphone;
+    public Equipment(Room room, Item item, int amount) {
+        this.room = room;
+        this.item = item;
+        this.amount = amount;
     }
 
-    public int getPc() {
-        return pc;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setPc(int pc) {
-        this.pc = pc;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
-    public int getWhiteboard() {
-        return whiteboard;
+    public Item getItem() {
+        return item;
     }
 
-    public void setWhiteboard(int whiteboard) {
-        this.whiteboard = whiteboard;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    public int getBeamer() {
-        return beamer;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setBeamer(int beamer) {
-        this.beamer = beamer;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public int getMicrophone() {
-        return microphone;
-    }
-
-    public void setMicrophone(int microphone) {
-        this.microphone = microphone;
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "room=" + room +
+                ", item=" + item +
+                ", amount=" + amount +
+                '}';
     }
 }

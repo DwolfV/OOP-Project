@@ -36,7 +36,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEventsById(@PathVariable long id) {
+    public ResponseEntity<Event> getEventById(@PathVariable long id) {
         return rep.findById(id).map(event -> new ResponseEntity<>(event, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -50,9 +50,9 @@ public class EventController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
-        rep.save(event);
+        Event eventAdded = rep.save(event);
         UriComponents uri = e.path("/event/{id}").buildAndExpand(event.getId());
-        return ResponseEntity.created(uri.toUri()).body(event);
+        return ResponseEntity.created(uri.toUri()).body(eventAdded);
     }
 
     /**

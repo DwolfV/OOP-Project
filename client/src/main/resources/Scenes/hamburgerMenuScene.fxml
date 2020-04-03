@@ -10,7 +10,8 @@
              <Button mnemonicParsing="false" onMouseClicked="#openCalendar" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Home" />
              <Button mnemonicParsing="false" onMouseClicked="#openReservations" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Reservations" />
              <Button mnemonicParsing="false" onMouseClicked="#openRestaurants" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Restaurants" />
-             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Friends" />
+             <Button mnemonicParsing="false" onMouseClicked="#openFriends" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Friends" />
+             <Button mnemonicParsing="false" onMouseClicked="#openSupplies" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Supplies" />
              <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Settings" />
 
              <!-- Must be last Button -->

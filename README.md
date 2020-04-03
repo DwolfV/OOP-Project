@@ -1,10 +1,10 @@
-# Starting template
-
-This README will need to contain a description of your project, how to run it, how to set up the development environment, and who worked on it.
-This information can be added throughout the course, except for the names of the group members.
-Add your own name (do not add the names for others!) to the section below.
-
 ## Description of project
+This project is a simple reservation system for the students and staff of TU Delft. 
+Being students at the Technical University of Delft has brought the team to a realization about the reservation system around the university. 
+For instance, the on-campus library utilizes a reservation network which allows students to order project rooms when in need of privacy and group works. 
+However, there is a certain limitation in mobility; the students need to visit the university itself to make a reservation. 
+Also, TU Delft employees need to handle requests, which comes with the caveat of people being prone to making errors, also it is more costly to manage these employees. 
+Therefore, we have developed a new application dedicated to reserving rooms around the university.
 
 ## Group members
 
@@ -24,7 +24,17 @@ Add your own name (do not add the names for others!) to the section below.
 <!-- - (please make sure the photos have the same size) --> 
 
 ## How to run it
+run ```./gradlew build``` in the directory of the project.
+    Then to start the server type
+    ```./gradlew bootRun```
+    To start the client type
+    ```./gradlew run```
+
 
 ## How to contribute to it
+1. Fork the repository
+2. Make your changes
+4. Push the code to your fork
+5. Submit a Pull request
 
 ## Copyright / License (opt.)
