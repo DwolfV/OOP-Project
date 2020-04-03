@@ -14,6 +14,7 @@ import nl.tudelft.oopp.demo.entities.Occasion;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.OccasionRepository;
+import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class RoomReservationController {
 
     @Autowired
     BuildingRepository buildings;
+
+    @Autowired
+    RoomRepository rooms;
 
     @Autowired
     OccasionRepository occasionRepository;
@@ -179,7 +183,7 @@ public class RoomReservationController {
         LocalTime endTime = newRoomReservation.getEndTime();
 
         // get the building from the room
-        Building building = buildings.findById(newRoomReservation.getRoom().getBuilding().getId()).get();
+        Building building = buildings.findById(rooms.findById(newRoomReservation.getRoom().getId()).get().getBuilding().getId()).get();
 
         List<Occasion> occasions = occasionRepository.findByBuildingIdAndDate(building.getId(), newRoomReservation.getDate().plusDays(1));
         LocalTime buildingOpenTime = null;
