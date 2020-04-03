@@ -49,12 +49,12 @@ public class InvitationController {
     /**
      * GET endpoint to retrieve the room reservations that a user is invited to.
      *
-     * @param id - the id of the user
+     * @param username - the username of the user
      * @return the list of room reservations
      */
-    @GetMapping("/user/{user_id}")
-    public List<RoomReservation> getReservationsByUser(@PathVariable(value = "user_id") long id) {
-        List<Invitation> invitations = invitationRepository.findByRoomReservationId(id);
+    @GetMapping("/user")
+    public List<RoomReservation> getReservationsByUser(@RequestParam(name = "username") String username) {
+        List<Invitation> invitations = invitationRepository.findByGuestUsername(username);
         List<RoomReservation> roomReservations = new ArrayList<>();
 
         for (Invitation i : invitations) {
