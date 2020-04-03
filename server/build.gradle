@@ -4,7 +4,7 @@ plugins {
 	id 'org.asciidoctor.convert' version '1.5.8'
 }
 
-mainClassName = 'nl.tudelft.oopp.demo.DemoApplication'
+mainClassName = 'nl.tudelft.oopp.demo.ServerApplication'
 
 configurations {
 	developmentOnly
