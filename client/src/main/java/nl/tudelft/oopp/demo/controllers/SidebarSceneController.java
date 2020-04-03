@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -52,6 +53,7 @@ public class SidebarSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         anchorPane = anchorPane;
+        datePickerFilter();
         for (Item i : ItemCommunication.getItems()) {
             System.out.println("items: " + i);
             CheckBox item = new CheckBox(i.getName());
@@ -60,6 +62,19 @@ public class SidebarSceneController implements Initializable {
             item.setTextFill(Paint.valueOf("white"));
             box.getChildren().add(item);
         }
+    }
+
+    /**
+     * This method restricts the DatePicker.
+     */
+    public void datePickerFilter() {
+        dp.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                setDisable(empty || date.compareTo(today) > 7);
+            }
+        });
     }
 
     /**
