@@ -19,11 +19,11 @@ public class Friend {
     @Column(name = "id")
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user1", referencedColumnName = "id")
     private User user1;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "user2", referencedColumnName = "id")
     private User user2;
 

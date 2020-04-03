@@ -17,12 +17,14 @@ public class HamburgerMenuSceneController implements Initializable {
     private MainSceneController mainSceneController;
     private HeaderSceneController headerSceneController;
     private RestaurantSceneController restaurantSceneController;
+    private FriendsSceneController friendsSceneController;
     private ReservationSceneController reservationSceneController;
     private SupplySceneController supplySceneController;
     private AdminSceneController adminSceneController;
 
     private Parent reservationRoot;
     private Parent restaurantRoot;
+    private Parent friendsRoot;
     private Parent sidebarFilterRoot;
     private Parent suppliesRoot;
     private Parent sidebarRoot;
@@ -40,6 +42,7 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader emptySidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/emptySidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
+        FXMLLoader friendsLoader = new FXMLLoader(getClass().getResource("/Scenes/friendsScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
         FXMLLoader suppliesLoader = new FXMLLoader(getClass().getResource("/Scenes/supplyScene.fxml"));
         try {
@@ -48,6 +51,7 @@ public class HamburgerMenuSceneController implements Initializable {
             sidebarRoot = sidebarLoader.load();
             emptySidebarRoot = emptySidebarLoader.load();
             restaurantRoot = restaurantLoader.load();
+            friendsRoot = friendsLoader.load();
             suppliesRoot = suppliesLoader.load();
             adminPanelRoot = adminPanelLoader.load();
         } catch (IOException e) {
@@ -56,6 +60,7 @@ public class HamburgerMenuSceneController implements Initializable {
 
         reservationSceneController = reservationLoader.getController();
         restaurantSceneController = restaurantLoader.getController();
+        friendsSceneController = friendsLoader.getController();
         supplySceneController = suppliesLoader.getController();
         adminSceneController = adminPanelLoader.getController();
 
@@ -117,6 +122,16 @@ public class HamburgerMenuSceneController implements Initializable {
     public void openAdminPanel(MouseEvent event) {
         mainSceneController.changeCenter(adminPanelRoot);
         mainSceneController.sidebar = (emptySidebarRoot);
+        headerSceneController.changeLeft();
+    }
+
+    /**
+     * Open friends page.
+     * @param event mouse click
+     */
+    public void openFriends(MouseEvent event) {
+        mainSceneController.changeCenter(friendsRoot);
+        mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
     }
 
