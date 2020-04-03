@@ -9,8 +9,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-
-import nl.tudelft.oopp.demo.helperclasses.Equipment;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
 public class RoomCommunication {
@@ -90,8 +88,8 @@ public class RoomCommunication {
      * Retrieves a list of rooms that are located in a certain building.
      *
      * @param buildingId - the id of the building where the rooms is supposed to be
-     * @param capacity - the minimum capacity that a room inside a buildings should have
-     * @param equipment - a list of Strings defining the filter parameters
+     * @param capacity   - the minimum capacity that a room inside a buildings should have
+     * @param equipment  - a list of Strings defining the filter parameters
      * @return A list of all rooms.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
@@ -101,18 +99,23 @@ public class RoomCommunication {
         if (capacity == null) {
             capacity = 0;
         }
-        uri = uri + "?capacity=" + capacity;
+        uri = uri + "&capacity=" + capacity;
 
         //the number of equipment items
         int count = 0;
-        String baseString = "&e%n"; //base string used for formatting
+        String baseString = "&e%d"; //base string used for formatting
         for (String s : equipment) {
+            if (s == null) {
+                break;
+            }
             if (count == 6) { //we don't want to filter more than 6 items
                 break;
             }
             count++;//increase the amount of added items
-            uri = uri + String.format(baseString, count) + s; //add the filter to the uri
+            uri = uri + String.format(baseString, count) + "=" + s; //add the filter to the uri
         }
+        System.out.println(uri);
+        uri = uri.replace(" ", "%20");
 
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(uri)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
 
