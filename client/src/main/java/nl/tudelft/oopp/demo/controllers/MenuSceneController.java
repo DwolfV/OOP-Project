@@ -24,6 +24,7 @@ public class MenuSceneController implements Initializable {
 
     public static TableView<Dish> tableView;
     private static Rectangle2D screenBounds;
+    private static HamburgerMenuSceneController hamburgerMenuSceneController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -82,8 +83,14 @@ public class MenuSceneController implements Initializable {
                     else {
                         final Button addButton = new Button("Add to basket");
                         addButton.setOnAction(event -> {
-                            Dish d = getTableView().getItems().get(getIndex());
-                            System.out.println("Your dish is: " + d.getId() + " " + d.getName());
+                            try {
+                                Dish d = getTableView().getItems().get(getIndex());
+                                System.out.println("Your dish is: " + d.getId() + " " + d.getName());
+                                OrderSceneController.addToBasket(d);
+                                hamburgerMenuSceneController.openOrder();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         });
                     setGraphic(addButton);
                     setText(null);
