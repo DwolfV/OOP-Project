@@ -88,8 +88,8 @@ public class FriendsSceneController implements Initializable {
 
         // This changes the observable list to a more human readable list
         List<String> reservedRoomsList = new ArrayList<>();
-        for (int m = 0; m < reservedRooms.size(); m++) {
-            reservedRoomsList.add(reservedRooms.get(m).invitationString());
+        for (RoomReservation reservedRoom : reservedRooms) {
+            reservedRoomsList.add(reservedRoom.invitationString());
         }
 
         TitledPane[] tps = new TitledPane[friends.size()];
@@ -98,11 +98,11 @@ public class FriendsSceneController implements Initializable {
 
         int c = 0;
 
-        for (int i = 0; i < friends.size(); i++) {
+        for (User friend : friends) {
             tps[c] = new TitledPane();
 
-            Label friendsLabel = new Label(friends.get(i).getUsername());
-            String friendId = friends.get(i).getUsername();
+            Label friendsLabel = new Label(friend.getUsername());
+            String friendId = friend.getUsername();
 
             Button inviteFriendsButton = new Button("Invite");
             buttonsInvite.add(inviteFriendsButton);
@@ -115,17 +115,16 @@ public class FriendsSceneController implements Initializable {
             // add all the reserved invitations by the friend's ID
             ObservableList<RoomReservation> reservedRoomsInvitations = FXCollections.observableList(InvitationCommunication.getInvitations(friendId));
             List<String> invitedRoomsList = new ArrayList<>();
-            for (int m = 0; m < reservedRoomsInvitations.size(); m++) {
-                invitedRoomsList.add(reservedRoomsInvitations.get(m).invitationString());
+            for (RoomReservation reservedRoomsInvitation : reservedRoomsInvitations) {
+                invitedRoomsList.add(reservedRoomsInvitation.invitationString());
             }
 
             // filtering the reserved room list to show reserved rooms that weren't invited to by the user
-            List<String> filteredRoomsList = new ArrayList<>();
             Set<String> result = reservedRoomsList.stream()
                 .distinct()
                 .filter(not(invitedRoomsList::contains))
                 .collect(Collectors.toSet());
-            filteredRoomsList.addAll(result);
+            List<String> filteredRoomsList = new ArrayList<>(result);
 
             ObservableList<String> readableReservedRoomsList = FXCollections.observableArrayList(filteredRoomsList);
 
@@ -155,12 +154,11 @@ public class FriendsSceneController implements Initializable {
             // invite a friend to a reserved room
             inviteFriendsButton.setOnAction(event -> {
                 List<RoomReservation> reservedList = RoomReservationCommunication.getRoomReservationsByUserId(Authenticator.ID);
-                for (RoomReservation reservedRooms1: reservedList) {
+                for (RoomReservation reservedRooms1 : reservedList) {
                     if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0])
                         && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
                         && reservedRooms1.getDate().toString().equals(buildingAndRoom[2])) {
                         InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
-                        readableReservedRoomsList.remove(comboBoxReservedRooms.getValue());
                         break;
                     }
                 }
@@ -183,7 +181,7 @@ public class FriendsSceneController implements Initializable {
                 + "-fx-border-radius: 5;" + "-fx-border-color: lightblue;");
 
             veBoxTpAndAdd.getChildren().add(hoBoxUsernameAndRemove);
-            veBoxTpAndAdd.setPadding(new Insets(20,0,0,0));
+            veBoxTpAndAdd.setPadding(new Insets(20, 0, 0, 0));
         }
         borderPane.setCenter(hoBoxAddFriend);
         borderPane.setBottom(veBoxTpAndAdd);
