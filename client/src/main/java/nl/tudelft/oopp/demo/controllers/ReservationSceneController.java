@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,6 +23,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
@@ -31,6 +33,8 @@ import nl.tudelft.oopp.demo.helperclasses.Occasion;
 import nl.tudelft.oopp.demo.helperclasses.Room;
 
 public class ReservationSceneController implements Initializable {
+
+    private static Rectangle2D screenBounds;
 
     public HamburgerMenuSceneController hamburgerMenuSceneController;
 
@@ -206,7 +210,6 @@ public class ReservationSceneController implements Initializable {
                 ac.getPanes().add(tps[c]);
                 c++;
             }
-
 
             // if there is no available rooms
             if (notFound == buildingData.size()) {

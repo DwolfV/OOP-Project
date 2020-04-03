@@ -76,7 +76,6 @@ public class Restaurant {
         this.timeOpen = timeOpen;
     }
 
-    @JsonIgnore
     public long getId() {
         return id;
     }
