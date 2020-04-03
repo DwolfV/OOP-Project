@@ -139,6 +139,7 @@ public class CalendarSceneController implements Initializable {
         // create a new calendar for Invitations
         Calendar invitations = new Calendar("Invitations");
         invitations.setStyle(Calendar.Style.STYLE4);
+        invitations.setReadOnly(true);
         calendarView.getCalendarSources().get(0).getCalendars().add(invitations);
 
         init();
@@ -219,6 +220,10 @@ public class CalendarSceneController implements Initializable {
         // clear the calendar when refreshing
         calendarInvitations.clear();
         for (RoomReservation reservation : InvitationCommunication.getInvitations(Authenticator.USERNAME)) {
+            // don't display invitations from before today
+            if (reservation.getDate().plusDays(1).compareTo(LocalDate.now()) < 0) {
+                continue;
+            }
             Interval interval = new Interval(reservation.getDate().plusDays(1), reservation.getStartTime(), reservation.getDate().plusDays(1), reservation.getEndTime());
             Entry<RoomReservation> calendarEntry = new Entry<>(reservation.getRoom().getName() + " with " + reservation.getUser().getUsername(), interval);
             calendarInvitations.addEntry(calendarEntry);
