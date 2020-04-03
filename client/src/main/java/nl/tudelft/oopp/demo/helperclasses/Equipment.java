@@ -6,6 +6,13 @@ public class Equipment {
     private Item item;
     private int amount;
 
+    /**
+     * Creates an instance of a new equipment object.
+     *
+     * @param room   The room to which the equipment is connected.
+     * @param item   The item to which the equipment is connected.
+     * @param amount The amount of the item in the room.
+     */
     public Equipment(Room room, Item item, int amount) {
         this.room = room;
         this.item = item;
@@ -38,10 +45,10 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return "Equipment{" +
-                "room=" + room +
-                ", item=" + item +
-                ", amount=" + amount +
-                '}';
+        return "Equipment{"
+            + "room=" + room
+            + ", item=" + item
+            + ", amount=" + amount
+            + '}';
     }
 }
