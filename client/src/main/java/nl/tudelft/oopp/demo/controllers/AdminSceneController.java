@@ -6,10 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -48,11 +45,14 @@ public class AdminSceneController implements Initializable {
         screenBounds = Screen.getPrimary().getBounds();
 
         // Building TitledPane
-        BorderPane borderPaneInfo = AdminBuildingPane.getBuildingInfoBP(ac);
-        BorderPane borderPaneTime = AdminBuildingPane.getBuildingTimesBP(ac);
-
         VBox vboxBuilding = new VBox();
-        vboxBuilding.getChildren().setAll(borderPaneInfo, borderPaneTime);
+        Label buildTitle = new Label("Add A Building:");
+        SplitPane splitPane1 = new SplitPane();
+        BorderPane borderPaneInfo = AdminBuildingPane.getBuildingInfoBP(ac);
+        Label occTitle = new Label("Add A Free Day:");
+        SplitPane splitPane2 = new SplitPane();
+        BorderPane borderPaneTime = AdminBuildingPane.getBuildingTimesBP(ac);
+        vboxBuilding.getChildren().setAll(buildTitle, splitPane1, borderPaneInfo, occTitle, splitPane2, borderPaneTime);
 
         ScrollPane scrollPaneBuilding = getScrollPane(vboxBuilding);
 
@@ -61,9 +61,11 @@ public class AdminSceneController implements Initializable {
         buildingTP.setContent(scrollPaneBuilding);
 
         // Room TitledPane
-        BorderPane borderPaneRoom = AdminRoomPane.getRoomBP(ac);
         VBox vboxRoom = new VBox();
-        vboxRoom.getChildren().setAll(borderPaneRoom);
+        Label roomTitle = new Label("Add A Room:");
+        SplitPane splitPane3 = new SplitPane();
+        BorderPane borderPaneRoom = AdminRoomPane.getRoomBP(ac);
+        vboxRoom.getChildren().setAll(roomTitle, splitPane3, borderPaneRoom);
 
         ScrollPane scrollPaneRoom = getScrollPane(vboxRoom);
 
@@ -72,9 +74,11 @@ public class AdminSceneController implements Initializable {
         roomTP.setContent(scrollPaneRoom);
 
         // Restaurant TitledPane
-        BorderPane borderPaneRestaurant = AdminRestaurantPane.getRestaurantBP(ac);
         VBox vboxRestaurant = new VBox();
-        vboxRestaurant.getChildren().setAll(borderPaneRestaurant);
+        Label resTitle = new Label("Add A Restaurant:");
+        SplitPane splitPane4 = new SplitPane();
+        BorderPane borderPaneRestaurant = AdminRestaurantPane.getRestaurantBP(ac);
+        vboxRestaurant.getChildren().setAll(resTitle, splitPane4, borderPaneRestaurant);
 
         ScrollPane scrollPaneRestaurant = getScrollPane(vboxRestaurant);
 
@@ -83,9 +87,11 @@ public class AdminSceneController implements Initializable {
         restaurantTP.setContent(scrollPaneRestaurant);
 
         // Supplies TitledPane
-        BorderPane borderPaneSupply = AdminSupplyPane.getSupplyBP(ac);
         VBox vboxSupply = new VBox();
-        vboxSupply.getChildren().setAll(borderPaneSupply);
+        Label supplyTitle = new Label("Add A Supply:");
+        SplitPane splitPane5 = new SplitPane();
+        BorderPane borderPaneSupply = AdminSupplyPane.getSupplyBP(ac);
+        vboxSupply.getChildren().setAll(supplyTitle, splitPane5, borderPaneSupply);
 
         ScrollPane scrollPaneSupply = getScrollPane(vboxSupply);
 
@@ -96,6 +102,18 @@ public class AdminSceneController implements Initializable {
         // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
         ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP);
+
+        // Styles
+        vboxBuilding.getStyleClass().add("v-boxes");
+        vboxRestaurant.getStyleClass().add("v-boxes");
+        vboxRoom.getStyleClass().add("v-boxes");
+        vboxSupply.getStyleClass().add("v-boxes");
+
+        buildTitle.getStyleClass().setAll("titles");
+        occTitle.getStyleClass().setAll("titles");
+        resTitle.getStyleClass().setAll("titles");
+        roomTitle.getStyleClass().setAll("titles");
+        supplyTitle.getStyleClass().setAll("titles");
     }
 
     public void setControllers(MainSceneController mainSceneController) {

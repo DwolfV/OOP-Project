@@ -2,10 +2,12 @@ $l-blue: #6699CC;
 $el-blue: #A4CFF2;
 $eel-blue: #D8EEFF;
 $d-blue: #336699;
+$td-blue: #4F88C1;
 $d-grey: #878787;
 $b-blue: #66CCFF;
-$l-grey: #CCCCCC;
-$el-grey: #DDDDDD;
+$d-grey: #555555;
+$l-grey: #BBBBBB;
+$el-grey: #F5F5F5;
 
 // Panes
 .main-pane {
@@ -22,11 +24,13 @@ $el-grey: #DDDDDD;
 }
 
 .right {
+    -fx-background-color: $el-grey;
     -fx-pref-width: 250;
     -fx-padding: 3.0em;
 }
 
 .bottom {
+    -fx-background-color: $el-grey;
     -fx-padding: 1.0em 1.0em 4.0em 3.0em;
     -fx-spacing: 10;
 }
@@ -34,6 +38,16 @@ $el-grey: #DDDDDD;
 .scroll-pane {
     -fx-border-width: 0 2 0 2;
     -fx-border-color: $l-grey;
+}
+
+.v-boxes {
+    -fx-background-color: $el-grey;
+}
+
+.titles {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 0.5em 3em 0em 3em;
 }
 
 // Scroll bar
@@ -93,7 +107,7 @@ $el-grey: #DDDDDD;
 .table-view .column-header {
     -fx-background-color: $l-blue;
     -fx-border-width: 0 1 0 1;
-    -fx-border-color: $l-grey;
+    -fx-border-color: $d-grey;
 }
 
 .table-view .column-header:hover {
@@ -131,18 +145,19 @@ $el-grey: #DDDDDD;
 // The titled panes inside the admin
 .titled-pane > .content {
     -fx-text-fill: white;
-    -fx-background-color: $l-blue;
+    -fx-background-color: $l-grey;
 }
 
 .titled-pane {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .titled-pane > .title{
-    -fx-background-color: $d-blue;
-    -fx-border-width: 2 0 0 0;
-    -fx-border-color: $l-grey;
-    -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
+    -fx-background-color: $l-grey;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-color: $d-grey;
+    //-fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 0, 2);
     -fx-padding: 10px;
     -fx-text-fill: white;
 }

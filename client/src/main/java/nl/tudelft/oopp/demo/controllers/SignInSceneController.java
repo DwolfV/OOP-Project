@@ -117,6 +117,7 @@ public class SignInSceneController implements Initializable {
         stage.setTitle("TU Delft reservations");
         stage.setScene(scene);
         stage.setMaximized(true);
+        stage.setResizable(false);
         stage.show();
     }
 }
