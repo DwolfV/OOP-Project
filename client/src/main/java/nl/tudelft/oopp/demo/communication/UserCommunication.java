@@ -10,6 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.List;
+
+import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.entities.UserInfo;
 
@@ -18,6 +20,39 @@ public class UserCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
 
     // TODO maybe return a flag that will be different if there is an error or if the credentials are wrong
+
+    /**
+     * Get a list of all the users.
+     *
+     * @return a list of all users
+     */
+    public static List<User> getUsers() {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/users")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        List<User> users = null;
+        // TODO handle exception
+        try {
+            users = mapper.readValue(response.body(), new TypeReference<List<User>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
 
     /**
      * Authenticates a user and sets a session cookie.
