@@ -49,28 +49,39 @@ public class AdminRolePane {
             Button makeEmployeeButton = new Button("Make Employee");
             makeEmployeeButtons.add(makeEmployeeButton);
 
-            Button makeNormalButton = new Button("Make Normal");
+            Button makeNormalButton = new Button("Make User");
             makeNormalButtons.add(makeEmployeeButton);
 
-            int Index = i;
+
+            if(users.get(i).getRole().equals("ROLE_USER")) {
+                makeNormalButton.setDisable(true);
+            }
+            if (users.get(i).getRole().equals("ROLE_EMPLOYEE")) {
+                makeEmployeeButton.setDisable(true);
+            }
+            if (users.get(i).getRole().equals("ROLE_ADMIN")) {
+                makeAdminButton.setDisable(true);
+            }
+
+            int index = i;
 
             // make a user Admin
             makeAdminButton.setOnAction(event -> {
-                UserCommunication.changeRole(users.get(Index).getUsername(), "admin");
+                UserCommunication.changeRole(users.get(index).getUsername(), "admin");
                 AdminSceneController.loadAdminScene(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 
             // make a user Employee
             makeEmployeeButton.setOnAction(event -> {
-                UserCommunication.changeRole(users.get(Index).getUsername(), "employee");
+                UserCommunication.changeRole(users.get(index).getUsername(), "employee");
                 AdminSceneController.loadAdminScene(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 
             // make a user "Normal"
             makeEmployeeButton.setOnAction(event -> {
-                UserCommunication.changeRole(users.get(Index).getUsername(), "user");
+                UserCommunication.changeRole(users.get(index).getUsername(), "user");
                 AdminSceneController.loadAdminScene(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
