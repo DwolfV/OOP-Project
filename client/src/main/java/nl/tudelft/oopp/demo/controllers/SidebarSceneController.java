@@ -91,7 +91,7 @@ public class SidebarSceneController implements Initializable {
                 if (date.isBefore(ChronoLocalDate.from(today))) {
                     setDisable(true);
                 }
-                if (empty || date.isAfter(monday.plusWeeks(2))) {
+                if (empty || date.isAfter(monday.plusDays(13))) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffc0cb;");
                 }
