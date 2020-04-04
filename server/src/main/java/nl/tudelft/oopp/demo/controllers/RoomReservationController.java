@@ -274,7 +274,14 @@ public class RoomReservationController {
         }
 
         // if the date is not in this week and the next three weeks - for EMPLOYEES (and ADMINs))
-        // ... TODO
+        // the check for monday is the same (isAfterMonday)
+        // the Sunday checks should be modified as employees (and admins) can reserve rooms for 3 weeks after this week (including this week)
+        sundayOfNextWeek = today.plusWeeks(3).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        isBeforeSunday = newRoomReservation.getDate().isBefore(sundayOfNextWeek) || newRoomReservation.getDate().isEqual(sundayOfNextWeek);
+        if ((authentication.getAuthorities().toString().contains("EMPLOYEE")
+            || authentication.getAuthorities().toString().contains("ADMIN")) && !(isAfterMonday && isBeforeSunday)) {
+            return false;
+        }
 
         // if the room reservation is for today
         if (newRoomReservation.getDate().equals(dateNow)) {
