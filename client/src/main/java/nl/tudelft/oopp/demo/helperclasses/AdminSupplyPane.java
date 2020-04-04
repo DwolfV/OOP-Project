@@ -23,6 +23,8 @@ import javafx.util.converter.IntegerStringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Supply;
 
 public class AdminSupplyPane {
 

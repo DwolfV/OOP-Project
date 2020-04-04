@@ -21,10 +21,9 @@ import nl.tudelft.oopp.demo.communication.EventCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Event;
-import nl.tudelft.oopp.demo.helperclasses.Invitation;
-import nl.tudelft.oopp.demo.helperclasses.Room;
-import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
+import nl.tudelft.oopp.demo.entities.Event;
+import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 
 public class CalendarSceneController implements Initializable {
 

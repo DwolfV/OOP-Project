@@ -1,8 +1,11 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +14,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -24,6 +28,8 @@ import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Occasion;
 
 public class AdminBuildingPane {
 
@@ -155,9 +161,13 @@ public class AdminBuildingPane {
         Text zipCode = new Text("Zip Code");
         Text city = new Text("City");
 
+
+        ObservableList<LocalTime> time = generateTime();
         TextField buildingNameInput = new TextField();
-        TextField openTimeInput = new TextField();
-        TextField closeTimeInput = new TextField();
+        ComboBox<LocalTime> openTimeInput = new ComboBox<>();
+        openTimeInput.setItems(time);
+        ComboBox<LocalTime> closeTimeInput = new ComboBox<>();
+        closeTimeInput.setItems(time);
         TextField streetNameInput = new TextField();
         TextField streetNumberInput = new TextField();
         TextField zipCodeInput = new TextField();
@@ -191,8 +201,8 @@ public class AdminBuildingPane {
         // Add Button
         addButtonBuilding.setOnAction(e -> {
             String buildingNameInputText = buildingNameInput.getText();
-            String openTimeInputText = openTimeInput.getText();
-            String closeTimeInputText = closeTimeInput.getText();
+            String openTimeInputText = openTimeInput.getValue().toString();
+            String closeTimeInputText = closeTimeInput.getValue().toString();
             String streetNameInputText = streetNameInput.getText();
             String streetNumberInputText = streetNumberInput.getText();
             String zipCodeInputText = zipCodeInput.getText();
@@ -202,8 +212,8 @@ public class AdminBuildingPane {
                     streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
 
             buildingNameInput.setText(null);
-            openTimeInput.setText(null);
-            closeTimeInput.setText(null);
+            openTimeInput.setValue(null);
+            closeTimeInput.setValue(null);
             streetNameInput.setText(null);
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
@@ -356,9 +366,12 @@ public class AdminBuildingPane {
         Text closeHolidayTime = new Text("Close Time");
         Text building = new Text("Building ID");
 
+        ObservableList<LocalTime> time = generateTime();
         TextField dayInput = new TextField();
-        TextField openHolidayTimeInput = new TextField();
-        TextField closeHolidayTimeInput = new TextField();
+        ComboBox<LocalTime> openHolidayTimeInput = new ComboBox<>();
+        openHolidayTimeInput.setItems(time);
+        ComboBox<LocalTime> closeHolidayTimeInput = new ComboBox<>();
+        closeHolidayTimeInput.setItems(time);
         TextField buildingInput = new TextField();
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
@@ -383,14 +396,14 @@ public class AdminBuildingPane {
         // Add open time button
         addOpenTime.setOnAction(e -> {
             LocalDate dayInputText = LocalDate.parse(dayInput.getText());
-            LocalTime openHolidayTimeInputText = LocalTime.parse(openHolidayTimeInput.getText());
-            LocalTime closeHolidayTimeInputText = LocalTime.parse(closeHolidayTimeInput.getText());
+            LocalTime openHolidayTimeInputText = openHolidayTimeInput.getValue();
+            LocalTime closeHolidayTimeInputText = closeHolidayTimeInput.getValue();
 
             OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
 
             dayInput.setText(null);
-            openHolidayTimeInput.setText(null);
-            closeHolidayTimeInput.setText(null);
+            openHolidayTimeInput.setValue(null);
+            closeHolidayTimeInput.setValue(null);
             buildingInput.setText(null);
             choiceBox.setValue(null);
             AdminSceneController.loadAdminScene(ac);
@@ -411,6 +424,19 @@ public class AdminBuildingPane {
         borderPane.setBottom(hboxBottom);
 
         return borderPane;
+    }
+
+    /**
+     * The method is generating time for comboboxes.
+     * @return an observable list of times.
+     */
+    public static ObservableList<LocalTime> generateTime() {
+        ArrayList<LocalTime> timeList = new ArrayList<>();
+        for (LocalTime tm = LocalTime.MIN; tm.isBefore(LocalTime.parse("23:30")); tm = tm.plusMinutes(30)) {
+            timeList.add(tm);
+        }
+        timeList.add(LocalTime.parse("23:30"));
+        return FXCollections.observableArrayList(timeList);
     }
 
 }

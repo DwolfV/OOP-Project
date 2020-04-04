@@ -8,7 +8,7 @@ import static org.mockserver.model.HttpResponse.response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalTime;
-import nl.tudelft.oopp.demo.helperclasses.Building;
+import nl.tudelft.oopp.demo.entities.Building;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

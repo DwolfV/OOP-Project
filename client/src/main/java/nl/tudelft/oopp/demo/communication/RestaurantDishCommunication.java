@@ -10,9 +10,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Dish;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
-import nl.tudelft.oopp.demo.helperclasses.RestaurantDish;
+import nl.tudelft.oopp.demo.entities.Dish;
+import nl.tudelft.oopp.demo.entities.Restaurant;
+import nl.tudelft.oopp.demo.entities.RestaurantDish;
 
 public class RestaurantDishCommunication {
 

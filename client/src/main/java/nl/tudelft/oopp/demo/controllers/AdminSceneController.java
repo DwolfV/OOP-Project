@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.helperclasses.AdminBuildingPane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRestaurantPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminRolePane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRoomPane;
 import nl.tudelft.oopp.demo.helperclasses.AdminSupplyPane;
 
@@ -28,6 +29,7 @@ public class AdminSceneController implements Initializable {
     public static TitledPane roomTP;
     public static TitledPane restaurantTP;
     public static TitledPane supplyTP;
+    public static TitledPane rolesTP;
     public static BorderPane adminBorderPane;
     private static Rectangle2D screenBounds;
     public MainSceneController mainSceneController;
@@ -98,9 +100,22 @@ public class AdminSceneController implements Initializable {
         supplyTP.setText("Supplies");
         supplyTP.setContent(scrollPaneSupply);
 
+        // Roles TitledPane
+        VBox vboxRoles = new VBox();
+        Label rolesTitle = new Label("Modify User Roles:");
+        SplitPane splitPane6 = new SplitPane();
+        BorderPane borderPaneRoles = AdminRolePane.getRolesBP(ac);
+        vboxRoles.getChildren().setAll(rolesTitle, splitPane6, borderPaneRoles);
+
+        ScrollPane scrollPaneRoles = getScrollPane(vboxRoles);
+
+        rolesTP = new TitledPane();
+        rolesTP.setText("Roles");
+        rolesTP.setContent(scrollPaneRoles);
+
         // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
-        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP);
+        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP, rolesTP);
 
         // Styles
         vboxBuilding.getStyleClass().add("v-boxes");

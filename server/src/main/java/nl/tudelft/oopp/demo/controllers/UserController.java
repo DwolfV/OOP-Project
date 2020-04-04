@@ -1,12 +1,18 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.entities.UserInfo;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +41,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EntityManager entityManager;
 
     /**
      * GET Endpoint to retrieve a list of all users.
@@ -159,5 +168,42 @@ public class UserController {
             .password(passwordEncoder.encode(userInfo.getPassword())).roles("USER").build());
 
         return ResponseEntity.created(uri.toUri()).body(newUser);
+    }
+
+    /**
+     * POST mapping to allow admins to change other users's roles. Authentication handled by jdbc.
+     * @param username The user's username whose role will be changed
+     * @param role The role to change to
+     * @return A response entity with a sensibe response code (see user controller to see return options)
+     */
+    @PostMapping(value = "change_user_role/{username}", consumes = {"application/json"})
+    public ResponseEntity<?> changeUserRole(@PathVariable String username, @Valid @RequestBody String role, Authentication authentication) {
+        return rep.findByUsername(username).map(userToPromote -> {
+            if (role.toUpperCase().equals("ADMIN") || role.toUpperCase().equals("USER") || role.toUpperCase().equals("EMPLOYEE")) {
+                // change the role and save
+                userToPromote.setRole("ROLE_" + role.toUpperCase());
+                rep.save(userToPromote);
+
+                // change authorities in the jdbc authentication table
+                Session sessionToUpdateAuthorities = entityManager.unwrap(Session.class);
+                sessionToUpdateAuthorities.doWork(connection -> {
+                    String query = "update authorities set authority = ? where username = ?";
+                    PreparedStatement updateAuth = connection.prepareStatement(query);
+                    updateAuth.setString(1, "ROLE_" + role.toUpperCase());
+                    updateAuth.setString(2, username);
+
+                    updateAuth.executeUpdate();
+                    // connection.commit();
+                    connection.close();
+                });
+                sessionToUpdateAuthorities.close();
+                return ResponseEntity.noContent().build();
+            }
+
+            // if the rights are incorrect
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
     }
 }
