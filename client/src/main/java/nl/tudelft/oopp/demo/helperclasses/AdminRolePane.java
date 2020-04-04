@@ -54,7 +54,7 @@ public class AdminRolePane {
             makeEmployeeButtons.add(makeEmployeeButton);
 
             Button makeNormalButton = new Button("Make User");
-            makeNormalButtons.add(makeEmployeeButton);
+            makeNormalButtons.add(makeNormalButton);
 
 
             if(users.get(i).getRole().equals("ROLE_USER")) {
