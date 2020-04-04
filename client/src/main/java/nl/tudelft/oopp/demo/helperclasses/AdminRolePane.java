@@ -38,10 +38,14 @@ public class AdminRolePane {
         for (int i = 0; i < users.size(); i++) {
             tps[c] = new TitledPane();
 
+            String roles = users.get(i).getRole();
+            String tempWord = "ROLE_";
+            roles = roles.replaceAll(tempWord, "");
+
             Label usernameLabel = new Label(users.get(i).getUsername());
             Label userFirstNameLabel = new Label(users.get(i).getFirstName());
             Label userLastNameLabel = new Label(users.get(i).getLastName());
-            Label userRoleLabel = new Label(users.get(i).getRole());
+            Label userRoleLabel = new Label(roles);
 
             Button makeAdminButton = new Button("Make Admin");
             makeAdminButtons.add(makeAdminButton);
