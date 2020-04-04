@@ -64,12 +64,14 @@ public class AdminRolePane {
             // make a user Employee
             makeEmployeeButton.setOnAction(event -> {
                 UserCommunication.changeRole(users.get(Index).getUsername(), "employee");
+                AdminSceneController.loadAdminScene(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 
             // make a user "Normal"
             makeEmployeeButton.setOnAction(event -> {
                 UserCommunication.changeRole(users.get(Index).getUsername(), "user");
+                AdminSceneController.loadAdminScene(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 
@@ -81,13 +83,13 @@ public class AdminRolePane {
             HBox.setHgrow(makeEmployeeButton, Priority.ALWAYS);
             HBox.setHgrow(makeAdminButton, Priority.ALWAYS);
 
-            usernameLabel.setMinWidth(50);
-            userFirstNameLabel.setMinWidth(50);
-            userLastNameLabel.setMinWidth(50);
+            usernameLabel.setMinWidth(70);
+            userFirstNameLabel.setMinWidth(70);
+            userLastNameLabel.setMinWidth(70);
             userRoleLabel.setMinWidth(100);
-            makeNormalButton.setMinWidth(50);
-            makeEmployeeButton.setMinWidth(50);
-            makeAdminButton.setMinWidth(50);
+            makeNormalButton.setMinWidth(40);
+            makeEmployeeButton.setMinWidth(40);
+            makeAdminButton.setMinWidth(40);
 
             HBox hoBoxUsernameAndRemove = new HBox();
             hoBoxUsernameAndRemove.setSpacing(25);
@@ -98,7 +100,7 @@ public class AdminRolePane {
                 + "-fx-border-radius: 5;" + "-fx-border-color: lightblue;");
 
             veBoxTp.getChildren().add(hoBoxUsernameAndRemove);
-            veBoxTp.setPadding(new Insets(20, 0, 0, 0));
+            veBoxTp.setPadding(new Insets(10, 0, 0, 0));
         }
 
         // All elements in BorderPane
