@@ -170,6 +170,12 @@ public class UserController {
         return ResponseEntity.created(uri.toUri()).body(newUser);
     }
 
+    /**
+     * POST mapping to allow admins to change other users's roles. Authentication handled by jdbc.
+     * @param username The user's username whose role will be changed
+     * @param role The role to change to
+     * @return A response entity with a sensibe response code (see user controller to see return options)
+     */
     @PostMapping(value = "change_user_role/{username}", consumes = {"application/json"})
     public ResponseEntity<?> changeUserRole(@PathVariable String username, @Valid @RequestBody String role, Authentication authentication) {
         return rep.findByUsername(username).map(userToPromote -> {
@@ -191,8 +197,12 @@ public class UserController {
                     connection.close();
                 });
                 sessionToUpdateAuthorities.close();
+                return ResponseEntity.noContent().build();
             }
-            return ResponseEntity.noContent().build();
+
+            // if the rights are incorrect
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
