@@ -160,6 +160,7 @@ public class ReservationSceneController implements Initializable {
                             public void handle(ActionEvent e) {
                                 stt[0] = cb.getValue();
 
+                                timeToDelete.clear();
                                 for (LocalTime time : to) {
                                     if (time.isBefore(stt[0])) {
                                         timeToDelete.add(time);
