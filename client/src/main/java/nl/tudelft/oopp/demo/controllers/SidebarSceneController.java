@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
 import nl.tudelft.oopp.demo.entities.Item;
 
@@ -91,9 +92,16 @@ public class SidebarSceneController implements Initializable {
                 if (date.isBefore(ChronoLocalDate.from(today))) {
                     setDisable(true);
                 }
-                if (empty || date.isAfter(monday.plusDays(13))) {
-                    setDisable(true);
-                    setStyle("-fx-background-color: #ffc0cb;");
+                if (Authenticator.isAdmin() || Authenticator.isEmployee()) {
+                    if (empty || date.isAfter(monday.plusDays(27))) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #ffc0cb;");
+                    }
+                } else {
+                    if (empty || date.isAfter(monday.plusDays(13))) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #ffc0cb;");
+                    }
                 }
             }
         });
