@@ -141,12 +141,12 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", capacity=" + capacity +
-                ", building=" + building +
-                ", equipment=" + equipment +
-                '}';
+        return "Room{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", capacity=" + capacity
+                + ", building=" + building
+                + ", equipment=" + equipment
+                + '}';
     }
 }

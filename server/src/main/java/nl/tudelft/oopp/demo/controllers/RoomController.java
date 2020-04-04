@@ -74,8 +74,8 @@ public class RoomController {
     @GetMapping("rooms/filter")
     public @ResponseBody
     List<Room> getFilteredRooms(@RequestParam(name = "building_id") Long id,
-                                @RequestParam(name = "date") String date,
-                                @RequestParam(name = "user_id") Long userId,
+                                @RequestParam(name = "date", required = false) String date,
+                                @RequestParam(name = "user_id", required = false) Long userId,
                                 @RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
                                 @RequestParam(name = "e1", required = false) String e1,
                                 @RequestParam(name = "e2", required = false) String e2,
@@ -87,29 +87,31 @@ public class RoomController {
         List<String> filters = new ArrayList<>();
         List<Room> roomList = rooms.filterRoom(id, capacity);
 
-        LocalDate currentDate = LocalDate.parse(date);
-        //use dayOfWeek = date.getDayOfWeek().getValue() to get the day as a number
-        int dayOfWeek = currentDate.getDayOfWeek().getValue();
-        System.out.println(dayOfWeek);
-        // use date.minusDays(dayOfWeek-1) to get to monday
-        currentDate = currentDate.minusDays(dayOfWeek-1);
-        for (int i = 0; i <= 6; i++) {
-            // get the rooms for the current user and date
-            List<RoomReservation> reservations = reservationRepository.findByUserIdAndDateAndRoomBuildingId(userId, currentDate, id);
+        if (date != null && userId != null) {
+            LocalDate currentDate = LocalDate.parse(date);
+            //use dayOfWeek = date.getDayOfWeek().getValue() to get the day as a number
+            int dayOfWeek = currentDate.getDayOfWeek().getValue();
+            System.out.println(dayOfWeek);
+            // use date.minusDays(dayOfWeek-1) to get to monday
+            currentDate = currentDate.minusDays(dayOfWeek - 1);
+            for (int i = 0; i <= 6; i++) {
+                // get the rooms for the current user and date
+                List<RoomReservation> reservations = reservationRepository.findByUserIdAndDateAndRoomBuildingId(userId, currentDate, id);
 
-            System.out.println(currentDate);
-            // iterate through the reservations for that date
-            for (RoomReservation reservation : reservations) {
-                System.out.print(reservation);
-                System.out.print(reservation.getRoom());
-                //if the room has already been reserved this week
-                if (roomList.contains(reservation.getRoom())) {
-                    // we remove the room from the result
-                    roomList.remove(reservation.getRoom());
+                System.out.println(currentDate);
+                // iterate through the reservations for that date
+                for (RoomReservation reservation : reservations) {
+                    System.out.print(reservation);
+                    System.out.print(reservation.getRoom());
+                    //if the room has already been reserved this week
+                    if (roomList.contains(reservation.getRoom())) {
+                        // we remove the room from the result
+                        roomList.remove(reservation.getRoom());
+                    }
                 }
+                //move to the next date to get the next room reservations
+                currentDate = currentDate.plusDays(1);
             }
-            //move to the next date to get the next room reservations
-            currentDate = currentDate.plusDays(1);
         }
 
         if (!(e1 == null)) {
