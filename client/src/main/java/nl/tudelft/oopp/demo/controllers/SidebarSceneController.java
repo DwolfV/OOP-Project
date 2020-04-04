@@ -1,14 +1,17 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.net.URL;
-import java.time.*;
-import java.time.chrono.ChronoLocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import static java.time.LocalDate.now;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.TimeZone;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -24,9 +27,6 @@ import javafx.scene.paint.Paint;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
 import nl.tudelft.oopp.demo.entities.Item;
-
-import static java.time.LocalDate.*;
-import static java.util.Calendar.MONDAY;
 
 public class SidebarSceneController implements Initializable {
 
