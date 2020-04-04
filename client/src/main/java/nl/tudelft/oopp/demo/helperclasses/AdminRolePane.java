@@ -98,10 +98,10 @@ public class AdminRolePane {
             HBox.setHgrow(makeEmployeeButton, Priority.ALWAYS);
             HBox.setHgrow(makeAdminButton, Priority.ALWAYS);
 
-            usernameLabel.setMinWidth(70);
-            userFirstNameLabel.setMinWidth(70);
-            userLastNameLabel.setMinWidth(70);
-            userRoleLabel.setMinWidth(100);
+            usernameLabel.setMinWidth(100);
+            userFirstNameLabel.setMinWidth(100);
+            userLastNameLabel.setMinWidth(100);
+            userRoleLabel.setMinWidth(40);
             makeNormalButton.setMinWidth(40);
             makeEmployeeButton.setMinWidth(40);
             makeAdminButton.setMinWidth(40);
