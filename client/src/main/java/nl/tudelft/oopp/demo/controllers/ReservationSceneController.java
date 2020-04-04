@@ -1,17 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import static java.util.function.Predicate.not;
-
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
@@ -35,6 +24,19 @@ import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Occasion;
 import nl.tudelft.oopp.demo.helperclasses.Room;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.function.Predicate.not;
 
 public class ReservationSceneController implements Initializable {
 
@@ -199,6 +201,17 @@ public class ReservationSceneController implements Initializable {
                         RoomReservationCommunication.addRoomReservation(date, stt[0], ett[0], roomId);
                         System.out.println(date + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
+
+                    horizBox.setHgrow(label1, Priority.ALWAYS);
+                    horizBox.setHgrow(label2, Priority.ALWAYS);
+                    horizBox.setHgrow(cb, Priority.ALWAYS);
+                    horizBox.setHgrow(cbb, Priority.ALWAYS);
+                    horizBox.setHgrow(button1, Priority.ALWAYS);
+                    label1.setMinWidth(70);
+                    label2.setMinWidth(100);
+                    cb.setMinWidth(70);
+                    cbb.setMinWidth(70);
+                    button1.setMinWidth(70);
 
                     horizBox.getChildren().addAll(label1, label2, cb, cbb, button1);
                     horizBox.setSpacing(150);
