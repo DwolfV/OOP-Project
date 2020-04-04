@@ -1,11 +1,14 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
+import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +55,9 @@ public class RoomController {
         return rooms.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rooms.findByBuildingId(id), HttpStatus.OK);
     }
 
+    @Autowired
+    RoomReservationRepository reservationRepository;
+
     /**
      * GET Endpoint to retrieve a list of all rooms in a building with certain filters applied.
      *
@@ -60,7 +66,7 @@ public class RoomController {
      * @param e1       - the name of a piece of equipment that should be present in the room
      * @param e2       - the name of a piece of equipment that should be present in the room
      * @param e3       - the name of a piece of equipment that should be present in the room
-     * @param e4       - the name of a piece of equipment that should be present in the room\
+     * @param e4       - the name of a piece of equipment that should be present in the room
      * @param e5       - the name of a piece of equipment that should be present in the room
      * @param e6       - the name of a piece of equipment that should be present in the room
      * @return a list of filtered buildings
@@ -68,6 +74,8 @@ public class RoomController {
     @GetMapping("rooms/filter")
     public @ResponseBody
     List<Room> getFilteredRooms(@RequestParam(name = "building_id") Long id,
+                                @RequestParam(name = "date") String date,
+                                @RequestParam(name = "user_id") Long userId,
                                 @RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
                                 @RequestParam(name = "e1", required = false) String e1,
                                 @RequestParam(name = "e2", required = false) String e2,
@@ -78,6 +86,29 @@ public class RoomController {
         List<Room> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Room> roomList = rooms.filterRoom(id, capacity);
+
+        LocalDate currentDate = LocalDate.parse(date);
+        System.out.println(currentDate);
+        //use dayOfWeek = date.getDayOfWeek().getValue() to get the day as a number
+        int dayOfWeek = currentDate.getDayOfWeek().getValue();
+        // use date.minusDays(dayOfWeek-1) to get to monday
+        LocalDate day = currentDate.minusDays(dayOfWeek);
+        for (int i = 0; i < 6; i++) {
+            // get the rooms for the current user and date
+            List<RoomReservation> reservations = reservationRepository.findByUserIdAndDateAndRoomBuildingId(userId, day, id);
+            System.out.print(reservations);
+            // iterate through the reservations for that date
+            for (RoomReservation reservation : reservations) {
+                //if the room has already been reserved this week
+                if (roomList.contains(reservation.getRoom())) {
+                    // we remove the room from the result
+                    roomList.remove(reservation.getRoom());
+                }
+            }
+            //move to the next date to get the next room reservations
+            day = day.plusDays(1);
+        }
+
         if (!(e1 == null)) {
             filters.add(e1);
         }
@@ -101,11 +132,10 @@ public class RoomController {
         for (String s : filters) {
             expected++;
         }
-
+        System.out.println("test");
         if (expected == 0) {
             return roomList;
         }
-
         for (Room room : roomList) {
             List<Equipment> equipmentList = room.getEquipment();
             int count = 0; //to count how many filters the room satisfies
@@ -120,6 +150,8 @@ public class RoomController {
             }
 
         }
+
+
         return result;
     }
 

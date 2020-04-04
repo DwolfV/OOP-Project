@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 import nl.tudelft.oopp.demo.entities.Room;
@@ -94,9 +95,9 @@ public class RoomCommunication {
      * @return A list of all rooms.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static List<Room> getFilteredRoomsByBuilding(Long buildingId, Integer capacity, List<String> equipment) {
+    public static List<Room> getFilteredRoomsByBuilding(Long buildingId, LocalDate date, Long userId, Integer capacity, List<String> equipment) {
 
-        String uri = "http://localhost:8080/rooms/filter?building_id=" + buildingId;
+        String uri = "http://localhost:8080/rooms/filter?building_id=" + buildingId + "&date=" + date + "&user_id=" + userId;
         if (capacity == null) {
             capacity = 0;
         }
