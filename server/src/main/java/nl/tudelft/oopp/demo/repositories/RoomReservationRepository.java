@@ -24,4 +24,5 @@ public interface RoomReservationRepository extends JpaRepository<RoomReservation
 
     List<RoomReservation> findByRoomId(@Param("room_id") long roomId);
 
+    List<RoomReservation> findByUserIdAndRoomBuildingId(long userId, long buildingId);
 }
