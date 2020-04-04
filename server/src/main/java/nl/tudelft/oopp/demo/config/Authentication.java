@@ -44,14 +44,14 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                         "/openTimes/**", "/restaurant/**", "/rooms/**",
                         "/room_reservations/**", "/supply/**", "/login", "/room_reservations_times/**", "/occasion/**", "/event/**",
                         "/supply_reservations/**", "/friend/**", "/invitation/**", "/item/**")
-                        .hasAnyRole("USER", "ADMIN")
+                        .hasAnyRole("USER", "ADMIN", "EMPLOYEE")
                 .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.POST, "/room_reservations/**", "/event/**", "/supply_reservations/**", "/friend/**", "/invitation/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/room_reservations/**", "/event/**", "/supply_reservations/**", "/friend/**", "/invitation/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/room_reservations/**", "/event/**", "/supply_reservations/**", "/friend/**", "/invitation/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/room_reservations/**", "/event/**", "/supply_reservations/**", "/friend/**", "/invitation/**").hasAnyRole("USER", "ADMIN", "EMPLOYEE")
+                .antMatchers(HttpMethod.PUT, "/room_reservations/**", "/event/**", "/supply_reservations/**", "/friend/**", "/invitation/**").hasAnyRole("USER", "ADMIN", "EMPLOYEE")
+                .antMatchers(HttpMethod.DELETE, "/room_reservations/**", "/event/**", "/supply_reservations/**", "/friend/**", "/invitation/**").hasAnyRole("USER", "ADMIN", "EMPLOYEE")
                 .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
