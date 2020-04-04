@@ -106,7 +106,7 @@ public class AdminSceneController implements Initializable {
         ScrollPane scrollPaneRoles = getScrollPane(vboxRoles);
 
         rolesTP = new TitledPane();
-        rolesTP.setText("Supplies");
+        rolesTP.setText("Roles");
         rolesTP.setContent(scrollPaneRoles);
 
         // Set Panes
