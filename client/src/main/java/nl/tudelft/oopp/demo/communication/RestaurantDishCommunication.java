@@ -10,6 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Dish;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
 import nl.tudelft.oopp.demo.helperclasses.RestaurantDish;
@@ -70,6 +72,40 @@ public class RestaurantDishCommunication {
             e.printStackTrace();
         }
         return dishes;
+    }
+
+    /**
+     * Get a RestaurantDish by id.
+     *
+     * @param id - the id of the restaurant dish
+     * @return a RestaurantDish
+     */
+    public static RestaurantDish getRestaurantDishById(long id) {
+        // TODO what if Authenticator.SESSION_COOKIE is not set?
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/restaurant_dish/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        RestaurantDish restaurantDish = null;
+        // TODO handle exception
+        try {
+            restaurantDish = mapper.readValue(response.body(), new TypeReference<RestaurantDish>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return restaurantDish;
     }
 
     /**
