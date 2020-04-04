@@ -4,6 +4,8 @@ import static java.time.LocalDate.now;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -68,11 +70,18 @@ public class SidebarSceneController implements Initializable {
      * This method restricts the DatePicker.
      */
     public void datePickerFilter() {
+        LocalDate today = LocalDate.now();
+        dp.setValue(today);
         dp.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-                setDisable(empty || date.compareTo(today) > 7);
+                if (date.isBefore(ChronoLocalDate.from(today))) {
+                    setDisable(true);
+                }
+                if (empty || date.isAfter(today.plusWeeks(2))) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
             }
         });
     }
