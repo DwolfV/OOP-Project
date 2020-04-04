@@ -6,12 +6,22 @@
   -fx-background-color: #6699CC;
 }
 
+.background-pane {
+  -fx-background-color: #555555;
+}
+
 .header-pane {
   -fx-background-color: #336699;
+  -fx-border-width: 0 0 3 0;
+  -fx-border-color: linear-gradient(to bottom, #1a334d, #555555);
+}
+
+.side-pane {
+  -fx-background-color: #2b2b2b;
 }
 
 .empty-side-pane {
-  -fx-background-color: transparent;
+  -fx-background-color: #555555;
 }
 
 .filter-vbox {
@@ -30,12 +40,29 @@
   -fx-background-color: #66CCFF;
 }
 
+.hamburger-pane {
+  -fx-background-color: #2b2b2b;
+}
+
+.menu-title {
+  -fx-font: 11pt "Candara Light";
+  -fx-text-color: #BBBBBB;
+  -fx-padding: 0 0 8 10;
+}
+
 .menu-button {
-  -fx-background-color: #6699CC;
+  -fx-font: 14pt "Candara Light";
+  -fx-text-color: #F5F5F5;
+  -fx-padding: 0 0 0 20;
+  -fx-alignment: left;
+  -fx-background-color: #2b2b2b;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
   -fx-background-radius: 0;
-  -fx-border-width: 2 0 0 0;
-  -fx-border-color: #BBBBBB;
+  -fx-background-insets: 0, 0 0 0 0;
+}
+
+.menu-button-splitter {
+  -fx-fill: #555555;
 }
 
 .hamburger-button {
@@ -53,46 +80,6 @@
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
 }
 
-/*
-// ADMIN
-.admin-main-pane {
-    -fx-border-width: 0 2 0 2;
-    -fx-border-color: $l-grey;
-    -fx-background-color: $el-grey;
-}
-
-.scroll-pane-admin {
-    -fx-border-width: 0 2 0 2;
-    -fx-border-color: $l-grey;
-    -fx-background-color: $el-grey;
-}
-
-.admin-center {
-    -fx-padding: 3.0em;
-}
-
-.admin-right {
-    -fx-background-color: $l-grey;
-    -fx-pref-width: 250;
-    -fx-padding: 3.0em;
-}
-
-.admin-bottom {
-    -fx-background-color: $l-grey;
-    -fx-padding: 1.0em 1.0em 4.0em 3.0em;
-    -fx-spacing: 10;
-}
-
-.admin-border-pane {
-    -fx-background-color: $l-grey;
-}
-
-.admin-pane-button {
-    -fx-pref-width: 180;
-    -fx-pref-height: 40;
-    -fx-background-radius: 0;
-}
-*/
 .restaurant-menu {
   -fx-background-color: #F5F5F5;
   -fx-background-insets: 0, 0 0 0 0;
@@ -129,14 +116,14 @@
 .table-view {
   -fx-background-color: #F5F5F5;
   -fx-background-insets: 0, 0 0 0 0;
-  -fx-padding: 3em 0em 0em 3em;
-  -fx-border-width: 0 0 0 0;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-color: #555555;
 }
 
 .table-view .column-header {
-  -fx-background-color: #BBBBBB;
+  -fx-background-color: #6699CC;
   -fx-border-width: 0 1 0 1;
-  -fx-border-color: #555555;
+  -fx-border-color: #336699;
 }
 
 .table-view .column-header:hover {

@@ -111,7 +111,7 @@ public class RestaurantSceneController implements Initializable {
         }
         MenuSceneController.loadMenu(pane, -1);
         double mainPaneWidth = screenBounds.getWidth() - 400;
-        mainPane.setPrefWidth(mainPaneWidth);
+        //mainPane.setPrefWidth(mainPaneWidth);
         hbox.setPrefWidth(mainPaneWidth);
         hbox.setPrefHeight(screenBounds.getHeight() - 200);
         ac.setPrefWidth(screenBounds.getWidth());

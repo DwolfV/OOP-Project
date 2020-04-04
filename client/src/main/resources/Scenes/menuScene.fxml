@@ -6,6 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="pane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.MenuSceneController"
-            prefHeight="400.0" stylesheets="@/Styles/mainstyle.css">
+<Pane fx:id="mainPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.MenuSceneController"
+            prefHeight="400.0" stylesheets="@/Styles/mainstyle.css" styleClass="background-pane">
 </Pane>

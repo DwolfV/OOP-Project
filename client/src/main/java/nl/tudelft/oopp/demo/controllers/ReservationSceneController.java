@@ -220,7 +220,6 @@ public class ReservationSceneController implements Initializable {
                 // load the accordion into the scene if there are available rooms
                 VBox box = new VBox(ac);
                 borderPane.setCenter(box);
-                borderPane.setPadding(new Insets(20, 0, 0, 50));
             }
 
         }

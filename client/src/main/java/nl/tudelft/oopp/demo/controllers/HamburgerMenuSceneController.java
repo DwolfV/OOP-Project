@@ -128,7 +128,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openFriends(MouseEvent event) {
         mainSceneController.changeCenter(friendsRoot);
-        mainSceneController.sidebar = (sidebarRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
     }
 
@@ -138,7 +138,7 @@ public class HamburgerMenuSceneController implements Initializable {
      */
     public void openSupplies(MouseEvent event) {
         mainSceneController.changeCenter(suppliesRoot);
-        mainSceneController.sidebar = (sidebarRoot);
+        mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
     }
 }
