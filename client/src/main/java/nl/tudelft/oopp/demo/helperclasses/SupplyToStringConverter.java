@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.helperclasses;
 import java.util.List;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
+import nl.tudelft.oopp.demo.entities.Supply;
 
 public class SupplyToStringConverter  extends StringConverter {
 

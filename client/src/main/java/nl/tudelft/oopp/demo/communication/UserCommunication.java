@@ -10,8 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.User;
-import nl.tudelft.oopp.demo.helperclasses.UserInfo;
+import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.entities.UserInfo;
 
 public class UserCommunication {
 

@@ -1,4 +1,4 @@
-package nl.tudelft.oopp.demo.helperclasses;
+package nl.tudelft.oopp.demo.entities;
 
 public class User {
 

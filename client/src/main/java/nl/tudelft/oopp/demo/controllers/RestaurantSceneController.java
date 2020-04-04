@@ -22,8 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Restaurant;
 
 public class RestaurantSceneController implements Initializable {
 

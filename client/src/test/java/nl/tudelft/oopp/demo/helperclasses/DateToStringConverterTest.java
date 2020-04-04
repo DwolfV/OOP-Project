@@ -1,13 +1,13 @@
-package nl.tudelft.oopp.demo.controller.helperclasses;
+package nl.tudelft.oopp.demo.helperclasses;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Occasion;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.DateToStringConverter;
-import nl.tudelft.oopp.demo.helperclasses.Occasion;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DateToStringConverterTest {
 

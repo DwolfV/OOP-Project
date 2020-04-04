@@ -12,7 +12,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Dish;
+
+import nl.tudelft.oopp.demo.entities.Dish;
+
+
 
 public class DishCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
@@ -63,7 +66,7 @@ public class DishCommunication {
 
     public static Dish getDishById(long id) {
         // TODO what if Authenticator.SESSION_COOKIE is not set?
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/dish/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.User;
 
 public class RegisterSceneController implements Initializable {
 
