@@ -9,4 +9,12 @@ public abstract class Authenticator {
     public static boolean isAdmin() {
         return ROLE.contains("ADMIN");
     }
+
+    public static boolean isUser() {
+        return ROLE.contains("USER");
+    }
+
+    public static boolean isEmployee() {
+        return ROLE.contains("EMPLOYEE");
+    }
 }

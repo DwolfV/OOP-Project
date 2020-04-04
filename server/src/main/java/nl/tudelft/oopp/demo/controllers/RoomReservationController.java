@@ -1,8 +1,10 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,9 +176,10 @@ public class RoomReservationController {
      *
      * @param newRoomReservation  The new room reservation object whose times need to be checked
      * @param allRoomReservations A list of all room reservations that have all unavailable time periods
+     * @param authentication Holds information for the authorities of the user that makes the request
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
-    public boolean timeIsValid(RoomReservation newRoomReservation, List<RoomReservation> allRoomReservations) {
+    public boolean timeIsValid(RoomReservation newRoomReservation, List<RoomReservation> allRoomReservations, Authentication authentication) {
         // TODO ROLE_EMPLOYEE?
 
         LocalTime startTime = newRoomReservation.getStartTime();
@@ -257,9 +260,26 @@ public class RoomReservationController {
             return false;
         }
 
-        // if the date is more than two weeks from now
-        LocalDate dateTwoWeeksFromNow = dateNow.plusWeeks(2);
-        if (newRoomReservation.getDate().compareTo(dateTwoWeeksFromNow) > 0) {
+        // if the date is not in this week and next week - for USERs
+        LocalDate today = LocalDate.now();
+        LocalDate mondayOfThisWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate sundayOfNextWeek = today.plusWeeks(1).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        // room reservation is after Monday this week or is Monday this week
+        boolean isAfterMonday = newRoomReservation.getDate().isAfter(mondayOfThisWeek) || newRoomReservation.getDate().isEqual(mondayOfThisWeek);
+        // room reservation is before Sunday of next week or is on that Sunday next week
+        boolean isBeforeSunday = newRoomReservation.getDate().isBefore(sundayOfNextWeek) || newRoomReservation.getDate().isEqual(sundayOfNextWeek);
+        if (authentication.getAuthorities().toString().contains("USER") && !(isAfterMonday && isBeforeSunday)) {
+            return false;
+        }
+
+        // if the date is not in this week and the next three weeks - for EMPLOYEES (and ADMINs))
+        // the check for monday is the same (isAfterMonday)
+        // the Sunday checks should be modified as employees (and admins) can reserve rooms for 3 weeks after this week (including this week)
+        sundayOfNextWeek = today.plusWeeks(3).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        isBeforeSunday = newRoomReservation.getDate().isBefore(sundayOfNextWeek) || newRoomReservation.getDate().isEqual(sundayOfNextWeek);
+        if ((authentication.getAuthorities().toString().contains("EMPLOYEE")
+            || authentication.getAuthorities().toString().contains("ADMIN")) && !(isAfterMonday && isBeforeSunday)) {
             return false;
         }
 
@@ -291,7 +311,7 @@ public class RoomReservationController {
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }
 
-            if (!timeIsValid(newRoomReservation, allReservations)) {
+            if (!timeIsValid(newRoomReservation, allReservations, authentication)) {
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }
             // Save a newly created object, so that the id will be auto generated
@@ -337,7 +357,8 @@ public class RoomReservationController {
 
         // if the user has reserved this room at some point during the week
         int weekOfNewReservation = newRoomReservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
-        for (RoomReservation reservation : reservations.findByUserIdAndRoomId(newRoomReservation.getUser().getId(), newRoomReservation.getRoom().getId())) {
+        for (RoomReservation reservation : reservations.findByUserIdAndRoomBuildingId(newRoomReservation.getUser().getId(),
+            rooms.findById(newRoomReservation.getRoom().getId()).get().getBuilding().getId())) {
             int weekOfRes = reservation.getDate().plusDays(1).get(WeekFields.ISO.weekOfWeekBasedYear());
             if (weekOfNewReservation == weekOfRes && reservation.getId() != newRoomReservation.getId() && reservation.getDate().getYear() == newRoomReservation.getDate().getYear()) {
                 return true;
@@ -373,7 +394,7 @@ public class RoomReservationController {
                     return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
                 }
 
-                if (!timeIsValid(newRoomReservation, allReservations)) {
+                if (!timeIsValid(newRoomReservation, allReservations, authentication)) {
                     return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
                 }
 
