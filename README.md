@@ -24,13 +24,26 @@ Therefore, we have developed a new application dedicated to reserving rooms arou
 <!-- - (please make sure the photos have the same size) --> 
 
 ## How to run it
-run ```./gradlew build``` in the directory of the project.
-    Then to start the server type
-    ```./gradlew bootRun```
-    To start the client type
-    ```./gradlew run```
-
-
+### On Linux/Mac 
+run 
+```
+./gradlew build
+``` 
+in the directory of the project.
+Then to start the server type
+```
+./gradlew bootRun
+```
+To start the client type
+```
+./gradlew run
+```
+Similarly for Windows:
+```
+.\gradle.bat build
+.\gradle.bat bootRun
+.\gradle.bat run
+```
 ## How to contribute to it
 1. Fork the repository
 2. Make your changes

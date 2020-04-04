@@ -11,8 +11,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Order;
-import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
+import nl.tudelft.oopp.demo.entities.Order;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 
 public class OrderCommunication {
 

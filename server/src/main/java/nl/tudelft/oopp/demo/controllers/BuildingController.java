@@ -164,6 +164,7 @@ public class BuildingController {
             building.setCloseTime(newBuilding.getCloseTime());
             building.setStreetName(newBuilding.getStreetName());
             building.setStreetNumber(newBuilding.getStreetNumber());
+            building.setZipCode(newBuilding.getZipCode());
 
             return new ResponseEntity<>(rep.save(building), HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

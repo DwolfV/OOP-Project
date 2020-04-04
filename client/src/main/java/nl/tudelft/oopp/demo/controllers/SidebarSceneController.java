@@ -22,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
-import nl.tudelft.oopp.demo.helperclasses.Item;
+import nl.tudelft.oopp.demo.entities.Item;
 
 import static java.time.LocalDate.*;
 import static java.util.Calendar.MONDAY;

@@ -1,11 +1,10 @@
-package nl.tudelft.oopp.demo.controller.helperclasses;
+package nl.tudelft.oopp.demo.helperclasses;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import nl.tudelft.oopp.demo.helperclasses.Building;
-import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
+import nl.tudelft.oopp.demo.entities.Building;
 import org.junit.jupiter.api.Test;
 
 public class TimeToStringConverterTest {

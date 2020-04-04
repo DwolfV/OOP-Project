@@ -24,6 +24,8 @@ import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Occasion;
 
 public class AdminBuildingPane {
 

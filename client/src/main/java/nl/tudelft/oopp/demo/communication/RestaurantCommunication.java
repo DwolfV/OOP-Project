@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalTime;
 import java.util.List;
 
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
+import nl.tudelft.oopp.demo.entities.Restaurant;
 
 public class RestaurantCommunication {
 
