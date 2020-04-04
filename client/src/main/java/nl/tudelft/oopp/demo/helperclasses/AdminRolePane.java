@@ -57,7 +57,7 @@ public class AdminRolePane {
             makeNormalButtons.add(makeNormalButton);
 
 
-            if(users.get(i).getRole().equals("ROLE_USER")) {
+            if (users.get(i).getRole().equals("ROLE_USER")) {
                 makeNormalButton.setDisable(true);
             }
             if (users.get(i).getRole().equals("ROLE_EMPLOYEE")) {

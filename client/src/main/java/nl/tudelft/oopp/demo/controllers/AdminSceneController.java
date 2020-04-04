@@ -17,7 +17,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
-import nl.tudelft.oopp.demo.helperclasses.*;
+import nl.tudelft.oopp.demo.helperclasses.AdminBuildingPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminRestaurantPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminRolePane;
+import nl.tudelft.oopp.demo.helperclasses.AdminRoomPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminSupplyPane;
 
 public class AdminSceneController implements Initializable {
 
