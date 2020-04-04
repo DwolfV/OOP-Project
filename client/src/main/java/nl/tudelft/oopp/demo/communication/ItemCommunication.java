@@ -10,7 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-import nl.tudelft.oopp.demo.helperclasses.Item;
+import nl.tudelft.oopp.demo.entities.Item;
 
 public class ItemCommunication {
 

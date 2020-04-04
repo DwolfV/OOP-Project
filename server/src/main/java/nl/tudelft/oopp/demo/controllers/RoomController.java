@@ -3,7 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
-
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
@@ -48,31 +47,34 @@ public class RoomController {
      * @return a list of the rooms in the building {@link Room}.
      */
     @GetMapping("rooms/{building_id}")
-    public @ResponseBody ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value = "building_id") long id) {
+    public @ResponseBody
+    ResponseEntity<List<Room>> getRoomsInBuilding(@PathVariable(value = "building_id") long id) {
         return rooms.findByBuildingId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(rooms.findByBuildingId(id), HttpStatus.OK);
     }
 
     /**
      * GET Endpoint to retrieve a list of all rooms in a building with certain filters applied.
-     * @param id - the id of the building from which the rooms are
+     *
+     * @param id       - the id of the building from which the rooms are
      * @param capacity - the minimum capacity of the room
-     * @param e1 - the name of a piece of equipment that should be present in the room
-     * @param e2 - the name of a piece of equipment that should be present in the room
-     * @param e3 - the name of a piece of equipment that should be present in the room
-     * @param e4 - the name of a piece of equipment that should be present in the room\
-     * @param e5 - the name of a piece of equipment that should be present in the room
-     * @param e6 - the name of a piece of equipment that should be present in the room
+     * @param e1       - the name of a piece of equipment that should be present in the room
+     * @param e2       - the name of a piece of equipment that should be present in the room
+     * @param e3       - the name of a piece of equipment that should be present in the room
+     * @param e4       - the name of a piece of equipment that should be present in the room\
+     * @param e5       - the name of a piece of equipment that should be present in the room
+     * @param e6       - the name of a piece of equipment that should be present in the room
      * @return a list of filtered buildings
      */
     @GetMapping("rooms/filter")
-    public @ResponseBody List<Room> getFilteredRooms(@RequestParam (name = "building_id") Long id,
-                                       @RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
-                                       @RequestParam (name = "e1", required = false) String e1,
-                                       @RequestParam (name = "e2", required = false) String e2,
-                                       @RequestParam (name = "e3", required = false) String e3,
-                                       @RequestParam (name = "e4", required = false) String e4,
-                                       @RequestParam (name = "e4", required = false) String e5,
-                                       @RequestParam (name = "e4", required = false) String e6) {
+    public @ResponseBody
+    List<Room> getFilteredRooms(@RequestParam(name = "building_id") Long id,
+                                @RequestParam(name = "capacity", required = false, defaultValue = "0") Integer capacity,
+                                @RequestParam(name = "e1", required = false) String e1,
+                                @RequestParam(name = "e2", required = false) String e2,
+                                @RequestParam(name = "e3", required = false) String e3,
+                                @RequestParam(name = "e4", required = false) String e4,
+                                @RequestParam(name = "e4", required = false) String e5,
+                                @RequestParam(name = "e4", required = false) String e6) {
         List<Room> result = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         List<Room> roomList = rooms.filterRoom(id, capacity);
@@ -132,19 +134,19 @@ public class RoomController {
         rooms.save(newRoom);
         UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
         return ResponseEntity
-                .created(uri.toUri())
-                .body(newRoom);
+            .created(uri.toUri())
+            .body(newRoom);
     }
 
     /**
      * PUT Endpoint to update the entry of a given room.
      *
-     * @param roomId Unique identifier of the room that is to be updated.
+     * @param roomId  Unique identifier of the room that is to be updated.
      * @param newRoom The updated version of the room.
      * @return the new room that is updated {@link Room}.
      */
     @PutMapping("rooms/{room_id}")
-    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable long roomId, UriComponentsBuilder b) {
+    public ResponseEntity<Room> replaceRoom(@RequestBody Room newRoom, @PathVariable(value = "room_id") long roomId, UriComponentsBuilder b) {
 
         UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(roomId);
 
@@ -169,7 +171,7 @@ public class RoomController {
      * @param roomId Unique identifier of the room that is to be deleted. {@link Room}
      */
     @DeleteMapping("rooms/{room_id}")
-    public ResponseEntity<?> deleteRoom(@PathVariable long roomId) {
+    public ResponseEntity<?> deleteRoom(@PathVariable(value = "room_id") long roomId) {
         rooms.deleteById(roomId);
 
         return ResponseEntity.noContent().build();

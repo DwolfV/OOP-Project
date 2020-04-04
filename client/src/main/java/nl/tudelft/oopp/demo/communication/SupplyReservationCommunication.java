@@ -11,11 +11,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Supply;
-import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.Supply;
+import nl.tudelft.oopp.demo.entities.SupplyReservation;
+import nl.tudelft.oopp.demo.entities.User;
 
 /**
  * Note before:

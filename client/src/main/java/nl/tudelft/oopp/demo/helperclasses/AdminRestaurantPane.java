@@ -21,6 +21,8 @@ import javafx.scene.text.Text;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Restaurant;
 
 public class AdminRestaurantPane {
 
