@@ -23,7 +23,7 @@ public class UserCommunication {
      * Authenticates a user and sets a session cookie.
      *
      * @return An integer flag: 0 - if the password is wrong or the user does not exist, 1 - if the server has authenticated the user;
-     *         2 - if the user has connectivity issues
+     *          2 - if the user has connectivity issues
      */
     public static int authenticate(String username, String password) {
         String encodedCredentials = Base64.getEncoder().encodeToString((username + ":" + password).getBytes());
@@ -134,6 +134,48 @@ public class UserCommunication {
 
         // if everything has gone fine, the user can authenticate with their newly added credentials
         return authenticate(username, password) == 1;
+    }
+
+    /**
+     * This method allows admins to change the roles of other users.
+     *
+     * @param username The username of the account you want to change the role of
+     * @param role     The role that you want the user to have. Choose from:
+     *                 admin, employee, user
+     *                 with user having the least rights, them employees, then admins.
+     *                 Note that the letter case does not matter.
+     * @return An integer flag:
+     *         0 - unauthorized
+     *         1 - successful
+     *         2 - the role does not exist
+     *         3 - if there is a network connection issue
+     *         4 - the user does not exist
+     *         5 - in any other case
+     */
+    public static int changeRole(String username, String role) {
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(role)).uri(URI.create(String.format("http://localhost:8080/change_user_role/%s", username))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 3;
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() == 404) {
+            System.out.println("No such user");
+            return 4;
+        } else if (response.statusCode() == 204) {
+            System.out.println("Successful role changing");
+            return 1;
+        } else if (response.statusCode() == 401 || response.statusCode() == 403) {
+            System.out.println("Unauthorized");
+            return 0;
+        } else if (response.statusCode() == 409) {
+            System.out.println("The role does not exist");
+            return 2;
+        }
+        return 5;
     }
 
 }

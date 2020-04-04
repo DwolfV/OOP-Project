@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
@@ -94,9 +95,10 @@ public class ReservationSceneController implements Initializable {
 
         // fill the accordion
         for (int i = 0; i < buildingData.size(); i++) {
-
+            LocalDate date = ctrl.onPickDate();
+            System.out.println(date);
             //Look for the rooms of the building i with the applied filters
-            ObservableList<Room> showRooms = FXCollections.observableList(RoomCommunication.getFilteredRoomsByBuilding(buildingData.get(i).getId(), capacity, filters));
+            ObservableList<Room> showRooms = FXCollections.observableList(RoomCommunication.getFilteredRoomsByBuilding(buildingData.get(i).getId(), date, Authenticator.ID, capacity, filters));
 
             if (showRooms.size() == 0) {
                 notFound++;
@@ -105,7 +107,6 @@ public class ReservationSceneController implements Initializable {
             //if there are rooms for the building i - show them
             if (showRooms.size() != 0) {
                 List<LocalTime> buildingTime = BuildingCommunication.getTimebyBuildingId(buildingData.get(i).getId());
-                LocalDate date = ctrl.onPickDate();
 
                 List<Occasion> occasions = OccasionCommunication.getOccasionsByBuilding(buildingData.get(i).getId());
                 LocalTime startTime = buildingTime.get(0);
@@ -163,6 +164,7 @@ public class ReservationSceneController implements Initializable {
                             public void handle(ActionEvent e) {
                                 stt[0] = cb.getValue();
 
+                                timeToDelete.clear();
                                 for (LocalTime time : to) {
                                     if (time.isBefore(stt[0])) {
                                         timeToDelete.add(time);
