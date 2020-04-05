@@ -45,6 +45,7 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader friendsLoader = new FXMLLoader(getClass().getResource("/Scenes/friendsScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
         FXMLLoader suppliesLoader = new FXMLLoader(getClass().getResource("/Scenes/supplyScene.fxml"));
+        FXMLLoader orderLoader = new FXMLLoader(getClass().getResource("/Scenes/orderScene.fxml"));
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
@@ -150,5 +151,9 @@ public class HamburgerMenuSceneController implements Initializable {
         mainSceneController.changeCenter(suppliesRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
+    }
+
+    public void openOrder() {
+        mainSceneController.borderPane.setRight(orderRoot);
     }
 }

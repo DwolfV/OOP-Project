@@ -19,6 +19,9 @@ import javafx.util.Callback;
 import javafx.util.converter.FloatStringConverter;
 import nl.tudelft.oopp.demo.communication.RestaurantDishCommunication;
 import nl.tudelft.oopp.demo.entities.Dish;
+import nl.tudelft.oopp.demo.entities.Restaurant;
+import nl.tudelft.oopp.demo.entities.RestaurantDish;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 
 public class MenuSceneController implements Initializable {
 

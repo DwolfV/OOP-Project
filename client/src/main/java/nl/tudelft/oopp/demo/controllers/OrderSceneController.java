@@ -11,6 +11,9 @@ import javafx.scene.control.ListView;
 import nl.tudelft.oopp.demo.communication.DishOrderCommunication;
 import nl.tudelft.oopp.demo.communication.OrderCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
+import nl.tudelft.oopp.demo.entities.Order;
+import nl.tudelft.oopp.demo.entities.RestaurantDish;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.helperclasses.*;
 
 import java.net.URL;
