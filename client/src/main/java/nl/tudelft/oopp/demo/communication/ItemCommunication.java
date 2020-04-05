@@ -152,8 +152,10 @@ public class ItemCommunication {
      */
     public static void removeItem(long id) {
         List<Equipment> equipmentList = EquipmentCommunication.getEquipmentByItem(id);
-        for (Equipment e : equipmentList) {
-            EquipmentCommunication.removeEquipment(e.getId());
+        if (equipmentList != null) {
+            for (Equipment e : equipmentList) {
+                EquipmentCommunication.removeEquipment(e.getId());
+            }
         }
 
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/item/delete/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();

@@ -79,7 +79,8 @@ public class EquipmentCommunication {
             equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
+            //e.printStackTrace();
         }
 
         return equipment;
