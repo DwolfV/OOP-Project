@@ -39,10 +39,10 @@ public class AdminItemsPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (ItemCommunication.updateItem(item.getId(), item.getName()).equals("Successful")) {
+        String success = ItemCommunication.updateItem(item.getId(), item.getName());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(ItemCommunication.updateItem(item.getId(), item.getName()));
             alert.showAndWait();
         }
     }
@@ -57,7 +57,7 @@ public class AdminItemsPane {
         Item item = tableItems.getSelectionModel().getSelectedItem();
 
         allItems.remove(item);
-//        ItemCommunication.removeItem(item.getId());
+        ItemCommunication.removeItem(item.getId());
     }
 
     /**
@@ -134,10 +134,10 @@ public class AdminItemsPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (ItemCommunication.addItem(itemFieldText).equals("Successful")) {
+            String success = ItemCommunication.addItem(itemFieldText);
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(ItemCommunication.addItem(itemFieldText));
                 alert.showAndWait();
             }
 
