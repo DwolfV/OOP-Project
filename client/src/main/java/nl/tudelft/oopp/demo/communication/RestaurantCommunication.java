@@ -132,7 +132,7 @@ public class RestaurantCommunication {
             e.printStackTrace();
         }
 
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
             return "There is already a restaurant with this name for this building.";
         }
