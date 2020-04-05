@@ -271,8 +271,11 @@ public class AdminItemsPane {
         TextField roomField = new TextField();
 
         ComboBox<String> roomComboBox = new ComboBox<>();
+        // get a list of buildings
         List<Building> buildingList = BuildingCommunication.getBuildings();
+        // string that will be displayed
         List<String> roomString = new ArrayList<>();
+        // string that we will use for comparison later
         List<String> idList = new ArrayList<>();
         for (Building building: buildingList) {
             idList.add(building.getName() + ", " + building.getId());
@@ -285,8 +288,7 @@ public class AdminItemsPane {
             if (newValue == null) {
                 return;
             }
-            String[] string = newValue.split(" ");
-            roomField.setText(string[1]);
+            roomField.setText(newValue);
         });
         roomComboBox.setItems(roomStringObservableList);
 
@@ -312,17 +314,27 @@ public class AdminItemsPane {
             String pickedItem = itemComboBox.getValue();
             String quantityFieldText = (quantityField.getText());
             String pickedRoom = roomField.getText();
-
-            for (Room room: idList) {
-                if (room.equals(pickedRoom)) {
-
+            // get the id of the building by comparing the selected name and the names inside the list that contains the ids
+            String buildingId = null;
+            String buildingName = pickedRoom.split(" ")[1];
+            for (String buildingNameId: idList) {
+                if (buildingNameId.split(", ")[0].equals(buildingName)) {
+                    buildingId = buildingNameId.split(", ")[1];
+                }
+            }
+            //get all the rooms by building id and look for the room that has the same name as the selected one
+            Long id = Long.parseLong(buildingId);
+            Room room = null;
+            for(Room r : RoomCommunication.getRoomsByBuildingId(id)) {
+                if (r.getName().equals(pickedRoom.split(" ")[3])) {
+                    room = r;
                 }
             }
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            String success = EquipmentCommunication.addEquipmentToRoom(pickedRoom, ItemCommunication.getItemByName(pickedItem), Integer.parseInt(quantityFieldText));
+            String success = EquipmentCommunication.addEquipmentToRoom(room, ItemCommunication.getItemByName(pickedItem), Integer.parseInt(quantityFieldText));
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
