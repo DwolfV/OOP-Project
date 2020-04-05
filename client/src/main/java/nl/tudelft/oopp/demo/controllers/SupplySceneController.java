@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -96,6 +97,8 @@ public class SupplySceneController implements Initializable {
 
             allReservedSupplies.remove(supplyReservation);
             SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
+
+            loadSuppliesAccordion();
         });
 
         veBoxDeleteAndTable = new VBox();
@@ -157,7 +160,12 @@ public class SupplySceneController implements Initializable {
                         LocalDate today = LocalDate.now();
                         int amount = Integer.parseInt(textFieldItem.getText());
 
-                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText(SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID));
+
+                        alert.showAndWait();
 
                         textFieldItem.setText(null);
 
