@@ -74,6 +74,8 @@ public class AdminSceneController implements Initializable {
         vboxBuilding.getStyleClass().add("v-boxes");
         buildTitle.getStyleClass().setAll("titles");
         occTitle.getStyleClass().setAll("titles");
+
+        ac.getPanes().set(0, buildingTP);
     }
 
     /**
@@ -96,6 +98,8 @@ public class AdminSceneController implements Initializable {
 
         vboxRoom.getStyleClass().add("v-boxes");
         roomTitle.getStyleClass().setAll("titles");
+
+        ac.getPanes().set(1, roomTP);
     }
 
     /**
@@ -119,6 +123,7 @@ public class AdminSceneController implements Initializable {
         vboxRestaurant.getStyleClass().add("v-boxes");
         resTitle.getStyleClass().setAll("titles");
 
+        ac.getPanes().set(2, restaurantTP);
     }
 
     /**
@@ -141,6 +146,8 @@ public class AdminSceneController implements Initializable {
 
         vboxSupply.getStyleClass().add("v-boxes");
         supplyTitle.getStyleClass().setAll("titles");
+
+        ac.getPanes().set(3, supplyTP);
     }
 
     /**
@@ -160,6 +167,8 @@ public class AdminSceneController implements Initializable {
         rolesTP = new TitledPane();
         rolesTP.setText("Roles");
         rolesTP.setContent(scrollPaneRoles);
+
+        ac.getPanes().set(4, rolesTP);
     }
 
     /**
@@ -170,6 +179,9 @@ public class AdminSceneController implements Initializable {
     public static void loadAdminScene(Accordion ac) {
         screenBounds = Screen.getPrimary().getBounds();
 
+        ac.getPanes().setAll(null, null, null, null, null);
+
+
         loadBuildingTP(ac);
         loadRoomTP(ac);
         loadRestaurantTP(ac);
@@ -178,7 +190,6 @@ public class AdminSceneController implements Initializable {
 
         // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
-        ac.getPanes().setAll(buildingTP, roomTP, restaurantTP, supplyTP, rolesTP);
     }
 
     /**
