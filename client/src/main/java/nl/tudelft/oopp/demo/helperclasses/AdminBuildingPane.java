@@ -92,9 +92,6 @@ public class AdminBuildingPane {
         buildingCol.setMinWidth(100);
         buildingCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        buildingCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
-                t.getTablePosition().getRow()).setName(t.getNewValue()));
         buildingCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
