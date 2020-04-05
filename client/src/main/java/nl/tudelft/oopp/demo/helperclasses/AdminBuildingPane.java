@@ -1,12 +1,8 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -35,6 +31,7 @@ public class AdminBuildingPane {
 
     public static TableView<Building> tableBuilding;
     public static TableView<Occasion> tableHoliday;
+    static ObservableList<Building> buildingData;
     private static Rectangle2D screenBounds;
     private static Button updateInfoButton = new Button("Update");
     private static Button deleteInfoButton = new Button("Delete");
@@ -49,7 +46,7 @@ public class AdminBuildingPane {
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
         BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
-                building.getZipCode(), building.getCity());
+            building.getZipCode(), building.getCity());
 
     }
 
@@ -66,7 +63,6 @@ public class AdminBuildingPane {
         BuildingCommunication.removeBuilding(building.getId());
     }
 
-    static ObservableList<Building> buildingData;
     /**
      * Get the BorderPane of the Building info list.
      *
@@ -210,7 +206,7 @@ public class AdminBuildingPane {
             String cityInputText = cityInput.getText();
 
             BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
-                    streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
+                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
 
             buildingNameInput.setText(null);
             openTimeInput.setValue(null);
@@ -277,33 +273,33 @@ public class AdminBuildingPane {
         // Set table of buildings with changed times
         // Center Pane
         TableColumn<Occasion, Long> idBuildingTimeCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idBuildingTimeCol.setMinWidth(100);
         idBuildingTimeCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Occasion, String> buildingNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConverter()));
 
         TableColumn<Occasion, LocalDate> dayCol =
-                new TableColumn<>("Day");
+            new TableColumn<>("Day");
         dayCol.setMinWidth(100);
         dayCol.setCellValueFactory(
-                new PropertyValueFactory<>("date"));
+            new PropertyValueFactory<>("date"));
         dayCol.setCellFactory(TextFieldTableCell.forTableColumn(new DateToStringConverter()));
         dayCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalDate> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setDate(t.getNewValue()));
 
         TableColumn<Occasion, LocalTime> openHolidayTimeCol =
-                new TableColumn<>("Open Time");
+            new TableColumn<>("Open Time");
         openHolidayTimeCol.setMinWidth(100);
         openHolidayTimeCol.setCellValueFactory(
-                new PropertyValueFactory<>("openTime"));
+            new PropertyValueFactory<>("openTime"));
         openHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
         openHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
@@ -312,10 +308,10 @@ public class AdminBuildingPane {
             });
 
         TableColumn<Occasion, LocalTime> closeHolidayTimeCol =
-                new TableColumn<>("Close Time");
+            new TableColumn<>("Close Time");
         closeHolidayTimeCol.setMinWidth(100);
         closeHolidayTimeCol.setCellValueFactory(
-                new PropertyValueFactory<>("closeTime"));
+            new PropertyValueFactory<>("closeTime"));
         closeHolidayTimeCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn((new TimeToStringConverter())));
         closeHolidayTimeCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Occasion, LocalTime> t) -> {
@@ -392,7 +388,7 @@ public class AdminBuildingPane {
 
         VBox vboxRight = new VBox(5);
         vboxRight.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
-                closeHolidayTime, closeHolidayTimeInput, building, choiceBox, addOpenTime);
+            closeHolidayTime, closeHolidayTimeInput, building, choiceBox, addOpenTime);
 
         // Add open time button
         addOpenTime.setOnAction(e -> {
@@ -429,6 +425,7 @@ public class AdminBuildingPane {
 
     /**
      * The method is generating time for comboboxes.
+     *
      * @return an observable list of times.
      */
     public static ObservableList<LocalTime> generateTime() {

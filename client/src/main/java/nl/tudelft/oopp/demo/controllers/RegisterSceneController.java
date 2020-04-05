@@ -84,6 +84,12 @@ public class RegisterSceneController implements Initializable {
             passwordConfirmField.requestFocus();
             return;
         }
+        if (usernameField.getText() == null || passwordField.getText() == null || firstNameField.getText() == null
+            || lastNameField.getText() == null || usernameField.getText().equals("") || usernameField.getText().equals(" ")) {
+            usernameField.clear();
+            usernameField.requestFocus();
+            return;
+        }
         if (UserCommunication.createNewUser(user, usernameField.getText(), passwordField.getText())) {
             FXMLLoader signInLoader = new FXMLLoader(getClass().getResource("/Scenes/signInScene.fxml"));
             try {
