@@ -31,13 +31,15 @@ public class Dish {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @NotBlank
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "type")
     private String type;
 
-    @Column(name = "price")
+    @NotNull
+    @Column(name = "price", nullable = false)
     private float price;
 
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)

@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class EquipmentController {
 
     @Autowired
-    EquipmentRepository equipment;
+    EquipmentRepository equipmentRepository;
 
     /**
      * GET Endpoint to retrieve a list of the equipment.
@@ -32,7 +32,7 @@ public class EquipmentController {
     @GetMapping("equipment")
     public @ResponseBody
     List<Equipment> getEquipment() {
-        return equipment.findAll();
+        return equipmentRepository.findAll();
     }
 
     /**
@@ -43,7 +43,7 @@ public class EquipmentController {
      */
     @GetMapping("equipment/{id}")
     public @ResponseBody ResponseEntity<Equipment> getEquipmentById(@PathVariable(value = "id") long id) {
-        Equipment toReturn = equipment.findById(id).orElseGet(() -> null);
+        Equipment toReturn = equipmentRepository.findById(id).orElseGet(() -> null);
         return (toReturn == null) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(toReturn, HttpStatus.OK);
     }
 
@@ -55,7 +55,7 @@ public class EquipmentController {
      */
     @GetMapping("equipment/name/{name}")
     public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable(value = "name") String equipmentName) {
-        return equipment.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipment.findByItemName(equipmentName), HttpStatus.OK);
+        return equipmentRepository.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipmentRepository.findByItemName(equipmentName), HttpStatus.OK);
     }
 
     /**
@@ -66,7 +66,7 @@ public class EquipmentController {
      */
     @GetMapping("equipment/room/{room_id}")
     public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByRoomId(@PathVariable(value = "room_id") long roomId) {
-        return equipment.findByRoomId(roomId).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipment.findByRoomId(roomId), HttpStatus.OK);
+        return equipmentRepository.findByRoomId(roomId).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipmentRepository.findByRoomId(roomId), HttpStatus.OK);
     }
 
     /**
@@ -78,7 +78,11 @@ public class EquipmentController {
 
     @PostMapping(value = "/equipment", consumes = {"application/json"})
     public ResponseEntity<Equipment> addNewEquipment(@Valid @RequestBody Equipment newEquipment, UriComponentsBuilder b) {
-        equipment.save(newEquipment);
+        try {
+            equipmentRepository.save(newEquipment);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = b.path("/equipment/{id}").buildAndExpand(newEquipment.getId());
         return ResponseEntity
                 .created(uri.toUri())
@@ -92,24 +96,26 @@ public class EquipmentController {
      * @param newEquipment The updated version of the equipment.
      * @return the new equipment that is updated {@link Equipment}.
      */
+
     @PutMapping(value = "equipment/{id}", consumes = {"application/json"})
-    public ResponseEntity<Equipment> replaceEquipment(@Valid @RequestBody Equipment newEquipment, @PathVariable long id, UriComponentsBuilder b) {
+    public ResponseEntity<Equipment> replaceEquipment(@Valid @RequestBody Equipment newEquipment, @PathVariable long id) {
 
-        UriComponents uri = b.path("/equipment/{id}").buildAndExpand(id);
-
-        Equipment updatedEquipment = equipment.findById(id)
-                .map(equipment -> {
+        return equipmentRepository.findById(id).map(equipment -> {
                     equipment.setItem(newEquipment.getItem());
                     equipment.setRoom(newEquipment.getRoom());
                     equipment.setAmount(newEquipment.getAmount());
-                    return this.equipment.save(equipment);
-                })
-                .orElseGet(() -> {
-                    newEquipment.setId(id);
-                    return this.equipment.save(newEquipment);
-                });
 
-        return ResponseEntity.created(uri.toUri()).body(updatedEquipment);
+                    Equipment equipmentToReturn;
+                    try {
+                        equipmentToReturn = equipmentRepository.save(equipment);
+                    } catch (Exception e) {
+                        return new ResponseEntity<Equipment>(HttpStatus.CONFLICT);
+                    }
+
+                    return new ResponseEntity<>(equipmentToReturn, HttpStatus.OK);
+
+                })
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -120,7 +126,7 @@ public class EquipmentController {
     @DeleteMapping("equipment/{id}")
     public ResponseEntity<?> deleteEquipment(@PathVariable long id) {
         // TODO equipment with that id may not exist
-        equipment.deleteById(id);
+        equipmentRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }

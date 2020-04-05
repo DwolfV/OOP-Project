@@ -50,9 +50,13 @@ public class EventController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
-        Event eventAdded = rep.save(event);
+        try{
+            rep.save(event);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = e.path("/event/{id}").buildAndExpand(event.getId());
-        return ResponseEntity.created(uri.toUri()).body(eventAdded);
+        return ResponseEntity.created(uri.toUri()).body(event);
     }
 
     /**
@@ -71,7 +75,15 @@ public class EventController {
             event.setEndTime(newEvent.getEndTime());
             event.setStartTime(newEvent.getStartTime());
 
-            return new ResponseEntity<>(rep.save(event), HttpStatus.OK);
+            Event eventToReturn;
+            try {
+                eventToReturn = rep.save(event);
+            } catch (Exception e) {
+                return new ResponseEntity<Event>(HttpStatus.CONFLICT);
+
+            }
+
+            return new ResponseEntity<>(eventToReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
