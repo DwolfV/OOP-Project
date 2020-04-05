@@ -24,7 +24,6 @@ public class SupplyReservation {
     @Column(name = "date")
     private LocalDate date;
 
-
     @Column(name = "amount")
     private int amount;
 
@@ -72,8 +71,6 @@ public class SupplyReservation {
 
     public SupplyReservation(long id,
                              LocalDate date,
-                             LocalTime startTime,
-                             LocalTime endTime,
                              int amount,
                              Supply supply,
                              User user) {

@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -17,6 +18,7 @@ import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.OccasionRepository;
+import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,6 +63,9 @@ class RoomReservationControllerTest {
 
     @Mock
     private BuildingRepository buildings;
+
+    @Mock
+    private RoomRepository rooms;
 
     @Mock
     private JdbcUserDetailsManager jdbcUserDetailsManager;
@@ -280,13 +285,79 @@ class RoomReservationControllerTest {
         when(roomReservationRepository.save(roomReservation)).thenReturn(roomReservation);
         when(users.findByUsername(u1.getUsername())).thenReturn(Optional.of(u1));
         when(buildings.findById(b1.getId())).thenReturn(Optional.of(b1));
+        when(rooms.findById(r1.getId())).thenReturn(Optional.of(r1));
         when(occasionRepository.findByBuildingIdAndDate(b1.getId(), date)).thenReturn(new ArrayList<Occasion>());
 
         assertEquals(roomReservation, roomReservationController.newRoomReservation(
             roomReservation, uriComponentsBuilder, new Authentication() {
                 @Override
                 public Collection<? extends GrantedAuthority> getAuthorities() {
-                    return null;
+                    return new Collection<GrantedAuthority>() {
+                        @Override
+                        public int size() {
+                            return 0;
+                        }
+
+                        @Override
+                        public boolean isEmpty() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean contains(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public Iterator<GrantedAuthority> iterator() {
+                            return null;
+                        }
+
+                        @Override
+                        public Object[] toArray() {
+                            return new String[]{"ROLE_USER"};
+                        }
+
+                        @Override
+                        public <T> T[] toArray(T[] ts) {
+                            return null;
+                        }
+
+                        @Override
+                        public boolean add(GrantedAuthority grantedAuthority) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean remove(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean containsAll(Collection<?> collection) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean addAll(Collection<? extends GrantedAuthority> collection) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean removeAll(Collection<?> collection) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean retainAll(Collection<?> collection) {
+                            return false;
+                        }
+
+                        @Override
+                        public void clear() {
+
+                        }
+                    };
                 }
 
                 @Override

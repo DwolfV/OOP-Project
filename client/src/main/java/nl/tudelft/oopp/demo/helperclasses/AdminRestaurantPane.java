@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,6 +22,8 @@ import javafx.scene.text.Text;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Restaurant;
 
 public class AdminRestaurantPane {
 
@@ -148,10 +151,13 @@ public class AdminRestaurantPane {
         Text openingTime = new Text("Opening Time");
         Text closingTime = new Text("Closing Time");
 
+        ObservableList<LocalTime> time = generateTime();
         TextField restaurantNameInput = new TextField();
         TextField buildingNameInput = new TextField();
-        TextField openingTimeInput = new TextField();
-        TextField closingTimeInput = new TextField();
+        ComboBox<LocalTime> openingTimeInput = new ComboBox<>();
+        openingTimeInput.setItems(time);
+        ComboBox<LocalTime> closingTimeInput = new ComboBox<>();
+        closingTimeInput.setItems(time);
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
@@ -174,14 +180,14 @@ public class AdminRestaurantPane {
 
         addRestaurant.setOnAction(e -> {
             String restaurantNameInputText = restaurantNameInput.getText();
-            LocalTime openingTimeInputText = LocalTime.parse(openingTimeInput.getText());
-            LocalTime closingTimeInputText = LocalTime.parse(closingTimeInput.getText());
+            LocalTime openingTimeInputText = openingTimeInput.getValue();
+            LocalTime closingTimeInputText = closingTimeInput.getValue();
 
             RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText);
 
             restaurantNameInput.setText(null);
-            openingTimeInput.setText(null);
-            closingTimeInput.setText(null);
+            openingTimeInput.setValue(null);
+            closingTimeInput.setValue(null);
             buildingNameInput.setText(null);
 
             choiceBox.setValue(null);
@@ -207,5 +213,18 @@ public class AdminRestaurantPane {
         borderPane.setBottom(hboxBottom);
 
         return borderPane;
+    }
+
+    /**
+     * The method is generating time for comboboxes.
+     * @return an observable list of times.
+     */
+    public static ObservableList<LocalTime> generateTime() {
+        ArrayList<LocalTime> timeList = new ArrayList<>();
+        for (LocalTime tm = LocalTime.MIN; tm.isBefore(LocalTime.parse("23:30")); tm = tm.plusMinutes(30)) {
+            timeList.add(tm);
+        }
+        timeList.add(LocalTime.parse("23:30"));
+        return FXCollections.observableArrayList(timeList);
     }
 }

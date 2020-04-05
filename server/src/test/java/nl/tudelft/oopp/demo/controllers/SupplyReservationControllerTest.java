@@ -101,7 +101,7 @@ class SupplyReservationControllerTest {
 
         when(supplyReservationRepository.findById(
             sr1.getId())).thenReturn(optionalSupplyReservation);
-        assertEquals(entity, supplyReservationController.getRoomReservationById(sr1.getId()));
+        assertEquals(entity, supplyReservationController.getSupplyReservationById(sr1.getId()));
     }
 
     @Test

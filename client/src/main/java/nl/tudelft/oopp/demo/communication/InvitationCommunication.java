@@ -9,9 +9,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Invitation;
-import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.Invitation;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
 
 public class InvitationCommunication {
 
@@ -55,11 +55,11 @@ public class InvitationCommunication {
     /**
      * Get a list of room reservations that a user is invited to.
      *
-     * @param id - the id of the user
+     * @param username - the username of the user
      * @return the list of room reservations
      */
-    public static List<RoomReservation> getInvitations(long id) {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/invitation/user/%d", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    public static List<RoomReservation> getInvitations(String username) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/invitation/user?username=" + username)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
 
         try {

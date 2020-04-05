@@ -12,8 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Event;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.Event;
+import nl.tudelft.oopp.demo.entities.User;
 
 public class EventCommunication {
 
