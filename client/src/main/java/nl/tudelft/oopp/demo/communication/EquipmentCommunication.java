@@ -9,55 +9,22 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-
-import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Item;
+import nl.tudelft.oopp.demo.entities.Room;
 
-public class ItemCommunication {
+public class EquipmentCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
-     * Retrieves a list of items from the server.
-     * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
-     */
-    public static List<Item> getItems() {
-
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/item/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return "Communication with server failed";
-        }
-        if (response.statusCode() != 200) {
-            System.out.println("Status: " + response.statusCode());
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        List<Item> items = null;
-        // TODO handle exception
-        try {
-            items = mapper.readValue(response.body(), new TypeReference<List<Item>>(){});
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return items;
-    }
-
-    /**
-     * Get an item by it's name
+     * Get a list of equipment for a specific room.
      *
-     * @param name - the name of the item
-     * @return an item with the given namme
+     * @param roomId - the id of the room
+     * @return a list of equipment
      */
-    public static Item getItemByName(String name) {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/item/name/%s", name))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    public static List<Equipment> getEquipmentByRoom(long roomId) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/equipment/room/%d", roomId))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -71,92 +38,129 @@ public class ItemCommunication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Item item = null;
+
+        List<Equipment> equipment = null;
         // TODO handle exception
         try {
-            item = mapper.readValue(response.body(), new TypeReference<Item>() {
+            equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return item;
+        return equipment;
     }
 
     /**
-     * Adds an item.
-     * @param name - the name of the item
-     */
-    public static String addItem(String name) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        Item newItem = new Item(name);
-        String jsonItem = "";
-        try {
-            jsonItem = mapper.writeValueAsString(newItem);
-            System.out.println(jsonItem);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create("http://localhost:8080/item/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return "Communication with server failed";
-        }
-        if (response.statusCode() != 200) {
-            System.out.println("Status: " + response.statusCode());
-            return "The item already exists.";
-        }
-        return "Successful";
-    }
-
-    /**
-     * Updates a Item.
-     * @throws Exception if communication with the server fails or if the response is not proper json.
-     */
-    public static String updateItem(long id, String name) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        Item newItem = new Item(name);
-        String jsonItem = "";
-        try {
-            jsonItem = mapper.writeValueAsString(newItem);
-            System.out.println(jsonItem);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create(String.format("http://localhost:8080/item/update/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return "Communication with server failed";
-        }
-        if (response.statusCode() != 200) {
-            System.out.println("Status: " + response.statusCode());
-            return "Item already exists.";
-        }
-        return "Successful";
-    }
-
-    /**
-     * Removes an item from the database.
+     * Get a list of equipment by item name.
      *
-     * @param id - the id of the item that will be deleted.
+     * @param itemId - the id of the item
+     * @return a list of equipment
      */
-    public static void removeItem(long id) {
-        List<Equipment> equipmentList = EquipmentCommunication.getEquipmentByItem(id);
-        for (Equipment e : equipmentList) {
-            EquipmentCommunication.removeEquipment(e.getId());
+    public static List<Equipment> getEquipmentByItem(long itemId) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/equipment/item_id/%d", itemId))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
         }
 
-        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/item/delete/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        List<Equipment> equipment = null;
+        // TODO handle exception
+        try {
+            equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return equipment;
+    }
+
+    /**
+     * Method to add a new Item to a room by creating an Equipment.
+     *
+     * @param room - the room in which the equipment will be
+     * @param item - the item inside the room
+     * @param amount - how much of that item
+     * @return a string which explains the output of the method
+     */
+    public static String addEquipmentToRoom(Room room, Item item, int amount) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        Equipment equipment = new Equipment(room, item, amount);
+        String jsonEquipment = "";
+        try {
+            jsonEquipment = mapper.writeValueAsString(equipment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonEquipment)).uri(URI.create("http://localhost:8080/equipment")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+            return "This Equipment is already linked to a room";
+        }
+        return "Successful";
+    }
+
+    /**
+     * Update the amount for an item inside a room if the quantity will change.
+     *
+     * @param id - id of the equipment
+     * @param room - room where the item is
+     * @param item - the item
+     * @param amount - the new amount
+     * @return a string which explains the output of the method
+     */
+    public static String updateEquipmentStock(long id, Room room, Item item, int amount) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        Equipment newEquipment = new Equipment(room, item, amount);
+        String jsonEquipment = "";
+        try {
+            jsonEquipment = mapper.writeValueAsString(newEquipment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonEquipment)).uri(URI.create(String.format("http://localhost:8080/equipment/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+            return "The room already has this item.";
+        }
+        return "Successful";
+    }
+
+    /**
+     * Deletes an equipment.
+     *
+     * @param id - the id of the equipment
+     */
+    public static void removeEquipment(long id) {
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/equipment/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
