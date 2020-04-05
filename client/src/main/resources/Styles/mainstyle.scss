@@ -46,6 +46,17 @@ $el-grey: #F5F5F5;
     -fx-text-fill: $el-grey;
 }
 
+.friends-list {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-width: 0 0 2 20;
+    -fx-border-color: black black mix($l-grey, $d-grey) $l-blue;
+    -fx-padding: 10 10 10 20;
+    -fx-text-fill: $el-grey;
+    -fx-text-weight: bold;
+    -fx-font: 14pt "Candara Light";
+}
+
 // Buttons
 .button {
     -fx-background-color: $d-blue;
@@ -115,9 +126,18 @@ $el-grey: #F5F5F5;
     -fx-background-color: mix($l-grey, $d-grey);
 }
 
+.text-field{
+    -fx-font: 11pt "Candara Light";
+    -fx-background-radius: 0;
+}
+
 .text-field-table-cell{
     -fx-text-fill: $l-grey;
     -fx-font: 11pt "Candara Light";
+}
+
+.text-field-table-cell:selected{
+    -fx-text-fill: black;
 }
 
 .restaurant-menu {
@@ -154,6 +174,15 @@ $el-grey: #F5F5F5;
     -fx-cell-size: 35px;
 }
 
+.restaurant-menu-row:selected {
+    -fx-background-color: $l-grey;
+}
+
+.restaurant-menu-row:selected .text-label{
+    -fx-background-color: $l-grey;
+    -fx-text-fill: black;
+}
+
 .price-col {
     -fx-alignment: center-right;
 }
@@ -164,11 +193,13 @@ $el-grey: #F5F5F5;
 }
 
 //The table inside the titled panes in admin scene
+
 .table-view {
+    -fx-text-fill: $el-grey;
     -fx-background-color: $el-grey;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-border-width: 1 1 1 1;
-    -fx-border-color: $d-grey;
+    -fx-border-color: $l-grey;
 }
 
 .table-view .column-header {
@@ -185,20 +216,20 @@ $el-grey: #F5F5F5;
     -fx-text-fill: white;
 }
 
-.table-row-cell:odd {
-    -fx-background-color: $eel-blue;
-}
-
-.table-row-cell:even {
-    -fx-background-color: $el-blue;
-}
-
 .table-view .column-header-background .first-col {
     -fx-border-width: 0 1 0 0;
 }
 
 .table-view .column-header-background .last-col {
     -fx-border-width: 0 0 0 1;
+}
+
+.table-row-cell {
+    -fx-text-fill: $el-grey;
+}
+
+.table-row-cell:selected {
+    -fx-text-fill: black;
 }
 
 // The titled panes inside the admin
@@ -213,7 +244,7 @@ $el-grey: #F5F5F5;
     -fx-border-width: 0 0 0 0;
 }
 
-.titled-pane > .title{
+.titled-pane > .title {
     -fx-background-color: transparent;
     -fx-background-insets: 0 0 0 0;
     -fx-border-width: 0 0 2 20;

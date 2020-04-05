@@ -34,6 +34,17 @@
   -fx-text-fill: #F5F5F5;
 }
 
+.friends-list {
+  -fx-background-color: transparent;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-width: 0 0 2 20;
+  -fx-border-color: black black #888888 #6699CC;
+  -fx-padding: 10 10 10 20;
+  -fx-text-fill: #F5F5F5;
+  -fx-text-weight: bold;
+  -fx-font: 14pt "Candara Light";
+}
+
 .button {
   -fx-background-color: #336699;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
@@ -102,9 +113,18 @@
   -fx-background-color: #888888;
 }
 
+.text-field {
+  -fx-font: 11pt "Candara Light";
+  -fx-background-radius: 0;
+}
+
 .text-field-table-cell {
   -fx-text-fill: #BBBBBB;
   -fx-font: 11pt "Candara Light";
+}
+
+.text-field-table-cell:selected {
+  -fx-text-fill: black;
 }
 
 .restaurant-menu {
@@ -140,6 +160,15 @@
   -fx-cell-size: 35px;
 }
 
+.restaurant-menu-row:selected {
+  -fx-background-color: #BBBBBB;
+}
+
+.restaurant-menu-row:selected .text-label {
+  -fx-background-color: #BBBBBB;
+  -fx-text-fill: black;
+}
+
 .price-col {
   -fx-alignment: center-right;
 }
@@ -150,10 +179,11 @@
 }
 
 .table-view {
+  -fx-text-fill: #F5F5F5;
   -fx-background-color: #F5F5F5;
   -fx-background-insets: 0, 0 0 0 0;
   -fx-border-width: 1 1 1 1;
-  -fx-border-color: #555555;
+  -fx-border-color: #BBBBBB;
 }
 
 .table-view .column-header {
@@ -170,20 +200,20 @@
   -fx-text-fill: white;
 }
 
-.table-row-cell:odd {
-  -fx-background-color: #D8EEFF;
-}
-
-.table-row-cell:even {
-  -fx-background-color: #A4CFF2;
-}
-
 .table-view .column-header-background .first-col {
   -fx-border-width: 0 1 0 0;
 }
 
 .table-view .column-header-background .last-col {
   -fx-border-width: 0 0 0 1;
+}
+
+.table-row-cell {
+  -fx-text-fill: #F5F5F5;
+}
+
+.table-row-cell:selected {
+  -fx-text-fill: black;
 }
 
 .titled-pane {

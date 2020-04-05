@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import static java.util.function.Predicate.not;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,28 +15,28 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.FriendCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
 import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
+import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
 import nl.tudelft.oopp.demo.helperclasses.User;
 
 public class FriendsSceneController implements Initializable {
 
+    private static TableView<SupplyReservation> tableFriends;
+
     private static HBox hoBoxAddFriend;
-    @FXML
-    private BorderPane borderPane;
+
+    @FXML private VBox vbox;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -47,8 +48,10 @@ public class FriendsSceneController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         addFriends();
         friendList();
+        vbox.setPrefWidth(screenSize.getWidth() - 400);
     }
 
     /**
@@ -173,18 +176,38 @@ public class FriendsSceneController implements Initializable {
             friendsLabel.setMinWidth(100);
             comboBoxReservedRooms.setMinWidth(75);
 
-            HBox hoBoxUsernameAndRemove = new HBox();
-            hoBoxUsernameAndRemove.setSpacing(150);
-            hoBoxUsernameAndRemove.getChildren().addAll(friendsLabel, comboBoxReservedRooms, inviteFriendsButton, removeFriendsButton);
-            hoBoxUsernameAndRemove.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                + "-fx-border-radius: 5;" + "-fx-border-color: lightblue;");
+            // Grid inside list
+            GridPane grid = new GridPane();
+            ColumnConstraints constraint1 = new ColumnConstraints();
+            constraint1.setPercentWidth(100/4);
+            ColumnConstraints constraint2 = new ColumnConstraints();
+            constraint2.setPercentWidth(100/4);
+            ColumnConstraints constraint3 = new ColumnConstraints();
+            constraint3.setPercentWidth(100/4);
+            ColumnConstraints constraint4 = new ColumnConstraints();
+            constraint4.setPercentWidth(100/4);
+            grid.getColumnConstraints().setAll(
+                    constraint1,
+                    constraint2,
+                    constraint3,
+                    constraint4
+            );
 
-            veBoxTpAndAdd.getChildren().add(hoBoxUsernameAndRemove);
-            veBoxTpAndAdd.setPadding(new Insets(20, 0, 0, 0));
+            grid.setVgap(10);
+            grid.add(friendsLabel, 0, c);
+            grid.add(comboBoxReservedRooms, 1, c);
+            grid.add(inviteFriendsButton, 2, c);
+            grid.add(removeFriendsButton, 3, c);
+            inviteFriendsButton.getStyleClass().setAll("restaurant-menu-button");
+            inviteFriendsButton.setAlignment(Pos.BOTTOM_CENTER);
+            removeFriendsButton.getStyleClass().setAll("restaurant-menu-button");
+            removeFriendsButton.setAlignment(Pos.CENTER);
+            grid.getStyleClass().setAll("friends-list");
+
+            veBoxTpAndAdd.getChildren().add(grid);
+            veBoxTpAndAdd.setPadding(new Insets(20, 0, 50, 0));
         }
-        borderPane.setCenter(hoBoxAddFriend);
-        borderPane.setBottom(veBoxTpAndAdd);
-        borderPane.setPadding(new Insets(30, 5, 5, 10));
+        vbox.getChildren().add(hoBoxAddFriend);
+        vbox.getChildren().add(veBoxTpAndAdd);
     }
 }
