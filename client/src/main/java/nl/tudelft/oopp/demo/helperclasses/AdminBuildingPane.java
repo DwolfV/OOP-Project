@@ -218,7 +218,7 @@ public class AdminBuildingPane {
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadBuildingTP(ac);
             ac.setExpandedPane(AdminSceneController.buildingTP);
         });
 

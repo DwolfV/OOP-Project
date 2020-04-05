@@ -174,7 +174,7 @@ public class AdminSupplyPane {
             stockInput.setText(null);
 
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadSupplyTP(ac);
             ac.setExpandedPane(AdminSceneController.supplyTP);
         });
 

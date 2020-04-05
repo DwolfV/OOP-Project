@@ -172,7 +172,7 @@ public class AdminRoomPane {
             roomNameField.setText(null);
             capacityField.setText(null);
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadRoomTP(ac);
             ac.setExpandedPane(AdminSceneController.roomTP);
         });
 

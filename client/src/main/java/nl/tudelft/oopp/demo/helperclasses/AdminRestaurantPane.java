@@ -191,7 +191,7 @@ public class AdminRestaurantPane {
             buildingNameInput.setText(null);
 
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadRestaurantTP(ac);
             ac.setExpandedPane(AdminSceneController.restaurantTP);
         });
 
