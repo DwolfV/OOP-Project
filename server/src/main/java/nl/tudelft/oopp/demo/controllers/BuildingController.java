@@ -2,6 +2,8 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJBTransactionRolledbackException;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
@@ -142,7 +144,17 @@ public class BuildingController {
      */
     @PostMapping(value = "/building", consumes = {"application/json"})
     public ResponseEntity<Building> newBuilding(@Valid @RequestBody Building building, UriComponentsBuilder uri) {
-        rep.save(building);
+        try {
+            rep.save(building);
+        } catch (EJBTransactionRolledbackException e) {
+            Throwable t = e.getCause();
+            while ((t != null) && !(t instanceof ConstraintViolationException)) {
+                t = t.getCause();
+            }
+            if (t instanceof ConstraintViolationException) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        }
         UriComponents uriComponents = uri.path("/building/{id}").buildAndExpand(building.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(building);
     }
