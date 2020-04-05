@@ -158,7 +158,7 @@ public class AdminSceneController implements Initializable {
     }
 
     /**
-     * Load the itemsTP scene.
+     * Load the itemsTP and equipmentTP scene.
      *
      * @param ac Accordion
      */
@@ -179,22 +179,6 @@ public class AdminSceneController implements Initializable {
         equipmentsTP.setContent(scrollPaneEquipments);
 
         ac.getPanes().set(4, equipmentsTP);
-    }
-
-    public static void loadEquipmentTP (Accordion ac) {
-        vboxEquipments = new VBox();
-        equipmentsTitle = new Label("Modify Items:");
-        SplitPane splitPane6 = new SplitPane();
-        BorderPane borderPaneEquipments = AdminItemsPane.getItemsBP(ac);
-        vboxEquipments.getChildren().setAll(equipmentsTitle, splitPane6, borderPaneEquipments);
-
-        ScrollPane scrollPaneRoles = getScrollPane(vboxEquipments);
-
-        equipmentsTP = new TitledPane();
-        equipmentsTP.setText("Items");
-        equipmentsTP.setContent(scrollPaneRoles);
-
-        ac.getPanes().set(5, equipmentsTP);
     }
 
     /**
