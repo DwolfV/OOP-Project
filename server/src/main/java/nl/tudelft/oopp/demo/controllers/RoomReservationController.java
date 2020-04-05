@@ -1,13 +1,22 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Occasion;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
+import nl.tudelft.oopp.demo.repositories.OccasionRepository;
+import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +42,15 @@ public class RoomReservationController {
 
     @Autowired
     UserRepository users;
+
+    @Autowired
+    BuildingRepository buildings;
+
+    @Autowired
+    RoomRepository rooms;
+
+    @Autowired
+    OccasionRepository occasionRepository;
 
     // TODO get mappings for get room reservation times only (per room of course, but no info for users)!
 
@@ -70,6 +88,25 @@ public class RoomReservationController {
         }
 
         return new ResponseEntity<>(unavailableTimes, HttpStatus.OK);
+    }
+
+    /**
+     * GET Endpoint to retrieve a map of all room reservation start and end times.
+     *
+     * @return a map of the room reservation times {@link RoomReservation}.
+     */
+    @GetMapping(value = "room_reservations_times/room/{room_id}")
+    public @ResponseBody
+    ResponseEntity<List<RoomReservation>> getRoomReservationTimesByRoom(@PathVariable(value = "room_id") long roomId) {
+        Map<String, String> unavailableTimes = new HashMap<>();
+
+        List<RoomReservation> reservations = new ArrayList<>();
+        for (RoomReservation reservation : this.reservations.findByRoomId(roomId)) {
+            reservation.setUser(null);
+            reservations.add(reservation);
+        }
+
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     /**
@@ -127,8 +164,8 @@ public class RoomReservationController {
         return users.findByUsername(authentication.getName()).map(user -> {
             if (user.getId() == userId) {
                 return reservations.findByUserIdAndRoomId(userId, roomId).isEmpty()
-                        ? new ResponseEntity<List<RoomReservation>>(HttpStatus.NOT_FOUND)
-                        : new ResponseEntity<>(reservations.findByUserIdAndRoomId(userId, roomId), HttpStatus.OK);
+                    ? new ResponseEntity<List<RoomReservation>>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(reservations.findByUserIdAndRoomId(userId, roomId), HttpStatus.OK);
             }
             return new ResponseEntity<List<RoomReservation>>(HttpStatus.UNAUTHORIZED);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -137,13 +174,43 @@ public class RoomReservationController {
     /**
      * Checks if a given time frame is valid and available.
      *
-     * @param startTime           The start of the time period
-     * @param endTime             The end of the time period
+     * @param newRoomReservation  The new room reservation object whose times need to be checked
      * @param allRoomReservations A list of all room reservations that have all unavailable time periods
+     * @param authentication Holds information for the authorities of the user that makes the request
      * @return A boolean - true if the time slot is available and valid; false otherwise
      */
-    public boolean timeIsValid(LocalTime startTime, LocalTime endTime, List<RoomReservation> allRoomReservations) {
-        // TODO open times of the building
+    public boolean timeIsValid(RoomReservation newRoomReservation, List<RoomReservation> allRoomReservations, Authentication authentication) {
+        // TODO ROLE_EMPLOYEE?
+
+        LocalTime startTime = newRoomReservation.getStartTime();
+        LocalTime endTime = newRoomReservation.getEndTime();
+
+        // get the building from the room
+        Building building = buildings.findById(rooms.findById(newRoomReservation.getRoom().getId()).get().getBuilding().getId()).get();
+
+        List<Occasion> occasions = occasionRepository.findByBuildingIdAndDate(building.getId(), newRoomReservation.getDate().plusDays(1));
+        LocalTime buildingOpenTime = null;
+        LocalTime buildingCloseTime = null;
+
+        // if there is a special occasion on the given day, override the building's opening and closing times
+        for (Occasion occasion : occasions) {
+            buildingOpenTime = occasion.getOpenTime();
+            buildingCloseTime = occasion.getCloseTime();
+        }
+        if (buildingOpenTime == null || buildingCloseTime == null) {
+            buildingOpenTime = building.getOpenTime();
+            buildingCloseTime = building.getCloseTime();
+        }
+
+        // compare the times of the room reservation to the building's opening and closing times
+        if (buildingOpenTime.compareTo(startTime) > 0 || buildingOpenTime.compareTo(endTime) > 0) {
+            return false;
+        }
+
+        if (buildingCloseTime.compareTo(startTime) < 0 || buildingCloseTime.compareTo(endTime) < 0) {
+            return false;
+        }
+
         if (startTime.compareTo(endTime) > 0) {
             return false;
         }
@@ -164,17 +231,22 @@ public class RoomReservationController {
         }
 
         for (RoomReservation roomReservation : allRoomReservations) {
-            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) > 0
-                    && startTime.compareTo(roomReservation.getEndTime()) > 0;
+            // don't check if the times of the newRoomReservation overlap with itself
+            if (newRoomReservation.getId() == roomReservation.getId()) {
+                continue;
+            }
 
-            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) < 0
-                    && startTime.compareTo(roomReservation.getEndTime()) < 0;
+            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) >= 0
+                && startTime.compareTo(roomReservation.getEndTime()) >= 0;
 
-            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) > 0
-                    && endTime.compareTo(roomReservation.getEndTime()) > 0;
+            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) <= 0
+                && startTime.compareTo(roomReservation.getEndTime()) <= 0;
 
-            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) < 0
-                    && endTime.compareTo(roomReservation.getEndTime()) < 0;
+            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) >= 0
+                && endTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) <= 0
+                && endTime.compareTo(roomReservation.getEndTime()) <= 0;
 
             // if the start time and the end time are not after the reserved time or they are not before it
             if (!((startTimeIsAfterReservedTime && endTimeIsAfterReservedTime) || (startTimeIsBeforeReservedTime && endTimeIsBeforeReservedTime))) {
@@ -182,6 +254,41 @@ public class RoomReservationController {
             }
         }
 
+        LocalDate dateNow = LocalDate.now();
+        // if the date in the room reservation is in the past
+        if (newRoomReservation.getDate().compareTo(dateNow) < 0) {
+            return false;
+        }
+
+        // if the date is not in this week and next week - for USERs
+        LocalDate today = LocalDate.now();
+        LocalDate mondayOfThisWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate sundayOfNextWeek = today.plusWeeks(1).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        // room reservation is after Monday this week or is Monday this week
+        boolean isAfterMonday = newRoomReservation.getDate().isAfter(mondayOfThisWeek) || newRoomReservation.getDate().isEqual(mondayOfThisWeek);
+        // room reservation is before Sunday of next week or is on that Sunday next week
+        boolean isBeforeSunday = newRoomReservation.getDate().isBefore(sundayOfNextWeek) || newRoomReservation.getDate().isEqual(sundayOfNextWeek);
+        if (authentication.getAuthorities().toString().contains("USER") && !(isAfterMonday && isBeforeSunday)) {
+            return false;
+        }
+
+        // if the date is not in this week and the next three weeks - for EMPLOYEES (and ADMINs))
+        // the check for monday is the same (isAfterMonday)
+        // the Sunday checks should be modified as employees (and admins) can reserve rooms for 3 weeks after this week (including this week)
+        sundayOfNextWeek = today.plusWeeks(3).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        isBeforeSunday = newRoomReservation.getDate().isBefore(sundayOfNextWeek) || newRoomReservation.getDate().isEqual(sundayOfNextWeek);
+        if ((authentication.getAuthorities().toString().contains("EMPLOYEE")
+            || authentication.getAuthorities().toString().contains("ADMIN")) && !(isAfterMonday && isBeforeSunday)) {
+            return false;
+        }
+
+        // if the room reservation is for today
+        if (newRoomReservation.getDate().equals(dateNow)) {
+            // if the start time is in the past
+            LocalTime timeNow = LocalTime.now();
+            return newRoomReservation.getStartTime().compareTo(timeNow) >= 0;
+        }
         return true;
     }
 
@@ -195,27 +302,69 @@ public class RoomReservationController {
     public ResponseEntity<RoomReservation> newRoomReservation(@Valid @RequestBody RoomReservation newRoomReservation, UriComponentsBuilder b, Authentication authentication) {
 
         if (authentication.getName().equals(newRoomReservation.getUser().getUsername())
-                && !users.findByUsername(authentication.getName()).isEmpty()
-                && newRoomReservation.getUser().getId() == users.findByUsername(authentication.getName()).get().getId()) {
+            && !users.findByUsername(authentication.getName()).isEmpty()
+            && newRoomReservation.getUser().getId() == users.findByUsername(authentication.getName()).get().getId()) {
 
             List<RoomReservation> allReservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
 
-            if (!timeIsValid(newRoomReservation.getStartTime(), newRoomReservation.getEndTime(), allReservations)) {
+            if (userHasReservedAlready(newRoomReservation)) {
+                return new ResponseEntity(HttpStatus.CONFLICT);
+            }
+
+            if (!timeIsValid(newRoomReservation, allReservations, authentication)) {
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }
             // Save a newly created object, so that the id will be auto generated
             RoomReservation savedRoomReservation = reservations.save(new RoomReservation(newRoomReservation.getDate(),
-                    newRoomReservation.getRoom(),
-                    newRoomReservation.getStartTime(),
-                    newRoomReservation.getEndTime(),
-                    newRoomReservation.getUser())
+                newRoomReservation.getRoom(),
+                newRoomReservation.getStartTime(),
+                newRoomReservation.getEndTime(),
+                newRoomReservation.getUser())
             );
             UriComponents uri = b.path("/room_reservations/{id}").buildAndExpand(savedRoomReservation.getId());
             return ResponseEntity
-                    .created(uri.toUri())
-                    .body(savedRoomReservation);
+                .created(uri.toUri())
+                .body(savedRoomReservation);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    private boolean userHasReservedAlready(RoomReservation newRoomReservation) {
+        LocalTime startTime = newRoomReservation.getStartTime();
+        LocalTime endTime = newRoomReservation.getEndTime();
+        for (RoomReservation roomReservation : reservations.findByUserIdAndDate(newRoomReservation.getUser().getId(), newRoomReservation.getDate())) {
+            // don't check if the times of the newRoomReservation overlap with itself
+            if (newRoomReservation.getId() == roomReservation.getId()) {
+                continue;
+            }
+
+            boolean startTimeIsAfterReservedTime = startTime.compareTo(roomReservation.getStartTime()) >= 0
+                && startTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean startTimeIsBeforeReservedTime = startTime.compareTo(roomReservation.getStartTime()) <= 0
+                && startTime.compareTo(roomReservation.getEndTime()) <= 0;
+
+            boolean endTimeIsAfterReservedTime = endTime.compareTo(roomReservation.getStartTime()) >= 0
+                && endTime.compareTo(roomReservation.getEndTime()) >= 0;
+
+            boolean endTimeIsBeforeReservedTime = endTime.compareTo(roomReservation.getStartTime()) <= 0
+                && endTime.compareTo(roomReservation.getEndTime()) <= 0;
+            // if the user has already booked a room in that time period
+            if (!((startTimeIsAfterReservedTime && endTimeIsAfterReservedTime) || (startTimeIsBeforeReservedTime && endTimeIsBeforeReservedTime))) {
+                return true;
+            }
+        }
+
+        // if the user has reserved this room at some point during the week
+        int weekOfNewReservation = newRoomReservation.getDate().get(WeekFields.ISO.weekOfWeekBasedYear());
+        for (RoomReservation reservation : reservations.findByUserIdAndRoomBuildingId(newRoomReservation.getUser().getId(),
+            rooms.findById(newRoomReservation.getRoom().getId()).get().getBuilding().getId())) {
+            int weekOfRes = reservation.getDate().plusDays(1).get(WeekFields.ISO.weekOfWeekBasedYear());
+            if (weekOfNewReservation == weekOfRes && reservation.getId() != newRoomReservation.getId() && reservation.getDate().getYear() == newRoomReservation.getDate().getYear()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -233,29 +382,41 @@ public class RoomReservationController {
         UriComponents uri = b.path("room_reservations/{room_reservation_id}").buildAndExpand(roomReservationId);
 
         return reservations.findById(roomReservationId)
-                .map(roomReservation -> {
-                    if (users.findByUsername(authentication.getName()).isEmpty() || newRoomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()
-                            || roomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()) {
-                        return new ResponseEntity<RoomReservation>(HttpStatus.UNAUTHORIZED);
-                    }
+            .map(roomReservation -> {
+                if (users.findByUsername(authentication.getName()).isEmpty() || newRoomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()
+                    || roomReservation.getUser().getId() != users.findByUsername(authentication.getName()).get().getId()) {
+                    return new ResponseEntity<RoomReservation>(HttpStatus.UNAUTHORIZED);
+                }
 
-                    List<RoomReservation> allReservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
-                    if (!timeIsValid(newRoomReservation.getStartTime(), newRoomReservation.getEndTime(), allReservations)) {
-                        return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
-                    }
+                List<RoomReservation> allReservations = reservations.findByDateAndRoomId(newRoomReservation.getDate(), newRoomReservation.getRoom().getId());
 
-                    roomReservation.setUser(newRoomReservation.getUser());
-                    roomReservation.setRoom(newRoomReservation.getRoom());
-                    roomReservation.setDate(newRoomReservation.getDate());
-                    roomReservation.setStartTime(newRoomReservation.getStartTime());
-                    roomReservation.setEndTime(newRoomReservation.getEndTime());
+                if (userHasReservedAlready(newRoomReservation)) {
+                    return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
+                }
 
-                    return ResponseEntity.created(uri.toUri()).body(reservations.save(roomReservation));
-                })
-                .orElseGet(() -> {
-                    newRoomReservation.setId(roomReservationId);
-                    return ResponseEntity.created(uri.toUri()).body(reservations.save(newRoomReservation));
-                });
+                if (!timeIsValid(newRoomReservation, allReservations, authentication)) {
+                    return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
+                }
+
+                // users should not be able to delete room reservations for previous days
+                if (newRoomReservation.getDate().compareTo(LocalDate.now()) < 0
+                    || (LocalDate.now().equals(newRoomReservation.getDate())
+                    && newRoomReservation.getStartTime().compareTo(LocalTime.now()) < 0)) {
+                    return new ResponseEntity<RoomReservation>(HttpStatus.CONFLICT);
+                }
+
+                roomReservation.setUser(newRoomReservation.getUser());
+                roomReservation.setRoom(newRoomReservation.getRoom());
+                roomReservation.setDate(newRoomReservation.getDate());
+                roomReservation.setStartTime(newRoomReservation.getStartTime());
+                roomReservation.setEndTime(newRoomReservation.getEndTime());
+
+                return ResponseEntity.created(uri.toUri()).body(reservations.save(roomReservation));
+            })
+            .orElseGet(() -> {
+                newRoomReservation.setId(roomReservationId);
+                return ResponseEntity.created(uri.toUri()).body(reservations.save(newRoomReservation));
+            });
     }
 
     /**
@@ -264,7 +425,7 @@ public class RoomReservationController {
      * @param roomReservationId Unique identifier of the room that is to be deleted. {@link RoomReservation}
      */
     @DeleteMapping("room_reservations/{room_reservation_id}")
-    public ResponseEntity<?> deleteRoomReservation(@PathVariable long roomReservationId, Authentication authentication) {
+    public ResponseEntity<?> deleteRoomReservation(@PathVariable(value = "room_reservation_id") long roomReservationId, Authentication authentication) {
 
         RoomReservation reservationToDelete = reservations.findById(roomReservationId).orElseGet(() -> null);
 
@@ -274,6 +435,13 @@ public class RoomReservationController {
 
         if (!reservationToDelete.getUser().getUsername().equals(authentication.getName())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // users should not be able to delete room reservations for previous days
+        if (reservationToDelete.getDate().plusDays(1).compareTo(LocalDate.now()) < 0
+            || (LocalDate.now().equals(reservationToDelete.getDate().plusDays(1))
+            && reservationToDelete.getStartTime().compareTo(LocalTime.now()) < 0)) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         reservations.deleteById(roomReservationId);

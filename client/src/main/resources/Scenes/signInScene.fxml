@@ -13,7 +13,8 @@
 
             <Label fx:id="signingInLabel" layoutX="131.0" layoutY="176.0" mnemonicParsing="false" text="Logging in..." visible="false" />
             <Label fx:id="signedInLabel" layoutX="131.0" layoutY="176.0" mnemonicParsing="false" text="Log in Success" visible="false" />
-            <Label fx:id="failedSignInLabel" layoutX="78.0" layoutY="176.0" mnemonicParsing="false" text="Incorrect password or username" visible="false" />
+            <Label fx:id="failedSignInLabel" layoutX="72.0" layoutY="176.0" mnemonicParsing="false" text="Incorrect password or username" visible="false" />
+            <Label fx:id="failedSignInLabelNoInternet" layoutX="59.0" layoutY="176.0" mnemonicParsing="false" text="You are not connected to the internet" visible="false" />
 
             <Button fx:id="signInButton" layoutX="47.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#handleLoginButton" prefHeight="31.0" prefWidth="233.0" text="Log in" />
 

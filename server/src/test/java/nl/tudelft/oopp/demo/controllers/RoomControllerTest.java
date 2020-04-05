@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -92,7 +94,7 @@ class RoomControllerTest {
     void testFilterWithoutEquipment() {
         List<Room> expectedList = new ArrayList<Room>(List.of(r2,r3,r4));
         when(roomRepository.filterRoom(b1.getId(),50)).thenReturn(expectedList);
-        List<Room> actualList = roomController.getFilteredRooms(b1.getId(),50, null, null, null, null);
+        List<Room> actualList = roomController.getFilteredRooms(b1.getId(), null, null, 50, null, null, null, null, null, null);
 
         assertEquals(expectedList, actualList);
     }
@@ -117,8 +119,7 @@ class RoomControllerTest {
         List<Room> expectedList = new ArrayList<Room>(List.of(r2));
         List<Room> repoResult = new ArrayList<Room>(List.of(r2, r3, r4));
         when(roomRepository.filterRoom(b1.getId(),50)).thenReturn(repoResult);
-        List<Room> actualList = roomController.getFilteredRooms(b1.getId(),50, i1.getName(), i2.getName(), null, null);
-
+        List<Room> actualList = roomController.getFilteredRooms(b1.getId(), null, null, 50, i1.getName(), i2.getName(), null, null, null, null);
         System.out.println(expectedList + " nice");
         System.out.println(actualList);
         assertEquals(expectedList, actualList);

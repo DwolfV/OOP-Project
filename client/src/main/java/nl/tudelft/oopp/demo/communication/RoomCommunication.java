@@ -8,8 +8,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Room;
+
+import nl.tudelft.oopp.demo.entities.Room;
 
 public class RoomCommunication {
 
@@ -87,28 +89,36 @@ public class RoomCommunication {
     /**
      * Retrieves a list of rooms that are located in a certain building.
      *
+     * @param buildingId - the id of the building where the rooms is supposed to be
+     * @param capacity   - the minimum capacity that a room inside a buildings should have
+     * @param equipment  - a list of Strings defining the filter parameters
      * @return A list of all rooms.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static List<Room> getFilteredRoomsByBuilding(Long buildingId, Integer capacity, String e1, String e2, String e3, String e4) {
+    public static List<Room> getFilteredRoomsByBuilding(Long buildingId, LocalDate date, Long userId, Integer capacity, List<String> equipment) {
 
-        String uri = "http://localhost:8080/rooms/filter?building_id=" + buildingId;
+        String uri = "http://localhost:8080/rooms/filter?building_id=" + buildingId + "&date=" + date + "&user_id=" + userId;
         if (capacity == null) {
             capacity = 0;
         }
-        uri = "?capacity=" + capacity;
-        if (e1 != null) {
-            uri = "&e1=" + e1;
+        uri = uri + "&capacity=" + capacity;
+
+        //the number of equipment items
+        int count = 0;
+        String baseString = "&e%d"; //base string used for formatting
+        for (String s : equipment) {
+            if (s == null) {
+                break;
+            }
+            if (count == 6) { //we don't want to filter more than 6 items
+                break;
+            }
+            count++;//increase the amount of added items
+            uri = uri + String.format(baseString, count) + "=" + s; //add the filter to the uri
         }
-        if (e2 != null) {
-            uri = "&e2=" + e2;
-        }
-        if (e3 != null) {
-            uri = "&e3=" + e3;
-        }
-        if (e4 != null) {
-            uri = "&e4=" + e4;
-        }
+        System.out.println(uri);
+        uri = uri.replace(" ", "%20");
+
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(uri)).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
 
         HttpResponse<String> response = null;

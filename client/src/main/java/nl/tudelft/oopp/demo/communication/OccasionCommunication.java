@@ -11,7 +11,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Occasion;
+import nl.tudelft.oopp.demo.entities.Occasion;
 
 
 public class OccasionCommunication {

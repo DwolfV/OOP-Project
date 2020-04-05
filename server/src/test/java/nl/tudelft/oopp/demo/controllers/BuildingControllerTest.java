@@ -134,7 +134,7 @@ public class BuildingControllerTest {
         List<Building> expectedBuildings = new ArrayList<>(List.of(b1));
         List<Building> repoResult = new ArrayList<>(List.of(b1,b2));
         when(buildingRepository.filterBuilding(50)).thenReturn(repoResult);
-        List<Building> actualList = buildingController.getFilteredBuildings(50, i1.getName(), null, null, null);
+        List<Building> actualList = buildingController.getFilteredBuildings(50, i1.getName(), null, null, null, null, null);
 
         assertEquals(expectedBuildings, actualList);
 
