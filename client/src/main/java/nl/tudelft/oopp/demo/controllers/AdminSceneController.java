@@ -169,7 +169,7 @@ public class AdminSceneController implements Initializable {
         equipmentsTitle = new Label("Modify Equipments:");
         SplitPane splitPane2 = new SplitPane();
         BorderPane borderPaneEquipment = AdminItemsPane.getEquipmentBP(ac);
-        vboxItemsAndEquip.getChildren().setAll(itemsTitle, splitPane1, borderPaneItems, occTitle, splitPane2, borderPaneEquipment);
+        vboxItemsAndEquip.getChildren().setAll(itemsTitle, splitPane1, borderPaneItems, equipmentsTitle, splitPane2, borderPaneEquipment);
 
         ScrollPane scrollPaneEquipments = getScrollPane(vboxItemsAndEquip);
 
