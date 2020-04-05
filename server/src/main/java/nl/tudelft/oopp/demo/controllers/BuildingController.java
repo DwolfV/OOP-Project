@@ -147,7 +147,7 @@ public class BuildingController {
         try {
             rep.save(building);
         } catch (Exception e) {
-             return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         UriComponents uriComponents = uri.path("/building/{id}").buildAndExpand(building.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(building);
@@ -175,6 +175,7 @@ public class BuildingController {
             Building buildingToReturn;
             try {
                 buildingToReturn = rep.save(building);
+                System.out.println(buildingToReturn);
             } catch (Exception e) {
                 return new ResponseEntity<Building>(HttpStatus.CONFLICT);
             }

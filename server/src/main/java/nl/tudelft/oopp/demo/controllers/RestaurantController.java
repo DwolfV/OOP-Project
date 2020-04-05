@@ -85,7 +85,11 @@ public class RestaurantController {
 
     @PostMapping(value = "/restaurant", consumes = {"application/json"})
     public ResponseEntity<Restaurant> createNewRestaurant(@Valid @RequestBody Restaurant restaurant, UriComponentsBuilder b) {
-        restaurantRepository.save(restaurant);
+        try {
+            restaurantRepository.save(restaurant);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uriComponents = b.path("restaurant/id/{id}").buildAndExpand(restaurant.getId());
         return ResponseEntity
                 .created(uriComponents.toUri())
@@ -109,7 +113,14 @@ public class RestaurantController {
             restaurant.setTimeClose(newRestaurant.getTimeClose());
             restaurant.setTimeOpen(newRestaurant.getTimeOpen());
 
-            return new ResponseEntity<>(restaurantRepository.save(restaurant), HttpStatus.OK);
+            Restaurant restaurantToReturn;
+            try {
+                restaurantToReturn = restaurantRepository.save(restaurant);
+            } catch (Exception e) {
+                return new ResponseEntity<Restaurant>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(restaurantToReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

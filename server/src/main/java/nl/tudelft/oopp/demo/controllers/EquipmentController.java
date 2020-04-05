@@ -55,7 +55,8 @@ public class EquipmentController {
      */
     @GetMapping("equipment/name/{name}")
     public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable(value = "name") String equipmentName) {
-        return equipmentRepository.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(equipmentRepository.findByItemName(equipmentName), HttpStatus.OK);
+        return equipmentRepository.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(equipmentRepository.findByItemName(equipmentName), HttpStatus.OK);
     }
 
     /**
@@ -101,21 +102,20 @@ public class EquipmentController {
     public ResponseEntity<Equipment> replaceEquipment(@Valid @RequestBody Equipment newEquipment, @PathVariable long id) {
 
         return equipmentRepository.findById(id).map(equipment -> {
-                    equipment.setItem(newEquipment.getItem());
-                    equipment.setRoom(newEquipment.getRoom());
-                    equipment.setAmount(newEquipment.getAmount());
+            equipment.setItem(newEquipment.getItem());
+            equipment.setRoom(newEquipment.getRoom());
+            equipment.setAmount(newEquipment.getAmount());
 
-                    Equipment equipmentToReturn;
-                    try {
-                        equipmentToReturn = equipmentRepository.save(equipment);
-                    } catch (Exception e) {
-                        return new ResponseEntity<Equipment>(HttpStatus.CONFLICT);
-                    }
+            Equipment equipmentToReturn;
+            try {
+                equipmentToReturn = equipmentRepository.save(equipment);
+            } catch (Exception e) {
+                return new ResponseEntity<Equipment>(HttpStatus.CONFLICT);
+            }
 
-                    return new ResponseEntity<>(equipmentToReturn, HttpStatus.OK);
+            return new ResponseEntity<>(equipmentToReturn, HttpStatus.OK);
 
-                })
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

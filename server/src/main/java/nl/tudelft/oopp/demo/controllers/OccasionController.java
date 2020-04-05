@@ -67,7 +67,11 @@ public class OccasionController {
      */
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Occasion> addOccasion(@Valid @RequestBody Occasion occasion, UriComponentsBuilder o) {
-        occasionRepository.save(occasion);
+        try {
+            occasionRepository.save(occasion);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = o.path("/occasion/id/{id}").buildAndExpand(occasion.getId());
         return ResponseEntity.created(uri.toUri()).body(occasion);
     }
@@ -88,7 +92,14 @@ public class OccasionController {
             occasion.setCloseTime(newOccasion.getCloseTime());
             occasion.setBuilding(newOccasion.getBuilding());
 
-            return new ResponseEntity<>(occasionRepository.save(occasion), HttpStatus.OK);
+            Occasion occasionReturn;
+            try {
+                occasionReturn = occasionRepository.save(occasion);
+            } catch (Exception e) {
+                return new ResponseEntity<Occasion>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(occasionReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

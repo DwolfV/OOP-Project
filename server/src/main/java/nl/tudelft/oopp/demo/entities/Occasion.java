@@ -12,9 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Occasion")
+@Table(name = "Occasion",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"date", "building_id"},
+                        name = "unique_occasion_per_building_constraint"
+                )
+        })
 public class Occasion {
 
     @Id

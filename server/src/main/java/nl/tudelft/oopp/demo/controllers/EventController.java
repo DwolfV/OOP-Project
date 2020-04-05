@@ -50,7 +50,7 @@ public class EventController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody Event event, UriComponentsBuilder e) {
-        try{
+        try {
             rep.save(event);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

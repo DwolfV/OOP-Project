@@ -68,7 +68,11 @@ public class ItemController {
      */
     @PostMapping(value = "/add", consumes = {"application/json"})
     public ResponseEntity<Item> createItem(@Valid @RequestBody Item item, UriComponentsBuilder uri) {
-        itemRepository.save(item);
+        try {
+            itemRepository.save(item);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uriComponents = uri.path("/item/id/{id}").buildAndExpand(item.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(item);
     }
@@ -86,7 +90,14 @@ public class ItemController {
         return itemRepository.findById(id).map(item -> {
             item.setName(newItem.getName());
 
-            return new ResponseEntity<>(itemRepository.save(item), HttpStatus.OK);
+            Item itemReturn;
+            try {
+                itemReturn = itemRepository.save(item);
+            } catch (Exception e) {
+                return new ResponseEntity<Item>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(itemReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
