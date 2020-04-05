@@ -168,11 +168,13 @@ public class RoomController {
      */
     @PostMapping(value = "/rooms", consumes = {"application/json"})
     public ResponseEntity<Room> newRoom(@Valid @RequestBody Room newRoom, UriComponentsBuilder b) {
-        rooms.save(newRoom);
+        try {
+            rooms.save(newRoom);
+        } catch (Exception e) {
+            return new ResponseEntity<Room>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
-        return ResponseEntity
-            .created(uri.toUri())
-            .body(newRoom);
+        return ResponseEntity.created(uri.toUri()).body(newRoom);
     }
 
     /**
@@ -187,19 +189,21 @@ public class RoomController {
 
         UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(roomId);
 
-        Room updatedRoom = rooms.findById(roomId)
+        return rooms.findById(roomId)
             .map(room -> {
                 room.setName(newRoom.getName());
                 room.setBuilding(newRoom.getBuilding());
                 room.setCapacity(newRoom.getCapacity());
-                return rooms.save(room);
-            })
-            .orElseGet(() -> {
-                newRoom.setId(roomId);
-                return rooms.save(newRoom);
-            });
 
-        return ResponseEntity.created(uri.toUri()).body(updatedRoom);
+                Room roomToReturn;
+                try {
+                    roomToReturn = rooms.save(room);
+                } catch (Exception e) {
+                    return new ResponseEntity<Room>(HttpStatus.CONFLICT);
+                }
+
+                return new ResponseEntity<>(roomToReturn, HttpStatus.OK);
+            }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

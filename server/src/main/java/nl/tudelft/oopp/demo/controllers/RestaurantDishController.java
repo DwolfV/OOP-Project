@@ -79,7 +79,11 @@ public class RestaurantDishController {
 
     @PostMapping(value = "restaurant_dish", consumes = {"application/json"})
     public ResponseEntity<RestaurantDish> newRestaurantDish(@Valid @RequestBody RestaurantDish newRestaurantDish, UriComponentsBuilder b) {
-        restaurantDishRepository.save(newRestaurantDish);
+        try {
+            restaurantDishRepository.save(newRestaurantDish);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(newRestaurantDish.getId());
         return ResponseEntity.created(uri.toUri()).body(newRestaurantDish);
     }
@@ -99,17 +103,20 @@ public class RestaurantDishController {
                                                                UriComponentsBuilder b) {
         UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(restaurantDishId);
 
-        RestaurantDish restaurantDish = restaurantDishRepository.findById(restaurantDishId).map(restaurantDish1 -> {
+        return restaurantDishRepository.findById(restaurantDishId).map(restaurantDish1 -> {
             //restaurantDish1.setDishOrders(newRestaurantDish.getDishOrders());
             restaurantDish1.setDish(newRestaurantDish.getDish());
             restaurantDish1.setRestaurant(newRestaurantDish.getRestaurant());
-            return restaurantDishRepository.save(restaurantDish1);
-        }).orElseGet(() -> {
-            newRestaurantDish.setId(restaurantDishId);
-            return restaurantDishRepository.save(newRestaurantDish);
-        });
 
-        return ResponseEntity.created(uri.toUri()).body(restaurantDish);
+            RestaurantDish restaurantDishReturn;
+            try {
+                restaurantDishReturn = restaurantDishRepository.save(restaurantDish1);
+            } catch (Exception e) {
+                return new ResponseEntity<RestaurantDish>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(restaurantDishReturn, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

@@ -151,7 +151,7 @@ public class RoomCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addRoom(String roomName, int capacity, long buildingId) {
+    public static String addRoom(String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
@@ -173,7 +173,9 @@ public class RoomCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "There is a room with the name " + roomName + "in the this building.";
         }
+        return "Successful";
     }
 
     /**
@@ -181,7 +183,7 @@ public class RoomCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRoom(long id, String roomName, int capacity, long buildingId) {
+    public static String updateRoom(long id, String roomName, int capacity, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Room newRoom = new Room(roomName, capacity, BuildingCommunication.getBuildingById(buildingId));
@@ -203,7 +205,9 @@ public class RoomCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "There is a room with the name " + roomName + "in the this building.";
         }
+        return "Successful";
     }
 
     /**

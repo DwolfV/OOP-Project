@@ -64,7 +64,7 @@ public class DishController {
 
     @PostMapping(value = "/dish", consumes = {"application/json"})
     public ResponseEntity<Dish> newDish(@Valid @RequestBody Dish dish, UriComponentsBuilder uriComponentsBuilder) {
-        try{
+        try {
             dishRepository.save(dish);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
