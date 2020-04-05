@@ -191,6 +191,8 @@ public class AdminBuildingPane {
         updateInfoButton.setOnAction(e -> {
             try {
                 updateBuildingButtonClicked();
+                AdminSceneController.loadBuildingTP(ac);
+                ac.setExpandedPane(AdminSceneController.buildingTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -340,6 +342,8 @@ public class AdminBuildingPane {
         updateTimeButton.setOnAction(e -> {
             try {
                 updateTimeButtonClicked();
+                AdminSceneController.loadBuildingTP(ac);
+                ac.setExpandedPane(AdminSceneController.buildingTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

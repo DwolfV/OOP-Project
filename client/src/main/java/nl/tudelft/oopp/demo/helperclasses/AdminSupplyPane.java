@@ -119,6 +119,8 @@ public class AdminSupplyPane {
         updateButtonSupplies.setOnAction(e -> {
             try {
                 updateButtonSuppliesClicked();
+                AdminSceneController.loadSupplyTP(ac);
+                ac.setExpandedPane(AdminSceneController.supplyTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

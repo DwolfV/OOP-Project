@@ -115,6 +115,8 @@ public class AdminRoomPane {
         updateRoom.setOnAction(e -> {
             try {
                 updateRoomButtonClicked();
+                AdminSceneController.loadRoomTP(ac);
+                ac.setExpandedPane(AdminSceneController.roomTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

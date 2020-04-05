@@ -133,6 +133,8 @@ public class AdminRestaurantPane {
         updateRestaurant.setOnAction(e -> {
             try {
                 updateButtonRestaurantClicked();
+                AdminSceneController.loadRestaurantTP(ac);
+                ac.setExpandedPane(AdminSceneController.restaurantTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
