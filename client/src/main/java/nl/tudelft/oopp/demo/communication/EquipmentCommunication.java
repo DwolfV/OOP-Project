@@ -17,6 +17,40 @@ public class EquipmentCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
+
+    /**
+     * Retrieves a list of all the available items in all the rooms
+     *
+     * @return a list of Equipment
+     */
+    public static List<Equipment> getAllEquipment() {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/equipment/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        List<Equipment> equipment = null;
+        // TODO handle exception
+        try {
+            equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return equipment;
+    }
+
     /**
      * Get a list of equipment for a specific room.
      *

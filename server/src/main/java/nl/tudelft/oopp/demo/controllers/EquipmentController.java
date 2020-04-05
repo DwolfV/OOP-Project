@@ -29,7 +29,7 @@ public class EquipmentController {
      *
      * @return a list of the equipment {@link Equipment}.
      */
-    @GetMapping("equipment")
+    @GetMapping("equipment/all")
     public @ResponseBody
     List<Equipment> getEquipment() {
         return equipmentRepository.findAll();
