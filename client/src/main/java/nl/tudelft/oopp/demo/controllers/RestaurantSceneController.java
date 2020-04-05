@@ -112,16 +112,20 @@ public class RestaurantSceneController implements Initializable {
                     RoomReservation roomReservation = new RoomReservation();
 
                     for (int k=0; k < roomReservations.size(); k++){
-                        if(localDate.isEqual(roomReservations.get(k).getDate()) && localTime.isAfter(roomReservations.get(k).getStartTime()) && localTime.isBefore(roomReservations.get(i).getEndTime()) && showRestaurants.get(j).getBuilding() == roomReservations.get(k).getRoom().getBuilding()){
+                        if(localDate.isEqual(roomReservations.get(k).getDate()) && localTime.isAfter(roomReservations.get(k).getStartTime()) && localTime.isBefore(roomReservations.get(k).getEndTime()) && showRestaurants.get(j).getBuilding().getId() == (roomReservations.get(k).getRoom().getBuilding()).getId()){
                             currentlyInReservation = true;
                             roomReservation = roomReservations.get(k);
+//                            System.out.print(roomReservations.get(k).getRoom() + " ");
+//                            System.out.print(roomReservations.get(k).getDate() + " ");
+//                            System.out.print(roomReservations.get(k).getStartTime() + " ");
+//                            System.out.print(roomReservations.get(k).getEndTime() + " ");
                         }
                     }
 
                     boolean finalCurrentlyInReservation = currentlyInReservation;
                     RoomReservation finalRoomReservation = roomReservation;
                     button1.setOnAction(e -> {
-                       if (finalCurrentlyInReservation || Authenticator.isAdmin()) {
+                       if (finalCurrentlyInReservation /*|| Authenticator.isAdmin()*/) {
                            try {
                                MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
                                System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
