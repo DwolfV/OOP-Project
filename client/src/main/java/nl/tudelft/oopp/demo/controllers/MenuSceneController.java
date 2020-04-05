@@ -13,7 +13,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.util.converter.FloatStringConverter;
@@ -35,7 +34,8 @@ public class MenuSceneController implements Initializable {
      * @param restaurantId Id of the restaurant to get the menu from
      * @return A VBox with a table inside
      */
-    public static VBox loadMenu(Pane pane, long restaurantId) {
+    public static VBox loadMenu(long restaurantId) {
+        screenBounds = Screen.getPrimary().getBounds();
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
 
@@ -60,7 +60,9 @@ public class MenuSceneController implements Initializable {
         priceCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Dish, Float> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setPrice(t.getNewValue()));
+
         priceCol.getStyleClass().add("price-col");
+        nameCol.getStyleClass().add("name-col");
 
         // Set styleClass to rows
         tableView.setRowFactory(tv -> {
@@ -77,8 +79,7 @@ public class MenuSceneController implements Initializable {
         tableView.setItems(dishObservableList);
 
         VBox vbox = new VBox();
-        vbox.getChildren().addAll(tableView);
-        screenBounds = Screen.getPrimary().getBounds();
+        vbox.getChildren().setAll(tableView);
         tableView.setPrefWidth((screenBounds.getWidth() - 400) / 2);
         tableView.setPrefHeight(screenBounds.getHeight() - 200);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

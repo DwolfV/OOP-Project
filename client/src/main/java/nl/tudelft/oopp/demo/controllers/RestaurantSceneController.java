@@ -9,21 +9,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Building;
 import nl.tudelft.oopp.demo.helperclasses.Restaurant;
+import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
 
 public class RestaurantSceneController implements Initializable {
 
@@ -49,7 +50,7 @@ public class RestaurantSceneController implements Initializable {
         TitledPane[] tps = new TitledPane[buildingData.size()];
         List<Button> buttons = new ArrayList<>();
         buttonRestaurant = new ArrayList<>();
-        List<Label> labels = new ArrayList<>();
+        List<Label> labels;
 
         // count - for lists, c - for tps
         int count = 0;
@@ -69,47 +70,74 @@ public class RestaurantSceneController implements Initializable {
             //if there are restaurants for the building i - show them;
             if (showRestaurants.size() != 0) {
                 tps[c] = new TitledPane();
-                GridPane grid = new GridPane();
-                ColumnConstraints colConst = new ColumnConstraints();
-                colConst.setPercentWidth(100 / 2);
-                grid.getColumnConstraints().add(colConst);
-                grid.setVgap(4);
+                VBox table = new VBox();
                 //grid.setPadding(new Insets(5, 5, 5, 5));
 
                 for (Restaurant restaurant : restaurants) {
                     System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
                 }
 
+                TimeToStringConverter timeToString = new TimeToStringConverter();
                 for (int j = 0; j < showRestaurants.size(); j++) {
-                    Label label1 = new Label(showRestaurants.get(j).getName());
-                    long restaurantId = showRestaurants.get(j).getId();
-                    labels.add(label1);
+                    labels = new ArrayList<>();
+                    Label resName = new Label(showRestaurants.get(j).getName());
+                    labels.add(resName);
+                    Label resOpen = new Label("Opens: " + timeToString.toString(showRestaurants.get(j).getTimeOpen()));
+                    labels.add(resOpen);
+                    Label resClose = new Label("Closes: " + timeToString.toString(showRestaurants.get(j).getTimeClose()));
+                    labels.add(resClose);
+
+
                     Button button1 = new Button("Menu");
+                    button1.getStyleClass().setAll("restaurant-menu-button");
                     buttons.add(button1);
                     buttonRestaurant.add(showRestaurants.get(j).getId());
 
-                    grid.add(labels.get(count), 0, j);
-                    grid.add(buttons.get(count), 1, j);
+                    GridPane grid = new GridPane();
+                    ColumnConstraints constraint1 = new ColumnConstraints();
+                    constraint1.setPercentWidth(100/3.5);
+                    ColumnConstraints constraint2 = new ColumnConstraints();
+                    constraint2.setPercentWidth(100/3.5);
+                    ColumnConstraints constraint3 = new ColumnConstraints();
+                    constraint3.setPercentWidth(100/3.5);
+                    grid.getColumnConstraints().setAll(
+                            constraint1,
+                            constraint2,
+                            constraint3
+                    );
+                    grid.setVgap(10);
+                    grid.add(labels.get(0), 0, j);
+                    grid.add(labels.get(1), 1, j);
+                    grid.add(labels.get(2), 2, j);
+                    grid.add(buttons.get(count), 3, j);
+                    buttons.get(count).setAlignment(Pos.CENTER_RIGHT);
                     count = count + 1;
 
+                    SplitPane splitPane = new SplitPane();
+                    splitPane.getStyleClass().add("restaurant-split-pane");
+                    table.getChildren().add(grid);
+                    table.getChildren().add(splitPane);
+
+                    long restaurantId = showRestaurants.get(j).getId();
                     button1.setOnAction(e -> {
                         try {
-                            System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
-                            VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
-                            pane.getChildren().setAll(vbox);
+                            System.out.println("id:" + restaurantId + " | Name:" + resName.getText());
+                            VBox vbox = MenuSceneController.loadMenu(restaurantId);
                             ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
+                            hbox.getChildren().setAll(ac, vbox);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     });
                 }
+                Label titledPaneTitle = new Label(buildingData.get(i).getName());
                 tps[c].setText(buildingData.get(i).getName());
-                tps[c].setContent(grid);
+                tps[c].setContent(table);
                 ac.getPanes().add(tps[c]);
                 c++;
             }
         }
-        MenuSceneController.loadMenu(pane, -1);
+        //MenuSceneController.loadMenu(-1);
         double mainPaneWidth = screenBounds.getWidth() - 400;
         //mainPane.setPrefWidth(mainPaneWidth);
         hbox.setPrefWidth(mainPaneWidth);

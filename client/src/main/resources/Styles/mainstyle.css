@@ -29,6 +29,11 @@
   -fx-padding: 10;
 }
 
+.label {
+  -fx-font: 11pt "Candara Light";
+  -fx-text-fill: #F5F5F5;
+}
+
 .button {
   -fx-background-color: #336699;
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0.2), 0, 0, 2, 2);
@@ -80,28 +85,59 @@
   -fx-effect: dropShadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0);
 }
 
+.restaurant-menu-button {
+  -fx-background-color: #BBBBBB;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0 0 0 0;
+  -fx-font: 12pt "Candara Light";
+  -fx-alignment: center;
+  -fx-padding: 4 10 4 10;
+}
+
+.restaurant-menu-button:hover {
+  -fx-background-color: white;
+}
+
+.restaurant-split-pane {
+  -fx-background-color: #888888;
+}
+
+.text-field-table-cell {
+  -fx-text-fill: #BBBBBB;
+  -fx-font: 11pt "Candara Light";
+}
+
 .restaurant-menu {
-  -fx-background-color: #F5F5F5;
+  -fx-background-color: transparent;
   -fx-background-insets: 0, 0 0 0 0;
-  -fx-border-width: 1 1 1 1;
-  -fx-border-color: #555555;
+  -fx-border-width: 0 0 0 0;
+  -fx-text-fill: #F5F5F5;
+  -fx-font: 11pt "Candara Light";
 }
 
 .restaurant-menu .column-header {
-  -fx-text-fill: black;
-  -fx-background-color: #BBBBBB;
-  -fx-border-width: 0 0 1 0;
-  -fx-border-color: #555555;
-  -fx-padding: 10;
+  -fx-background-color: transparent;
+  -fx-background-insets: 0 0 0 0;
+  -fx-border-width: 0 0 2 0;
+  -fx-border-color: black black #888888 black;
+  -fx-padding: 10 10 10 20;
+  -fx-text-fill: #F5F5F5;
+  -fx-text-weight: bold;
+  -fx-font: 14pt "Candara Light";
 }
 
 .restaurant-menu .column-header-background .label {
-  -fx-text-fill: black;
+  -fx-text-fill: #F5F5F5;
+  -fx-text-weight: bold;
 }
 
-.restaurant-menu-row-cell {
-  -fx-padding: 3;
-  -fx-background-color: #F5F5F5;
+.restaurant-menu-row {
+  -fx-background-color: transparent;
+  -fx-text-fill: #F5F5F5 !important;
+  -fx-font: 12pt "Candara Light";
+  -fx-border-width: 0 0 1 0;
+  -fx-border-color: #BBBBBB;
+  -fx-cell-size: 35px;
 }
 
 .price-col {
@@ -150,30 +186,56 @@
   -fx-border-width: 0 0 0 1;
 }
 
-.titled-pane > .content {
-  -fx-text-fill: white;
-  -fx-background-color: #F5F5F5;
+.titled-pane {
+  -fx-padding: 10;
+  -fx-text-fill: #F5F5F5;
 }
 
-.titled-pane {
-  -fx-text-fill: black;
+.titled-pane > .content {
+  -fx-text-fill: #F5F5F5;
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
 }
 
 .titled-pane > .title {
-  -fx-background-color: #BBBBBB;
-  -fx-border-width: 0 0 2 0;
+  -fx-background-color: transparent;
   -fx-background-insets: 0 0 0 0;
-  -fx-border-color: #555555;
-  -fx-padding: 10px;
-  -fx-text-fill: white;
+  -fx-border-width: 0 0 2 20;
+  -fx-border-color: black black #888888 #6699CC;
+  -fx-padding: 10 10 10 20;
+  -fx-text-fill: #F5F5F5;
+  -fx-text-weight: bold;
+  -fx-font: 14pt "Candara Light";
 }
 
 .titled-pane > .title:hover {
   -fx-background-color: #66CCFF;
+  -fx-border-color: black black #66CCFF #66CCFF;
 }
 
-.titled-pane > .title:selected {
-  -fx-background-color: #66CCFF;
+.titled-pane > .title > .arrow-button {
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-padding: 0em 0.25em 0em 0em;
+  /* 0 3 0 0 */
+}
+
+.titled-pane > .title > .arrow-button .arrow {
+  -fx-background-color: #F5F5F5;
+  -fx-mark-highlight-color: transparent;
+  -fx-mark-color: #F5F5F5;
+  -fx-background-insets: 0;
+  -fx-padding: 0.25em 0.3125em 0.25em 0.3125em;
+  /* 3 3.75 3 3.75 */
+  -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+}
+
+.titled-pane:collapsed > .title > .arrow-button .arrow {
+  -fx-rotate: -90;
+}
+
+.titled-pane:focused > .title > .arrow-button .arrow {
+  -fx-background-color: #F5F5F5;
 }
 
 /*# sourceMappingURL=mainstyle.css.map */
