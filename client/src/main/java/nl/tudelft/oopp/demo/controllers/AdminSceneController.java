@@ -55,7 +55,7 @@ public class AdminSceneController implements Initializable {
      *
      * @param ac Accordion
      */
-    public static void loadBuildingTP (Accordion ac) {
+    public static void loadBuildingTP(Accordion ac) {
         vboxBuilding = new VBox();
         buildTitle = new Label("Add A Building:");
         SplitPane splitPane1 = new SplitPane();
@@ -81,7 +81,7 @@ public class AdminSceneController implements Initializable {
      *
      * @param ac Accordion
      */
-    public static void loadRoomTP (Accordion ac) {
+    public static void loadRoomTP(Accordion ac) {
         vboxRoom = new VBox();
         roomTitle = new Label("Add A Room:");
         SplitPane splitPane3 = new SplitPane();
@@ -103,7 +103,7 @@ public class AdminSceneController implements Initializable {
      *
      * @param ac Accordion
      */
-    public static void loadRestaurantTP (Accordion ac) {
+    public static void loadRestaurantTP(Accordion ac) {
         vboxRestaurant = new VBox();
         resTitle = new Label("Add A Restaurant:");
         SplitPane splitPane4 = new SplitPane();
@@ -126,7 +126,7 @@ public class AdminSceneController implements Initializable {
      *
      * @param ac Accordion
      */
-    public static void loadSupplyTP (Accordion ac) {
+    public static void loadSupplyTP(Accordion ac) {
         vboxSupply = new VBox();
         supplyTitle = new Label("Add A Supply:");
         SplitPane splitPane5 = new SplitPane();
@@ -148,7 +148,7 @@ public class AdminSceneController implements Initializable {
      *
      * @param ac Accordion
      */
-    public static void loadRolesTP (Accordion ac) {
+    public static void loadRolesTP(Accordion ac) {
         vboxRoles = new VBox();
         rolesTitle = new Label("Modify User Roles:");
         SplitPane splitPane6 = new SplitPane();
