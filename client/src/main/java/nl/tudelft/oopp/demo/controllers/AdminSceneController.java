@@ -32,6 +32,7 @@ public class AdminSceneController implements Initializable {
     public static TitledPane supplyTP;
     public static TitledPane rolesTP;
     public static TitledPane itemsTP;
+    private static TitledPane equipmentsTP;
     public static BorderPane adminBorderPane;
     private static Rectangle2D screenBounds;
 
@@ -48,6 +49,8 @@ public class AdminSceneController implements Initializable {
     private static Label rolesTitle;
     private static VBox vboxItems;
     private static Label itemsTitle;
+    private static VBox vboxEquipments;
+    private static Label equipmentsTitle;
 
     public MainSceneController mainSceneController;
 
@@ -160,19 +163,38 @@ public class AdminSceneController implements Initializable {
      * @param ac Accordion
      */
     public static void loadItemsTP(Accordion ac) {
-        vboxItems = new VBox();
+        VBox vboxItemsAndEquip = new VBox();
         itemsTitle = new Label("Modify Items:");
-        SplitPane splitPane6 = new SplitPane();
+        SplitPane splitPane1 = new SplitPane();
         BorderPane borderPaneItems = AdminItemsPane.getItemsBP(ac);
-        vboxItems.getChildren().setAll(itemsTitle, splitPane6, borderPaneItems);
+        equipmentsTitle = new Label("Modify Equipments:");
+        SplitPane splitPane2 = new SplitPane();
+        BorderPane borderPaneEquipment = AdminItemsPane.getEquipmentBP(ac);
+        vboxItemsAndEquip.getChildren().setAll(itemsTitle, splitPane1, borderPaneItems, occTitle, splitPane2, borderPaneEquipment);
 
-        ScrollPane scrollPaneRoles = getScrollPane(vboxItems);
+        ScrollPane scrollPaneEquipments = getScrollPane(vboxItemsAndEquip);
 
-        itemsTP = new TitledPane();
-        itemsTP.setText("Items");
-        itemsTP.setContent(scrollPaneRoles);
+        equipmentsTP = new TitledPane();
+        equipmentsTP.setText("Items and Equipment");
+        equipmentsTP.setContent(scrollPaneEquipments);
 
-        ac.getPanes().set(4, itemsTP);
+        ac.getPanes().set(4, equipmentsTP);
+    }
+
+    public static void loadEquipmentTP (Accordion ac) {
+        vboxEquipments = new VBox();
+        equipmentsTitle = new Label("Modify Items:");
+        SplitPane splitPane6 = new SplitPane();
+        BorderPane borderPaneEquipments = AdminItemsPane.getItemsBP(ac);
+        vboxEquipments.getChildren().setAll(equipmentsTitle, splitPane6, borderPaneEquipments);
+
+        ScrollPane scrollPaneRoles = getScrollPane(vboxEquipments);
+
+        equipmentsTP = new TitledPane();
+        equipmentsTP.setText("Items");
+        equipmentsTP.setContent(scrollPaneRoles);
+
+        ac.getPanes().set(5, equipmentsTP);
     }
 
     /**

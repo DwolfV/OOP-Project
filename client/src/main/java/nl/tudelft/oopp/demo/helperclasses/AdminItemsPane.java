@@ -2,22 +2,21 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import nl.tudelft.oopp.demo.communication.ItemCommunication;
+import javafx.util.converter.IntegerStringConverter;
+import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
-import nl.tudelft.oopp.demo.entities.Equipment;
-import nl.tudelft.oopp.demo.entities.Item;
+import nl.tudelft.oopp.demo.entities.*;
+import org.controlsfx.control.PropertySheet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminItemsPane {
 
@@ -156,6 +155,197 @@ public class AdminItemsPane {
         BorderPane borderPane = new BorderPane();
         borderPane.getStyleClass().add("border-pane");
         borderPane.setCenter(tableItems);
+        borderPane.setRight(vboxRight);
+        borderPane.setBottom(hboxBottom);
+
+        return borderPane;
+    }
+
+    /**
+     * The method below is implemented for the update button under the equipment section in the admin scene.
+     * When the user double clicks on a specific section of a row one will be able to change the details, and
+     * after changing the details one will have to press on the update button to update the database.
+     */
+    public static void updateEquipmentsButtonClicked() {
+        Equipment equipment = tableEquipments.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        String success = EquipmentCommunication.updateEquipmentStock(equipment.getId(), equipment.getRoom(), equipment.getItem(), equipment.getAmount());
+        if (success.equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.showAndWait();
+        }
+    }
+
+    /**
+     * The method below is implemented for the delete button under the equipment section in the admin scene.
+     * When the user selects a row in the building table it will be deleted from the database.
+     */
+    public static void deleteEquipmentsButtonClicked() {
+        ObservableList<Equipment> allEquipments;
+        allEquipments = tableEquipments.getItems();
+        Equipment equipment = tableEquipments.getSelectionModel().getSelectedItem();
+
+        allEquipments.remove(equipment);
+        EquipmentCommunication.removeEquipment(equipment.getId());
+    }
+
+    /**
+     * Get the BorderPane of the Equipment info list.
+     * @return BorderPane of Equipment Info
+     */
+    public static BorderPane getEquipmentBP(Accordion ac) {
+        //Reset TableView tableRoom
+        tableEquipments = new TableView<>();
+        tableEquipments.getColumns().clear();
+        tableEquipments.setEditable(true);
+
+        TableColumn<Equipment, Long> idColEquipment =
+            new TableColumn<>("id");
+        idColEquipment.setMinWidth(100);
+        idColEquipment.setCellValueFactory(
+            new PropertyValueFactory<>("id"));
+
+        TableColumn<Equipment, Room> idColRoom =
+            new TableColumn<>("Room Name");
+        idColRoom.setMinWidth(100);
+        idColRoom.setCellValueFactory(
+            new PropertyValueFactory<>("room"));
+
+        TableColumn<Equipment, Item> itemCol =
+            new TableColumn<>("Item Name");
+        itemCol.setMinWidth(100);
+        itemCol.setCellValueFactory(
+            new PropertyValueFactory<>("item"));
+
+        TableColumn<Equipment, Integer> amountCol =
+            new TableColumn<>("Amount");
+        amountCol.setMinWidth(100);
+        amountCol.setCellValueFactory(
+            new PropertyValueFactory<>("amount"));
+        amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        amountCol.setOnEditCommit(
+            (TableColumn.CellEditEvent<Equipment, Integer> t) -> t.getTableView().getItems().get(
+                t.getTablePosition().getRow()).setAmount(t.getNewValue()));
+
+
+        ObservableList<Equipment> equipmentData = FXCollections.observableList(EquipmentCommunication.getAllEquipment());
+        tableEquipments.setItems(equipmentData);
+        tableEquipments.getColumns().addAll(idColEquipment, itemCol, amountCol);
+
+        //delete button
+        deleteEquipmentButton.setOnAction(e -> {
+            try {
+                deleteEquipmentsButtonClicked();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        //update button
+        updateEquipmentButton.setOnAction(e -> {
+            try {
+                updateEquipmentsButtonClicked();
+                AdminSceneController.loadEquipmentTP(ac);
+                ac.setExpandedPane(AdminSceneController.itemsTP);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        // HBox for the buttons under the table
+        HBox hboxBottom = new HBox(5);
+        hboxBottom.getChildren().setAll(deleteEquipmentButton, updateEquipmentButton);
+
+        // adding an item scene
+        BorderPane borderPaneAddEquipment = new BorderPane();
+        VBox vboxRight = new VBox();
+
+        Text rooms = new Text("Room Name");
+        Text itemName = new Text("Item Name");
+        Text quantity = new Text("Quantity");
+
+        TextField roomField = new TextField();
+
+        ComboBox<String> roomComboBox = new ComboBox<>();
+        List<Building> buildingList = BuildingCommunication.getBuildings();
+        List<String> roomString = new ArrayList<>();
+        List<String> idList = new ArrayList<>();
+        for (Building building: buildingList) {
+            idList.add(building.getName() + ", " + building.getId());
+            for (Room room: RoomCommunication.getRoomsByBuildingId(building.getId())) {
+                roomString.add("Building: " + building.getName() + " Room: " + room.getName());
+            }
+        }
+        ObservableList<String> roomStringObservableList = FXCollections.observableList(roomString);
+        roomComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+            String[] string = newValue.split(" ");
+            roomField.setText(string[1]);
+        });
+        roomComboBox.setItems(roomStringObservableList);
+
+        TextField quantityField = new TextField();
+
+        List<Item> itemArrayList = ItemCommunication.getItems();
+        List<String> itemString = new ArrayList<>();
+        for (Item item: itemArrayList) {
+            itemString.add(item.getName());
+        }
+        ObservableList<String> items = FXCollections.observableList(itemString);
+
+        ComboBox<String> itemComboBox = new ComboBox<>();
+        itemComboBox.setItems(items);
+
+        Button addEquipment = new Button("Add Equipment");
+
+        vboxRight.getChildren().addAll(itemName, itemComboBox, quantity, quantityField, rooms, roomField, roomComboBox, addEquipment);
+        vboxRight.setSpacing(5);
+        borderPaneAddEquipment.setTop(vboxRight);
+
+        addEquipment.setOnAction(e -> {
+            String pickedItem = itemComboBox.getValue();
+            String quantityFieldText = (quantityField.getText());
+            String pickedRoom = roomField.getText();
+
+            for (Room room: idList) {
+                if (room.equals(pickedRoom)) {
+
+                }
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            String success = EquipmentCommunication.addEquipmentToRoom(pickedRoom, ItemCommunication.getItemByName(pickedItem), Integer.parseInt(quantityFieldText));
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.showAndWait();
+            }
+
+            itemComboBox.setValue(null);
+            quantityField.setText(null);
+            roomComboBox.setValue(null);
+            AdminSceneController.loadEquipmentTP(ac);
+            ac.setExpandedPane(AdminSceneController.itemsTP);
+        });
+
+        tableEquipments.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tableEquipments.getStyleClass().add("center");
+        hboxBottom.getStyleClass().add("bottom");
+        vboxRight.getStyleClass().add("right");
+
+        // All elements in BorderPane
+        BorderPane borderPane = new BorderPane();
+        borderPane.getStyleClass().add("border-pane");
+        borderPane.setCenter(tableEquipments);
         borderPane.setRight(vboxRight);
         borderPane.setBottom(hboxBottom);
 
