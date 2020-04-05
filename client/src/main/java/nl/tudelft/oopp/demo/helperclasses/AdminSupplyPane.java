@@ -182,12 +182,11 @@ public class AdminSupplyPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (SupplyCommunication.addSupply(Long.parseLong(buildingNameInput.getText()), supplyNameInputText,
-                stockInputText).equals("Successful")) {
+            String success = SupplyCommunication.addSupply(Long.parseLong(buildingNameInput.getText()), supplyNameInputText,
+                stockInputText);
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(SupplyCommunication.addSupply(Long.parseLong(buildingNameInput.getText()),
-                    supplyNameInputText, stockInputText));
                 alert.showAndWait();
             }
 

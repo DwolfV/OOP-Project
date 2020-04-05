@@ -51,14 +51,12 @@ public class AdminBuildingPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(),
+        String success = BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(),
             building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
-            building.getZipCode(), building.getCity()).equals("Successful")) {
+            building.getZipCode(), building.getCity());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(BuildingCommunication.updateBuilding(building.getId(), building.getName(),
-                building.getOpenTime(), building.getCloseTime(), building.getStreetName(),
-                building.getStreetNumber(), building.getZipCode(), building.getCity()));
             alert.showAndWait();
         }
     }
@@ -223,12 +221,11 @@ public class AdminBuildingPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
-                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText).equals("Successful")) {
+            String success = BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
+                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText),
-                    LocalTime.parse(closeTimeInputText), streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText));
                 alert.showAndWait();
             }
 

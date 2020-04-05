@@ -3,8 +3,6 @@ package nl.tudelft.oopp.demo.communication;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import nl.tudelft.oopp.demo.entities.*;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,13 +10,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalTime;
 import java.util.List;
+import nl.tudelft.oopp.demo.entities.DishOrder;
 
 public class DishOrderCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     /**
-     * Get the dish orders by order, used to get dishes for an order
+     * Get the dish orders by order, used to get dishes for an order.
      *
      * @param id - the id of the order
      * @return
@@ -51,7 +50,7 @@ public class DishOrderCommunication {
     }
 
     /**
-     * Add a new DishOrder, links a dish to an order
+     * Add a new DishOrder, links a dish to an order.
      *
      * @param amount - amount of the product
      * @param restaurantDishId - id of the restaurant
