@@ -155,6 +155,27 @@ public class AdminSceneController implements Initializable {
     }
 
     /**
+     * Load the itemsTP scene.
+     *
+     * @param ac Accordion
+     */
+    public static void loadItemsTP(Accordion ac) {
+        vboxItems = new VBox();
+        itemsTitle = new Label("Modify Items:");
+        SplitPane splitPane6 = new SplitPane();
+        BorderPane borderPaneItems = AdminItemsPane.getItemsBP(ac);
+        vboxItems.getChildren().setAll(itemsTitle, splitPane6, borderPaneItems);
+
+        ScrollPane scrollPaneRoles = getScrollPane(vboxItems);
+
+        itemsTP = new TitledPane();
+        itemsTP.setText("Items");
+        itemsTP.setContent(scrollPaneRoles);
+
+        ac.getPanes().set(4, itemsTP);
+    }
+
+    /**
      * Load the rolesTP scene.
      *
      * @param ac Accordion
@@ -172,23 +193,7 @@ public class AdminSceneController implements Initializable {
         rolesTP.setText("Roles");
         rolesTP.setContent(scrollPaneRoles);
 
-        ac.getPanes().set(4, rolesTP);
-    }
-
-    public static void loadItemsTP (Accordion ac) {
-        vboxItems = new VBox();
-        itemsTitle = new Label("Modify Items:");
-        SplitPane splitPane6 = new SplitPane();
-        BorderPane borderPaneItems = AdminItemsPane.getItemsBP(ac);
-        vboxItems.getChildren().setAll(itemsTitle, splitPane6, borderPaneItems);
-
-        ScrollPane scrollPaneRoles = getScrollPane(vboxItems);
-
-        itemsTP = new TitledPane();
-        itemsTP.setText("Items");
-        itemsTP.setContent(scrollPaneRoles);
-
-        ac.getPanes().set(5, itemsTP);
+        ac.getPanes().set(5, rolesTP);
     }
 
     /**
@@ -206,8 +211,8 @@ public class AdminSceneController implements Initializable {
         loadRoomTP(ac);
         loadRestaurantTP(ac);
         loadSupplyTP(ac);
-        loadRolesTP(ac);
         loadItemsTP(ac);
+        loadRolesTP(ac);
 
         // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
