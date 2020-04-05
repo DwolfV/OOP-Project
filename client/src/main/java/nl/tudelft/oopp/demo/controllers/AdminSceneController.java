@@ -32,7 +32,6 @@ public class AdminSceneController implements Initializable {
     public static TitledPane supplyTP;
     public static TitledPane rolesTP;
     public static TitledPane itemsTP;
-    private static TitledPane equipmentsTP;
     public static BorderPane adminBorderPane;
     private static Rectangle2D screenBounds;
 
@@ -158,7 +157,7 @@ public class AdminSceneController implements Initializable {
     }
 
     /**
-     * Load the itemsTP scene.
+     * Load the itemsTP and equipmentTP scene.
      *
      * @param ac Accordion
      */
@@ -174,27 +173,11 @@ public class AdminSceneController implements Initializable {
 
         ScrollPane scrollPaneEquipments = getScrollPane(vboxItemsAndEquip);
 
-        equipmentsTP = new TitledPane();
-        equipmentsTP.setText("Items and Equipment");
-        equipmentsTP.setContent(scrollPaneEquipments);
+        itemsTP = new TitledPane();
+        itemsTP.setText("Items and Equipment");
+        itemsTP.setContent(scrollPaneEquipments);
 
-        ac.getPanes().set(4, equipmentsTP);
-    }
-
-    public static void loadEquipmentTP (Accordion ac) {
-        vboxEquipments = new VBox();
-        equipmentsTitle = new Label("Modify Items:");
-        SplitPane splitPane6 = new SplitPane();
-        BorderPane borderPaneEquipments = AdminItemsPane.getItemsBP(ac);
-        vboxEquipments.getChildren().setAll(equipmentsTitle, splitPane6, borderPaneEquipments);
-
-        ScrollPane scrollPaneRoles = getScrollPane(vboxEquipments);
-
-        equipmentsTP = new TitledPane();
-        equipmentsTP.setText("Items");
-        equipmentsTP.setContent(scrollPaneRoles);
-
-        ac.getPanes().set(5, equipmentsTP);
+        ac.getPanes().set(4, itemsTP);
     }
 
     /**

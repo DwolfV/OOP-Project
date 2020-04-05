@@ -249,7 +249,7 @@ public class AdminItemsPane {
         updateEquipmentButton.setOnAction(e -> {
             try {
                 updateEquipmentsButtonClicked();
-                AdminSceneController.loadEquipmentTP(ac);
+                AdminSceneController.loadItemsTP(ac);
                 ac.setExpandedPane(AdminSceneController.itemsTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -351,7 +351,7 @@ public class AdminItemsPane {
             itemComboBox.setValue(null);
             quantityField.setText(null);
             roomComboBox.setValue(null);
-            AdminSceneController.loadEquipmentTP(ac);
+            AdminSceneController.loadItemsTP(ac);
             ac.setExpandedPane(AdminSceneController.itemsTP);
         });
 
