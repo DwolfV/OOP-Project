@@ -1,9 +1,11 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
+import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -32,8 +35,12 @@ public class RestaurantSceneController implements Initializable {
     @FXML private Pane pane;
     @FXML private HBox hbox;
 
+    private MainSceneController mainSceneController;
+    private HamburgerMenuSceneController hamburgerMenuSceneController;
+
     private static Rectangle2D screenBounds;
     public static List<Long> buttonRestaurant;
+
 
     /**
      * Loads all the content into the tables.
@@ -87,20 +94,62 @@ public class RestaurantSceneController implements Initializable {
                     Button button1 = new Button("Menu");
                     buttons.add(button1);
                     buttonRestaurant.add(showRestaurants.get(j).getId());
+                    Restaurant restaurant = showRestaurants.get(j);
 
                     grid.add(labels.get(count), 0, j);
                     grid.add(buttons.get(count), 1, j);
                     count = count + 1;
 
-                    button1.setOnAction(e -> {
-                        try {
-                            System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
-                            VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
-                            pane.getChildren().setAll(vbox);
-                            ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                    long user = Authenticator.ID;
+                    ObservableList<RoomReservation> roomReservations = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(user));
+
+                    LocalDate localDate = LocalDate.now();
+                    LocalTime localTime = LocalTime.now();
+
+                    boolean currentlyInReservation = false;
+                    RoomReservation roomReservation = new RoomReservation();
+
+                    for (int k=0; k < roomReservations.size(); k++){
+                        if(localDate.isEqual(roomReservations.get(k).getDate()) && localTime.isAfter(roomReservations.get(k).getStartTime()) && localTime.isBefore(roomReservations.get(k).getEndTime()) && showRestaurants.get(j).getBuilding().getId() == (roomReservations.get(k).getRoom().getBuilding()).getId()){
+                            currentlyInReservation = true;
+                            roomReservation = roomReservations.get(k);
+//                            System.out.print(roomReservations.get(k).getRoom() + " ");
+//                            System.out.print(roomReservations.get(k).getDate() + " ");
+//                            System.out.print(roomReservations.get(k).getStartTime() + " ");
+//                            System.out.print(roomReservations.get(k).getEndTime() + " ");
                         }
+                    }
+
+                    boolean finalCurrentlyInReservation = currentlyInReservation;
+                    RoomReservation finalRoomReservation = roomReservation;
+                    button1.setOnAction(e -> {
+                       if (finalCurrentlyInReservation /*|| Authenticator.isAdmin()*/) {
+                           try {
+                               MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
+                               System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
+                               VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant, finalRoomReservation);
+                               pane.getChildren().setAll(vbox);
+                               ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
+
+                               OrderSceneController orderSceneController = new OrderSceneController();
+                               orderSceneController.setRoomReservation(finalRoomReservation);
+                               orderSceneController.clearBasket();
+                               hamburgerMenuSceneController.openOrder();
+                           } catch (Exception ex) {
+                               ex.printStackTrace();
+                           }
+                       }
+                       else{
+                           try {
+                               MenuSceneController.loadMenu(pane, -1);
+                               System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
+                               VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
+                               pane.getChildren().setAll(vbox);
+                               ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
+                           } catch (Exception ex) {
+                               ex.printStackTrace();
+                           }
+                       }
                     });
                 }
                 tps[c].setText(buildingData.get(i).getName());
@@ -109,12 +158,16 @@ public class RestaurantSceneController implements Initializable {
                 c++;
             }
         }
-        MenuSceneController.loadMenu(pane, -1);
         double mainPaneWidth = screenBounds.getWidth() - 400;
         mainPane.setPrefWidth(mainPaneWidth);
         hbox.setPrefWidth(mainPaneWidth);
         hbox.setPrefHeight(screenBounds.getHeight() - 200);
         ac.setPrefWidth(screenBounds.getWidth());
         pane.setPrefWidth(mainPaneWidth * 0.50);
+    }
+
+    public void setController(MainSceneController mainSceneController, HamburgerMenuSceneController hamburgerMenuSceneController){
+        this.mainSceneController = mainSceneController;
+        this.hamburgerMenuSceneController = hamburgerMenuSceneController;
     }
 }
