@@ -14,11 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -68,8 +64,13 @@ public class FriendsSceneController implements Initializable {
         addButton.setOnAction(event -> {
             String newFriendTextFieldText = newFriendTextField.getText();
 
-            System.out.println(FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText(FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
                 UserCommunication.getByUsername(newFriendTextFieldText)));
+
+            alert.showAndWait();
 
             newFriendTextField.setText(null);
 
