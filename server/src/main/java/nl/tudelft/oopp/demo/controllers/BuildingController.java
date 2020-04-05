@@ -146,14 +146,8 @@ public class BuildingController {
     public ResponseEntity<Building> newBuilding(@Valid @RequestBody Building building, UriComponentsBuilder uri) {
         try {
             rep.save(building);
-        } catch (EJBTransactionRolledbackException e) {
-            Throwable t = e.getCause();
-            while ((t != null) && !(t instanceof ConstraintViolationException)) {
-                t = t.getCause();
-            }
-            if (t instanceof ConstraintViolationException) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
+        } catch (Exception e) {
+             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         UriComponents uriComponents = uri.path("/building/{id}").buildAndExpand(building.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(building);
@@ -178,7 +172,14 @@ public class BuildingController {
             building.setStreetNumber(newBuilding.getStreetNumber());
             building.setZipCode(newBuilding.getZipCode());
 
-            return new ResponseEntity<>(rep.save(building), HttpStatus.OK);
+            Building buildingToReturn;
+            try {
+                buildingToReturn = rep.save(building);
+            } catch (Exception e) {
+                return new ResponseEntity<Building>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(buildingToReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
