@@ -171,9 +171,9 @@ public class RoomCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "There is a room with the name " + roomName + "in the this building.";
+            return "There is a room with the name " + roomName + " in the this building.";
         }
         return "Successful";
     }
@@ -205,7 +205,7 @@ public class RoomCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
-            return "There is a room with the name " + roomName + "in the this building.";
+            return "There is a room with the name " + roomName + " in the this building.";
         }
         return "Successful";
     }
