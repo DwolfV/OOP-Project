@@ -1,11 +1,8 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +12,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -361,13 +359,13 @@ public class AdminBuildingPane {
         }
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
-        Text day = new Text("Day");
+        Text day = new Text("Date");
         Text openHolidayTime = new Text("Open Time");
         Text closeHolidayTime = new Text("Close Time");
         Text building = new Text("Building ID");
 
         ObservableList<LocalTime> time = generateTime();
-        TextField dayInput = new TextField();
+        DatePicker datePicker = new DatePicker();
         ComboBox<LocalTime> openHolidayTimeInput = new ComboBox<>();
         openHolidayTimeInput.setItems(time);
         ComboBox<LocalTime> closeHolidayTimeInput = new ComboBox<>();
@@ -390,23 +388,23 @@ public class AdminBuildingPane {
         });
 
         VBox vboxRight = new VBox(5);
-        vboxRight.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
+        vboxRight.getChildren().addAll(day, datePicker, openHolidayTime, openHolidayTimeInput,
                 closeHolidayTime, closeHolidayTimeInput, building, choiceBox, addOpenTime);
 
         // Add open time button
         addOpenTime.setOnAction(e -> {
-            LocalDate dayInputText = LocalDate.parse(dayInput.getText());
+            LocalDate dayInputText = (datePicker.getValue());
             LocalTime openHolidayTimeInputText = openHolidayTimeInput.getValue();
             LocalTime closeHolidayTimeInputText = closeHolidayTimeInput.getValue();
 
             OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
 
-            dayInput.setText(null);
+            datePicker.setValue(null);
             openHolidayTimeInput.setValue(null);
             closeHolidayTimeInput.setValue(null);
             buildingInput.setText(null);
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadBuildingTP(ac);
             ac.setExpandedPane(AdminSceneController.buildingTP);
         });
 
