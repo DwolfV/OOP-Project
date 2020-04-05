@@ -121,7 +121,7 @@ public class SupplyCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
             return "There is already a supply with this name in this building.";
         }
@@ -156,7 +156,7 @@ public class SupplyCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
             return "There is already a supply with this name in this building.";
         }
