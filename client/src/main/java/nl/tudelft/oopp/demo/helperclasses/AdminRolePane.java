@@ -72,21 +72,21 @@ public class AdminRolePane {
             // make a user Admin
             makeAdminButton.setOnAction(event -> {
                 UserCommunication.changeRole(users.get(index).getUsername(), "admin");
-                AdminSceneController.loadAdminScene(ac);
+                AdminSceneController.loadRolesTP(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 
             // make a user Employee
             makeEmployeeButton.setOnAction(event -> {
                 UserCommunication.changeRole(users.get(index).getUsername(), "employee");
-                AdminSceneController.loadAdminScene(ac);
+                AdminSceneController.loadRolesTP(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 
             // make a user "Normal"
-            makeEmployeeButton.setOnAction(event -> {
+            makeNormalButton.setOnAction(event -> {
                 UserCommunication.changeRole(users.get(index).getUsername(), "user");
-                AdminSceneController.loadAdminScene(ac);
+                AdminSceneController.loadRolesTP(ac);
                 ac.setExpandedPane(AdminSceneController.rolesTP);
             });
 

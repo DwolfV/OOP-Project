@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -21,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -96,6 +98,8 @@ public class SupplySceneController implements Initializable {
 
             allReservedSupplies.remove(supplyReservation);
             SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
+
+            loadSuppliesAccordion();
         });
 
         veBoxDeleteAndTable = new VBox();
@@ -157,12 +161,28 @@ public class SupplySceneController implements Initializable {
                         LocalDate today = LocalDate.now();
                         int amount = Integer.parseInt(textFieldItem.getText());
 
-                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText(SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID));
+
+                        alert.showAndWait();
 
                         textFieldItem.setText(null);
 
                         loadReservedSupply();
                     });
+
+                    HBox.setHgrow(labelItem, Priority.ALWAYS);
+                    HBox.setHgrow(labelQuantity, Priority.ALWAYS);
+                    HBox.setHgrow(textFieldItem, Priority.ALWAYS);
+                    HBox.setHgrow(reserveSupplyButton, Priority.ALWAYS);
+
+                    labelItem.setMinWidth(100);
+                    labelQuantity.setMinWidth(100);
+                    textFieldItem.setMinWidth(75);
+                    textFieldItem.setMaxWidth(75);
+                    reserveSupplyButton.setMinWidth(75);
 
                     horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, reserveSupplyButton);
                     horizBox.setSpacing(150);

@@ -5,13 +5,7 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -38,7 +32,18 @@ public class AdminRestaurantPane {
      */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        if (RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding().getId(),
+            restaurant.getTimeClose(), restaurant.getTimeOpen()).equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.setContentText(RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(),
+                restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen()));
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -133,6 +138,8 @@ public class AdminRestaurantPane {
         updateRestaurant.setOnAction(e -> {
             try {
                 updateButtonRestaurantClicked();
+                AdminSceneController.loadRestaurantTP(ac);
+                ac.setExpandedPane(AdminSceneController.restaurantTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -183,7 +190,17 @@ public class AdminRestaurantPane {
             LocalTime openingTimeInputText = openingTimeInput.getValue();
             LocalTime closingTimeInputText = closingTimeInput.getValue();
 
-            RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            if (RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()),
+                closingTimeInputText, openingTimeInputText).equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.setContentText(RestaurantCommunication.addRestaurant(restaurantNameInputText,
+                    Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText));
+                alert.showAndWait();
+            }
 
             restaurantNameInput.setText(null);
             openingTimeInput.setValue(null);
@@ -191,7 +208,7 @@ public class AdminRestaurantPane {
             buildingNameInput.setText(null);
 
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadRestaurantTP(ac);
             ac.setExpandedPane(AdminSceneController.restaurantTP);
         });
 

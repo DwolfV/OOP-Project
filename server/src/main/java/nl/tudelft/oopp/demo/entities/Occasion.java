@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.sun.istack.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.persistence.Column;
@@ -10,9 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Occasion")
+@Table(name = "Occasion",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"date", "building_id"},
+                        name = "unique_occasion_per_building_constraint"
+                )
+        })
 public class Occasion {
 
     @Id
@@ -20,12 +29,15 @@ public class Occasion {
     @Column(name = "id")
     private long id;
 
+    @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
+    @NotNull
     @Column(name = "open_time", nullable = false)
     private LocalTime openTime;
 
+    @NotNull
     @Column(name = "close_time", nullable = false)
     private LocalTime closeTime;
 

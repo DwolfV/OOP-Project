@@ -101,7 +101,7 @@ public class SupplyCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addSupply(long buildingId, String name, int stock) {
+    public static String addSupply(long buildingId, String name, int stock) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Supply newSupply = new Supply(BuildingCommunication.getBuildingById(buildingId), name, stock);
@@ -121,9 +121,11 @@ public class SupplyCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
+            return "There is already a supply with this name in this building.";
         }
+        return "Successful";
     }
 
     /**
@@ -132,7 +134,7 @@ public class SupplyCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void updateSupply(long id, long buildingId, String name, int stock) {
+    public static String updateSupply(long id, long buildingId, String name, int stock) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Supply newSupply = new Supply(BuildingCommunication.getBuildingById(buildingId), name, stock);
@@ -154,9 +156,11 @@ public class SupplyCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
+            return "There is already a supply with this name in this building.";
         }
+        return "Successful";
     }
 
 

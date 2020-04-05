@@ -171,7 +171,7 @@ class RoomControllerTest {
         when(roomRepository.findById(r1.getId())).thenReturn(roomOptional);
 
         assertEquals(responseEntity.getBody(), roomController.replaceRoom(
-                room, 1, uriComponentsBuilder).getBody());
+                room, 0, uriComponentsBuilder).getBody());
     }
 
     @Test

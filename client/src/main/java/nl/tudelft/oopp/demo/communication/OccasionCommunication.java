@@ -125,7 +125,7 @@ public class OccasionCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addOccasion(LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
+    public static String addOccasion(LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
@@ -147,7 +147,9 @@ public class OccasionCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "There is already an occasion for this building on this day";
         }
+        return "Successful";
     }
 
     /**
@@ -155,7 +157,7 @@ public class OccasionCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateOccasion(long id, LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
+    public static String updateOccasion(long id, LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
@@ -177,7 +179,9 @@ public class OccasionCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "There is already an occasion for this building on this day";
         }
+        return "Successful";
     }
 
     /**
