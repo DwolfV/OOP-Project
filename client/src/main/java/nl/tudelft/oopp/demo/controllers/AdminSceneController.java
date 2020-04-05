@@ -32,7 +32,6 @@ public class AdminSceneController implements Initializable {
     public static TitledPane supplyTP;
     public static TitledPane rolesTP;
     public static TitledPane itemsTP;
-    private static TitledPane equipmentsTP;
     public static BorderPane adminBorderPane;
     private static Rectangle2D screenBounds;
 
@@ -174,11 +173,11 @@ public class AdminSceneController implements Initializable {
 
         ScrollPane scrollPaneEquipments = getScrollPane(vboxItemsAndEquip);
 
-        equipmentsTP = new TitledPane();
-        equipmentsTP.setText("Items and Equipment");
-        equipmentsTP.setContent(scrollPaneEquipments);
+        itemsTP = new TitledPane();
+        itemsTP.setText("Items and Equipment");
+        itemsTP.setContent(scrollPaneEquipments);
 
-        ac.getPanes().set(4, equipmentsTP);
+        ac.getPanes().set(4, itemsTP);
     }
 
     /**
