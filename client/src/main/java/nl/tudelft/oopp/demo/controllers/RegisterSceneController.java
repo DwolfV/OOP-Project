@@ -85,7 +85,7 @@ public class RegisterSceneController implements Initializable {
             return;
         }
         if (usernameField.getText() == null || passwordField.getText() == null || firstNameField.getText() == null
-            || lastNameField.getText() == null || usernameField.getText().equals("") || usernameField.getText().equals(" ")) {
+            || lastNameField.getText() == null || usernameField.getText().equals("") || usernameField.getText().contains(" ")) {
             usernameField.clear();
             usernameField.requestFocus();
             return;
