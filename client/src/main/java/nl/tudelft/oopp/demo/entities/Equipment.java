@@ -7,6 +7,10 @@ public class Equipment {
     private Item item;
     private int amount;
 
+    public Equipment() {
+
+    }
+
     /**
      * Creates an instance of a new equipment object.
      *
