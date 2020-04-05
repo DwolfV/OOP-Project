@@ -8,14 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -46,9 +39,20 @@ public class AdminBuildingPane {
      */
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
-                building.getZipCode(), building.getCity());
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        if (BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(),
+            building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
+            building.getZipCode(), building.getCity()).equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.setContentText(BuildingCommunication.updateBuilding(building.getId(), building.getName(),
+                building.getOpenTime(), building.getCloseTime(), building.getStreetName(),
+                building.getStreetNumber(), building.getZipCode(), building.getCity()));
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -208,8 +212,17 @@ public class AdminBuildingPane {
             String zipCodeInputText = zipCodeInput.getText();
             String cityInputText = cityInput.getText();
 
-            BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
-                    streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            if (BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
+                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText).equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.setContentText(BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText),
+                    LocalTime.parse(closeTimeInputText), streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText));
+                alert.showAndWait();
+            }
 
             buildingNameInput.setText(null);
             openTimeInput.setValue(null);
@@ -245,7 +258,18 @@ public class AdminBuildingPane {
      */
     public static void updateTimeButtonClicked() {
         Occasion occasion = tableHoliday.getSelectionModel().getSelectedItem();
-        OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(), occasion.getCloseTime(), occasion.getBuilding().getId());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        if (OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(),
+            occasion.getCloseTime(), occasion.getBuilding().getId()).equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.setContentText(OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(),
+                occasion.getOpenTime(), occasion.getCloseTime(), occasion.getBuilding().getId()));
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -401,7 +425,17 @@ public class AdminBuildingPane {
             LocalTime openHolidayTimeInputText = openHolidayTimeInput.getValue();
             LocalTime closeHolidayTimeInputText = closeHolidayTimeInput.getValue();
 
-            OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            if (OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText,
+                Long.parseLong(buildingInput.getText())).equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.setContentText(OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText,
+                    closeHolidayTimeInputText, Long.parseLong(buildingInput.getText())));
+                alert.showAndWait();
+            }
 
             datePicker.setValue(null);
             openHolidayTimeInput.setValue(null);

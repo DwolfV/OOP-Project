@@ -200,7 +200,7 @@ public class BuildingCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
             return "The name or address of the building already exists.";
         }
