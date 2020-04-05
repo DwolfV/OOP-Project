@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.sun.istack.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.persistence.Column;
@@ -20,12 +22,15 @@ public class Occasion {
     @Column(name = "id")
     private long id;
 
+    @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
+    @NotNull
     @Column(name = "open_time", nullable = false)
     private LocalTime openTime;
 
+    @NotNull
     @Column(name = "close_time", nullable = false)
     private LocalTime closeTime;
 

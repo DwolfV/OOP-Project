@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -24,17 +26,19 @@ public class RestaurantDish {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = false)
     private Restaurant restaurant;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "dish_id", referencedColumnName = "id")
+    @JoinColumn(name = "dish_id", referencedColumnName = "id", nullable = false)
     private Dish dish;
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
-    @Nullable
-    private Set<DishOrder> dishOrders = new HashSet<>();
+    //@OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)
+    //@Nullable
+    //private Set<DishOrder> dishOrders = new HashSet<>();
 
 
     public RestaurantDish(){
@@ -70,15 +74,15 @@ public class RestaurantDish {
         this.dish = dish;
     }
 
-    @Nullable
-    @JsonIgnore
-    public Set<DishOrder> getDishOrders() {
-        return dishOrders;
-    }
-
-    public void setDishOrders(@Nullable Set<DishOrder> dishOrders) {
-        this.dishOrders = dishOrders;
-    }
+    //    @Nullable
+    //    @JsonIgnore
+    //    public Set<DishOrder> getDishOrders() {
+    //        return dishOrders;
+    //    }
+    //
+    //    public void setDishOrders(@Nullable Set<DishOrder> dishOrders) {
+    //        this.dishOrders = dishOrders;
+    //    }
 
     @Override
     public boolean equals(Object o) {

@@ -100,7 +100,7 @@ public class RestaurantDishController {
         UriComponents uri = b.path("restaurant_dish/{restaurant_dish_id}").buildAndExpand(restaurantDishId);
 
         RestaurantDish restaurantDish = restaurantDishRepository.findById(restaurantDishId).map(restaurantDish1 -> {
-            restaurantDish1.setDishOrders(newRestaurantDish.getDishOrders());
+            //restaurantDish1.setDishOrders(newRestaurantDish.getDishOrders());
             restaurantDish1.setDish(newRestaurantDish.getDish());
             restaurantDish1.setRestaurant(newRestaurantDish.getRestaurant());
             return restaurantDishRepository.save(restaurantDish1);
