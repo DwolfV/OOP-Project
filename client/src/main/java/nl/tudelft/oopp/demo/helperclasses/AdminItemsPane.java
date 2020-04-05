@@ -2,22 +2,22 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.converter.IntegerStringConverter;
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
-import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
-import nl.tudelft.oopp.demo.entities.*;
-
-import java.time.LocalDate;
+import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
 
 public class AdminItemsPane {
 
@@ -57,7 +57,7 @@ public class AdminItemsPane {
         Item item = tableItems.getSelectionModel().getSelectedItem();
 
         allItems.remove(item);
-        ItemCommunication.removeItem(item.getId());
+//        ItemCommunication.removeItem(item.getId());
     }
 
     /**
@@ -77,7 +77,7 @@ public class AdminItemsPane {
             new PropertyValueFactory<>("id"));
 
         TableColumn<Item, String> itemCol =
-            new TableColumn<>("Room Name");
+            new TableColumn<>("Item Name");
         itemCol.setMinWidth(100);
         itemCol.setCellValueFactory(
             new PropertyValueFactory<>("name"));
@@ -112,7 +112,7 @@ public class AdminItemsPane {
 
         // HBox for the buttons under the table
         HBox hboxBottom = new HBox(5);
-        hboxBottom.getChildren().setAll(deleteInfoButton, updateInfoButton);
+        hboxBottom.getChildren().setAll(deleteItemsButton, updateItemsButton);
 
         // adding an item scene
         BorderPane borderPaneAddItems = new BorderPane();
@@ -124,7 +124,7 @@ public class AdminItemsPane {
 
         Button addItem = new Button("Add Item");
 
-        vboxRight.getChildren().addAll(roomName, itemField, addItem);
+        vboxRight.getChildren().addAll(itemName, itemField, addItem);
         vboxRight.setSpacing(5);
         borderPaneAddItems.setTop(vboxRight);
 
@@ -160,6 +160,5 @@ public class AdminItemsPane {
         borderPane.setBottom(hboxBottom);
 
         return borderPane;
-    }
     }
 }

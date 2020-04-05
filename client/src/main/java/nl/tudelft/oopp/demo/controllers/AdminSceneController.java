@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.helperclasses.AdminBuildingPane;
+import nl.tudelft.oopp.demo.helperclasses.AdminItemsPane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRestaurantPane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRolePane;
 import nl.tudelft.oopp.demo.helperclasses.AdminRoomPane;
@@ -30,6 +31,7 @@ public class AdminSceneController implements Initializable {
     public static TitledPane restaurantTP;
     public static TitledPane supplyTP;
     public static TitledPane rolesTP;
+    public static TitledPane itemsTP;
     public static BorderPane adminBorderPane;
     private static Rectangle2D screenBounds;
 
@@ -44,6 +46,8 @@ public class AdminSceneController implements Initializable {
     private static Label supplyTitle;
     private static VBox vboxRoles;
     private static Label rolesTitle;
+    private static VBox vboxItems;
+    private static Label itemsTitle;
 
     public MainSceneController mainSceneController;
 
@@ -171,6 +175,22 @@ public class AdminSceneController implements Initializable {
         ac.getPanes().set(4, rolesTP);
     }
 
+    public static void loadItemsTP (Accordion ac) {
+        vboxItems = new VBox();
+        itemsTitle = new Label("Modify Items:");
+        SplitPane splitPane6 = new SplitPane();
+        BorderPane borderPaneItems = AdminItemsPane.getItemsBP(ac);
+        vboxItems.getChildren().setAll(itemsTitle, splitPane6, borderPaneItems);
+
+        ScrollPane scrollPaneRoles = getScrollPane(vboxItems);
+
+        itemsTP = new TitledPane();
+        itemsTP.setText("Items");
+        itemsTP.setContent(scrollPaneRoles);
+
+        ac.getPanes().set(5, itemsTP);
+    }
+
     /**
      * Load the admin scene.
      *
@@ -179,7 +199,7 @@ public class AdminSceneController implements Initializable {
     public static void loadAdminScene(Accordion ac) {
         screenBounds = Screen.getPrimary().getBounds();
 
-        ac.getPanes().setAll(null, null, null, null, null);
+        ac.getPanes().setAll(null, null, null, null, null, null);
 
 
         loadBuildingTP(ac);
@@ -187,6 +207,7 @@ public class AdminSceneController implements Initializable {
         loadRestaurantTP(ac);
         loadSupplyTP(ac);
         loadRolesTP(ac);
+        loadItemsTP(ac);
 
         // Set Panes
         ac.setPrefWidth(screenBounds.getWidth() - 400);
