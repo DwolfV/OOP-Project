@@ -1,10 +1,15 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -12,9 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
-
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -61,6 +63,7 @@ public class AdminRoomPane {
 
     /**
      * Get the BorderPane of the Building info list.
+     *
      * @return BorderPane of Building Info
      */
     public static BorderPane getRoomBP(Accordion ac) {
@@ -70,38 +73,38 @@ public class AdminRoomPane {
         tableRoom.setEditable(true);
 
         TableColumn<Room, Long> idColRooms =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idColRooms.setMinWidth(100);
         idColRooms.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Room, String> roomCol =
-                new TableColumn<>("Room Name");
+            new TableColumn<>("Room Name");
         roomCol.setMinWidth(100);
         roomCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         roomCol.setCellFactory(TextFieldTableCell.forTableColumn());
         roomCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Room, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Room, Integer> capacityCol =
-                new TableColumn<>("capacityField");
+            new TableColumn<>("capacityField");
         capacityCol.setMinWidth(100);
         capacityCol.setCellValueFactory(
-                new PropertyValueFactory<>("capacity"));
+            new PropertyValueFactory<>("capacity"));
         capacityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         capacityCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Room, Integer> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
         capacityCol.setOnEditCommit((TableColumn.CellEditEvent<Room, Integer> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCapacity(t.getNewValue()));
 
         TableColumn<Room, String> buildingNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Room, String>forTableColumn(new BuildingToStringConverter()));
 
         ObservableList<Room> roomData = FXCollections.observableList(RoomCommunication.getRooms());

@@ -1,11 +1,16 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -14,9 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.converter.IntegerStringConverter;
-
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -77,33 +79,33 @@ public class AdminSupplyPane {
         tableSupplies.setEditable(true);
 
         TableColumn<Supply, Long> idSupplyCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idSupplyCol.setMinWidth(100);
         idSupplyCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Supply, Building> buildingNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new BuildingToStringConverter()));
 
         TableColumn<Supply, String> supplyNameCol =
-                new TableColumn<>("Supply Name");
+            new TableColumn<>("Supply Name");
         supplyNameCol.setMinWidth(100);
         supplyNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         supplyNameCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Supply, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Supply, Integer> supplyStockCol =
-                new TableColumn<>("Stock");
+            new TableColumn<>("Stock");
         supplyStockCol.setMinWidth(100);
         supplyStockCol.setCellValueFactory(
-                new PropertyValueFactory<>("stock"));
+            new PropertyValueFactory<>("stock"));
         supplyStockCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         supplyStockCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Supply, Integer> t) -> t.getTableView().getItems().get(
@@ -168,7 +170,7 @@ public class AdminSupplyPane {
         });
 
         veBoxAddSupplies.getChildren().addAll(buildingName, choiceBox,
-                supplyName, supplyNameInput, stock, stockInput, addSupplies);
+            supplyName, supplyNameInput, stock, stockInput, addSupplies);
         veBoxAddSupplies.setSpacing(5);
         borderPaneAddSupplies.setTop(veBoxAddSupplies);
 

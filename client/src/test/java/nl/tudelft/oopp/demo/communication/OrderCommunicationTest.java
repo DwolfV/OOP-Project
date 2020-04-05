@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.communication;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalDate;
@@ -14,14 +15,7 @@ import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 
 
 class OrderCommunicationTest {
@@ -53,10 +47,10 @@ class OrderCommunicationTest {
         u1 = new User("user1@email.com", "student", "fn1", "ln1");
         u2 = new User("user2@email.com", "student", "fn2", "ln2");
 
-        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         r1 = new Room("r1", 11, b1);
 
-        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s2", "sNo2", "z2", "c1");
+        Building b2 = new Building("b2", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s2", "sNo2", "z2", "c1");
         r2 = new Room("r2", 21, b2);
 
         rr1 = new RoomReservation(LocalDate.parse("2020-01-01"), LocalTime.parse("13:00"), LocalTime.parse("14:00"), u1, r1);
@@ -74,8 +68,6 @@ class OrderCommunicationTest {
     public void stopMockServer() {
         mockServer.stop();
     }
-
-
 
 
 }
