@@ -78,7 +78,7 @@ public class RestaurantDishCommunication {
      * @param dish - a dish
      * @param restaurant - a restaurant that will have the dish in the menu
      */
-    public static void addLinkRestaurantDish(Dish dish, Restaurant restaurant) {
+    public static String addLinkRestaurantDish(Dish dish, Restaurant restaurant) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         RestaurantDish restaurantDish = new RestaurantDish(restaurant, dish);
@@ -100,7 +100,9 @@ public class RestaurantDishCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "This dish has already been added to this restaurant";
         }
+        return "Successful";
     }
 
     /**

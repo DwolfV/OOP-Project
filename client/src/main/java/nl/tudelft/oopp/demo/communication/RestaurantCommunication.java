@@ -105,7 +105,7 @@ public class RestaurantCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addRestaurant(String name, Long building, LocalTime timeClose, LocalTime timeOpen) {
+    public static String addRestaurant(String name, Long building, LocalTime timeClose, LocalTime timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = new Restaurant(name, BuildingCommunication.getBuildingById(building), timeClose, timeOpen);
@@ -134,8 +134,9 @@ public class RestaurantCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "There is already a restaurant with this name for this building.";
         }
-
+        return "Successful";
     }
 
     /**
@@ -143,7 +144,7 @@ public class RestaurantCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateRestaurant(long id, String name, Long building, LocalTime timeClose, LocalTime timeOpen) {
+    public static String updateRestaurant(long id, String name, Long building, LocalTime timeClose, LocalTime timeOpen) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Restaurant restaurant = new Restaurant(name, BuildingCommunication.getBuildingById(building), timeClose, timeOpen);
@@ -170,7 +171,9 @@ public class RestaurantCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "There is already a restaurant with this name for this building.";
         }
+        return "Successful";
     }
 
 

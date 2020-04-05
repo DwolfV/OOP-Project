@@ -103,7 +103,7 @@ public class DishCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addDish(String name, String description, String type, float price) {
+    public static String addDish(String name, String description, String type, float price) {
         ObjectMapper mapper = new ObjectMapper();
         Dish dish = new Dish(name, description, type, price);
         String jsonDish = "";
@@ -130,7 +130,9 @@ public class DishCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "Dish name already exists.";
         }
+        return "Successful";
     }
 
 
@@ -140,7 +142,7 @@ public class DishCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void updateDish(long id, String name, String description, String type, float price) {
+    public static String updateDish(long id, String name, String description, String type, float price) {
         ObjectMapper mapper = new ObjectMapper();
         Dish newDish = new Dish(name, description, type, price);
         String jsonDish = "";
@@ -167,7 +169,9 @@ public class DishCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "Dish name already exists.";
         }
+        return "Successful";
     }
 
     /**
