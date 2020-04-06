@@ -13,7 +13,7 @@ public class RoomBuildingNameToStringConverter extends StringConverter {
     @Override
     public String toString(Object object) {
         Room r = (Room) object;
-        return r.getName();
+        return "Room: " + r.getName() + ", " + "Building: " + r.getBuilding().getName();
     }
 
     @Override
