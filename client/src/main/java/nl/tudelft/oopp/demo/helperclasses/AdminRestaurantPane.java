@@ -2,7 +2,6 @@ package nl.tudelft.oopp.demo.helperclasses;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Accordion;
@@ -19,8 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -68,6 +65,7 @@ public class AdminRestaurantPane {
 
     /**
      * Get the BorderPane of the Building info list.
+     *
      * @return BorderPane of Building Info
      */
     public static BorderPane getRestaurantBP(Accordion ac) {
@@ -77,34 +75,34 @@ public class AdminRestaurantPane {
         tableRestaurant.setEditable(true);
 
         TableColumn<Restaurant, Long> idRestaurantCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idRestaurantCol.setMinWidth(100);
         idRestaurantCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Restaurant, String> restaurantNameCol =
-                new TableColumn<>("Restaurant Name");
+            new TableColumn<>("Restaurant Name");
         restaurantNameCol.setMinWidth(100);
         restaurantNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         restaurantNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         restaurantNameCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Restaurant, Building> buildingNameRestaurantCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameRestaurantCol.setMinWidth(100);
         buildingNameRestaurantCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConverter()));
         buildingNameRestaurantCol.setEditable(false);
 
         TableColumn<Restaurant, LocalTime> timeOpenCol =
-                new TableColumn<>("Opening Time");
+            new TableColumn<>("Opening Time");
         timeOpenCol.setMinWidth(100);
         timeOpenCol.setCellValueFactory(
-                new PropertyValueFactory<>("timeOpen"));
+            new PropertyValueFactory<>("timeOpen"));
         timeOpenCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeOpenCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
@@ -113,10 +111,10 @@ public class AdminRestaurantPane {
             });
 
         TableColumn<Restaurant, LocalTime> timeCloseCol =
-                new TableColumn<>("Closing Time");
+            new TableColumn<>("Closing Time");
         timeCloseCol.setMinWidth(100);
         timeCloseCol.setCellValueFactory(
-                new PropertyValueFactory<>("timeClose"));
+            new PropertyValueFactory<>("timeClose"));
         timeCloseCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn((new TimeToStringConverter())));
         timeCloseCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Restaurant, LocalTime> t) -> {
@@ -124,7 +122,7 @@ public class AdminRestaurantPane {
                     t.getTablePosition().getRow()).setTimeClose(t.getNewValue());
             });
         buildingNameRestaurantCol.setOnEditCommit((TableColumn.CellEditEvent<Restaurant, Building> t) ->
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
+            t.getTableView().getItems().get(t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
 
         ObservableList<Restaurant> restaurantData = FXCollections.observableList(RestaurantCommunication.getRestaurants());
         tableRestaurant.setItems(restaurantData);
@@ -150,7 +148,7 @@ public class AdminRestaurantPane {
             }
         });
 
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildingNames = AdminBuildingPane.buildingData;
         ArrayList<String> buildingList = new ArrayList<>();
 
         for (Building name : buildingNames) {
@@ -241,6 +239,7 @@ public class AdminRestaurantPane {
 
     /**
      * The method is generating time for comboboxes.
+     *
      * @return an observable list of times.
      */
     public static ObservableList<LocalTime> generateTime() {
