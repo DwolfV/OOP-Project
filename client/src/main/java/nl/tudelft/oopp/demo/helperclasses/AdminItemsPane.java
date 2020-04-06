@@ -218,6 +218,7 @@ public class AdminItemsPane {
         idColRoom.setCellValueFactory(
             new PropertyValueFactory<>("room"));
         idColRoom.setCellFactory(TextFieldTableCell.forTableColumn(new RoomBuildingNameToStringConverter()));
+        idColRoom.setEditable(false);
 
         TableColumn<Equipment, Item> itemCol =
             new TableColumn<>("Item Name");
@@ -225,6 +226,7 @@ public class AdminItemsPane {
         itemCol.setCellValueFactory(
             new PropertyValueFactory<>("item"));
         itemCol.setCellFactory(TextFieldTableCell.forTableColumn(new ItemToStringConverter()));
+        itemCol.setEditable(false);
 
         TableColumn<Equipment, Integer> amountCol =
             new TableColumn<>("Amount");

@@ -94,6 +94,7 @@ public class AdminSupplyPane {
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new BuildingToStringConverter()));
+        buildingNameCol.setEditable(false);
 
         TableColumn<Supply, String> supplyNameCol =
                 new TableColumn<>("Supply Name");

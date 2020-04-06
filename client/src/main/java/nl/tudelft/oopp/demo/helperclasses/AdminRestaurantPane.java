@@ -98,9 +98,7 @@ public class AdminRestaurantPane {
         buildingNameRestaurantCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConverter()));
-        buildingNameRestaurantCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
-                t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
+        buildingNameRestaurantCol.setEditable(false);
 
         TableColumn<Restaurant, LocalTime> timeOpenCol =
                 new TableColumn<>("Opening Time");
