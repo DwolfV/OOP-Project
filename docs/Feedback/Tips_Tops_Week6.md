@@ -31,4 +31,4 @@
 ###Steph
 - **Top:**  Reviewing code is going a lot better. We are meeting less so it is also becoming more important. checkstyle is up to date and we only need to keep it up to date with the things we push now.
 
-- **Tip:**  We still need to do a few more tests to have that completely up to date. We also need to break up the two large controllers on the client side which we are working on right now, which will be done for next week
+- **Tip:**  We still need to do a few more tests to have that completely up to date. We also need to break up the two large controllers on the client side which we are working on right now, which will be done for next week.
