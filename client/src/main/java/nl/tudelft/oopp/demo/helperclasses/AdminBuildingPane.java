@@ -1,20 +1,19 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -48,9 +47,19 @@ public class AdminBuildingPane {
      */
     public static void updateBuildingButtonClicked() {
         Building building = tableBuilding.getSelectionModel().getSelectedItem();
-        BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(), building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
-                building.getZipCode(), building.getCity());
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        String success = BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(),
+            building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
+            building.getZipCode(), building.getCity());
+        if (success.equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.setContentText(success);
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -90,9 +99,6 @@ public class AdminBuildingPane {
         buildingCol.setMinWidth(100);
         buildingCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        buildingCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
-                t.getTablePosition().getRow()).setName(t.getNewValue()));
         buildingCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
@@ -193,6 +199,8 @@ public class AdminBuildingPane {
         updateInfoButton.setOnAction(e -> {
             try {
                 updateBuildingButtonClicked();
+                AdminSceneController.loadBuildingTP(ac);
+                ac.setExpandedPane(AdminSceneController.buildingTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -208,8 +216,17 @@ public class AdminBuildingPane {
             String zipCodeInputText = zipCodeInput.getText();
             String cityInputText = cityInput.getText();
 
-            BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
-                    streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            String success = BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
+                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.setContentText(success);
+                alert.showAndWait();
+            }
 
             buildingNameInput.setText(null);
             openTimeInput.setValue(null);
@@ -218,7 +235,7 @@ public class AdminBuildingPane {
             streetNumberInput.setText(null);
             zipCodeInput.setText(null);
             cityInput.setText(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadBuildingTP(ac);
             ac.setExpandedPane(AdminSceneController.buildingTP);
         });
 
@@ -245,7 +262,18 @@ public class AdminBuildingPane {
      */
     public static void updateTimeButtonClicked() {
         Occasion occasion = tableHoliday.getSelectionModel().getSelectedItem();
-        OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(), occasion.getCloseTime(), occasion.getBuilding().getId());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        String success = OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(),
+            occasion.getCloseTime(), occasion.getBuilding().getId());
+        if (success.equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.setContentText(success);
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -287,6 +315,7 @@ public class AdminBuildingPane {
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConverter()));
+        buildingNameCol.setEditable(false);
 
         TableColumn<Occasion, LocalDate> dayCol =
                 new TableColumn<>("Day");
@@ -342,6 +371,8 @@ public class AdminBuildingPane {
         updateTimeButton.setOnAction(e -> {
             try {
                 updateTimeButtonClicked();
+                AdminSceneController.loadBuildingTP(ac);
+                ac.setExpandedPane(AdminSceneController.buildingTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -361,13 +392,13 @@ public class AdminBuildingPane {
         }
         ObservableList<String> bl = FXCollections.observableArrayList(buildingList);
 
-        Text day = new Text("Day");
+        Text day = new Text("Date");
         Text openHolidayTime = new Text("Open Time");
         Text closeHolidayTime = new Text("Close Time");
         Text building = new Text("Building ID");
 
         ObservableList<LocalTime> time = generateTime();
-        TextField dayInput = new TextField();
+        DatePicker datePicker = new DatePicker();
         ComboBox<LocalTime> openHolidayTimeInput = new ComboBox<>();
         openHolidayTimeInput.setItems(time);
         ComboBox<LocalTime> closeHolidayTimeInput = new ComboBox<>();
@@ -390,23 +421,33 @@ public class AdminBuildingPane {
         });
 
         VBox vboxRight = new VBox(5);
-        vboxRight.getChildren().addAll(day, dayInput, openHolidayTime, openHolidayTimeInput,
+        vboxRight.getChildren().addAll(day, datePicker, openHolidayTime, openHolidayTimeInput,
                 closeHolidayTime, closeHolidayTimeInput, building, choiceBox, addOpenTime);
 
         // Add open time button
         addOpenTime.setOnAction(e -> {
-            LocalDate dayInputText = LocalDate.parse(dayInput.getText());
+            LocalDate dayInputText = (datePicker.getValue());
             LocalTime openHolidayTimeInputText = openHolidayTimeInput.getValue();
             LocalTime closeHolidayTimeInputText = closeHolidayTimeInput.getValue();
 
-            OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText, Long.parseLong(buildingInput.getText()));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            String success = OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText,
+                Long.parseLong(buildingInput.getText()));
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.setContentText(success);
+                alert.showAndWait();
+            }
 
-            dayInput.setText(null);
+            datePicker.setValue(null);
             openHolidayTimeInput.setValue(null);
             closeHolidayTimeInput.setValue(null);
             buildingInput.setText(null);
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadBuildingTP(ac);
             ac.setExpandedPane(AdminSceneController.buildingTP);
         });
 

@@ -50,10 +50,6 @@ public class RoomReservation {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "roomReservation", cascade = CascadeType.ALL)
-    @Nullable
-    private Set<Order> orders = new HashSet<>();
-
     public RoomReservation() {
     }
 
@@ -150,16 +146,6 @@ public class RoomReservation {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @JsonIgnore
-    @Nullable
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(@Nullable Set<Order> orders) {
-        this.orders = orders;
     }
 
     @Override

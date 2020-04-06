@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,12 +21,14 @@ public class Friend {
     @Column(name = "id")
     private long id;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "user1", referencedColumnName = "id")
+    @JoinColumn(name = "user1", referencedColumnName = "id", nullable = false)
     private User user1;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "user2", referencedColumnName = "id")
+    @JoinColumn(name = "user2", referencedColumnName = "id", nullable = false)
     private User user2;
 
     /**

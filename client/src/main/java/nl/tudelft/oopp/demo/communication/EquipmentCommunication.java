@@ -8,25 +8,23 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import nl.tudelft.oopp.demo.entities.Occasion;
+import nl.tudelft.oopp.demo.entities.Equipment;
+import nl.tudelft.oopp.demo.entities.Item;
+import nl.tudelft.oopp.demo.entities.Room;
 
-
-public class OccasionCommunication {
+public class EquipmentCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
-    /**
-     * Retrieves a list of occasions from the server.
-     *
-     * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
-     */
-    public static List<Occasion> getOccasions() {
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/occasion/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    /**
+     * Retrieves a list of all the available items in all the rooms.
+     *
+     * @return a list of Equipment
+     */
+    public static List<Equipment> getAllEquipment() {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/equipment/all")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -40,27 +38,27 @@ public class OccasionCommunication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        List<Occasion> occasions = null;
+
+        List<Equipment> equipment = null;
         // TODO handle exception
         try {
-            occasions = mapper.readValue(response.body(), new TypeReference<List<Occasion>>() {
+            equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return occasions;
+        return equipment;
     }
 
     /**
-     * Retrieves a list of occasions for a specific building from the server.
+     * Get a list of equipment for a specific room.
      *
-     * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
+     * @param roomId - the id of the room
+     * @return a list of equipment
      */
-    public static List<Occasion> getOccasionsByBuilding(long id) {
-
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/occasion/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    public static List<Equipment> getEquipmentByRoom(long roomId) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/equipment/room/%d", roomId))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -74,27 +72,27 @@ public class OccasionCommunication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        List<Occasion> occasions = null;
+
+        List<Equipment> equipment = null;
         // TODO handle exception
         try {
-            occasions = mapper.readValue(response.body(), new TypeReference<List<Occasion>>() {
+            equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return occasions;
+        return equipment;
     }
 
     /**
-     * Retrieves an occasion by id from the server.
+     * Get a list of equipment by item name.
      *
-     * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
+     * @param itemId - the id of the item
+     * @return a list of equipment
      */
-    public static Occasion getOccasionById(long id) {
-
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/occasion/id/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    public static List<Equipment> getEquipmentByItem(long itemId) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/equipment/item_id/%d", itemId))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -108,36 +106,40 @@ public class OccasionCommunication {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Occasion occasion = null;
+
+        List<Equipment> equipment = null;
         // TODO handle exception
         try {
-            occasion = mapper.readValue(response.body(), new TypeReference<Occasion>() {
+            equipment = mapper.readValue(response.body(), new TypeReference<List<Equipment>>() {
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
+            //e.printStackTrace();
         }
 
-        return occasion;
+        return equipment;
     }
 
     /**
-     * Adds an occasion.
+     * Method to add a new Item to a room by creating an Equipment.
      *
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @param room - the room in which the equipment will be
+     * @param item - the item inside the room
+     * @param amount - how much of that item
+     * @return a string which explains the output of the method
      */
-    public static String addOccasion(LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
+    public static String addEquipmentToRoom(Room room, Item item, int amount) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
-        String jsonOccasion = "";
+        Equipment equipment = new Equipment(room, item, amount);
+        String jsonEquipment = "";
         try {
-            jsonOccasion = mapper.writeValueAsString(newOccasion);
-            System.out.println(jsonOccasion);
+            jsonEquipment = mapper.writeValueAsString(equipment);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonOccasion)).uri(URI.create("http://localhost:8080/occasion/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonEquipment)).uri(URI.create("http://localhost:8080/equipment")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -147,29 +149,32 @@ public class OccasionCommunication {
         }
         if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "There is already an occasion for this building on this day";
+            return "The item \"" + item.getName() + "\" is already linked to the room \"" + room.getName() + "\".";
         }
         return "Successful";
     }
 
     /**
-     * Update an occasion.
+     * Update the amount for an item inside a room if the quantity will change.
      *
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @param id - id of the equipment
+     * @param room - room where the item is
+     * @param item - the item
+     * @param amount - the new amount
+     * @return a string which explains the output of the method
      */
-    public static String updateOccasion(long id, LocalDate date, LocalTime openTime, LocalTime closeTime, long buildingId) {
+    public static String updateEquipmentStock(long id, Room room, Item item, int amount) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        Occasion newOccasion = new Occasion(date, openTime, closeTime, BuildingCommunication.getBuildingById(buildingId));
-        String jsonOccasion = "";
+        Equipment newEquipment = new Equipment(room, item, amount);
+        String jsonEquipment = "";
         try {
-            jsonOccasion = mapper.writeValueAsString(newOccasion);
-            System.out.println(jsonOccasion);
+            jsonEquipment = mapper.writeValueAsString(newEquipment);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonOccasion)).uri(URI.create(String.format("http://localhost:8080/occasion/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonEquipment)).uri(URI.create(String.format("http://localhost:8080/equipment/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -179,18 +184,18 @@ public class OccasionCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
-            return "There is already an occasion for this building on this day";
+            return "The item \"" + item.getName() + "\" is already linked to the room \"" + room.getName() + "\" or the equipment does not exist.";
         }
         return "Successful";
     }
 
     /**
-     * Removes an occasion.
+     * Deletes an equipment.
      *
-     * @throws Exception if communication with the server fails or if the response is not proper json.
+     * @param id - the id of the equipment
      */
-    public static void removeOccasion(long id) {
-        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/occasion/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+    public static void removeEquipment(long id) {
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/equipment/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

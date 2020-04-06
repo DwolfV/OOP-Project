@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import com.sun.istack.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -22,7 +24,8 @@ public class Order {
     @Column(name = "id")
     private long id;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "room_reservation_id", referencedColumnName = "id", nullable = false)
     private RoomReservation roomReservation;
 

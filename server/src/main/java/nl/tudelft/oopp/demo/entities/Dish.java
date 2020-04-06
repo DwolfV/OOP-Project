@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -12,28 +11,35 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Dish")
+@Table(name = "Dish",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"name"},
+        name = "unique_name_constraint"))
 public class Dish {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
     @NotBlank
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @NotBlank
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "type")
     private String type;
 
-    @Column(name = "price")
+    @NotNull
+    @Column(name = "price", nullable = false)
     private float price;
 
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL)

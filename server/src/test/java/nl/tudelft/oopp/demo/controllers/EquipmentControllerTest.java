@@ -143,7 +143,7 @@ class EquipmentControllerTest {
         when(equipmentRepository.findById(e1.getId())).thenReturn(optionalEquipment);
 
         assertEquals(responseEntity.getBody(),equipmentController.replaceEquipment(
-                equipment, e1.getId(), uriComponentsBuilder).getBody());
+                equipment, e1.getId()).getBody());
     }
 
     @Test

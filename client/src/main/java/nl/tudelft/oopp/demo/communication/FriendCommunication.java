@@ -88,7 +88,7 @@ public class FriendCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
 
             if (response.statusCode() == 409) {
@@ -96,7 +96,7 @@ public class FriendCommunication {
             }
         }
 
-        return "The user is now your friend";
+        return "Successful";
     }
 
     /**

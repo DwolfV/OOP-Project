@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
+import java.util.Objects;
+
 public class Dish {
 
     private long id;
@@ -67,4 +69,25 @@ public class Dish {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dish dish = (Dish) o;
+        return getId() == dish.getId()
+                &&
+                Float.compare(dish.getPrice(), getPrice()) == 0
+                &&
+                Objects.equals(getName(), dish.getName())
+                &&
+                Objects.equals(getDescription(), dish.getDescription())
+                &&
+                Objects.equals(getType(), dish.getType());
+    }
+
 }

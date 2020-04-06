@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -21,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -29,6 +31,7 @@ import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Supply;
 import nl.tudelft.oopp.demo.entities.SupplyReservation;
+import nl.tudelft.oopp.demo.helperclasses.SupplyReservationRoomToStringConverter;
 import nl.tudelft.oopp.demo.helperclasses.SupplyToStringConverter;
 
 public class SupplySceneController implements Initializable {
@@ -66,6 +69,7 @@ public class SupplySceneController implements Initializable {
         supplyNameCol.setCellValueFactory(
             new PropertyValueFactory<>("supply"));
         supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new SupplyToStringConverter()));
+        supplyNameCol.setEditable(false);
 
         TableColumn<SupplyReservation, Integer> amountCol =
             new TableColumn<>("Amount");
@@ -79,9 +83,17 @@ public class SupplySceneController implements Initializable {
         dateCol.setCellValueFactory(
             new PropertyValueFactory<>("date"));
 
+        TableColumn<SupplyReservation, Supply> buildingRoomCol =
+            new TableColumn<>("Building Name");
+        buildingRoomCol.setMinWidth(100);
+        buildingRoomCol.setCellValueFactory(
+            new PropertyValueFactory<>("supply"));
+        buildingRoomCol.setCellFactory(TextFieldTableCell.forTableColumn(new SupplyReservationRoomToStringConverter()));
+        buildingRoomCol.setEditable(false);
+
         ObservableList<SupplyReservation> reservedSupplies = FXCollections.observableList(SupplyReservationCommunication.getSupplyReservationByUserId(Authenticator.ID));
         tableReservedSupplies.setItems(reservedSupplies);
-        tableReservedSupplies.getColumns().addAll(supplyNameCol, amountCol, dateCol);
+        tableReservedSupplies.getColumns().addAll(supplyNameCol, amountCol, dateCol, buildingRoomCol);
         tableReservedSupplies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableReservedSupplies.setPrefHeight(200);
         tableReservedSupplies.setPlaceholder(new Label("Currently you have made no supply reservations"));
@@ -96,6 +108,10 @@ public class SupplySceneController implements Initializable {
 
             allReservedSupplies.remove(supplyReservation);
             SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
+
+            ac.getPanes().clear();
+            loadSuppliesAccordion();
+            loadReservedSupply();
         });
 
         veBoxDeleteAndTable = new VBox();
@@ -157,12 +173,34 @@ public class SupplySceneController implements Initializable {
                         LocalDate today = LocalDate.now();
                         int amount = Integer.parseInt(textFieldItem.getText());
 
-                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        String success = SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        if (success.equals("Successful")) {
+                            alert.hide();
+                        } else {
+                            alert.setContentText(success);
+                            alert.showAndWait();
+                        }
 
                         textFieldItem.setText(null);
 
                         loadReservedSupply();
+                        ac.getPanes().clear();
+                        loadSuppliesAccordion();
                     });
+
+                    HBox.setHgrow(labelItem, Priority.ALWAYS);
+                    HBox.setHgrow(labelQuantity, Priority.ALWAYS);
+                    HBox.setHgrow(textFieldItem, Priority.ALWAYS);
+                    HBox.setHgrow(reserveSupplyButton, Priority.ALWAYS);
+
+                    labelItem.setMinWidth(100);
+                    labelQuantity.setMinWidth(100);
+                    textFieldItem.setMinWidth(75);
+                    textFieldItem.setMaxWidth(75);
+                    reserveSupplyButton.setMinWidth(75);
 
                     horizBox.getChildren().addAll(labelItem, labelQuantity, textFieldItem, reserveSupplyButton);
                     horizBox.setSpacing(150);

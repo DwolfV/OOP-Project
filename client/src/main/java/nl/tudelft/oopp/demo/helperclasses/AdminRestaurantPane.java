@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -38,7 +39,18 @@ public class AdminRestaurantPane {
      */
     public static void updateButtonRestaurantClicked() {
         Restaurant restaurant = tableRestaurant.getSelectionModel().getSelectedItem();
-        RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        String success = RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(),
+            restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen());
+        if (success.equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.setContentText(success);
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -86,9 +98,7 @@ public class AdminRestaurantPane {
         buildingNameRestaurantCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
         buildingNameRestaurantCol.setCellFactory(TextFieldTableCell.<Restaurant, String>forTableColumn(new BuildingToStringConverter()));
-        buildingNameRestaurantCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Restaurant, Building> t) -> t.getTableView().getItems().get(
-                t.getTablePosition().getRow()).setBuilding(t.getNewValue()));
+        buildingNameRestaurantCol.setEditable(false);
 
         TableColumn<Restaurant, LocalTime> timeOpenCol =
                 new TableColumn<>("Opening Time");
@@ -133,6 +143,8 @@ public class AdminRestaurantPane {
         updateRestaurant.setOnAction(e -> {
             try {
                 updateButtonRestaurantClicked();
+                AdminSceneController.loadRestaurantTP(ac);
+                ac.setExpandedPane(AdminSceneController.restaurantTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -183,15 +195,24 @@ public class AdminRestaurantPane {
             LocalTime openingTimeInputText = openingTimeInput.getValue();
             LocalTime closingTimeInputText = closingTimeInput.getValue();
 
-            RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            String success = RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()),
+                closingTimeInputText, openingTimeInputText);
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.setContentText(success);
+                alert.showAndWait();
+            }
 
             restaurantNameInput.setText(null);
             openingTimeInput.setValue(null);
             closingTimeInput.setValue(null);
             buildingNameInput.setText(null);
-
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadRestaurantTP(ac);
             ac.setExpandedPane(AdminSceneController.restaurantTP);
         });
 
