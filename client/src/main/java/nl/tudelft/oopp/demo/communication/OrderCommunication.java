@@ -105,7 +105,7 @@ public class OrderCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addOrder(RoomReservation roomReservation) {
+    public static String addOrder(RoomReservation roomReservation) {
         ObjectMapper mapper = new ObjectMapper();
         Order order = new Order(roomReservation);
         String jsonOrder = "";
@@ -127,9 +127,11 @@ public class OrderCommunication {
             e.printStackTrace();
         }
 
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
+            return "The order was not created.";
         }
+        return "Successful";
     }
 
     /**

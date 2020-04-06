@@ -147,9 +147,9 @@ public class EquipmentCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "This Equipment is already linked to a room";
+            return "The item \"" + item.getName() + "\" is already linked to the room \"" + room.getName() + "\".";
         }
         return "Successful";
     }
@@ -184,7 +184,7 @@ public class EquipmentCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
-            return "The room already has this item.";
+            return "The item \"" + item.getName() + "\" is already linked to the room \"" + room.getName() + "\" or the equipment does not exist.";
         }
         return "Successful";
     }

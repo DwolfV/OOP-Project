@@ -128,9 +128,9 @@ public class DishCommunication {
             e.printStackTrace();
         }
 
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "Dish name already exists.";
+            return "Dish with name \"" + name+ "\" already exists.";
         }
         return "Successful";
     }
@@ -169,7 +169,7 @@ public class DishCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
-            return "Dish name already exists.";
+            return "Dish with name \"" + name+ "\" already exists por dish does not exist at all.";
         }
         return "Successful";
     }

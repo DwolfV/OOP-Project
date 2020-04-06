@@ -145,7 +145,7 @@ public class OccasionCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
             return "There is already an occasion for this building on this day";
         }

@@ -107,9 +107,9 @@ public class ItemCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "The item already exists.";
+            return "The item \"" + name + "\" already exists.";
         }
         return "Successful";
     }
@@ -140,7 +140,7 @@ public class ItemCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
-            return "Item already exists.";
+            return "The item \"" + name + "\" already exists.";
         }
         return "Successful";
     }
