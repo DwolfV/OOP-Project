@@ -116,7 +116,7 @@ public class OrderCommunication {
             e.printStackTrace();
         }
 
-        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonOrder)).uri(URI.create("http://localhost:8080/order")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonOrder)).uri(URI.create("http://localhost:8080/order/add")).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
 
         try {

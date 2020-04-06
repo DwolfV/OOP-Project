@@ -103,7 +103,7 @@ public class OrderSceneController implements Initializable {
                 System.out.println("One order id: " + orders.get((i)));
             }
             //System.out.println(order.getId());
-            for (int i = 0; i < basketList.size(); i++) {
+                for (int i = 0; i < basketList.size(); i++) {
                 //DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
                 System.out.println(amountBasketList.get(i) + ", " + basketList.get(i).getId());// + getRoomReservation().getId());
                 //System.out.println(order.getId());
