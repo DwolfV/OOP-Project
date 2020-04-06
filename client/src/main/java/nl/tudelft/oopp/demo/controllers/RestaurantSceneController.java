@@ -81,11 +81,6 @@ public class RestaurantSceneController implements Initializable {
             if (showRestaurants.size() != 0) {
                 tps[c] = new TitledPane();
                 VBox table = new VBox();
-                //grid.setPadding(new Insets(5, 5, 5, 5));
-
-                for (Restaurant restaurant : restaurants) {
-                    System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
-                }
 
                 TimeToStringConverter timeToString = new TimeToStringConverter();
                 for (int j = 0; j < showRestaurants.size(); j++) {
@@ -154,7 +149,6 @@ public class RestaurantSceneController implements Initializable {
                         if (finalCurrentlyInReservation) {
                             try {
                                 OrderSceneController orderSceneController = new OrderSceneController();
-                                System.out.println(finalRoomReservation);
                                 VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant);
                                 hbox.getChildren().setAll(ac, vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
@@ -167,7 +161,6 @@ public class RestaurantSceneController implements Initializable {
                             }
                         } else {
                             try {
-                                System.out.println("id:" + restaurantId + " | Name:" + resName.getText());
                                 VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
                                 hbox.getChildren().setAll(ac, vbox);

@@ -90,7 +90,6 @@ public class MenuSceneController implements Initializable {
                             try {
                                 Restaurant r = restaurant;
                                 Dish d = getTableView().getItems().get(getIndex());
-                                System.out.println("Your dish is: " + d.getId() + " " + d.getName());
                                 List<RestaurantDish> restaurantDishes = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(r.getId());
                                 RestaurantDish restaurantDish = new RestaurantDish(r, d);
                                 boolean found = false;
@@ -131,7 +130,6 @@ public class MenuSceneController implements Initializable {
                             try {
                                 Restaurant r = restaurant;
                                 Dish d = getTableView().getItems().get(getIndex());
-                                System.out.println("Your dish is: " + d.getId() + " " + d.getName());
                                 List<RestaurantDish> restaurantDishes = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(r.getId());
                                 RestaurantDish restaurantDish = new RestaurantDish(r, d);
                                 boolean found = false;

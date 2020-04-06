@@ -26,13 +26,10 @@ public class OrderSceneController implements Initializable {
     private static ArrayList<RestaurantDish> basketList = new ArrayList();
     private static ObservableList<Integer> amountBasketList = FXCollections.observableArrayList();
     private static RoomReservation roomReservation;
-    @FXML
-    private Label totalLabel = new Label();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         basketListView.setItems(stringBasketList);
-        System.out.println(getRoomReservation());
     }
 
     /**
@@ -96,7 +93,6 @@ public class OrderSceneController implements Initializable {
             alert.setContentText("You currently have no items in the basket");
             alert.show();
         } else {
-            System.out.println(roomReservation);
             OrderCommunication.addOrder(roomReservation);
             List<Order> orders = OrderCommunication.getOrders();
             Order order = new Order(getRoomReservation());
@@ -104,12 +100,11 @@ public class OrderSceneController implements Initializable {
                 if (orders.get(i).getRoomReservation().getId() == roomReservation.getId()) {
                     order = orders.get(i);
                 }
-                System.out.println(orders.get((i)));
+                System.out.println("One order id: " + orders.get((i)));
             }
-            System.out.println(getRoomReservation());
             //System.out.println(order.getId());
             for (int i = 0; i < basketList.size(); i++) {
-                DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
+                //DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
                 System.out.println(amountBasketList.get(i) + ", " + basketList.get(i).getId());// + getRoomReservation().getId());
                 //System.out.println(order.getId());
             }
@@ -121,14 +116,10 @@ public class OrderSceneController implements Initializable {
         }
     }
 
-    public void refreshTotal() {
-        totalLabel.setText("Total: " + calculateTotal());
-    }
-
     /**
      * Calculate the total amount of dishRestaurants.
      * Calculate total number of items in basket.
-     * @return
+     * @return the total ammount of items in the basket
      */
     public static long calculateTotal() {
         long total = 0;
