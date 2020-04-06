@@ -100,13 +100,11 @@ public class OrderSceneController implements Initializable {
                 if (orders.get(i).getRoomReservation().getId() == roomReservation.getId()) {
                     order = orders.get(i);
                 }
-                System.out.println("One order id: " + orders.get((i)));
             }
-            //System.out.println(order.getId());
-                for (int i = 0; i < basketList.size(); i++) {
-                //DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
+            for (int i = 0; i < basketList.size(); i++) {
+                DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
                 System.out.println(amountBasketList.get(i) + ", " + basketList.get(i).getId());// + getRoomReservation().getId());
-                //System.out.println(order.getId());
+                System.out.println(order.getId());
             }
             clearBasket();
 
@@ -114,19 +112,6 @@ public class OrderSceneController implements Initializable {
             alert.setContentText("Your order has been placed");
             alert.show();
         }
-    }
-
-    /**
-     * Calculate the total amount of dishRestaurants.
-     * Calculate total number of items in basket.
-     * @return the total ammount of items in the basket
-     */
-    public static long calculateTotal() {
-        long total = 0;
-        for (int i = 0; i < amountBasketList.size(); i++) {
-            total += amountBasketList.get(i) * basketList.get(i).getDish().getPrice();
-        }
-        return total;
     }
 
     public void setRoomReservation(RoomReservation roomReservation) {

@@ -16,7 +16,6 @@
                </font>
             </Text>
             <ListView fx:id="basketListView" prefHeight="550.0" />
-            <ListView fx:id="totalView" prefHeight="20.0" prefWidth="200.0" />
             <Button fx:id="orderButton" alignment="CENTER" mnemonicParsing="false" onAction="#handelOrderButton" style="-fx-background-color: #00A6D6;" text="Order" textFill="WHITE">
                <font>
                   <Font size="18.0" />
