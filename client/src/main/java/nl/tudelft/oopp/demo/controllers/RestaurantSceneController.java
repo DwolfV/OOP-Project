@@ -133,8 +133,8 @@ public class RestaurantSceneController implements Initializable {
                     long user = Authenticator.ID;
                     ObservableList<RoomReservation> roomReservations = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(user));
 
-                    LocalDate localDate = LocalDate.now();
-                    LocalTime localTime = LocalTime.now();
+                    LocalDate localDate = LocalDate.now().plusDays(1);
+                    LocalTime localTime = LocalTime.now().minusHours(7);
 
                     boolean currentlyInReservation = false;
                     RoomReservation roomReservation = new RoomReservation();
