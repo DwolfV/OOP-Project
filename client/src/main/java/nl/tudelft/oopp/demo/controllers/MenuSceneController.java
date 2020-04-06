@@ -3,8 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicReference;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -83,8 +81,7 @@ public class MenuSceneController implements Initializable {
                     if (empty) {
                         setGraphic(null);
                         setText(null);
-                    }
-                    else {
+                    } else {
                         final Button addButton = new Button("Add to basket");
                         addButton.setOnAction(event -> {
                             try {
@@ -94,8 +91,8 @@ public class MenuSceneController implements Initializable {
                                 List<RestaurantDish> restaurantDishes = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(r.getId());
                                 RestaurantDish restaurantDish = new RestaurantDish(r, d);
                                 boolean found = false;
-                                for (int i = 0; i<restaurantDishes.size(); i++){
-                                    if (restaurantDishes.get(i).getDish().getId() == d.getId() && restaurantDishes.get(i).getRestaurant().getId() == r.getId()){
+                                for (int i = 0; i < restaurantDishes.size(); i++) {
+                                    if (restaurantDishes.get(i).getDish().getId() == d.getId() && restaurantDishes.get(i).getRestaurant().getId() == r.getId()) {
                                         restaurantDish = restaurantDishes.get(i);
                                     }
                                 }
@@ -105,8 +102,8 @@ public class MenuSceneController implements Initializable {
                                 ex.printStackTrace();
                             }
                         });
-                    setGraphic(addButton);
-                    setText(null);
+                        setGraphic(addButton);
+                        setText(null);
                     }
                 }
             };
@@ -126,8 +123,7 @@ public class MenuSceneController implements Initializable {
                     if (empty) {
                         setGraphic(null);
                         setText(null);
-                    }
-                    else {
+                    } else {
                         final Button addButton = new Button("Remove 1 from basket");
                         addButton.setOnAction(event -> {
                             try {
@@ -137,8 +133,8 @@ public class MenuSceneController implements Initializable {
                                 List<RestaurantDish> restaurantDishes = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(r.getId());
                                 RestaurantDish restaurantDish = new RestaurantDish(r, d);
                                 boolean found = false;
-                                for (int i = 0; i<restaurantDishes.size(); i++){
-                                    if (restaurantDishes.get(i).getDish().getId() == d.getId() && restaurantDishes.get(i).getRestaurant().getId() == r.getId()){
+                                for (int i = 0; i < restaurantDishes.size(); i++) {
+                                    if (restaurantDishes.get(i).getDish().getId() == d.getId() && restaurantDishes.get(i).getRestaurant().getId() == r.getId()) {
                                         restaurantDish = restaurantDishes.get(i);
                                     }
                                 }
@@ -194,31 +190,27 @@ public class MenuSceneController implements Initializable {
         TableColumn<Dish, String> nameCol = new TableColumn<>("Course");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        nameCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()).setName(t.getNewValue()));
+        nameCol.setOnEditCommit((TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
         // Description Column
         TableColumn<Dish, String> descCol = new TableColumn<>();
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         descCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        descCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
+        descCol.setOnEditCommit((TableColumn.CellEditEvent<Dish, String> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setDescription(t.getNewValue()));
         // Price Column
         TableColumn<Dish, Float> priceCol = new TableColumn<>("Price");
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
-        priceCol.setOnEditCommit(
-                (TableColumn.CellEditEvent<Dish, Float> t) -> t.getTableView().getItems().get(
+        priceCol.setOnEditCommit((TableColumn.CellEditEvent<Dish, Float> t) -> t.getTableView().getItems().get(
                         t.getTablePosition().getRow()).setPrice(t.getNewValue()));
         priceCol.getStyleClass().add("price-col");
 
         // Set styleClass to rows
         tableView.setRowFactory(tv -> {
-                    TableRow<Dish> row = new TableRow<Dish>();
-                    row.getStyleClass().setAll("restaurant-menu-row");
-                    return row;
-                }
+            TableRow<Dish> row = new TableRow<Dish>();
+            row.getStyleClass().setAll("restaurant-menu-row");
+            return row;
+        }
         );
 
         // Set Columns
