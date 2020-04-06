@@ -287,4 +287,53 @@
   -fx-background-color: #F5F5F5;
 }
 
+.admin-main-pane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-border-pane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.center {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+  -fx-padding: 3em;
+}
+
+.right {
+  -fx-background-color: transparent;
+  -fx-pref-width: 250;
+  -fx-padding: 3em;
+}
+
+.bottom {
+  -fx-background-color: transparent;
+  -fx-padding: 1em 1em 4em 3em;
+  -fx-spacing: 10;
+}
+
+.admin-scroll-pane {
+  -fx-background-color: #F5F5F5;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-scroll-pane > .viewport {
+  -fx-background-color: #F5F5F5;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-v-boxes {
+  -fx-background-color: transparent;
+}
+
+.admin-titles {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-font-color: white;
+  -fx-padding: 0.5em 3em 0em 3em;
+}
+
 /*# sourceMappingURL=mainstyle.css.map */

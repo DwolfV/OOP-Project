@@ -217,6 +217,9 @@ public class AdminSupplyPane {
         tableSupplies.getStyleClass().add("center");
         hoBoxAddDeleteUpdateSupplies.getStyleClass().add("bottom");
         veBoxAddSupplies.getStyleClass().add("right");
+        deleteButtonSupplies.getStyleClass().setAll("restaurant-menu-button");
+        updateButtonSupplies.getStyleClass().setAll("restaurant-menu-button");
+        addSupplies.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();

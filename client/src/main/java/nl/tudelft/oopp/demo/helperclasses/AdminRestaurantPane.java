@@ -225,10 +225,13 @@ public class AdminRestaurantPane {
         tableRestaurant.getStyleClass().add("center");
         hboxBottom.getStyleClass().add("bottom");
         vboxRight.getStyleClass().add("right");
+        updateRestaurant.getStyleClass().setAll("restaurant-menu-button");
+        deleteRestaurant.getStyleClass().setAll("restaurant-menu-button");
+        addRestaurant.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("border-pane");
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(tableRestaurant);
         borderPane.setRight(vboxRight);
         borderPane.setBottom(hboxBottom);

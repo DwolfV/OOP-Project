@@ -56,6 +56,13 @@ public class AdminSceneController implements Initializable {
     @FXML
     private Accordion ac;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadAdminScene(ac);
+
+        ac.setExpandedPane(buildingTP);
+    }
+
     /**
      * Load the buildingTP scene.
      *
@@ -77,9 +84,9 @@ public class AdminSceneController implements Initializable {
         buildingTP.setText("Buildings");
         buildingTP.setContent(scrollPaneBuilding);
 
-        vboxBuilding.getStyleClass().add("v-boxes");
-        buildTitle.getStyleClass().setAll("titles");
-        occTitle.getStyleClass().setAll("titles");
+        vboxBuilding.getStyleClass().add("admin-v-boxes");
+        buildTitle.getStyleClass().setAll("admin-titles");
+        occTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(0, buildingTP);
     }
@@ -102,8 +109,8 @@ public class AdminSceneController implements Initializable {
         roomTP.setText("Rooms");
         roomTP.setContent(scrollPaneRoom);
 
-        vboxRoom.getStyleClass().add("v-boxes");
-        roomTitle.getStyleClass().setAll("titles");
+        vboxRoom.getStyleClass().add("admin-v-boxes");
+        roomTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(1, roomTP);
     }
@@ -126,8 +133,8 @@ public class AdminSceneController implements Initializable {
         restaurantTP.setText("Restaurants");
         restaurantTP.setContent(scrollPaneRestaurant);
 
-        vboxRestaurant.getStyleClass().add("v-boxes");
-        resTitle.getStyleClass().setAll("titles");
+        vboxRestaurant.getStyleClass().add("admin-v-boxes");
+        resTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(2, restaurantTP);
     }
@@ -150,8 +157,8 @@ public class AdminSceneController implements Initializable {
         supplyTP.setText("Supplies");
         supplyTP.setContent(scrollPaneSupply);
 
-        vboxSupply.getStyleClass().add("v-boxes");
-        supplyTitle.getStyleClass().setAll("titles");
+        vboxSupply.getStyleClass().add("admin-v-boxes");
+        supplyTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(3, supplyTP);
     }
@@ -239,7 +246,7 @@ public class AdminSceneController implements Initializable {
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("border-pane");
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(centerPane);
         borderPane.setRight(rightVBox);
         borderPane.setBottom(bottomHBox);
@@ -271,10 +278,10 @@ public class AdminSceneController implements Initializable {
 
         // GridPane inside ScrollPane
         ScrollPane scroll = new ScrollPane();
-        scroll.setMaxHeight(screenBounds.getHeight() - 400);
+        scroll.setMaxHeight(screenBounds.getHeight() - 550);
         scroll.setMaxWidth(screenBounds.getWidth());
         scroll.setContent(gridPane);
-        scroll.getStyleClass().setAll("scroll-pane");
+        scroll.getStyleClass().setAll("admin-scroll-pane");
 
         // Set scroll speed
         scroll.getContent().setOnScroll(scrollEvent -> {
@@ -283,13 +290,6 @@ public class AdminSceneController implements Initializable {
         });
 
         return scroll;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        loadAdminScene(ac);
-
-        ac.setExpandedPane(buildingTP);
     }
 
     public void setControllers(MainSceneController mainSceneController) {

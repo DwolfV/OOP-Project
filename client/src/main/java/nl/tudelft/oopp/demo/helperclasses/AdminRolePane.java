@@ -49,12 +49,15 @@ public class AdminRolePane {
 
             Button makeAdminButton = new Button("Make Admin");
             makeAdminButtons.add(makeAdminButton);
+            makeAdminButton.getStyleClass().setAll("restaurant-menu-button");
 
             Button makeEmployeeButton = new Button("Make Employee");
             makeEmployeeButtons.add(makeEmployeeButton);
+            makeEmployeeButton.getStyleClass().setAll("restaurant-menu-button");
 
             Button makeNormalButton = new Button("Make User");
             makeNormalButtons.add(makeNormalButton);
+            makeNormalButton.getStyleClass().setAll("restaurant-menu-button");
 
 
             if (users.get(i).getRole().equals("ROLE_USER")) {
