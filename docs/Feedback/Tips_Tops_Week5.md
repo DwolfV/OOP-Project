@@ -29,6 +29,6 @@
 - **Tip:** improve the overall management of the project-improve giving small individual tasks
 
 ###Steph
-- **Top:**
+- **Top:** Merging and committing is going so much better.
 
-- **Tip:**
+- **Tip:** Merging could still improve.

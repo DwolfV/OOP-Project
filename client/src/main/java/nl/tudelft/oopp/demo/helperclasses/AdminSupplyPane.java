@@ -80,34 +80,34 @@ public class AdminSupplyPane {
         tableSupplies.setEditable(true);
 
         TableColumn<Supply, Long> idSupplyCol =
-                new TableColumn<>("id");
+            new TableColumn<>("id");
         idSupplyCol.setMinWidth(100);
         idSupplyCol.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+            new PropertyValueFactory<>("id"));
 
         TableColumn<Supply, Building> buildingNameCol =
-                new TableColumn<>("Building Name");
+            new TableColumn<>("Building Name");
         buildingNameCol.setMinWidth(100);
         buildingNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("building"));
+            new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new BuildingToStringConverter()));
         buildingNameCol.setEditable(false);
 
         TableColumn<Supply, String> supplyNameCol =
-                new TableColumn<>("Supply Name");
+            new TableColumn<>("Supply Name");
         supplyNameCol.setMinWidth(100);
         supplyNameCol.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+            new PropertyValueFactory<>("name"));
         supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
         supplyNameCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Supply, String> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setName(t.getNewValue()));
 
         TableColumn<Supply, Integer> supplyStockCol =
-                new TableColumn<>("Stock");
+            new TableColumn<>("Stock");
         supplyStockCol.setMinWidth(100);
         supplyStockCol.setCellValueFactory(
-                new PropertyValueFactory<>("stock"));
+            new PropertyValueFactory<>("stock"));
         supplyStockCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         supplyStockCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Supply, Integer> t) -> t.getTableView().getItems().get(
@@ -141,7 +141,7 @@ public class AdminSupplyPane {
         BorderPane borderPaneAddSupplies = new BorderPane();
         VBox veBoxAddSupplies = new VBox();
 
-        ObservableList<Building> buildingNames = FXCollections.observableList(BuildingCommunication.getBuildings());
+        ObservableList<Building> buildingNames = AdminBuildingPane.buildingData;
         ArrayList<String> buildingList = new ArrayList<>();
 
         for (Building buildingName : buildingNames) {
@@ -172,7 +172,7 @@ public class AdminSupplyPane {
         });
 
         veBoxAddSupplies.getChildren().addAll(buildingName, choiceBox,
-                supplyName, supplyNameInput, stock, stockInput, addSupplies);
+            supplyName, supplyNameInput, stock, stockInput, addSupplies);
         veBoxAddSupplies.setSpacing(5);
         borderPaneAddSupplies.setTop(veBoxAddSupplies);
 
@@ -217,6 +217,9 @@ public class AdminSupplyPane {
         tableSupplies.getStyleClass().add("center");
         hoBoxAddDeleteUpdateSupplies.getStyleClass().add("bottom");
         veBoxAddSupplies.getStyleClass().add("right");
+        deleteButtonSupplies.getStyleClass().setAll("restaurant-menu-button");
+        updateButtonSupplies.getStyleClass().setAll("restaurant-menu-button");
+        addSupplies.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();

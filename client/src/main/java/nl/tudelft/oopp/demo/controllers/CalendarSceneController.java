@@ -84,7 +84,6 @@ public class CalendarSceneController implements Initializable {
                         Interval oldInterval = event.getOldInterval();
                         event.getEntry().setInterval(oldInterval);
                         event.consume();
-                        System.out.println("COULD NOT UPDATE THE RESERVATION TIME");
                         flag = 0;
                     }
                 }
@@ -108,14 +107,12 @@ public class CalendarSceneController implements Initializable {
                         event.getEntry().getId(), event.getEntry().getStartDate(), event.getEntry().getStartTime(),
                         event.getEntry().getEndTime());
                     event.getEntry().setId((String.valueOf(addedEvent.getId())));
-                    System.out.println("entry added ");
                 });
                 thread.start();
             } else if (event.isEntryRemoved()) {
                 // if an entry is deleted
                 Thread thread = new Thread(() -> {
                     EventCommunication.removeEvent(Long.parseLong(event.getEntry().getId()));
-                    System.out.println("event deleted");
                 });
                 thread.start();
             } else {
@@ -124,7 +121,6 @@ public class CalendarSceneController implements Initializable {
                     EventCommunication.updateEvent(Long.parseLong(event.getEntry().getId()),
                         event.getEntry().getTitle(), event.getEntry().getId(), event.getEntry().getStartDate(),
                         event.getEntry().getStartTime(), event.getEntry().getEndTime());
-                    System.out.println("event updated");
                 });
                 thread.start();
             }

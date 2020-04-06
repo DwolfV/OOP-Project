@@ -35,14 +35,13 @@
 }
 
 .friends-list {
-  -fx-background-color: transparent;
   -fx-background-insets: 0 0 0 0;
-  -fx-border-width: 0 0 2 20;
-  -fx-border-color: black black #888888 #6699CC;
-  -fx-padding: 10 10 10 20;
-  -fx-text-fill: #F5F5F5;
+  -fx-border-width: 2 0 2 20;
+  -fx-border-color: #888888 black #888888 #6699CC;
+  -fx-padding: 5 5 5 10;
+  -fx-text-fill: #555555;
   -fx-text-weight: bold;
-  -fx-font: 14pt "Candara";
+  -fx-font: 11pt "Candara";
 }
 
 .button {
@@ -77,6 +76,14 @@
   -fx-background-insets: 0, 0 0 0 0;
 }
 
+.menu-button:hover {
+  -fx-background-color: #6699CC;
+}
+
+.menu-button:focused {
+  -fx-background-color: #6699CC;
+}
+
 .menu-button-splitter {
   -fx-fill: #555555;
 }
@@ -97,7 +104,7 @@
 }
 
 .restaurant-menu-button {
-  -fx-background-color: #BBBBBB;
+  -fx-background-color: #6699CC;
   -fx-background-radius: 0;
   -fx-background-insets: 0 0 0 0;
   -fx-font: 12pt "Candara";
@@ -106,11 +113,11 @@
 }
 
 .restaurant-menu-button:hover {
-  -fx-background-color: white;
+  -fx-background-color: #66CCFF;
 }
 
 .restaurant-split-pane {
-  -fx-background-color: #888888;
+  -fx-background-color: #BBBBBB;
 }
 
 .text-field {
@@ -119,7 +126,7 @@
 }
 
 .text-field-table-cell {
-  -fx-text-fill: #BBBBBB;
+  -fx-text-fill: black;
   -fx-font: 11pt "Candara";
 }
 
@@ -128,15 +135,19 @@
 }
 
 .restaurant-menu {
-  -fx-background-color: transparent;
+  -fx-background-color: white;
   -fx-background-insets: 0, 0 0 0 0;
   -fx-border-width: 0 0 0 0;
-  -fx-text-fill: #F5F5F5;
+  -fx-text-fill: black;
   -fx-font: 11pt "Candara";
 }
 
+.restaurant-menu > .label {
+  -fx-text-fill: black;
+}
+
 .restaurant-menu .column-header {
-  -fx-background-color: transparent;
+  -fx-background-color: #6699CC;
   -fx-background-insets: 0 0 0 0;
   -fx-border-width: 0 0 2 0;
   -fx-border-color: black black #888888 black;
@@ -222,9 +233,12 @@
 }
 
 .titled-pane > .content {
-  -fx-text-fill: #F5F5F5;
-  -fx-background-color: transparent;
+  -fx-background-color: #888888;
   -fx-border-width: 0 0 0 0;
+}
+
+.titled-pane > .content > .label {
+  -fx-text-fill: black;
 }
 
 .titled-pane > .title {
@@ -239,6 +253,11 @@
 }
 
 .titled-pane > .title:hover {
+  -fx-background-color: #66CCFF;
+  -fx-border-color: black black #66CCFF #66CCFF;
+}
+
+.titled-pane:focused > .title {
   -fx-background-color: #66CCFF;
   -fx-border-color: black black #66CCFF #66CCFF;
 }
@@ -266,6 +285,70 @@
 
 .titled-pane:focused > .title > .arrow-button .arrow {
   -fx-background-color: #F5F5F5;
+}
+
+.admin-main-pane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-border-pane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.center {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+  -fx-padding: 3em;
+}
+
+.right {
+  -fx-background-color: transparent;
+  -fx-pref-width: 250;
+  -fx-padding: 3em;
+}
+
+.bottom {
+  -fx-background-color: transparent;
+  -fx-padding: 1em 1em 4em 3em;
+  -fx-spacing: 10;
+}
+
+.scroll-pane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.scroll-pane > .viewport {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-scroll-pane {
+  -fx-background-color: #F5F5F5;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-scroll-pane > .viewport {
+  -fx-background-color: #F5F5F5;
+  -fx-border-width: 0 0 0 0;
+}
+
+.admin-v-boxes {
+  -fx-background-color: transparent;
+}
+
+.admin-titles {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-font-color: white;
+  -fx-padding: 0.5em 3em 0em 3em;
+}
+
+.label-black {
+  -fx-font: 11pt "Candara";
+  -fx-text-color: black;
 }
 
 /*# sourceMappingURL=mainstyle.css.map */

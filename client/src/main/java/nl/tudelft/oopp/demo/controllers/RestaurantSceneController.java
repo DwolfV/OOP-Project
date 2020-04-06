@@ -111,7 +111,6 @@ public class RestaurantSceneController implements Initializable {
                             constraint2,
                             constraint3
                     );
-                    grid.setVgap(10);
                     grid.add(labels.get(0), 0, j);
                     grid.add(labels.get(1), 1, j);
                     grid.add(labels.get(2), 2, j);
@@ -170,6 +169,7 @@ public class RestaurantSceneController implements Initializable {
                         }
                     });
                 }
+                table.setSpacing(5);
                 Label titledPaneTitle = new Label(buildingData.get(i).getName());
                 tps[c].setText(buildingData.get(i).getName());
                 tps[c].setContent(table);
