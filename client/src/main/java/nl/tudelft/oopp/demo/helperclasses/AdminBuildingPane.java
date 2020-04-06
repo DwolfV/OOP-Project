@@ -244,10 +244,15 @@ public class AdminBuildingPane {
         tableBuilding.getStyleClass().add("center");
         hboxBottom.getStyleClass().add("bottom");
         vboxRight.getStyleClass().add("right");
+        addButtonBuilding.getStyleClass().setAll("restaurant-menu-button");
+        deleteInfoButton.getStyleClass().setAll("restaurant-menu-button");
+        updateInfoButton.getStyleClass().setAll("restaurant-menu-button");
+        deleteTimeButton.getStyleClass().setAll("restaurant-menu-button");
+        updateTimeButton.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("border-pane");
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(tableBuilding);
         borderPane.setRight(vboxRight);
         borderPane.setBottom(hboxBottom);
@@ -456,10 +461,11 @@ public class AdminBuildingPane {
         tableHoliday.getStyleClass().add("center");
         hboxBottom.getStyleClass().add("bottom");
         vboxRight.getStyleClass().add("right");
+        addOpenTime.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("border-pane");
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(tableHoliday);
         borderPane.setRight(vboxRight);
         borderPane.setBottom(hboxBottom);

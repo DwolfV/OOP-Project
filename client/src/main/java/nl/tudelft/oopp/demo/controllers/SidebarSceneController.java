@@ -63,7 +63,7 @@ public class SidebarSceneController implements Initializable {
         for (Item i : ItemCommunication.getItems()) {
             System.out.println("items: " + i);
             CheckBox item = new CheckBox(i.getName());
-            Insets insets = new Insets(10, 10, 10, 10);
+            Insets insets = new Insets(5, 10, 5, 10);
             item.setPadding(insets);
             item.setTextFill(Paint.valueOf("white"));
             box.getChildren().add(item);

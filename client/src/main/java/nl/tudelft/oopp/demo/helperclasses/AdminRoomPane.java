@@ -203,6 +203,9 @@ public class AdminRoomPane {
         tableRoom.getStyleClass().add("center");
         hboxBottom.getStyleClass().add("bottom");
         vboxRight.getStyleClass().add("right");
+        addButton.getStyleClass().setAll("restaurant-menu-button");
+        updateRoom.getStyleClass().setAll("restaurant-menu-button");
+        deleteRoom.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();

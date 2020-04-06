@@ -56,6 +56,13 @@ public class AdminSceneController implements Initializable {
     @FXML
     private Accordion ac;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadAdminScene(ac);
+
+        ac.setExpandedPane(buildingTP);
+    }
+
     /**
      * Load the buildingTP scene.
      *
@@ -63,10 +70,10 @@ public class AdminSceneController implements Initializable {
      */
     public static void loadBuildingTP(Accordion ac) {
         vboxBuilding = new VBox();
-        buildTitle = new Label("Add A Building:");
+        buildTitle = new Label("Add Buildings");
         SplitPane splitPane1 = new SplitPane();
         BorderPane borderPaneInfo = AdminBuildingPane.getBuildingInfoBP(ac);
-        occTitle = new Label("Add A Free Day:");
+        occTitle = new Label("Add Holiday Times");
         SplitPane splitPane2 = new SplitPane();
         BorderPane borderPaneTime = AdminBuildingPane.getBuildingTimesBP(ac);
         vboxBuilding.getChildren().setAll(buildTitle, splitPane1, borderPaneInfo, occTitle, splitPane2, borderPaneTime);
@@ -77,9 +84,9 @@ public class AdminSceneController implements Initializable {
         buildingTP.setText("Buildings");
         buildingTP.setContent(scrollPaneBuilding);
 
-        vboxBuilding.getStyleClass().add("v-boxes");
-        buildTitle.getStyleClass().setAll("titles");
-        occTitle.getStyleClass().setAll("titles");
+        vboxBuilding.getStyleClass().add("admin-v-boxes");
+        buildTitle.getStyleClass().setAll("admin-titles");
+        occTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(0, buildingTP);
     }
@@ -91,7 +98,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void loadRoomTP(Accordion ac) {
         vboxRoom = new VBox();
-        roomTitle = new Label("Add A Room:");
+        roomTitle = new Label("Add Rooms");
         SplitPane splitPane3 = new SplitPane();
         BorderPane borderPaneRoom = AdminRoomPane.getRoomBP(ac);
         vboxRoom.getChildren().setAll(roomTitle, splitPane3, borderPaneRoom);
@@ -102,8 +109,8 @@ public class AdminSceneController implements Initializable {
         roomTP.setText("Rooms");
         roomTP.setContent(scrollPaneRoom);
 
-        vboxRoom.getStyleClass().add("v-boxes");
-        roomTitle.getStyleClass().setAll("titles");
+        vboxRoom.getStyleClass().add("admin-v-boxes");
+        roomTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(1, roomTP);
     }
@@ -115,7 +122,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void loadRestaurantTP(Accordion ac) {
         vboxRestaurant = new VBox();
-        resTitle = new Label("Add A Restaurant:");
+        resTitle = new Label("Add Restaurants");
         SplitPane splitPane4 = new SplitPane();
         BorderPane borderPaneRestaurant = AdminRestaurantPane.getRestaurantBP(ac);
         vboxRestaurant.getChildren().setAll(resTitle, splitPane4, borderPaneRestaurant);
@@ -126,8 +133,8 @@ public class AdminSceneController implements Initializable {
         restaurantTP.setText("Restaurants");
         restaurantTP.setContent(scrollPaneRestaurant);
 
-        vboxRestaurant.getStyleClass().add("v-boxes");
-        resTitle.getStyleClass().setAll("titles");
+        vboxRestaurant.getStyleClass().add("admin-v-boxes");
+        resTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(2, restaurantTP);
     }
@@ -139,7 +146,7 @@ public class AdminSceneController implements Initializable {
      */
     public static void loadSupplyTP(Accordion ac) {
         vboxSupply = new VBox();
-        supplyTitle = new Label("Add A Supply:");
+        supplyTitle = new Label("Add Supplies");
         SplitPane splitPane5 = new SplitPane();
         BorderPane borderPaneSupply = AdminSupplyPane.getSupplyBP(ac);
         vboxSupply.getChildren().setAll(supplyTitle, splitPane5, borderPaneSupply);
@@ -150,8 +157,8 @@ public class AdminSceneController implements Initializable {
         supplyTP.setText("Supplies");
         supplyTP.setContent(scrollPaneSupply);
 
-        vboxSupply.getStyleClass().add("v-boxes");
-        supplyTitle.getStyleClass().setAll("titles");
+        vboxSupply.getStyleClass().add("admin-v-boxes");
+        supplyTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(3, supplyTP);
     }
@@ -163,10 +170,10 @@ public class AdminSceneController implements Initializable {
      */
     public static void loadItemsTP(Accordion ac) {
         VBox vboxItemsAndEquip = new VBox();
-        itemsTitle = new Label("Modify Items:");
+        itemsTitle = new Label("Add Items");
         SplitPane splitPane1 = new SplitPane();
         BorderPane borderPaneItems = AdminItemsPane.getItemsBP(ac);
-        equipmentsTitle = new Label("Modify Equipments:");
+        equipmentsTitle = new Label("Add Equipment");
         SplitPane splitPane2 = new SplitPane();
         BorderPane borderPaneEquipment = AdminItemsPane.getEquipmentBP(ac);
         vboxItemsAndEquip.getChildren().setAll(itemsTitle, splitPane1, borderPaneItems, equipmentsTitle, splitPane2, borderPaneEquipment);
@@ -176,6 +183,10 @@ public class AdminSceneController implements Initializable {
         itemsTP = new TitledPane();
         itemsTP.setText("Items and Equipment");
         itemsTP.setContent(scrollPaneEquipments);
+
+        vboxItemsAndEquip.getStyleClass().add("admin-v-boxes");
+        itemsTitle.getStyleClass().setAll("admin-titles");
+        equipmentsTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(4, itemsTP);
     }
@@ -197,6 +208,9 @@ public class AdminSceneController implements Initializable {
         rolesTP = new TitledPane();
         rolesTP.setText("Roles");
         rolesTP.setContent(scrollPaneRoles);
+
+        vboxRoles.getStyleClass().add("admin-v-boxes");
+        rolesTitle.getStyleClass().setAll("admin-titles");
 
         ac.getPanes().set(5, rolesTP);
     }
@@ -239,7 +253,7 @@ public class AdminSceneController implements Initializable {
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("border-pane");
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(centerPane);
         borderPane.setRight(rightVBox);
         borderPane.setBottom(bottomHBox);
@@ -271,10 +285,10 @@ public class AdminSceneController implements Initializable {
 
         // GridPane inside ScrollPane
         ScrollPane scroll = new ScrollPane();
-        scroll.setMaxHeight(screenBounds.getHeight() - 400);
+        scroll.setMaxHeight(screenBounds.getHeight() - 550);
         scroll.setMaxWidth(screenBounds.getWidth());
         scroll.setContent(gridPane);
-        scroll.getStyleClass().setAll("scroll-pane");
+        scroll.getStyleClass().setAll("admin-scroll-pane");
 
         // Set scroll speed
         scroll.getContent().setOnScroll(scrollEvent -> {
@@ -283,13 +297,6 @@ public class AdminSceneController implements Initializable {
         });
 
         return scroll;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        loadAdminScene(ac);
-
-        ac.setExpandedPane(buildingTP);
     }
 
     public void setControllers(MainSceneController mainSceneController) {

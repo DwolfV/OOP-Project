@@ -163,10 +163,10 @@ public class AdminItemsPane {
         tableItems.getStyleClass().add("center");
         hboxBottom.getStyleClass().add("bottom");
         vboxRight.getStyleClass().add("right");
-
+        addItem.getStyleClass().setAll("restaurant-menu-button");
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();
-        borderPane.getStyleClass().add("border-pane");
+        borderPane.getStyleClass().add("admin-border-pane");
         borderPane.setCenter(tableItems);
         borderPane.setRight(vboxRight);
         borderPane.setBottom(hboxBottom);
@@ -382,6 +382,11 @@ public class AdminItemsPane {
         tableEquipments.getStyleClass().add("center");
         hboxBottom.getStyleClass().add("bottom");
         vboxRight.getStyleClass().add("right");
+        deleteEquipmentButton.getStyleClass().setAll("restaurant-menu-button");
+        deleteItemsButton.getStyleClass().setAll("restaurant-menu-button");
+        updateEquipmentButton.getStyleClass().setAll("restaurant-menu-button");
+        updateItemsButton.getStyleClass().setAll("restaurant-menu-button");
+        addEquipment.getStyleClass().setAll("restaurant-menu-button");
 
         // All elements in BorderPane
         BorderPane borderPane = new BorderPane();

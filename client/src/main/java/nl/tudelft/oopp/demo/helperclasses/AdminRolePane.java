@@ -49,22 +49,28 @@ public class AdminRolePane {
 
             Button makeAdminButton = new Button("Make Admin");
             makeAdminButtons.add(makeAdminButton);
+            makeAdminButton.getStyleClass().setAll("restaurant-menu-button");
 
             Button makeEmployeeButton = new Button("Make Employee");
             makeEmployeeButtons.add(makeEmployeeButton);
+            makeEmployeeButton.getStyleClass().setAll("restaurant-menu-button");
 
             Button makeNormalButton = new Button("Make User");
             makeNormalButtons.add(makeNormalButton);
+            makeNormalButton.getStyleClass().setAll("restaurant-menu-button");
 
 
             if (users.get(i).getRole().equals("ROLE_USER")) {
                 makeNormalButton.setDisable(true);
+                makeNormalButton.setStyle("-fx-background-color: #BBBBBB;");
             }
             if (users.get(i).getRole().equals("ROLE_EMPLOYEE")) {
                 makeEmployeeButton.setDisable(true);
+                makeEmployeeButton.setStyle("-fx-background-color: #BBBBBB;");
             }
             if (users.get(i).getRole().equals("ROLE_ADMIN")) {
                 makeAdminButton.setDisable(true);
+                makeAdminButton.setStyle("-fx-background-color: #BBBBBB;");
             }
 
             int index = i;
@@ -98,13 +104,21 @@ public class AdminRolePane {
             HBox.setHgrow(makeEmployeeButton, Priority.ALWAYS);
             HBox.setHgrow(makeAdminButton, Priority.ALWAYS);
 
-            usernameLabel.setMinWidth(100);
+            usernameLabel.setMinWidth(150);
             userFirstNameLabel.setMinWidth(100);
             userLastNameLabel.setMinWidth(100);
-            userRoleLabel.setMinWidth(40);
-            makeNormalButton.setMinWidth(40);
-            makeEmployeeButton.setMinWidth(40);
-            makeAdminButton.setMinWidth(40);
+            userRoleLabel.setMinWidth(100);
+            makeNormalButton.setMinWidth(150);
+            makeEmployeeButton.setMinWidth(150);
+            makeAdminButton.setMinWidth(150);
+
+            usernameLabel.setMaxWidth(150);
+            userFirstNameLabel.setMaxWidth(100);
+            userLastNameLabel.setMaxWidth(100);
+            userRoleLabel.setMaxWidth(100);
+            makeNormalButton.setMaxWidth(150);
+            makeEmployeeButton.setMaxWidth(150);
+            makeAdminButton.setMaxWidth(150);
 
             HBox hoBoxUsernameAndRemove = new HBox();
             hoBoxUsernameAndRemove.setSpacing(25);
@@ -116,6 +130,11 @@ public class AdminRolePane {
 
             veBoxTp.getChildren().add(hoBoxUsernameAndRemove);
             veBoxTp.setPadding(new Insets(10, 0, 0, 0));
+
+            userFirstNameLabel.getStyleClass().setAll("label-black");
+            userLastNameLabel.getStyleClass().setAll("label-black");
+            usernameLabel.getStyleClass().setAll("label-black");
+            userRoleLabel.getStyleClass().setAll("label-black");
         }
 
         // All elements in BorderPane
