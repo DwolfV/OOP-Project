@@ -17,6 +17,7 @@ public class DishOrder {
      * @param order - The id of the order that the dish is part of
      * @param restaurantDish - The id of the dish that is included in the order
      */
+    
     public DishOrder(int amount,
                      Order order,
                      RestaurantDish restaurantDish) {
