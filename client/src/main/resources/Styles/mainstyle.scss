@@ -117,7 +117,7 @@ $el-grey: #F5F5F5;
 }
 
 .restaurant-menu-button {
-    -fx-background-color: $l-grey;
+    -fx-background-color: $l-blue;
     -fx-background-radius: 0;
     -fx-background-insets: 0 0 0 0;
     -fx-font: 12pt "Candara";
@@ -126,7 +126,7 @@ $el-grey: #F5F5F5;
 }
 
 .restaurant-menu-button:hover {
-    -fx-background-color: white;
+    -fx-background-color: $b-blue;
 }
 
 .restaurant-split-pane {
@@ -354,4 +354,9 @@ $el-grey: #F5F5F5;
     -fx-font-weight: bold;
     -fx-font-color: white;
     -fx-padding: 0.5em 3em 0em 3em;
+}
+
+.label-black {
+    -fx-font: 11pt "Candara";
+    -fx-text-color: black;
 }

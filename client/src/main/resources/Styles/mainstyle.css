@@ -10,14 +10,6 @@
   -fx-background-color: #555555;
 }
 
-.scroll-pane > .viewport {
-  -fx-background-color: transparent;
-}
-
-.scroll-pane {
-  -fx-background-color: transparent;
-}
-
 .header-pane {
   -fx-background-color: #336699;
   -fx-border-width: 0 0 3 0;
@@ -112,7 +104,7 @@
 }
 
 .restaurant-menu-button {
-  -fx-background-color: #BBBBBB;
+  -fx-background-color: #6699CC;
   -fx-background-radius: 0;
   -fx-background-insets: 0 0 0 0;
   -fx-font: 12pt "Candara";
@@ -121,7 +113,7 @@
 }
 
 .restaurant-menu-button:hover {
-  -fx-background-color: white;
+  -fx-background-color: #66CCFF;
 }
 
 .restaurant-split-pane {
@@ -342,6 +334,11 @@
   -fx-font-weight: bold;
   -fx-font-color: white;
   -fx-padding: 0.5em 3em 0em 3em;
+}
+
+.label-black {
+  -fx-font: 11pt "Candara";
+  -fx-text-color: black;
 }
 
 /*# sourceMappingURL=mainstyle.css.map */
