@@ -214,7 +214,7 @@ public class AdminItemsPane {
 
         TableColumn<Equipment, Room> idColRoom =
             new TableColumn<>("Room Name");
-        idColRoom.setMinWidth(100);
+        idColRoom.setMinWidth(150);
         idColRoom.setCellValueFactory(
             new PropertyValueFactory<>("room"));
         idColRoom.setCellFactory(TextFieldTableCell.forTableColumn(new RoomBuildingNameToStringConverter()));
@@ -228,7 +228,7 @@ public class AdminItemsPane {
 
         TableColumn<Equipment, Integer> amountCol =
             new TableColumn<>("Amount");
-        amountCol.setMinWidth(100);
+        amountCol.setMinWidth(50);
         amountCol.setCellValueFactory(
             new PropertyValueFactory<>("amount"));
         amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
