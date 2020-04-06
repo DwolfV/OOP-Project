@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
@@ -257,8 +258,20 @@ public class ReservationSceneController implements Initializable {
                 text.setStyle("-fx-padding: 50;" + "-fx-font-weight: bold");
             } else {
                 // load the accordion into the scene if there are available rooms
+                Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+                ac.setPrefWidth(screenBounds.getWidth()-460);
+                ac.setPadding(new Insets(0,0,20,0));
+
+                ScrollPane scrollPane = new ScrollPane(ac);
+                scrollPane.setMaxHeight(700);
+                scrollPane.setPadding(new Insets(0,0,20,0));
+
                 VBox box = new VBox(ac);
+                box.setSpacing(20);
+
                 borderPane.setCenter(box);
+                borderPane.setPadding(new Insets(20, 20, 20, 20));
+
             }
 
         }
