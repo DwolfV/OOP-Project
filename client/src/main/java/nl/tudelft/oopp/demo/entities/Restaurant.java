@@ -74,13 +74,21 @@ public class Restaurant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Restaurant that = (Restaurant) o;
-        return getId() == that.getId() &&
-                Objects.equals(getName(), that.getName()) &&
-                Objects.equals(getBuilding(), that.getBuilding()) &&
-                Objects.equals(getTimeClose(), that.getTimeClose()) &&
+        return getId() == that.getId()
+                &&
+                Objects.equals(getName(), that.getName())
+                &&
+                Objects.equals(getBuilding(), that.getBuilding())
+                &&
+                Objects.equals(getTimeClose(), that.getTimeClose())
+                &&
                 Objects.equals(getTimeOpen(), that.getTimeOpen());
     }
 
