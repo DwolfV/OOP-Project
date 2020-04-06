@@ -24,9 +24,10 @@
 - **Tip:** The work on certain features needs to pick up as they are a bit behind
 
 ### Iulia
-- **Top:** 
+- **Top:** The collaboration between backend and front end team was even better than last week, we improved the definition of our tasks (e.g. issues) a lot, we fixed the checkstyle errors and each member of the team reviewed the code of another member 
 
-- **Tip:** 
+- **Tip:** We should document decisions in gitlab issues more and improve commit messages. Moreover, we have to work a lot on Restaurant and reservation scenes ( on client side )
+
 
 ### Steph
 - **Top:** Task division went really well this week. I think we all knew what we were supposed to do and what the others were doing. We also have fixed all the checkstyles and now the pipeline passes without any warnings for both development and master.
