@@ -8,6 +8,9 @@ public class Order {
     private RoomReservation roomReservation;
     private Set<DishOrder> dishOrders;
 
+    public Order() {
+
+    }
     /**
      * Constructor for the Order object.
      *

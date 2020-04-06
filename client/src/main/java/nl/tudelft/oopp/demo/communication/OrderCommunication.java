@@ -107,6 +107,7 @@ public class OrderCommunication {
 
     public static String addOrder(RoomReservation roomReservation) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         Order order = new Order(roomReservation);
         String jsonOrder = "";
         try {
