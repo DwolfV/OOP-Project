@@ -2,6 +2,8 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJBTransactionRolledbackException;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Equipment;
@@ -142,7 +144,11 @@ public class BuildingController {
      */
     @PostMapping(value = "/building", consumes = {"application/json"})
     public ResponseEntity<Building> newBuilding(@Valid @RequestBody Building building, UriComponentsBuilder uri) {
-        rep.save(building);
+        try {
+            rep.save(building);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uriComponents = uri.path("/building/{id}").buildAndExpand(building.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(building);
     }
@@ -166,7 +172,15 @@ public class BuildingController {
             building.setStreetNumber(newBuilding.getStreetNumber());
             building.setZipCode(newBuilding.getZipCode());
 
-            return new ResponseEntity<>(rep.save(building), HttpStatus.OK);
+            Building buildingToReturn;
+            try {
+                buildingToReturn = rep.save(building);
+                System.out.println(buildingToReturn);
+            } catch (Exception e) {
+                return new ResponseEntity<Building>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(buildingToReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

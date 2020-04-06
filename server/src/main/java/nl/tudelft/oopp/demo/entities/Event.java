@@ -27,24 +27,25 @@ public class Event {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @NotBlank
+    @Column(name = "description", nullable = false)
     private String description;
 
-    //@NotBlank
+    @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    //@NotBlank
+    @NotNull
     @Column(name = "startTime", nullable = false)
     private LocalTime startTime;
 
-    //@NotBlank
+    @NotNull
     @Column(name = "endTime", nullable = false)
     private LocalTime endTime;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     public Event() {

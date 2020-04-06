@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -24,23 +26,23 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    @NotNull
-    @Column(name = "email")
+    @NotBlank
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
-    @Column(name = "role")
+    @NotBlank
+    @Column(name = "role", nullable = false)
     private String role;
 
-    @NotNull
-    @Column(name = "firstName")
+    @NotBlank
+    @Column(name = "firstName", nullable = false)
     private String firstName;
 
-    @NotNull
-    @Column(name = "lastName")
+    @NotBlank
+    @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @NotNull
+    @NotBlank
     @Column(name = "user_name", unique = true, nullable = false)
     private String username;
 

@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.util.List;
 import javax.validation.Valid;
+
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RestaurantRepository;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
 
 @RestController
 public class RestaurantController {
@@ -33,6 +36,7 @@ public class RestaurantController {
      * @return List of restaurants
      */
     @GetMapping("/restaurant")
+    @ResponseBody
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
@@ -81,7 +85,11 @@ public class RestaurantController {
 
     @PostMapping(value = "/restaurant", consumes = {"application/json"})
     public ResponseEntity<Restaurant> createNewRestaurant(@Valid @RequestBody Restaurant restaurant, UriComponentsBuilder b) {
-        restaurantRepository.save(restaurant);
+        try {
+            restaurantRepository.save(restaurant);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uriComponents = b.path("restaurant/id/{id}").buildAndExpand(restaurant.getId());
         return ResponseEntity
                 .created(uriComponents.toUri())
@@ -105,7 +113,14 @@ public class RestaurantController {
             restaurant.setTimeClose(newRestaurant.getTimeClose());
             restaurant.setTimeOpen(newRestaurant.getTimeOpen());
 
-            return new ResponseEntity<>(restaurantRepository.save(restaurant), HttpStatus.OK);
+            Restaurant restaurantToReturn;
+            try {
+                restaurantToReturn = restaurantRepository.save(restaurant);
+            } catch (Exception e) {
+                return new ResponseEntity<Restaurant>(HttpStatus.CONFLICT);
+            }
+
+            return new ResponseEntity<>(restaurantToReturn, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

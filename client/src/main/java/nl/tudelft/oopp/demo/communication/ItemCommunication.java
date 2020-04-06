@@ -10,7 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-import nl.tudelft.oopp.demo.helperclasses.Item;
+import nl.tudelft.oopp.demo.entities.Item;
 
 public class ItemCommunication {
 
@@ -52,7 +52,7 @@ public class ItemCommunication {
      * Adds an item.
      * @param name - the name of the item
      */
-    public static void addItem(String name) {
+    public static String addItem(String name) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
@@ -74,14 +74,16 @@ public class ItemCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "The item already exists.";
         }
+        return "Successful";
     }
 
     /**
      * Updates a Item.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateItem(long id, String name) {
+    public static String updateItem(long id, String name) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
@@ -103,6 +105,8 @@ public class ItemCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "Item already exists.";
         }
+        return "Successful";
     }
 }

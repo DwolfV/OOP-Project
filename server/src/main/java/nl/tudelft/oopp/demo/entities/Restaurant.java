@@ -11,11 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Restaurant")
+@Table(name = "Restaurant",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"name", "building_id"},
+                        name = "unique_restaurant_in_building_constraint"
+                )
+        })
 public class Restaurant {
 
     @Id
@@ -24,19 +31,20 @@ public class Restaurant {
     private long id;
 
     @NotBlank
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "building_id", referencedColumnName = "id")
+    @NotNull
+    @JoinColumn(name = "building_id", referencedColumnName = "id", nullable = false)
     private Building building;
 
     @NotNull
-    @Column(name = "t_close")
+    @Column(name = "t_close", nullable = false)
     private LocalTime timeClose;
 
     @NotNull
-    @Column(name = "t_open")
+    @Column(name = "t_open", nullable = false)
     private LocalTime timeOpen;
 
     public Restaurant() {

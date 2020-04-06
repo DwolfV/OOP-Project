@@ -21,20 +21,21 @@ public class SupplyReservation {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "date")
+    @NotNull
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private int amount;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "supply_id", referencedColumnName = "id")
+    @JoinColumn(name = "supply_id", referencedColumnName = "id", nullable = false)
     private Supply supply;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     public SupplyReservation() {

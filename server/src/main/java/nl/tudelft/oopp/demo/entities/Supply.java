@@ -12,33 +12,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Supply"/*,
+@Table(name = "Supply",
         uniqueConstraints = {
                 @UniqueConstraint(
                         columnNames = {"name", "building_id"},
                         name = "unique_supply_per_building_constraint"
                 )
-        }*/)
+        })
 public class Supply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private long id;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "building_id", referencedColumnName = "id")
+    @JoinColumn(name = "building_id", referencedColumnName = "id", nullable = false)
     private Building building;
 
-    @NotNull
-    @Column(name = "name")
+    @NotBlank
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "stock")
+    @NotNull
+    @Column(name = "stock", nullable = false)
     private int stock;
 
     @OneToMany(mappedBy = "supply", cascade = CascadeType.ALL)

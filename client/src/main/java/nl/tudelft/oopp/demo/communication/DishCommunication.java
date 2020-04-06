@@ -12,7 +12,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Dish;
+
+import nl.tudelft.oopp.demo.entities.Dish;
+
+
 
 public class DishCommunication {
     private static HttpClient client = HttpClient.newBuilder().build();
@@ -63,7 +66,7 @@ public class DishCommunication {
 
     public static Dish getDishById(long id) {
         // TODO what if Authenticator.SESSION_COOKIE is not set?
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/building/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/dish/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -100,7 +103,7 @@ public class DishCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void addDish(String name, String description, String type, float price) {
+    public static String addDish(String name, String description, String type, float price) {
         ObjectMapper mapper = new ObjectMapper();
         Dish dish = new Dish(name, description, type, price);
         String jsonDish = "";
@@ -127,7 +130,9 @@ public class DishCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "Dish name already exists.";
         }
+        return "Successful";
     }
 
 
@@ -137,7 +142,7 @@ public class DishCommunication {
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
 
-    public static void updateDish(long id, String name, String description, String type, float price) {
+    public static String updateDish(long id, String name, String description, String type, float price) {
         ObjectMapper mapper = new ObjectMapper();
         Dish newDish = new Dish(name, description, type, price);
         String jsonDish = "";
@@ -164,7 +169,9 @@ public class DishCommunication {
 
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "Dish name already exists.";
         }
+        return "Successful";
     }
 
     /**

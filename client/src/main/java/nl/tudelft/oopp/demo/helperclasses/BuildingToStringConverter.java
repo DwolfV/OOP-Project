@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.helperclasses;
 import java.util.List;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.entities.Building;
 
 public class BuildingToStringConverter extends StringConverter {
 

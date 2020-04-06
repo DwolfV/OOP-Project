@@ -10,9 +10,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import nl.tudelft.oopp.demo.helperclasses.Dish;
-import nl.tudelft.oopp.demo.helperclasses.Restaurant;
-import nl.tudelft.oopp.demo.helperclasses.RestaurantDish;
+import nl.tudelft.oopp.demo.entities.Dish;
+import nl.tudelft.oopp.demo.entities.Restaurant;
+import nl.tudelft.oopp.demo.entities.RestaurantDish;
 
 public class RestaurantDishCommunication {
 
@@ -73,12 +73,46 @@ public class RestaurantDishCommunication {
     }
 
     /**
+     * Get a RestaurantDish by id.
+     *
+     * @param id - the id of the restaurant dish
+     * @return a RestaurantDish
+     */
+    public static RestaurantDish getRestaurantDishById(long id) {
+        // TODO what if Authenticator.SESSION_COOKIE is not set?
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/restaurant_dish/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        RestaurantDish restaurantDish = null;
+        // TODO handle exception
+        try {
+            restaurantDish = mapper.readValue(response.body(), new TypeReference<RestaurantDish>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return restaurantDish;
+    }
+
+    /**
      * Adds a new link between a restaurant and a dish.
      *
      * @param dish - a dish
      * @param restaurant - a restaurant that will have the dish in the menu
      */
-    public static void addLinkRestaurantDish(Dish dish, Restaurant restaurant) {
+    public static String addLinkRestaurantDish(Dish dish, Restaurant restaurant) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         RestaurantDish restaurantDish = new RestaurantDish(restaurant, dish);
@@ -100,7 +134,9 @@ public class RestaurantDishCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "This dish has already been added to this restaurant";
         }
+        return "Successful";
     }
 
     /**

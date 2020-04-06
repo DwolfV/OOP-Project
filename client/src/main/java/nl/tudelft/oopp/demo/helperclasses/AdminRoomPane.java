@@ -1,10 +1,10 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
 import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -17,10 +17,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
-
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Room;
 
 public class AdminRoomPane {
 
@@ -35,7 +36,17 @@ public class AdminRoomPane {
      */
     public static void updateRoomButtonClicked() {
         Room room = tableRoom.getSelectionModel().getSelectedItem();
-        RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        String success = RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(),
+            room.getBuilding().getId());
+        if (success.equals("Successful")) {
+            alert.hide();
+        } else {
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -113,6 +124,8 @@ public class AdminRoomPane {
         updateRoom.setOnAction(e -> {
             try {
                 updateRoomButtonClicked();
+                AdminSceneController.loadRoomTP(ac);
+                ac.setExpandedPane(AdminSceneController.roomTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -164,13 +177,21 @@ public class AdminRoomPane {
             String roomName1 = roomNameField.getText();
             int capacity1 = Integer.parseInt(capacityField.getText());
 
-            RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText()));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            String success = RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText()));
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.showAndWait();
+            }
 
             buildingField.setText(null);
             roomNameField.setText(null);
             capacityField.setText(null);
             choiceBox.setValue(null);
-            AdminSceneController.loadAdminScene(ac);
+            AdminSceneController.loadRoomTP(ac);
             ac.setExpandedPane(AdminSceneController.roomTP);
         });
 

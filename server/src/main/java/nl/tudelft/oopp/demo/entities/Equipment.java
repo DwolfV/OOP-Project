@@ -28,11 +28,11 @@ public class Equipment {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     private Item item;
 
     @NotNull
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     private int amount;
 
     public Equipment() {

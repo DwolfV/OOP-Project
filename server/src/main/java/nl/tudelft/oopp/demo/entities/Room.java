@@ -16,13 +16,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.lang.Nullable;
 
 @Entity
-@Table(name = "Room")
+@Table(name = "Room",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"name", "building_id"},
+                        name = "unique_room_per_building_constraint"
+                )
+        })
 public class Room {
-    // TODO nullable = false
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -139,4 +145,14 @@ public class Room {
                 && Objects.equals(building, room.building);
     }
 
+    @Override
+    public String toString() {
+        return "Room{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", capacity=" + capacity
+                + ", building=" + building
+                + ", equipment=" + equipment
+                + '}';
+    }
 }

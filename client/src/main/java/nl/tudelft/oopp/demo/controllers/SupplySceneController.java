@@ -15,11 +15,26 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
-import nl.tudelft.oopp.demo.helperclasses.*;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Supply;
+import nl.tudelft.oopp.demo.entities.SupplyReservation;
+import nl.tudelft.oopp.demo.helperclasses.SupplyToStringConverter;
 
 public class SupplySceneController implements Initializable {
 
@@ -88,6 +103,8 @@ public class SupplySceneController implements Initializable {
 
             allReservedSupplies.remove(supplyReservation);
             SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
+
+            loadSuppliesAccordion();
         });
 
         // Set styleClass to rows
@@ -154,7 +171,15 @@ public class SupplySceneController implements Initializable {
                         LocalDate today = LocalDate.now();
                         int amount = Integer.parseInt(textFieldItem.getText());
 
-                        SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        String success = SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        if (success.equals("Successful")) {
+                            alert.hide();
+                        } else {
+                            alert.showAndWait();
+                        }
 
                         textFieldItem.setText(null);
 

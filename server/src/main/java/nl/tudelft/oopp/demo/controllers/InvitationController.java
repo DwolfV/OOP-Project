@@ -85,7 +85,11 @@ public class InvitationController {
      */
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Invitation> addInvitation(@Valid @RequestBody Invitation invitation, UriComponentsBuilder f) {
-        invitationRepository.save(invitation);
+        try {
+            invitationRepository.save(invitation);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = f.path("/{id}").buildAndExpand(invitation.getId());
         return ResponseEntity.created(uri.toUri()).body(invitation);
     }

@@ -79,7 +79,11 @@ public class SupplyController {
 
     @PostMapping(value = "/supply", consumes = {"application/json"})
     public ResponseEntity<Supply> newSupply(@Valid @RequestBody Supply newSupply, UriComponentsBuilder b) {
-        rep.save(newSupply);
+        try {
+            rep.save(newSupply);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = b.path("/supply/{supply_id}").buildAndExpand(newSupply.getId());
         return ResponseEntity.created(uri.toUri()).body(newSupply);
     }
@@ -96,17 +100,19 @@ public class SupplyController {
                                                    UriComponentsBuilder builder) {
         UriComponents uriComponents = builder.path("/supply/{supply_id}").buildAndExpand(supplyId);
 
-        Supply updatedSupply = rep.findById(supplyId).map(supply -> {
+        return rep.findById(supplyId).map(supply -> {
             supply.setBuilding(newSupply.getBuilding());
             supply.setName(newSupply.getName());
             supply.setStock(newSupply.getStock());
-            return rep.save(supply);
-        }).orElseGet(() -> {
-            newSupply.setId(supplyId);
-            return rep.save(newSupply);
-        });
 
-        return ResponseEntity.created(uriComponents.toUri()).body(updatedSupply);
+            Supply supplyReturn;
+            try {
+                supplyReturn = rep.save(supply);
+            } catch (Exception e) {
+                return new ResponseEntity<Supply>(HttpStatus.CONFLICT);
+            }
+            return new ResponseEntity<>(supplyReturn, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

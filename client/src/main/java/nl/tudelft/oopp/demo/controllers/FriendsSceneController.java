@@ -4,6 +4,7 @@ import static java.util.function.Predicate.not;
 
 import java.awt.*;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,8 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,9 +27,9 @@ import nl.tudelft.oopp.demo.communication.FriendCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
-import nl.tudelft.oopp.demo.helperclasses.RoomReservation;
-import nl.tudelft.oopp.demo.helperclasses.SupplyReservation;
-import nl.tudelft.oopp.demo.helperclasses.User;
+import nl.tudelft.oopp.demo.entities.SupplyReservation;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.User;
 
 public class FriendsSceneController implements Initializable {
 
@@ -71,8 +72,16 @@ public class FriendsSceneController implements Initializable {
         addButton.setOnAction(event -> {
             String newFriendTextFieldText = newFriendTextField.getText();
 
-            System.out.println(FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
-                UserCommunication.getByUsername(newFriendTextFieldText)));
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            String success = FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
+                UserCommunication.getByUsername(newFriendTextFieldText));
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.showAndWait();
+            }
 
             newFriendTextField.setText(null);
 
@@ -161,6 +170,7 @@ public class FriendsSceneController implements Initializable {
                     if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0])
                         && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
                         && reservedRooms1.getDate().toString().equals(buildingAndRoom[2])) {
+                        
                         InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
                         break;
                     }
