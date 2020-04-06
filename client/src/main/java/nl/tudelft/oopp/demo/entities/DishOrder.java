@@ -7,6 +7,9 @@ public class DishOrder {
     private Order order;
     private RestaurantDish restaurantDish;
 
+    public DishOrder() {
+
+    }
     /**
      * Constructor for the DishOrder class.
      *
@@ -14,6 +17,7 @@ public class DishOrder {
      * @param order - The id of the order that the dish is part of
      * @param restaurantDish - The id of the dish that is included in the order
      */
+    
     public DishOrder(int amount,
                      Order order,
                      RestaurantDish restaurantDish) {

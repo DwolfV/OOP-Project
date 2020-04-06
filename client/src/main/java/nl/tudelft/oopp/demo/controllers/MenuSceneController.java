@@ -42,7 +42,7 @@ public class MenuSceneController implements Initializable {
      * @param restaurant An object of type restaurant to load the order scene
      * @return A VBox with a table inside
      */
-    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant, RoomReservation roomReservation) {
+    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant) {
         screenBounds = Screen.getPrimary().getBounds();
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
@@ -90,7 +90,6 @@ public class MenuSceneController implements Initializable {
                             try {
                                 Restaurant r = restaurant;
                                 Dish d = getTableView().getItems().get(getIndex());
-                                System.out.println("Your dish is: " + d.getId() + " " + d.getName());
                                 List<RestaurantDish> restaurantDishes = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(r.getId());
                                 RestaurantDish restaurantDish = new RestaurantDish(r, d);
                                 boolean found = false;
@@ -100,7 +99,6 @@ public class MenuSceneController implements Initializable {
                                     }
                                 }
                                 OrderSceneController.addToBasket(restaurantDish);
-                                hamburgerMenuSceneController.openOrder();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -132,7 +130,6 @@ public class MenuSceneController implements Initializable {
                             try {
                                 Restaurant r = restaurant;
                                 Dish d = getTableView().getItems().get(getIndex());
-                                System.out.println("Your dish is: " + d.getId() + " " + d.getName());
                                 List<RestaurantDish> restaurantDishes = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(r.getId());
                                 RestaurantDish restaurantDish = new RestaurantDish(r, d);
                                 boolean found = false;
@@ -142,7 +139,6 @@ public class MenuSceneController implements Initializable {
                                     }
                                 }
                                 OrderSceneController.removeFromBasket(restaurantDish);
-                                hamburgerMenuSceneController.openOrder();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }

@@ -25,9 +25,7 @@ public class OrderSceneController implements Initializable {
     private static ObservableList<String> stringBasketList = FXCollections.observableArrayList();
     private static ArrayList<RestaurantDish> basketList = new ArrayList();
     private static ObservableList<Integer> amountBasketList = FXCollections.observableArrayList();
-    private RoomReservation roomReservation;
-    @FXML
-    private Label totalLabel = new Label();
+    private static RoomReservation roomReservation;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,17 +93,18 @@ public class OrderSceneController implements Initializable {
             alert.setContentText("You currently have no items in the basket");
             alert.show();
         } else {
-            OrderCommunication.addOrder(getRoomReservation());
+            OrderCommunication.addOrder(roomReservation);
             List<Order> orders = OrderCommunication.getOrders();
             Order order = new Order(getRoomReservation());
             for (int i = 0; i < orders.size(); i++) {
-                if (orders.get(i).getRoomReservation().getId() == getRoomReservation().getId()) {
+                if (orders.get(i).getRoomReservation().getId() == roomReservation.getId()) {
                     order = orders.get(i);
                 }
             }
             for (int i = 0; i < basketList.size(); i++) {
                 DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
-                System.out.println("New dishorder place with: ammount:" + amountBasketList.get(i) + ", restaurantdishID:" + basketList.get(i).getId() + ", roomreservaionID: " + order.getId());
+                System.out.println(amountBasketList.get(i) + ", " + basketList.get(i).getId());// + getRoomReservation().getId());
+                System.out.println(order.getId());
             }
             clearBasket();
 
@@ -113,26 +112,6 @@ public class OrderSceneController implements Initializable {
             alert.setContentText("Your order has been placed");
             alert.show();
         }
-    }
-
-    public void refreshTotal() {
-        totalLabel.setText("Total: " + calculateTotal());
-    }
-
-    /**
-<<<<<<< HEAD
-     * Calculate the total amount of dishRestaurants.
-=======
-     * Calculate total number of items in basket.
->>>>>>> development
-     * @return
-     */
-    public static long calculateTotal() {
-        long total = 0;
-        for (int i = 0; i < amountBasketList.size(); i++) {
-            total += amountBasketList.get(i) * basketList.get(i).getDish().getPrice();
-        }
-        return total;
     }
 
     public void setRoomReservation(RoomReservation roomReservation) {
