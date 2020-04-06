@@ -59,6 +59,7 @@ public class DishOrderCommunication {
     public static void addDishOrder(Integer amount, Long restaurantDishId, Long orderId) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        mapper.registerModule(new JavaTimeModule());
 
         DishOrder dishOrder = new DishOrder(amount, OrderCommunication.getOrderById(orderId), RestaurantDishCommunication.getRestaurantDishById(restaurantDishId));
         String jsonDishOrder = "";

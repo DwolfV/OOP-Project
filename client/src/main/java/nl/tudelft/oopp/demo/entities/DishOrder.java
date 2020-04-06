@@ -7,6 +7,9 @@ public class DishOrder {
     private Order order;
     private RestaurantDish restaurantDish;
 
+    public DishOrder() {
+
+    }
     /**
      * Constructor for the DishOrder class.
      *
