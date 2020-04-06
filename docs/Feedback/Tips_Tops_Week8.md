@@ -19,9 +19,9 @@
 - **Tip:** we should have done more testing in the backend since there was a lot of small stuff that we had to change last minute, which is very stressfull. Also, there was a small feature which we forgot to do and we had to implement it quickly which led to unnecessary stress.
 
 ### Bogdan
-- **Top:** 
+- **Top:** This final week has been very challenging as we were on the last mile and everyone has put in a lot of effort to manage getting everything on point. The communication was grat as the team met online and the members helped eachother.
 
-- **Tip:** 
+- **Tip:** The git features could have been used more. It was a bit confusing beacuse everyone was working all over the place and it was relatively confusing
 
 ### Iulia
 - **Top:** the communication between the members of our group was great, we helped each other a lot and tried to do the best we could. We tried to improve ourselves every week and to include the feedbacks that we received into our work.
