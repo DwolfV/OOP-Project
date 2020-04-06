@@ -299,13 +299,10 @@ public class AdminItemsPane {
         List<String> idList = new ArrayList<>();
         for (Building building: buildingList) {
             idList.add(building.getName() + ", " + building.getId());
-            System.out.println(building.getId());
             List<Room> roomList = RoomCommunication.getRoomsByBuildingId(building.getId());
-            System.out.println(roomList);
             if (roomList != null) {
                 for (Room room : roomList) {
                     roomString.add("Building: " + building.getName() + " Room: " + room.getName());
-                    System.out.println("Building: " + building.getName() + " Room: " + room.getName());
                 }
             }
         }
@@ -350,7 +347,6 @@ public class AdminItemsPane {
             }
             //get all the rooms by building id and look for the room that has the same name as the selected one
             Long id = Long.parseLong(buildingId);
-            System.out.println(id);
             Room room = null;
             for (Room r : RoomCommunication.getRoomsByBuildingId(id)) {
                 if (r.getName().equals(pickedRoom.split(" ")[3])) {

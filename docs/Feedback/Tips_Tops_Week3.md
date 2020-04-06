@@ -29,7 +29,7 @@
 - **Tip:** Improve branching, start writing tests for classes, do code reviewing.
 
 ###Steph
-- **Top:**
+- **Top:** We are meeting all the deadlines with time to spare.
 
-- **Tip:**
+- **Tip:** We could improve on branching.
 

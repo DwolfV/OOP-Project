@@ -4,10 +4,13 @@ import java.util.Set;
 
 public class Order {
 
-    private Long id;
+    private long id;
     private RoomReservation roomReservation;
     private Set<DishOrder> dishOrders;
 
+    public Order() {
+
+    }
     /**
      * Constructor for the Order object.
      *

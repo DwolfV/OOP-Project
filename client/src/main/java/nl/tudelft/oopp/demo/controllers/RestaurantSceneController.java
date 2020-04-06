@@ -81,11 +81,6 @@ public class RestaurantSceneController implements Initializable {
             if (showRestaurants.size() != 0) {
                 tps[c] = new TitledPane();
                 VBox table = new VBox();
-                //grid.setPadding(new Insets(5, 5, 5, 5));
-
-                for (Restaurant restaurant : restaurants) {
-                    System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
-                }
 
                 TimeToStringConverter timeToString = new TimeToStringConverter();
                 for (int j = 0; j < showRestaurants.size(); j++) {
@@ -150,23 +145,21 @@ public class RestaurantSceneController implements Initializable {
                     boolean finalCurrentlyInReservation = currentlyInReservation;
                     RoomReservation finalRoomReservation = roomReservation;
                     button1.setOnAction(e -> {
-                        if (finalCurrentlyInReservation /*|| Authenticator.isAdmin()*/) {
+                        if (finalCurrentlyInReservation) {
                             try {
-                                MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
-                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant, finalRoomReservation);
+                                OrderSceneController orderSceneController = new OrderSceneController();
+                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant);
                                 hbox.getChildren().setAll(ac, vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
 
-                                OrderSceneController orderSceneController = new OrderSceneController();
                                 orderSceneController.setRoomReservation(finalRoomReservation);
-                                orderSceneController.clearBasket();
+                                OrderSceneController.clearBasket();
                                 hamburgerMenuSceneController.openOrder();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                         } else {
                             try {
-                                System.out.println("id:" + restaurantId + " | Name:" + resName.getText());
                                 VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
                                 hbox.getChildren().setAll(ac, vbox);
