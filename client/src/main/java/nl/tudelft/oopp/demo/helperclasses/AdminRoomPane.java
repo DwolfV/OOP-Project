@@ -45,6 +45,7 @@ public class AdminRoomPane {
         if (success.equals("Successful")) {
             alert.hide();
         } else {
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -184,6 +185,7 @@ public class AdminRoomPane {
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 

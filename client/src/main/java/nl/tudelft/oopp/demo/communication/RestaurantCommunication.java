@@ -134,7 +134,7 @@ public class RestaurantCommunication {
 
         if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "There is already a restaurant with this name for this building.";
+            return "There is already a restaurant with the name \"" + name + "\" for this building.";
         }
         return "Successful";
     }
@@ -171,7 +171,7 @@ public class RestaurantCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
-            return "There is already a restaurant with this name for this building.";
+            return "There is already a restaurant with the name \"" + name + "\" for this building.";
         }
         return "Successful";
     }

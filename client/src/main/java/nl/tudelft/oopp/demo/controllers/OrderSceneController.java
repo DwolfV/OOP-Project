@@ -78,7 +78,7 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * clear basket.
+     * Clears the curent state of the basket.
      */
     public static void clearBasket() {
         basketList.clear();
@@ -99,7 +99,7 @@ public class OrderSceneController implements Initializable {
             List<Order> orders = OrderCommunication.getOrders();
             Order order = new Order(getRoomReservation());
             for (int i = 0; i < orders.size(); i++) {
-                if (orders.get(i).getRoomReservation() == getRoomReservation() && order.getDishOrders() == null) {
+                if (orders.get(i).getRoomReservation().getId() == getRoomReservation().getId()) {
                     order = orders.get(i);
                 }
             }
@@ -120,7 +120,11 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
+<<<<<<< HEAD
      * Calculate the total amount of dishRestaurants.
+=======
+     * Calculate total number of items in basket.
+>>>>>>> development
      * @return
      */
     public static long calculateTotal() {

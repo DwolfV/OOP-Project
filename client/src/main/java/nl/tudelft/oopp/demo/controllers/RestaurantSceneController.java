@@ -140,8 +140,8 @@ public class RestaurantSceneController implements Initializable {
                     RoomReservation roomReservation = new RoomReservation();
 
                     for (int k = 0; k < roomReservations.size(); k++) {
-                        if (localDate.isEqual(roomReservations.get(k).getDate()) && localTime.isAfter(roomReservations.get(k).getStartTime())
-                                && localTime.isBefore(roomReservations.get(k).getEndTime())
+                        if (localDate.isEqual(roomReservations.get(k).getDate().plusDays(1)) && localTime.isAfter(roomReservations.get(k).getStartTime())
+                                && localTime.isBefore(roomReservations.get(k).getEndTime().minusMinutes(30))
                                 && showRestaurants.get(j).getBuilding().getId() == (roomReservations.get(k).getRoom().getBuilding()).getId()) {
                             currentlyInReservation = true;
                             roomReservation = roomReservations.get(k);

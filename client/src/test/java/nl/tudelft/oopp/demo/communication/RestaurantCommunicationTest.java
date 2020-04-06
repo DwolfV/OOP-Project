@@ -45,7 +45,11 @@ public class RestaurantCommunicationTest {
     }
 
     /**
+<<<<<<< HEAD
      * Stop mock server before each test.
+=======
+     * Stop mock server after each test.
+>>>>>>> development
      */
     @AfterEach
     public void stopMockServer() {

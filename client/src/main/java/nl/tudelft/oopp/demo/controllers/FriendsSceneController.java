@@ -86,6 +86,7 @@ public class FriendsSceneController implements Initializable {
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 
