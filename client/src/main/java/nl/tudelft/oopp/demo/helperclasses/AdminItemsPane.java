@@ -42,6 +42,7 @@ public class AdminItemsPane {
         if (success.equals("Successful")) {
             alert.hide();
         } else {
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -178,6 +179,7 @@ public class AdminItemsPane {
         if (success.equals("Successful")) {
             alert.hide();
         } else {
+            alert.setContentText(success);
             alert.showAndWait();
         }
 
@@ -354,6 +356,7 @@ public class AdminItemsPane {
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 
