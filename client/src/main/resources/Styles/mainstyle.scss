@@ -42,7 +42,7 @@ $el-grey: #F5F5F5;
 }
 
 .label {
-    -fx-font: 11pt "Candara Light";
+    -fx-font: 11pt "Candara";
     -fx-text-fill: $el-grey;
 }
 
@@ -54,7 +54,7 @@ $el-grey: #F5F5F5;
     -fx-padding: 10 10 10 20;
     -fx-text-fill: $el-grey;
     -fx-text-weight: bold;
-    -fx-font: 14pt "Candara Light";
+    -fx-font: 14pt "Candara";
 }
 
 // Buttons
@@ -74,13 +74,13 @@ $el-grey: #F5F5F5;
 }
 
 .menu-title {
-    -fx-font: 11pt "Candara Light";
+    -fx-font: 11pt "Candara";
     -fx-text-color: $l-grey;
     -fx-padding: 0 0 8 10;
 }
 
 .menu-button {
-    -fx-font: 14pt "Candara Light";
+    -fx-font: 14pt "Candara";
     -fx-text-color: $el-grey;
     -fx-padding: 0 0 0 20;
     -fx-alignment: left;
@@ -113,7 +113,7 @@ $el-grey: #F5F5F5;
     -fx-background-color: $l-grey;
     -fx-background-radius: 0;
     -fx-background-insets: 0 0 0 0;
-    -fx-font: 12pt "Candara Light";
+    -fx-font: 12pt "Candara";
     -fx-alignment: center;
     -fx-padding: 4 10 4 10;
 }
@@ -127,13 +127,13 @@ $el-grey: #F5F5F5;
 }
 
 .text-field{
-    -fx-font: 11pt "Candara Light";
+    -fx-font: 11pt "Candara";
     -fx-background-radius: 0;
 }
 
 .text-field-table-cell{
     -fx-text-fill: $l-grey;
-    -fx-font: 11pt "Candara Light";
+    -fx-font: 11pt "Candara";
 }
 
 .text-field-table-cell:selected{
@@ -145,7 +145,7 @@ $el-grey: #F5F5F5;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-border-width: 0 0 0 0;
     -fx-text-fill: $el-grey;
-    -fx-font: 11pt "Candara Light";
+    -fx-font: 11pt "Candara";
 
 }
 
@@ -157,7 +157,7 @@ $el-grey: #F5F5F5;
     -fx-padding: 10 10 10 20;
     -fx-text-fill: $el-grey;
     -fx-text-weight: bold;
-    -fx-font: 14pt "Candara Light";
+    -fx-font: 14pt "Candara";
 }
 
 .restaurant-menu .column-header-background .label {
@@ -168,7 +168,7 @@ $el-grey: #F5F5F5;
 .restaurant-menu-row {
     -fx-background-color: transparent;
     -fx-text-fill: $el-grey !important;
-    -fx-font: 12pt "Candara Light";
+    -fx-font: 12pt "Candara";
     -fx-border-width: 0 0 1 0;
     -fx-border-color: $l-grey;
     -fx-cell-size: 35px;
@@ -252,7 +252,7 @@ $el-grey: #F5F5F5;
     -fx-padding: 10 10 10 20;
     -fx-text-fill: $el-grey;
     -fx-text-weight: bold;
-    -fx-font: 14pt "Candara Light";
+    -fx-font: 14pt "Candara";
 }
 
 .titled-pane > .title:hover {
