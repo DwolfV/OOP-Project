@@ -43,7 +43,10 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader sidebarLoader = new FXMLLoader(getClass().getResource("/Scenes/sidebarScene.fxml"));
         FXMLLoader restaurantLoader = new FXMLLoader(getClass().getResource("/Scenes/restaurantScene.fxml"));
         FXMLLoader friendsLoader = new FXMLLoader(getClass().getResource("/Scenes/friendsScene.fxml"));
-        FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
+        FXMLLoader adminPanelLoader = null;
+        if (Authenticator.isAdmin()) {
+            adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
+        }
         FXMLLoader suppliesLoader = new FXMLLoader(getClass().getResource("/Scenes/supplyScene.fxml"));
         FXMLLoader orderLoader = new FXMLLoader(getClass().getResource("/Scenes/orderScene.fxml"));
         try {
@@ -53,7 +56,10 @@ public class HamburgerMenuSceneController implements Initializable {
             restaurantRoot = restaurantLoader.load();
             friendsRoot = friendsLoader.load();
             suppliesRoot = suppliesLoader.load();
-            adminPanelRoot = adminPanelLoader.load();
+            // only load the admin panel if the user is admin
+            if (Authenticator.isAdmin()) {
+                adminPanelRoot = adminPanelLoader.load();
+            }
             orderRoot = orderLoader.load();
 
         } catch (IOException e) {
@@ -64,13 +70,17 @@ public class HamburgerMenuSceneController implements Initializable {
         restaurantSceneController = restaurantLoader.getController();
         friendsSceneController = friendsLoader.getController();
         supplySceneController = suppliesLoader.getController();
-        adminSceneController = adminPanelLoader.getController();
+        if (Authenticator.isAdmin()) {
+            adminSceneController = adminPanelLoader.getController();
+        }
 
         restaurantSceneController.setController(mainSceneController, this);
 
         reservationSceneController.setControllers(this);
         reservationSceneController.init();
-        adminSceneController.setControllers(mainSceneController);
+        if (Authenticator.isAdmin()) {
+            adminSceneController.setControllers(mainSceneController);
+        }
         if (!Authenticator.isAdmin()) {
             adminButton.setVisible(false);
         }
