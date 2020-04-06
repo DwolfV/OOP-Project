@@ -21,6 +21,7 @@ public class HamburgerMenuSceneController implements Initializable {
     private ReservationSceneController reservationSceneController;
     private SupplySceneController supplySceneController;
     private AdminSceneController adminSceneController;
+    private OrderSceneController orderSceneController;
 
     private Parent reservationRoot;
     private Parent restaurantRoot;
@@ -29,6 +30,7 @@ public class HamburgerMenuSceneController implements Initializable {
     private Parent suppliesRoot;
     private Parent sidebarRoot;
     private Parent adminPanelRoot;
+    private Parent orderRoot;
 
     public FXMLLoader sidebarFilterLoader;
 
@@ -43,6 +45,7 @@ public class HamburgerMenuSceneController implements Initializable {
         FXMLLoader friendsLoader = new FXMLLoader(getClass().getResource("/Scenes/friendsScene.fxml"));
         FXMLLoader adminPanelLoader = new FXMLLoader(getClass().getResource("/Scenes/adminScene.fxml"));
         FXMLLoader suppliesLoader = new FXMLLoader(getClass().getResource("/Scenes/supplyScene.fxml"));
+        FXMLLoader orderLoader = new FXMLLoader(getClass().getResource("/Scenes/orderScene.fxml"));
         try {
             reservationRoot = reservationLoader.load();
             sidebarFilterRoot = sidebarFilterLoader.load();
@@ -51,6 +54,8 @@ public class HamburgerMenuSceneController implements Initializable {
             friendsRoot = friendsLoader.load();
             suppliesRoot = suppliesLoader.load();
             adminPanelRoot = adminPanelLoader.load();
+            orderRoot = orderLoader.load();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,6 +65,8 @@ public class HamburgerMenuSceneController implements Initializable {
         friendsSceneController = friendsLoader.getController();
         supplySceneController = suppliesLoader.getController();
         adminSceneController = adminPanelLoader.getController();
+
+        restaurantSceneController.setController(mainSceneController, this);
 
         reservationSceneController.setControllers(this);
         reservationSceneController.init();
@@ -85,6 +92,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openReservations(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(reservationRoot);
         mainSceneController.sidebar = (sidebarFilterRoot);
         headerSceneController.changeLeft();
@@ -95,6 +103,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openCalendar(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(mainSceneController.calendarRoot);
         mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
@@ -107,6 +116,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openRestaurants(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(restaurantRoot);
         mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
@@ -117,6 +127,7 @@ public class HamburgerMenuSceneController implements Initializable {
      * @param event mouse click
      */
     public void openAdminPanel(MouseEvent event) {
+        mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
         mainSceneController.changeCenter(adminPanelRoot);
         mainSceneController.sidebar = (MainSceneController.emptySidebarLeftRoot);
         headerSceneController.changeLeft();
@@ -140,5 +151,9 @@ public class HamburgerMenuSceneController implements Initializable {
         mainSceneController.changeCenter(suppliesRoot);
         mainSceneController.sidebar = (sidebarRoot);
         headerSceneController.changeLeft();
+    }
+
+    public void openOrder() {
+        mainSceneController.borderPane.setRight(orderRoot);
     }
 }

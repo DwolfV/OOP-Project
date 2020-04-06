@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import static java.util.function.Predicate.not;
 
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -72,10 +73,13 @@ public class FriendsSceneController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            alert.setContentText(FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
-                UserCommunication.getByUsername(newFriendTextFieldText)));
-
-            alert.showAndWait();
+            String success = FriendCommunication.addFriendship(UserCommunication.getByUsername(Authenticator.USERNAME),
+                UserCommunication.getByUsername(newFriendTextFieldText));
+            if (success.equals("Successful")) {
+                alert.hide();
+            } else {
+                alert.showAndWait();
+            }
 
             newFriendTextField.setText(null);
 
@@ -164,6 +168,7 @@ public class FriendsSceneController implements Initializable {
                     if (reservedRooms1.getRoom().getBuilding().getName().equals(buildingAndRoom[0])
                         && reservedRooms1.getRoom().getName().equals(buildingAndRoom[1])
                         && reservedRooms1.getDate().toString().equals(buildingAndRoom[2])) {
+                        
                         InvitationCommunication.addInvitation(reservedRooms1, UserCommunication.getByUsername(friendId));
                         break;
                     }

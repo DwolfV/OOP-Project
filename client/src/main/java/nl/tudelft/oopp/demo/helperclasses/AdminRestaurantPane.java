@@ -43,12 +43,11 @@ public class AdminRestaurantPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(), restaurant.getBuilding().getId(),
-            restaurant.getTimeClose(), restaurant.getTimeOpen()).equals("Successful")) {
+        String success = RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(),
+            restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(RestaurantCommunication.updateRestaurant(restaurant.getId(), restaurant.getName(),
-                restaurant.getBuilding().getId(), restaurant.getTimeClose(), restaurant.getTimeOpen()));
             alert.showAndWait();
         }
     }
@@ -200,12 +199,11 @@ public class AdminRestaurantPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()),
-                closingTimeInputText, openingTimeInputText).equals("Successful")) {
+            String success = RestaurantCommunication.addRestaurant(restaurantNameInputText, Long.parseLong(buildingNameInput.getText()),
+                closingTimeInputText, openingTimeInputText);
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(RestaurantCommunication.addRestaurant(restaurantNameInputText,
-                    Long.parseLong(buildingNameInput.getText()), closingTimeInputText, openingTimeInputText));
                 alert.showAndWait();
             }
 
@@ -213,7 +211,6 @@ public class AdminRestaurantPane {
             openingTimeInput.setValue(null);
             closingTimeInput.setValue(null);
             buildingNameInput.setText(null);
-
             choiceBox.setValue(null);
             AdminSceneController.loadRestaurantTP(ac);
             ac.setExpandedPane(AdminSceneController.restaurantTP);

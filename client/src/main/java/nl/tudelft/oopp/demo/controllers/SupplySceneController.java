@@ -164,9 +164,12 @@ public class SupplySceneController implements Initializable {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Information Dialog");
                         alert.setHeaderText(null);
-                        alert.setContentText(SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID));
-
-                        alert.showAndWait();
+                        String success = SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        if (success.equals("Successful")) {
+                            alert.hide();
+                        } else {
+                            alert.showAndWait();
+                        }
 
                         textFieldItem.setText(null);
 
