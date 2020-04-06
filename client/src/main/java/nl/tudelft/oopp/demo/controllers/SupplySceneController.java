@@ -2,8 +2,6 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,21 +9,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.*;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -47,6 +46,7 @@ public class SupplySceneController implements Initializable {
 
     /**
      * Loads all the content into the tables.
+     *
      * @param location  url location
      * @param resources resource bundle
      */
@@ -67,23 +67,23 @@ public class SupplySceneController implements Initializable {
         tableReservedSupplies.setEditable(true);
 
         TableColumn<SupplyReservation, Long> supplyNameCol =
-            new TableColumn<>("Supply");
+                new TableColumn<>("Supply");
         supplyNameCol.setMinWidth(100);
         supplyNameCol.setCellValueFactory(
-            new PropertyValueFactory<>("supply"));
+                new PropertyValueFactory<>("supply"));
         supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new SupplyToStringConverter()));
 
         TableColumn<SupplyReservation, Integer> amountCol =
-            new TableColumn<>("Amount");
+                new TableColumn<>("Amount");
         amountCol.setMinWidth(100);
         amountCol.setCellValueFactory(
-            new PropertyValueFactory<>("amount"));
+                new PropertyValueFactory<>("amount"));
 
         TableColumn<SupplyReservation, LocalDate> dateCol =
-            new TableColumn<>("Order Date");
+                new TableColumn<>("Order Date");
         dateCol.setMinWidth(100);
         dateCol.setCellValueFactory(
-            new PropertyValueFactory<>("date"));
+                new PropertyValueFactory<>("date"));
 
         ObservableList<SupplyReservation> reservedSupplies = FXCollections.observableList(SupplyReservationCommunication.getSupplyReservationByUserId(Authenticator.ID));
         tableReservedSupplies.setItems(reservedSupplies);
@@ -109,10 +109,10 @@ public class SupplySceneController implements Initializable {
 
         // Set styleClass to rows
         tableReservedSupplies.setRowFactory(tv -> {
-            TableRow<SupplyReservation> row = new TableRow<>();
-            row.getStyleClass().setAll("restaurant-menu-row");
-            return row;
-        }
+                TableRow<SupplyReservation> row = new TableRow<>();
+                row.getStyleClass().setAll("restaurant-menu-row");
+                return row;
+            }
         );
 
         veBoxDeleteAndTable = new VBox();
@@ -188,13 +188,13 @@ public class SupplySceneController implements Initializable {
 
                     GridPane grid = new GridPane();
                     ColumnConstraints constraint1 = new ColumnConstraints();
-                    constraint1.setPercentWidth(100/4);
+                    constraint1.setPercentWidth(100 / 4);
                     ColumnConstraints constraint2 = new ColumnConstraints();
-                    constraint2.setPercentWidth(100/4);
+                    constraint2.setPercentWidth(100 / 4);
                     ColumnConstraints constraint3 = new ColumnConstraints();
-                    constraint3.setPercentWidth(100/4);
+                    constraint3.setPercentWidth(100 / 4);
                     ColumnConstraints constraint4 = new ColumnConstraints();
-                    constraint4.setPercentWidth(100/4);
+                    constraint4.setPercentWidth(100 / 4);
                     grid.getColumnConstraints().setAll(
                             constraint1,
                             constraint2,

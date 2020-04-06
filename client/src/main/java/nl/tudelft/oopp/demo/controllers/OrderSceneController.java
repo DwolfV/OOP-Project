@@ -34,6 +34,10 @@ public class OrderSceneController implements Initializable {
         basketListView.setItems(stringBasketList);
     }
 
+    /**
+     * add restaurant dish to basket.
+     * @param restaurantDish restaurantDish
+     */
     public static void addToBasket(RestaurantDish restaurantDish) {
         if (basketList.contains(restaurantDish)) {
             int amount = amountBasketList.get(basketList.indexOf(restaurantDish));
@@ -49,6 +53,10 @@ public class OrderSceneController implements Initializable {
         }
     }
 
+    /**
+     * remove restaurant dish to basket.
+     * @param restaurantDish restaurantDish
+     */
     public static void removeFromBasket(RestaurantDish restaurantDish) {
         if (basketList.contains(restaurantDish)) {
             if (amountBasketList.get(basketList.indexOf(restaurantDish)) > 1) {
@@ -69,12 +77,18 @@ public class OrderSceneController implements Initializable {
         }
     }
 
+    /**
+     * clear basket.
+     */
     public static void clearBasket() {
         basketList.clear();
         stringBasketList.clear();
         amountBasketList.clear();
     }
 
+    /**
+     * Order a restaurantDish.
+     */
     public void handelOrderButton() {
         if (basketList.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -105,6 +119,10 @@ public class OrderSceneController implements Initializable {
         totalLabel.setText("Total: " + calculateTotal());
     }
 
+    /**
+     * Calculate the total amount of dishRestaurants.
+     * @return
+     */
     public static long calculateTotal() {
         long total = 0;
         for (int i = 0; i < amountBasketList.size(); i++) {

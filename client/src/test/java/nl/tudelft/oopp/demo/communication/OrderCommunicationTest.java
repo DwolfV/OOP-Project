@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.communication;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.LocalDate;
@@ -14,15 +15,7 @@ import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
-
 
 class OrderCommunicationTest {
 

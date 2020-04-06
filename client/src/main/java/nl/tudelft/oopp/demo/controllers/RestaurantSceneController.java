@@ -12,7 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,11 +26,11 @@ import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RestaurantCommunication;
-import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
 
 public class RestaurantSceneController implements Initializable {
 
@@ -102,11 +106,11 @@ public class RestaurantSceneController implements Initializable {
 
                     GridPane grid = new GridPane();
                     ColumnConstraints constraint1 = new ColumnConstraints();
-                    constraint1.setPercentWidth(100/3.5);
+                    constraint1.setPercentWidth(100 / 3.5);
                     ColumnConstraints constraint2 = new ColumnConstraints();
-                    constraint2.setPercentWidth(100/3.5);
+                    constraint2.setPercentWidth(100 / 3.5);
                     ColumnConstraints constraint3 = new ColumnConstraints();
-                    constraint3.setPercentWidth(100/3.5);
+                    constraint3.setPercentWidth(100 / 3.5);
                     grid.getColumnConstraints().setAll(
                             constraint1,
                             constraint2,
@@ -126,17 +130,6 @@ public class RestaurantSceneController implements Initializable {
                     table.getChildren().add(splitPane);
 
                     long restaurantId = showRestaurants.get(j).getId();
-//                    button1.setOnAction(e -> {
-//                        try {
-//                            System.out.println("id:" + restaurantId + " | Name:" + resName.getText());
-//                            VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
-//                            ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
-//                            hbox.getChildren().setAll(ac, vbox);
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    });
-
                     long user = Authenticator.ID;
                     ObservableList<RoomReservation> roomReservations = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(user));
 

@@ -2,9 +2,9 @@ package nl.tudelft.oopp.demo.controllers;
 
 import static java.util.function.Predicate.not;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.net.URL;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,19 +16,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.FriendCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
 import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.communication.UserCommunication;
-import nl.tudelft.oopp.demo.entities.SupplyReservation;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.entities.SupplyReservation;
 import nl.tudelft.oopp.demo.entities.User;
 
 public class FriendsSceneController implements Initializable {
@@ -189,13 +195,13 @@ public class FriendsSceneController implements Initializable {
             // Grid inside list
             GridPane grid = new GridPane();
             ColumnConstraints constraint1 = new ColumnConstraints();
-            constraint1.setPercentWidth(100/4);
+            constraint1.setPercentWidth(100 / 4);
             ColumnConstraints constraint2 = new ColumnConstraints();
-            constraint2.setPercentWidth(100/4);
+            constraint2.setPercentWidth(100 / 4);
             ColumnConstraints constraint3 = new ColumnConstraints();
-            constraint3.setPercentWidth(100/4);
+            constraint3.setPercentWidth(100 / 4);
             ColumnConstraints constraint4 = new ColumnConstraints();
-            constraint4.setPercentWidth(100/4);
+            constraint4.setPercentWidth(100 / 4);
             grid.getColumnConstraints().setAll(
                     constraint1,
                     constraint2,
