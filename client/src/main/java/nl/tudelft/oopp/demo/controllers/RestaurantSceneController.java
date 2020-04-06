@@ -151,7 +151,7 @@ public class RestaurantSceneController implements Initializable {
                     boolean finalCurrentlyInReservation = currentlyInReservation;
                     RoomReservation finalRoomReservation = roomReservation;
                     button1.setOnAction(e -> {
-                        if (finalCurrentlyInReservation /*|| Authenticator.isAdmin()*/) {
+                        if (finalCurrentlyInReservation) {
                             try {
                                 MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
                                 VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant, finalRoomReservation);
