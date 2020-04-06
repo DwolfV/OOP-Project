@@ -111,8 +111,8 @@ public class RestaurantSceneController implements Initializable {
                     RoomReservation roomReservation = new RoomReservation();
 
                     for (int k = 0; k < roomReservations.size(); k++) {
-                        if (localDate.isEqual(roomReservations.get(k).getDate()) && localTime.isAfter(roomReservations.get(k).getStartTime())
-                                && localTime.isBefore(roomReservations.get(k).getEndTime())
+                        if (localDate.isEqual(roomReservations.get(k).getDate().minusDays(1)) && localTime.isAfter(roomReservations.get(k).getStartTime())
+                                && localTime.isBefore(roomReservations.get(k).getEndTime().minusMinutes(30))
                                 && showRestaurants.get(j).getBuilding().getId() == (roomReservations.get(k).getRoom().getBuilding()).getId()) {
                             currentlyInReservation = true;
                             roomReservation = roomReservations.get(k);
@@ -124,9 +124,11 @@ public class RestaurantSceneController implements Initializable {
                     button1.setOnAction(e -> {
                         if (finalCurrentlyInReservation /*|| Authenticator.isAdmin()*/) {
                             try {
-                                MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
+                                System.out.println(localDate);
+                                System.out.println(finalRoomReservation.getDate());
+                                MenuSceneController.loadOrderMenu(pane, -1, restaurant);
                                 System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
-                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant, finalRoomReservation);
+                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant);
                                 pane.getChildren().setAll(vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
 
@@ -144,6 +146,7 @@ public class RestaurantSceneController implements Initializable {
                                 VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
                                 pane.getChildren().setAll(vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
+                                hamburgerMenuSceneController.clearRight();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }

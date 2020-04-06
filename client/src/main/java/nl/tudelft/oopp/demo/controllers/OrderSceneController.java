@@ -34,6 +34,10 @@ public class OrderSceneController implements Initializable {
         basketListView.setItems(stringBasketList);
     }
 
+    /**
+     * Adds a dish into the basket
+     * @param restaurantDish A restaurant dish
+     */
     public static void addToBasket(RestaurantDish restaurantDish) {
         if (basketList.contains(restaurantDish)) {
             int amount = amountBasketList.get(basketList.indexOf(restaurantDish));
@@ -49,6 +53,10 @@ public class OrderSceneController implements Initializable {
         }
     }
 
+    /**
+     * Removes a dish from the basket
+     * @param restaurantDish A restaurant dish
+     */
     public static void removeFromBasket(RestaurantDish restaurantDish) {
         if (basketList.contains(restaurantDish)) {
             if (amountBasketList.get(basketList.indexOf(restaurantDish)) > 1) {
@@ -69,12 +77,18 @@ public class OrderSceneController implements Initializable {
         }
     }
 
+    /**
+     * Clears the curent state of the basket
+     */
     public static void clearBasket() {
         basketList.clear();
         stringBasketList.clear();
         amountBasketList.clear();
     }
 
+    /**
+     * Creates a new order
+     */
     public void handelOrderButton() {
         if (basketList.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -85,7 +99,7 @@ public class OrderSceneController implements Initializable {
             List<Order> orders = OrderCommunication.getOrders();
             Order order = new Order(getRoomReservation());
             for (int i = 0; i < orders.size(); i++) {
-                if (orders.get(i).getRoomReservation() == getRoomReservation() && order.getDishOrders() == null) {
+                if (orders.get(i).getRoomReservation().getId() == getRoomReservation().getId()) {
                     order = orders.get(i);
                 }
             }

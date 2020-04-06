@@ -42,7 +42,7 @@ public class MenuSceneController implements Initializable {
      * @param restaurant An object of type restaurant to load the order scene
      * @return A VBox with a table inside
      */
-    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant, RoomReservation roomReservation) {
+    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant) {
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
 
