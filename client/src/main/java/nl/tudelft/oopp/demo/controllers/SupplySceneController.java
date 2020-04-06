@@ -24,10 +24,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import nl.tudelft.oopp.demo.communication.Authenticator;
-import nl.tudelft.oopp.demo.communication.BuildingCommunication;
-import nl.tudelft.oopp.demo.communication.SupplyCommunication;
-import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
+import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Supply;
 import nl.tudelft.oopp.demo.entities.SupplyReservation;
@@ -164,9 +161,12 @@ public class SupplySceneController implements Initializable {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Information Dialog");
                         alert.setHeaderText(null);
-                        alert.setContentText(SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID));
-
-                        alert.showAndWait();
+                        String success = SupplyReservationCommunication.addSupplyReservation(today, amount, supplyID);
+                        if (success.equals("Successful")) {
+                            alert.hide();
+                        } else {
+                            alert.showAndWait();
+                        }
 
                         textFieldItem.setText(null);
 
