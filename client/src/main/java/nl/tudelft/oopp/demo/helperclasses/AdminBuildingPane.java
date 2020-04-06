@@ -316,6 +316,7 @@ public class AdminBuildingPane {
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConverter()));
+        buildingNameCol.setEditable(false);
 
         TableColumn<Occasion, LocalDate> dayCol =
                 new TableColumn<>("Day");

@@ -214,19 +214,23 @@ public class AdminItemsPane {
 
         TableColumn<Equipment, Room> idColRoom =
             new TableColumn<>("Room Name");
-        idColRoom.setMinWidth(100);
+        idColRoom.setMinWidth(150);
         idColRoom.setCellValueFactory(
             new PropertyValueFactory<>("room"));
+        idColRoom.setCellFactory(TextFieldTableCell.forTableColumn(new RoomBuildingNameToStringConverter()));
+        idColRoom.setEditable(false);
 
         TableColumn<Equipment, Item> itemCol =
             new TableColumn<>("Item Name");
         itemCol.setMinWidth(100);
         itemCol.setCellValueFactory(
             new PropertyValueFactory<>("item"));
+        itemCol.setCellFactory(TextFieldTableCell.forTableColumn(new ItemToStringConverter()));
+        itemCol.setEditable(false);
 
         TableColumn<Equipment, Integer> amountCol =
             new TableColumn<>("Amount");
-        amountCol.setMinWidth(100);
+        amountCol.setMinWidth(50);
         amountCol.setCellValueFactory(
             new PropertyValueFactory<>("amount"));
         amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -237,7 +241,7 @@ public class AdminItemsPane {
 
         ObservableList<Equipment> equipmentData = FXCollections.observableList(EquipmentCommunication.getAllEquipment());
         tableEquipments.setItems(equipmentData);
-        tableEquipments.getColumns().addAll(idColEquipment, itemCol, amountCol);
+        tableEquipments.getColumns().addAll(idColEquipment, itemCol, amountCol, idColRoom);
 
         //delete button
         deleteEquipmentButton.setOnAction(e -> {
@@ -346,7 +350,8 @@ public class AdminItemsPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            String success = EquipmentCommunication.addEquipmentToRoom(room, ItemCommunication.getItemByName(pickedItem), Integer.parseInt(quantityFieldText));
+            String success = EquipmentCommunication.addEquipmentToRoom(room, ItemCommunication.getItemByName(pickedItem),
+                Integer.parseInt(quantityFieldText));
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
