@@ -44,9 +44,10 @@ public class CalendarSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         calendarView.setPrefWidth(screenBounds.getWidth() - 400);
-        calendarView.setPrefHeight(screenBounds.getHeight() - 170);
+        calendarView.setPrefHeight(screenBounds.getHeight() - 125);
 
         //create a new calendar for room reservations
         Calendar calendarRoomReservations = new Calendar("Room Reservations");

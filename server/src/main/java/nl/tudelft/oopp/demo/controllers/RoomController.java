@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,9 +105,14 @@ public class RoomController {
                     System.out.print(reservation);
                     System.out.print(reservation.getRoom());
                     //if the room has already been reserved this week
-                    if (roomList.contains(reservation.getRoom())) {
-                        // we remove the room from the result
-                        roomList.remove(reservation.getRoom());
+                    List<Room> roomsToRemove = rooms.findByBuildingId(reservation.getRoom().getBuilding().getId());
+                    if (roomsToRemove != null) {
+                        for (Room room : roomsToRemove) {
+                            if (roomList.contains(room)) {
+                                // we remove the room from the result
+                                roomList.remove(room);
+                            }
+                        }
                     }
                 }
                 //move to the next date to get the next room reservations

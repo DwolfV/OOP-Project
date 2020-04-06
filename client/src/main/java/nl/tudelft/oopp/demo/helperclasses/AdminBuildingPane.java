@@ -51,14 +51,13 @@ public class AdminBuildingPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(),
+        String success = BuildingCommunication.updateBuilding(building.getId(), building.getName(), building.getOpenTime(),
             building.getCloseTime(), building.getStreetName(), building.getStreetNumber(),
-            building.getZipCode(), building.getCity()).equals("Successful")) {
+            building.getZipCode(), building.getCity());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(BuildingCommunication.updateBuilding(building.getId(), building.getName(),
-                building.getOpenTime(), building.getCloseTime(), building.getStreetName(),
-                building.getStreetNumber(), building.getZipCode(), building.getCity()));
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -100,9 +99,6 @@ public class AdminBuildingPane {
         buildingCol.setMinWidth(100);
         buildingCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         buildingCol.setCellFactory(TextFieldTableCell.forTableColumn());
-        buildingCol.setOnEditCommit(
-            (TableColumn.CellEditEvent<Building, String> t) -> t.getTableView().getItems().get(
-                t.getTablePosition().getRow()).setName(t.getNewValue()));
         buildingCol.setOnEditCommit((TableColumn.CellEditEvent<Building, String> t) ->
             t.getTableView().getItems().get(t.getTablePosition().getRow()).setName(t.getNewValue()));
 
@@ -223,12 +219,12 @@ public class AdminBuildingPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
-                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText).equals("Successful")) {
+            String success = BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText), LocalTime.parse(closeTimeInputText),
+                streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText);
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(BuildingCommunication.addBuilding(buildingNameInputText, LocalTime.parse(openTimeInputText),
-                    LocalTime.parse(closeTimeInputText), streetNameInputText, streetNumberInputText, zipCodeInputText, cityInputText));
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 
@@ -270,12 +266,12 @@ public class AdminBuildingPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(),
-            occasion.getCloseTime(), occasion.getBuilding().getId()).equals("Successful")) {
+        String success = OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(), occasion.getOpenTime(),
+            occasion.getCloseTime(), occasion.getBuilding().getId());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(OccasionCommunication.updateOccasion(occasion.getId(), occasion.getDate(),
-                occasion.getOpenTime(), occasion.getCloseTime(), occasion.getBuilding().getId()));
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -319,6 +315,7 @@ public class AdminBuildingPane {
         buildingNameCol.setCellValueFactory(
             new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.<Occasion, String>forTableColumn(new BuildingToStringConverter()));
+        buildingNameCol.setEditable(false);
 
         TableColumn<Occasion, LocalDate> dayCol =
             new TableColumn<>("Day");
@@ -436,12 +433,12 @@ public class AdminBuildingPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText,
-                Long.parseLong(buildingInput.getText())).equals("Successful")) {
+            String success = OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText,
+                Long.parseLong(buildingInput.getText()));
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText,
-                    closeHolidayTimeInputText, Long.parseLong(buildingInput.getText())));
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 

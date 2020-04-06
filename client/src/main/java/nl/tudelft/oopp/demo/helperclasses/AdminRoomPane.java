@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -39,11 +40,12 @@ public class AdminRoomPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(),
-            room.getBuilding().getId()).equals("Successful")) {
+        String success = RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(),
+            room.getBuilding().getId());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId()));
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -180,10 +182,11 @@ public class AdminRoomPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText())).equals("Successful")) {
+            String success = RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText()));
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText())));
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 

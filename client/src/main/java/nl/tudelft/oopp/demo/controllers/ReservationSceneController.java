@@ -18,8 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -39,8 +37,6 @@ import nl.tudelft.oopp.demo.entities.Occasion;
 import nl.tudelft.oopp.demo.entities.Room;
 
 public class ReservationSceneController implements Initializable {
-
-    private static Rectangle2D screenBounds;
 
     public HamburgerMenuSceneController hamburgerMenuSceneController;
 
@@ -236,7 +232,6 @@ public class ReservationSceneController implements Initializable {
                 // load the accordion into the scene if there are available rooms
                 VBox box = new VBox(ac);
                 borderPane.setCenter(box);
-                borderPane.setPadding(new Insets(20, 0, 0, 50));
             }
 
         }

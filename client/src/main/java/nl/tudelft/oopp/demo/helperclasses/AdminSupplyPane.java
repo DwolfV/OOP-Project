@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.util.converter.IntegerStringConverter;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
 import nl.tudelft.oopp.demo.controllers.AdminSceneController;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -42,12 +43,12 @@ public class AdminSupplyPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(),
-            supply.getStock()).equals("Successful")) {
+        String success = SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(),
+            supply.getStock());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(),
-                supply.getName(), supply.getStock()));
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -90,6 +91,7 @@ public class AdminSupplyPane {
         buildingNameCol.setCellValueFactory(
             new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new BuildingToStringConverter()));
+        buildingNameCol.setEditable(false);
 
         TableColumn<Supply, String> supplyNameCol =
             new TableColumn<>("Supply Name");
@@ -181,12 +183,12 @@ public class AdminSupplyPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (SupplyCommunication.addSupply(Long.parseLong(buildingNameInput.getText()), supplyNameInputText,
-                stockInputText).equals("Successful")) {
+            String success = SupplyCommunication.addSupply(Long.parseLong(buildingNameInput.getText()), supplyNameInputText,
+                stockInputText);
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(SupplyCommunication.addSupply(Long.parseLong(buildingNameInput.getText()),
-                    supplyNameInputText, stockInputText));
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 
