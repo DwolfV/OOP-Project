@@ -68,7 +68,6 @@ public class Equipment {
         this.amount = amount;
     }
 
-    @JsonIgnore
     public long getId() {
         return id;
     }
