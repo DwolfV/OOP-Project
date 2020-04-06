@@ -80,7 +80,8 @@ public class RoomCommunication {
             room = mapper.readValue(response.body(), new TypeReference<List<Room>>() {
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
+            //e.printStackTrace();
         }
 
         return room;

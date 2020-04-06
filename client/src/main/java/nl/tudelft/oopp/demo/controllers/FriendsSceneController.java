@@ -25,11 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import nl.tudelft.oopp.demo.communication.Authenticator;
-import nl.tudelft.oopp.demo.communication.FriendCommunication;
-import nl.tudelft.oopp.demo.communication.InvitationCommunication;
-import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
-import nl.tudelft.oopp.demo.communication.UserCommunication;
+import nl.tudelft.oopp.demo.communication.*;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
 import nl.tudelft.oopp.demo.entities.User;
 
@@ -78,6 +74,7 @@ public class FriendsSceneController implements Initializable {
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 

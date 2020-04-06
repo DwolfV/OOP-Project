@@ -132,9 +132,9 @@ public class RestaurantDishCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
-            return "This dish has already been added to this restaurant";
+            return "The dish \"" + dish.getName() + "\" is already linked to the restaurant \"" + restaurant.getName() + "\".";
         }
         return "Successful";
     }

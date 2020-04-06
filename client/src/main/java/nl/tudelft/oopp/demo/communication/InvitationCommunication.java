@@ -92,7 +92,7 @@ public class InvitationCommunication {
      * @param roomReservation - a room reservation
      * @param guest - the user that is invited to the room reservation
      */
-    public static void addInvitation(RoomReservation roomReservation, User guest) {
+    public static String addInvitation(RoomReservation roomReservation, User guest) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
@@ -113,9 +113,10 @@ public class InvitationCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
         }
+        return "The invite has been sent successfully.";
     }
 
     /**

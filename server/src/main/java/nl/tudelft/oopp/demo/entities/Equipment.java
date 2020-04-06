@@ -3,17 +3,16 @@ package nl.tudelft.oopp.demo.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "Equipment")
+@Table(name = "Equipment",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = {"item_id", "room_id"},
+                        name = "unique_item_per_room_constraint"
+                )
+        })
 public class Equipment {
 
     @Id
@@ -69,7 +68,6 @@ public class Equipment {
         this.amount = amount;
     }
 
-    @JsonIgnore
     public long getId() {
         return id;
     }

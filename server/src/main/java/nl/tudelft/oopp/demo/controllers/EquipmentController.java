@@ -29,7 +29,7 @@ public class EquipmentController {
      *
      * @return a list of the equipment {@link Equipment}.
      */
-    @GetMapping("equipment")
+    @GetMapping("equipment/all")
     public @ResponseBody
     List<Equipment> getEquipment() {
         return equipmentRepository.findAll();
@@ -57,6 +57,18 @@ public class EquipmentController {
     public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByName(@PathVariable(value = "name") String equipmentName) {
         return equipmentRepository.findByItemName(equipmentName).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(equipmentRepository.findByItemName(equipmentName), HttpStatus.OK);
+    }
+
+    /**
+     * GET Endpoint to retrieve equipment by item id.
+     *
+     * @param id - the if of the item
+     * @return List of the requested equipment {@link Equipment}.
+     */
+    @GetMapping("equipment/item_id/{id}")
+    public @ResponseBody ResponseEntity<List<Equipment>> getEquipmentByItemId(@PathVariable long id) {
+        return equipmentRepository.findByItemId(id).isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(equipmentRepository.findByItemId(id), HttpStatus.OK);
     }
 
     /**
@@ -102,8 +114,6 @@ public class EquipmentController {
     public ResponseEntity<Equipment> replaceEquipment(@Valid @RequestBody Equipment newEquipment, @PathVariable long id) {
 
         return equipmentRepository.findById(id).map(equipment -> {
-            equipment.setItem(newEquipment.getItem());
-            equipment.setRoom(newEquipment.getRoom());
             equipment.setAmount(newEquipment.getAmount());
 
             Equipment equipmentToReturn;
@@ -124,11 +134,11 @@ public class EquipmentController {
      * @param id Unique identifier of the equipment that is to be deleted. {@link Equipment}
      */
     @DeleteMapping("equipment/{id}")
-    public ResponseEntity<?> deleteEquipment(@PathVariable long id) {
-        // TODO equipment with that id may not exist
-        equipmentRepository.deleteById(id);
-
-        return ResponseEntity.noContent().build();
+    public ResponseEntity deleteEquipment(@PathVariable long id) {
+        return equipmentRepository.findById(id).map(equipment -> {
+            equipmentRepository.delete(equipment);
+            return new ResponseEntity("The equipment has been successfully deleted", HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
 }

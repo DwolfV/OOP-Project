@@ -43,12 +43,12 @@ public class AdminSupplyPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(),
-            supply.getStock()).equals("Successful")) {
+        String success = SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(),
+            supply.getStock());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(),
-                supply.getName(), supply.getStock()));
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -91,6 +91,7 @@ public class AdminSupplyPane {
         buildingNameCol.setCellValueFactory(
                 new PropertyValueFactory<>("building"));
         buildingNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new BuildingToStringConverter()));
+        buildingNameCol.setEditable(false);
 
         TableColumn<Supply, String> supplyNameCol =
                 new TableColumn<>("Supply Name");
@@ -187,6 +188,7 @@ public class AdminSupplyPane {
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 
