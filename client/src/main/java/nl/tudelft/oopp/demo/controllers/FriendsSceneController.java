@@ -16,13 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -66,11 +60,12 @@ public class FriendsSceneController implements Initializable {
      */
     public void addFriends() {
         Button addButton = new Button("Add a friend");
+        addButton.getStyleClass().setAll("restaurant-menu-button");
         TextField newFriendTextField = new TextField();
         newFriendTextField.setPromptText("username");
 
         hoBoxAddFriend = new HBox();
-        hoBoxAddFriend.getChildren().addAll(addButton, newFriendTextField);
+        hoBoxAddFriend.getChildren().addAll(newFriendTextField, addButton);
         hoBoxAddFriend.setAlignment(Pos.CENTER);
         hoBoxAddFriend.setSpacing(10);
 
@@ -185,13 +180,13 @@ public class FriendsSceneController implements Initializable {
                 friendList();
             });
 
-            HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);
-            HBox.setHgrow(removeFriendsButton, Priority.ALWAYS);
-            HBox.setHgrow(friendsLabel, Priority.ALWAYS);
-            inviteFriendsButton.setMinWidth(70);
-            removeFriendsButton.setMinWidth(70);
-            friendsLabel.setMinWidth(100);
-            comboBoxReservedRooms.setMinWidth(75);
+//            HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);
+//            HBox.setHgrow(removeFriendsButton, Priority.ALWAYS);
+//            HBox.setHgrow(friendsLabel, Priority.ALWAYS);
+//            inviteFriendsButton.setMinWidth(70);
+//            removeFriendsButton.setMinWidth(70);
+//            friendsLabel.setMinWidth(100);
+//            comboBoxReservedRooms.setMinWidth(75);
 
             // Grid inside list
             GridPane grid = new GridPane();
@@ -210,11 +205,12 @@ public class FriendsSceneController implements Initializable {
                     constraint4
             );
 
-            grid.setVgap(10);
+            grid.setVgap(15);
             grid.add(friendsLabel, 0, c);
             grid.add(comboBoxReservedRooms, 1, c);
             grid.add(inviteFriendsButton, 2, c);
             grid.add(removeFriendsButton, 3, c);
+            comboBoxReservedRooms.setPadding(new Insets(0, 0, 0, 0));
             inviteFriendsButton.getStyleClass().setAll("restaurant-menu-button");
             inviteFriendsButton.setAlignment(Pos.BOTTOM_CENTER);
             removeFriendsButton.getStyleClass().setAll("restaurant-menu-button");
@@ -222,9 +218,12 @@ public class FriendsSceneController implements Initializable {
             grid.getStyleClass().setAll("friends-list");
 
             veBoxTpAndAdd.getChildren().add(grid);
-            veBoxTpAndAdd.setPadding(new Insets(20, 0, 50, 0));
+            veBoxTpAndAdd.setSpacing(20);
         }
-        vbox.getChildren().add(hoBoxAddFriend);
-        vbox.getChildren().add(veBoxTpAndAdd);
+        SplitPane splitPane1 = new SplitPane();
+        SplitPane splitPane2 = new SplitPane();
+        hoBoxAddFriend.setPadding(new Insets(20, 20, 20, 20));
+        veBoxTpAndAdd.setPadding(new Insets(20, 20, 20, 20));
+        vbox.getChildren().addAll(splitPane1, hoBoxAddFriend, splitPane2, veBoxTpAndAdd);
     }
 }

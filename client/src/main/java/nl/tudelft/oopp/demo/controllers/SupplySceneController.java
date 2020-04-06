@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -26,6 +27,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.SupplyCommunication;
@@ -216,7 +218,6 @@ public class SupplySceneController implements Initializable {
                             constraint3,
                             constraint4
                     );
-                    grid.setVgap(10);
                     grid.add(labelItem, 0, j);
                     grid.add(labelQuantity, 1, j);
                     grid.add(textFieldItem, 2, j);
@@ -229,6 +230,7 @@ public class SupplySceneController implements Initializable {
                     vertBox.getChildren().add(grid);
                     vertBox.getChildren().add(splitPane);
                 }
+                vertBox.setSpacing(5);
                 tps[c].setText(buildings.get(i).getName());
                 tps[c].setContent(vertBox);
                 ac.getPanes().add(tps[c]);
@@ -238,7 +240,7 @@ public class SupplySceneController implements Initializable {
             VBox box = new VBox(veBoxDeleteAndTable, ac);
             box.setSpacing(20);
             borderPane.setCenter(box);
-            borderPane.setPadding(new Insets(30, 5, 5, 10));
+            borderPane.setPadding(new Insets(20, 20, 20, 20));
         }
     }
 
