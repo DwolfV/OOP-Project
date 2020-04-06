@@ -177,6 +177,7 @@ public class SupplySceneController implements Initializable {
                         if (success.equals("Successful")) {
                             alert.hide();
                         } else {
+                            alert.setContentText(success);
                             alert.showAndWait();
                         }
 

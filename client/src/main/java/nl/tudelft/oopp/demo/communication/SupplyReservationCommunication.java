@@ -123,7 +123,7 @@ public class SupplyReservationCommunication {
             //update the stock for the supply
             SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(), stock - amount);
         }
-        return "The item has been saved successfully";
+        return "Successful";
     }
 
     /**
