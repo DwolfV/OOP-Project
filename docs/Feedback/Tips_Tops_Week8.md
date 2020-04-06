@@ -29,6 +29,6 @@
 - **Tip:** we could have divided and scheduled our work better, fixed more deadlines with smaller but stricter things to implement so that we wouldn’t have to fix errors and add features in the last minute.
 
 ### Steph
-- **Top:**
+- **Top:** I think we worked very hard this week. We finalized many things and communicated a lot. We were all helping each other and and asking for help when need be.
 
-- **Tip:** 
+- **Tip:** We should have planned a little better since we cut it a little short. everything worked out but it would have been nice to finish a little earlier.
