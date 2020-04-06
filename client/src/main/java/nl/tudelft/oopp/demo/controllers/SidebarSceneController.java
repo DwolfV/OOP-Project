@@ -1,14 +1,14 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import static java.time.LocalDate.now;
-
 import java.net.URL;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -23,6 +23,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
 import nl.tudelft.oopp.demo.helperclasses.Item;
+
+import static java.time.LocalDate.*;
+import static java.util.Calendar.MONDAY;
 
 public class SidebarSceneController implements Initializable {
 
@@ -71,6 +74,16 @@ public class SidebarSceneController implements Initializable {
      */
     public void datePickerFilter() {
         LocalDate today = LocalDate.now();
+
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        TimeZone tz = c.getTimeZone();
+        ZoneId zid = tz == null ? ZoneId.systemDefault() : tz.toZoneId();
+        LocalDateTime.ofInstant(c.toInstant(), zid);
+
+        LocalDate monday = LocalDate.from(LocalDateTime.ofInstant(c.toInstant(), zid));
+
         dp.setValue(today);
         dp.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
@@ -78,7 +91,7 @@ public class SidebarSceneController implements Initializable {
                 if (date.isBefore(ChronoLocalDate.from(today))) {
                     setDisable(true);
                 }
-                if (empty || date.isAfter(today.plusWeeks(2))) {
+                if (empty || date.isAfter(monday.plusWeeks(2))) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffc0cb;");
                 }
