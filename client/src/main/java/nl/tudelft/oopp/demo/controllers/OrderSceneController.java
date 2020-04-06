@@ -35,7 +35,7 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Adds a dish into the basket
+     * Adds a dish into the basket.
      * @param restaurantDish A restaurant dish
      */
     public static void addToBasket(RestaurantDish restaurantDish) {
@@ -54,7 +54,7 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Removes a dish from the basket
+     * Removes a dish from the basket.
      * @param restaurantDish A restaurant dish
      */
     public static void removeFromBasket(RestaurantDish restaurantDish) {
@@ -78,7 +78,7 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Clears the curent state of the basket
+     * Clears the curent state of the basket.
      */
     public static void clearBasket() {
         basketList.clear();
@@ -87,7 +87,7 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Creates a new order
+     * Creates a new order.
      */
     public void handelOrderButton() {
         if (basketList.isEmpty()) {
@@ -119,6 +119,10 @@ public class OrderSceneController implements Initializable {
         totalLabel.setText("Total: " + calculateTotal());
     }
 
+    /**
+     * Calculate total number of items in basket.
+     * @return
+     */
     public static long calculateTotal() {
         long total = 0;
         for (int i = 0; i < amountBasketList.size(); i++) {

@@ -24,10 +24,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import nl.tudelft.oopp.demo.communication.*;
-import nl.tudelft.oopp.demo.entities.*;
-import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConverter;
-import nl.tudelft.oopp.demo.helperclasses.RoomBuildingNameToStringConverter;
+import nl.tudelft.oopp.demo.communication.Authenticator;
+import nl.tudelft.oopp.demo.communication.BuildingCommunication;
+import nl.tudelft.oopp.demo.communication.SupplyCommunication;
+import nl.tudelft.oopp.demo.communication.SupplyReservationCommunication;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Supply;
+import nl.tudelft.oopp.demo.entities.SupplyReservation;
 import nl.tudelft.oopp.demo.helperclasses.SupplyReservationRoomToStringConverter;
 import nl.tudelft.oopp.demo.helperclasses.SupplyToStringConverter;
 

@@ -19,7 +19,7 @@ public class EquipmentCommunication {
 
 
     /**
-     * Retrieves a list of all the available items in all the rooms
+     * Retrieves a list of all the available items in all the rooms.
      *
      * @return a list of Equipment
      */
