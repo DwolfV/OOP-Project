@@ -121,6 +121,7 @@ public class SupplySceneController implements Initializable {
         );
 
         veBoxDeleteAndTable = new VBox();
+        veBoxDeleteAndTable.setSpacing(10);
         veBoxDeleteAndTable.getChildren().addAll(tableReservedSupplies, removeReservedSupply);
     }
 
