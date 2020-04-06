@@ -79,13 +79,11 @@ class RestaurantDishCommunicationTest {
     void getAllRestaurantDishesByRestaurant() throws JsonProcessingException {
         String body = mapper.writeValueAsString(new ArrayList<RestaurantDish>(List.of(restaurantDish, restaurantDish2)));
         mockServer
-                .when(request().withPath("/restaurant_dish/restaurant/1"))
-                .respond(
-                        response()
-                                .withHeaders(
-
-                                )
-                                .withBody(body)
+            .when(request().withPath("/restaurant_dish/restaurant/1"))
+            .respond(
+                response()
+                .withHeaders()
+                .withBody(body)
             );
 
         List<RestaurantDish> rd = RestaurantDishCommunication.getAllRestaurantDishesByRestaurant(1);

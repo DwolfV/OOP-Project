@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
 
-
 public class DishCommunicationTest {
 
     private ClientAndServer mockServer;
@@ -47,6 +46,10 @@ public class DishCommunicationTest {
         mockServer.stop();
     }
 
+    /**
+     * Test get all dishese.
+     * @throws Exception e
+     */
     @Test
     void getDishes() throws Exception {
         String body = mapper.writeValueAsString(dishes);

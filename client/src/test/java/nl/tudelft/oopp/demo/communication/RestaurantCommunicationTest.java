@@ -45,43 +45,53 @@ public class RestaurantCommunicationTest {
     }
 
     /**
+<<<<<<< HEAD
+     * Stop mock server before each test.
+=======
      * Stop mock server after each test.
+>>>>>>> development
      */
     @AfterEach
     public void stopMockServer() {
         mockServer.stop();
     }
 
+    /**
+     * Get all restaurants.
+     * @throws JsonProcessingException e
+     */
     @Test
     void getRestaurants() throws JsonProcessingException {
         String body = mapper.writeValueAsString(restaurants);
         mockServer
             .when(
                 request()
-                            .withPath("/restaurant")
+                .withPath("/restaurant")
             )
             .respond(
-                response().withHeaders(
-                    )
-                        .withBody(body)
+                response().withHeaders()
+                    .withBody(body)
             );
         List<Restaurant> restaurantList = RestaurantCommunication.getRestaurants();
         assertEquals(restaurantList, restaurants);
     }
 
+    /**
+     * Get restaurants by ID.
+     * @throws JsonProcessingException e
+     */
     @Test
     void getRestaurantById() throws JsonProcessingException {
         String body = mapper.writeValueAsString(restaurant);
         mockServer
-                .when(
-                        request()
-                                .withPath("/restaurant/id/1")
-                )
-                .respond(
-                        response()
-                                .withBody(body)
+            .when(
+                request()
+                    .withPath("/restaurant/id/1")
+            )
+            .respond(
+                response()
+                    .withBody(body)
             );
-
         Restaurant restaurant2 = RestaurantCommunication.getRestaurantById(1);
         assertEquals(restaurant, restaurant2);
     }

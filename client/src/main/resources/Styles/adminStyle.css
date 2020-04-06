@@ -126,10 +126,6 @@
   -fx-background-color: #BBBBBB;
 }
 
-.titled-pane {
-  -fx-text-fill: black;
-}
-
 .titled-pane > .title {
   -fx-background-color: #BBBBBB;
   -fx-border-width: 0 0 2 0;

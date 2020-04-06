@@ -10,10 +10,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -28,6 +30,7 @@ import nl.tudelft.oopp.demo.communication.RoomReservationCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Restaurant;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.helperclasses.TimeToStringConverter;
 
 public class RestaurantSceneController implements Initializable {
 
@@ -57,7 +60,7 @@ public class RestaurantSceneController implements Initializable {
         TitledPane[] tps = new TitledPane[buildingData.size()];
         List<Button> buttons = new ArrayList<>();
         buttonRestaurant = new ArrayList<>();
-        List<Label> labels = new ArrayList<>();
+        List<Label> labels;
 
         // count - for lists, c - for tps
         int count = 0;
@@ -77,30 +80,56 @@ public class RestaurantSceneController implements Initializable {
             //if there are restaurants for the building i - show them;
             if (showRestaurants.size() != 0) {
                 tps[c] = new TitledPane();
-                GridPane grid = new GridPane();
-                ColumnConstraints colConst = new ColumnConstraints();
-                colConst.setPercentWidth(100 / 2);
-                grid.getColumnConstraints().add(colConst);
-                grid.setVgap(4);
+                VBox table = new VBox();
                 //grid.setPadding(new Insets(5, 5, 5, 5));
 
                 for (Restaurant restaurant : restaurants) {
                     System.out.println(buildingData.get(i).getName() + " " + restaurant.getName());
                 }
 
+                TimeToStringConverter timeToString = new TimeToStringConverter();
                 for (int j = 0; j < showRestaurants.size(); j++) {
-                    Label label1 = new Label(showRestaurants.get(j).getName());
-                    long restaurantId = showRestaurants.get(j).getId();
-                    labels.add(label1);
+                    labels = new ArrayList<>();
+                    Label resName = new Label(showRestaurants.get(j).getName());
+                    labels.add(resName);
+                    Label resOpen = new Label("Opens: " + timeToString.toString(showRestaurants.get(j).getTimeOpen()));
+                    labels.add(resOpen);
+                    Label resClose = new Label("Closes: " + timeToString.toString(showRestaurants.get(j).getTimeClose()));
+                    labels.add(resClose);
+
+
                     Button button1 = new Button("Menu");
+                    button1.getStyleClass().setAll("restaurant-menu-button");
                     buttons.add(button1);
                     buttonRestaurant.add(showRestaurants.get(j).getId());
                     Restaurant restaurant = showRestaurants.get(j);
 
-                    grid.add(labels.get(count), 0, j);
-                    grid.add(buttons.get(count), 1, j);
+                    GridPane grid = new GridPane();
+                    ColumnConstraints constraint1 = new ColumnConstraints();
+                    constraint1.setPercentWidth(100 / 3.5);
+                    ColumnConstraints constraint2 = new ColumnConstraints();
+                    constraint2.setPercentWidth(100 / 3.5);
+                    ColumnConstraints constraint3 = new ColumnConstraints();
+                    constraint3.setPercentWidth(100 / 3.5);
+                    grid.getColumnConstraints().setAll(
+                            constraint1,
+                            constraint2,
+                            constraint3
+                    );
+                    grid.setVgap(10);
+                    grid.add(labels.get(0), 0, j);
+                    grid.add(labels.get(1), 1, j);
+                    grid.add(labels.get(2), 2, j);
+                    grid.add(buttons.get(count), 3, j);
+                    buttons.get(count).setAlignment(Pos.CENTER_RIGHT);
                     count = count + 1;
 
+                    SplitPane splitPane = new SplitPane();
+                    splitPane.getStyleClass().add("restaurant-split-pane");
+                    table.getChildren().add(grid);
+                    table.getChildren().add(splitPane);
+
+                    long restaurantId = showRestaurants.get(j).getId();
                     long user = Authenticator.ID;
                     ObservableList<RoomReservation> roomReservations = FXCollections.observableList(RoomReservationCommunication.getRoomReservationsByUserId(user));
 
@@ -124,12 +153,9 @@ public class RestaurantSceneController implements Initializable {
                     button1.setOnAction(e -> {
                         if (finalCurrentlyInReservation /*|| Authenticator.isAdmin()*/) {
                             try {
-                                System.out.println(localDate);
-                                System.out.println(finalRoomReservation.getDate());
-                                MenuSceneController.loadOrderMenu(pane, -1, restaurant);
-                                System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
-                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant);
-                                pane.getChildren().setAll(vbox);
+                                MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
+                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant, finalRoomReservation);
+                                hbox.getChildren().setAll(ac, vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
 
                                 OrderSceneController orderSceneController = new OrderSceneController();
@@ -141,26 +167,25 @@ public class RestaurantSceneController implements Initializable {
                             }
                         } else {
                             try {
-                                MenuSceneController.loadMenu(pane, -1);
-                                System.out.println("id:" + restaurantId + " | Name:" + label1.getText());
+                                System.out.println("id:" + restaurantId + " | Name:" + resName.getText());
                                 VBox vbox = MenuSceneController.loadMenu(pane, restaurantId);
-                                pane.getChildren().setAll(vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
-                                hamburgerMenuSceneController.clearRight();
+                                hbox.getChildren().setAll(ac, vbox);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                         }
                     });
                 }
+                Label titledPaneTitle = new Label(buildingData.get(i).getName());
                 tps[c].setText(buildingData.get(i).getName());
-                tps[c].setContent(grid);
+                tps[c].setContent(table);
                 ac.getPanes().add(tps[c]);
                 c++;
             }
         }
         double mainPaneWidth = screenBounds.getWidth() - 400;
-        mainPane.setPrefWidth(mainPaneWidth);
+        //mainPane.setPrefWidth(mainPaneWidth);
         hbox.setPrefWidth(mainPaneWidth);
         hbox.setPrefHeight(screenBounds.getHeight() - 200);
         ac.setPrefWidth(screenBounds.getWidth());

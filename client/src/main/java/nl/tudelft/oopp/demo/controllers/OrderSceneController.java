@@ -35,8 +35,8 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Adds a dish into the basket.
-     * @param restaurantDish A restaurant dish
+     * add restaurant dish to basket.
+     * @param restaurantDish restaurantDish
      */
     public static void addToBasket(RestaurantDish restaurantDish) {
         if (basketList.contains(restaurantDish)) {
@@ -54,8 +54,8 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Removes a dish from the basket.
-     * @param restaurantDish A restaurant dish
+     * remove restaurant dish to basket.
+     * @param restaurantDish restaurantDish
      */
     public static void removeFromBasket(RestaurantDish restaurantDish) {
         if (basketList.contains(restaurantDish)) {
@@ -87,7 +87,7 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-     * Creates a new order.
+     * Order a restaurantDish.
      */
     public void handelOrderButton() {
         if (basketList.isEmpty()) {
@@ -120,7 +120,11 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
+<<<<<<< HEAD
+     * Calculate the total amount of dishRestaurants.
+=======
      * Calculate total number of items in basket.
+>>>>>>> development
      * @return
      */
     public static long calculateTotal() {

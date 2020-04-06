@@ -42,7 +42,8 @@ public class MenuSceneController implements Initializable {
      * @param restaurant An object of type restaurant to load the order scene
      * @return A VBox with a table inside
      */
-    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant) {
+    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant, RoomReservation roomReservation) {
+        screenBounds = Screen.getPrimary().getBounds();
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
 
@@ -67,7 +68,9 @@ public class MenuSceneController implements Initializable {
         priceCol.setOnEditCommit(
             (TableColumn.CellEditEvent<Dish, Float> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setPrice(t.getNewValue()));
+
         priceCol.getStyleClass().add("price-col");
+        nameCol.getStyleClass().add("name-col");
 
         //Add to basket column
         TableColumn addCol = new TableColumn();
@@ -183,6 +186,7 @@ public class MenuSceneController implements Initializable {
      * @return A VBox with a table inside
      */
     public static VBox loadMenu(Pane pane, long restaurantId) {
+        screenBounds = Screen.getPrimary().getBounds();
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
 
@@ -210,8 +214,7 @@ public class MenuSceneController implements Initializable {
             TableRow<Dish> row = new TableRow<Dish>();
             row.getStyleClass().setAll("restaurant-menu-row");
             return row;
-        }
-        );
+        });
 
         // Set Columns
         tableView.getColumns().addAll(nameCol, descCol, priceCol);
@@ -220,8 +223,7 @@ public class MenuSceneController implements Initializable {
         tableView.setItems(dishObservableList);
 
         VBox vbox = new VBox();
-        vbox.getChildren().addAll(tableView);
-        screenBounds = Screen.getPrimary().getBounds();
+        vbox.getChildren().setAll(tableView);
         tableView.setPrefWidth((screenBounds.getWidth() - 400) / 2);
         tableView.setPrefHeight(screenBounds.getHeight() - 200);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
