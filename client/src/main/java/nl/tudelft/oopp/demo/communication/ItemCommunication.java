@@ -10,6 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Item;
 
 public class ItemCommunication {
@@ -49,10 +51,43 @@ public class ItemCommunication {
     }
 
     /**
+     * Get an item by it's name.
+     *
+     * @param name - the name of the item
+     * @return an item with the given namme
+     */
+    public static Item getItemByName(String name) {
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(String.format("http://localhost:8080/item/name/%s", name))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        Item item = null;
+        // TODO handle exception
+        try {
+            item = mapper.readValue(response.body(), new TypeReference<Item>() {
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return item;
+    }
+
+    /**
      * Adds an item.
      * @param name - the name of the item
      */
-    public static void addItem(String name) {
+    public static String addItem(String name) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
@@ -72,16 +107,18 @@ public class ItemCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
+            return "The item \"" + name + "\" already exists.";
         }
+        return "Successful";
     }
 
     /**
      * Updates a Item.
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateItem(long id, String name) {
+    public static String updateItem(long id, String name) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Item newItem = new Item(name);
@@ -94,6 +131,34 @@ public class ItemCommunication {
         }
 
         HttpRequest request = HttpRequest.newBuilder().header("Content-type", "application/json").PUT(HttpRequest.BodyPublishers.ofString(jsonItem)).uri(URI.create(String.format("http://localhost:8080/item/update/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+            return "The item \"" + name + "\" already exists.";
+        }
+        return "Successful";
+    }
+
+    /**
+     * Removes an item from the database.
+     *
+     * @param id - the id of the item that will be deleted.
+     */
+    public static void removeItem(long id) {
+        List<Equipment> equipmentList = EquipmentCommunication.getEquipmentByItem(id);
+        if (equipmentList != null) {
+            for (Equipment e : equipmentList) {
+                EquipmentCommunication.removeEquipment(e.getId());
+            }
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(String.format("http://localhost:8080/item/delete/%s", id))).setHeader("Cookie", Authenticator.SESSION_COOKIE).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

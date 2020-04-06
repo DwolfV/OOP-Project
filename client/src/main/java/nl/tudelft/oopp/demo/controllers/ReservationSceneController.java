@@ -19,16 +19,21 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
 import nl.tudelft.oopp.demo.communication.OccasionCommunication;
@@ -40,8 +45,6 @@ import nl.tudelft.oopp.demo.entities.Room;
 
 public class ReservationSceneController implements Initializable {
 
-    private static Rectangle2D screenBounds;
-
     public HamburgerMenuSceneController hamburgerMenuSceneController;
 
     @FXML
@@ -52,7 +55,8 @@ public class ReservationSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        borderPane.setPrefWidth(screenBounds.getWidth() - 400);
     }
 
     /**
@@ -145,6 +149,7 @@ public class ReservationSceneController implements Initializable {
 
                     Label label2 = new Label("Capacity: " + showRooms.get(j).getCapacity() + " persons");
                     Button button1 = new Button("Reserve");
+                    button1.getStyleClass().setAll("restaurant-menu-button");
                     buttons.add(button1);
 
                     // A combobox for start time
@@ -203,24 +208,36 @@ public class ReservationSceneController implements Initializable {
                         System.out.println(date + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
 
-                    horizBox.setHgrow(label1, Priority.ALWAYS);
-                    horizBox.setHgrow(label2, Priority.ALWAYS);
-                    horizBox.setHgrow(cb, Priority.ALWAYS);
-                    horizBox.setHgrow(cbb, Priority.ALWAYS);
-                    horizBox.setHgrow(button1, Priority.ALWAYS);
-                    label1.setMinWidth(70);
-                    label2.setMinWidth(100);
-                    cb.setMinWidth(70);
-                    cbb.setMinWidth(70);
-                    button1.setMinWidth(70);
+                    GridPane grid = new GridPane();
+                    ColumnConstraints constraint1 = new ColumnConstraints();
+                    constraint1.setPercentWidth(100 / 5);
+                    ColumnConstraints constraint2 = new ColumnConstraints();
+                    constraint2.setPercentWidth(100 / 5);
+                    ColumnConstraints constraint3 = new ColumnConstraints();
+                    constraint3.setPercentWidth(100 / 5);
+                    ColumnConstraints constraint4 = new ColumnConstraints();
+                    constraint4.setPercentWidth(100 / 5);
+                    ColumnConstraints constraint5 = new ColumnConstraints();
+                    constraint4.setPercentWidth(100 / 5);
+                    grid.getColumnConstraints().setAll(
+                            constraint1,
+                            constraint2,
+                            constraint3,
+                            constraint4,
+                            constraint5
+                    );
+                    grid.add(label1, 0, j);
+                    grid.add(label2, 1, j);
+                    grid.add(cb, 2, j);
+                    grid.add(cbb, 3, j);
+                    grid.add(button1, 4, j);
 
-                    horizBox.getChildren().addAll(label1, label2, cb, cbb, button1);
-                    horizBox.setSpacing(150);
-                    horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-                        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-                        + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
-                    vertBox.getChildren().add(horizBox);
+                    SplitPane splitPane = new SplitPane();
+                    splitPane.getStyleClass().add("restaurant-split-pane");
+
+                    vertBox.getChildren().addAll(grid, splitPane);
                 }
+                vertBox.setSpacing(5);
                 tps[c].setText(buildingData.get(i).getName());
                 tps[c].setContent(vertBox);
                 ac.getPanes().add(tps[c]);
@@ -234,13 +251,23 @@ public class ReservationSceneController implements Initializable {
                 text.setStyle("-fx-padding: 50;" + "-fx-font-weight: bold");
             } else {
                 // load the accordion into the scene if there are available rooms
+                Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+                ac.setPrefWidth(screenBounds.getWidth() - 460);
+                ac.setPadding(new Insets(0,0,20,0));
+
+                ScrollPane scrollPane = new ScrollPane(ac);
+                scrollPane.setMaxHeight(700);
+                scrollPane.setPadding(new Insets(0,0,20,0));
+
                 VBox box = new VBox(ac);
+                box.setSpacing(20);
+
                 borderPane.setCenter(box);
-                borderPane.setPadding(new Insets(20, 0, 0, 50));
+                borderPane.setPadding(new Insets(20, 20, 20, 20));
+
             }
 
         }
-
     }
 
     /**

@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Item {
 
@@ -44,6 +45,25 @@ public class Item {
 
     public void setEquipmentList(List<Equipment> equipment) {
         this.equipment = equipment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Item item = (Item) o;
+        return Objects.equals(getId(), item.getId())
+                && Objects.equals(getName(), item.getName())
+                && Objects.equals(equipment, item.equipment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), equipment);
     }
 
     @Override

@@ -2,21 +2,28 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="200.0" styleClass="empty-side-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HamburgerMenuSceneController">
+<AnchorPane prefHeight="400.0" prefWidth="200.0" styleClass="hamburger-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HamburgerMenuSceneController">
    <children>
-      <VBox fx:id="vBox" prefHeight="400.0" prefWidth="200.0">
-         <children>
-             <Button mnemonicParsing="false" onMouseClicked="#openCalendar" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Home" />
-             <Button mnemonicParsing="false" onMouseClicked="#openReservations" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Reservations" />
-             <Button mnemonicParsing="false" onMouseClicked="#openRestaurants" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Restaurants" />
+      <VBox fx:id="vBox" prefHeight="400.0" prefWidth="200.0" styleClass="hamburger-box">
+          <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="transparent" height="38.0" width="200.0" />
+            <Label styleClass="menu-title" text="Pages" textFill="#bfbfbf" />
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
+             <Button mnemonicParsing="false" onMouseClicked="#openCalendar" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Calendar" />
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
+             <Button mnemonicParsing="false" onMouseClicked="#openReservations" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Reserve Room" />
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
+              <Button mnemonicParsing="false" onMouseClicked="#openSupplies" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Reserve Supply" />
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
+              <Button mnemonicParsing="false" onMouseClicked="#openRestaurants" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Restaurants" />
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
              <Button mnemonicParsing="false" onMouseClicked="#openFriends" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Friends" />
-             <Button mnemonicParsing="false" onMouseClicked="#openSupplies" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Supplies" />
-             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Settings" />
-
-             <!-- Must be last Button -->
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
              <Button fx:id="adminButton" mnemonicParsing="false" onMouseClicked="#openAdminPanel" prefHeight="60.0" prefWidth="200.0" styleClass="menu-button" text="Admin Panel" />
-         </children>
+              <Rectangle arcHeight="5.0" arcWidth="5.0" height="3.0" styleClass="menu-button-splitter" width="200.0" />
+          </children>
       </VBox>
    </children>
 </AnchorPane>

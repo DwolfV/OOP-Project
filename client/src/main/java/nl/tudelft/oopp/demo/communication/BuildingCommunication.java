@@ -180,7 +180,7 @@ public class BuildingCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void addBuilding(String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
+    public static String addBuilding(String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
@@ -200,9 +200,11 @@ public class BuildingCommunication {
             e.printStackTrace();
             //return "Communication with server failed";
         }
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
+            return "The name or address of the building already exists.";
         }
+        return "Successful";
     }
 
     /**
@@ -210,7 +212,7 @@ public class BuildingCommunication {
      *
      * @throws Exception if communication with the server fails or if the response is not proper json.
      */
-    public static void updateBuilding(long id, String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
+    public static String updateBuilding(long id, String name, LocalTime openTime, LocalTime closeTime, String streetName, String streetNumber, String zipCode, String city) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         Building newBuilding = new Building(name, openTime, closeTime, streetName, streetNumber, zipCode, city);
@@ -232,7 +234,9 @@ public class BuildingCommunication {
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
+            return "The name or address of the building already exists.";
         }
+        return "Successful";
     }
 
     /**

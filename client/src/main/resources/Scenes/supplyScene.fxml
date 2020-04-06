@@ -6,9 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.SupplySceneController">
-    <children>
-        <BorderPane fx:id="borderPane"  prefWidth="1080.0" />
-    </children>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.SupplySceneController" stylesheets="@/Styles/mainstyle.css">
+</BorderPane>
 
-</AnchorPane>

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import nl.tudelft.oopp.demo.entities.Equipment;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
+import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import nl.tudelft.oopp.demo.repositories.RoomReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,9 +105,14 @@ public class RoomController {
                     System.out.print(reservation);
                     System.out.print(reservation.getRoom());
                     //if the room has already been reserved this week
-                    if (roomList.contains(reservation.getRoom())) {
-                        // we remove the room from the result
-                        roomList.remove(reservation.getRoom());
+                    List<Room> roomsToRemove = rooms.findByBuildingId(reservation.getRoom().getBuilding().getId());
+                    if (roomsToRemove != null) {
+                        for (Room room : roomsToRemove) {
+                            if (roomList.contains(room)) {
+                                // we remove the room from the result
+                                roomList.remove(room);
+                            }
+                        }
                     }
                 }
                 //move to the next date to get the next room reservations
@@ -168,11 +174,13 @@ public class RoomController {
      */
     @PostMapping(value = "/rooms", consumes = {"application/json"})
     public ResponseEntity<Room> newRoom(@Valid @RequestBody Room newRoom, UriComponentsBuilder b) {
-        rooms.save(newRoom);
+        try {
+            rooms.save(newRoom);
+        } catch (Exception e) {
+            return new ResponseEntity<Room>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = b.path("/rooms/{id}").buildAndExpand(newRoom.getId());
-        return ResponseEntity
-            .created(uri.toUri())
-            .body(newRoom);
+        return ResponseEntity.created(uri.toUri()).body(newRoom);
     }
 
     /**
@@ -187,19 +195,21 @@ public class RoomController {
 
         UriComponents uri = b.path("/rooms/{room_id}").buildAndExpand(roomId);
 
-        Room updatedRoom = rooms.findById(roomId)
+        return rooms.findById(roomId)
             .map(room -> {
                 room.setName(newRoom.getName());
                 room.setBuilding(newRoom.getBuilding());
                 room.setCapacity(newRoom.getCapacity());
-                return rooms.save(room);
-            })
-            .orElseGet(() -> {
-                newRoom.setId(roomId);
-                return rooms.save(newRoom);
-            });
 
-        return ResponseEntity.created(uri.toUri()).body(updatedRoom);
+                Room roomToReturn;
+                try {
+                    roomToReturn = rooms.save(room);
+                } catch (Exception e) {
+                    return new ResponseEntity<Room>(HttpStatus.CONFLICT);
+                }
+
+                return new ResponseEntity<>(roomToReturn, HttpStatus.OK);
+            }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
