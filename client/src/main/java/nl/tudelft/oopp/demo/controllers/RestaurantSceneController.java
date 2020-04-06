@@ -153,14 +153,14 @@ public class RestaurantSceneController implements Initializable {
                     button1.setOnAction(e -> {
                         if (finalCurrentlyInReservation) {
                             try {
-                                MenuSceneController.loadOrderMenu(pane, -1, restaurant, finalRoomReservation);
-                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant, finalRoomReservation);
+                                OrderSceneController orderSceneController = new OrderSceneController();
+                                System.out.println(finalRoomReservation);
+                                VBox vbox = MenuSceneController.loadOrderMenu(pane, restaurantId, restaurant);
                                 hbox.getChildren().setAll(ac, vbox);
                                 ac.setPrefWidth((screenBounds.getWidth() - 400) * 0.50);
 
-                                OrderSceneController orderSceneController = new OrderSceneController();
                                 orderSceneController.setRoomReservation(finalRoomReservation);
-                                orderSceneController.clearBasket();
+                                OrderSceneController.clearBasket();
                                 hamburgerMenuSceneController.openOrder();
                             } catch (Exception ex) {
                                 ex.printStackTrace();

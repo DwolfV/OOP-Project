@@ -25,13 +25,14 @@ public class OrderSceneController implements Initializable {
     private static ObservableList<String> stringBasketList = FXCollections.observableArrayList();
     private static ArrayList<RestaurantDish> basketList = new ArrayList();
     private static ObservableList<Integer> amountBasketList = FXCollections.observableArrayList();
-    private RoomReservation roomReservation;
+    private static RoomReservation roomReservation;
     @FXML
     private Label totalLabel = new Label();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         basketListView.setItems(stringBasketList);
+        System.out.println(getRoomReservation());
     }
 
     /**
@@ -95,7 +96,8 @@ public class OrderSceneController implements Initializable {
             alert.setContentText("You currently have no items in the basket");
             alert.show();
         } else {
-            OrderCommunication.addOrder(getRoomReservation());
+            System.out.println(roomReservation);
+            OrderCommunication.addOrder(roomReservation);
             List<Order> orders = OrderCommunication.getOrders();
             Order order = new Order(getRoomReservation());
             for (int i = 0; i < orders.size(); i++) {
@@ -103,9 +105,11 @@ public class OrderSceneController implements Initializable {
                     order = orders.get(i);
                 }
             }
+            System.out.println(getRoomReservation());
             for (int i = 0; i < basketList.size(); i++) {
                 DishOrderCommunication.addDishOrder(amountBasketList.get(i), basketList.get(i).getId(), order.getId());
-                System.out.println("New dishorder place with: ammount:" + amountBasketList.get(i) + ", restaurantdishID:" + basketList.get(i).getId() + ", roomreservaionID: " + order.getId());
+                System.out.println(amountBasketList.get(i) + ", " + basketList.get(i).getId());// + getRoomReservation().getId());
+                System.out.println(order.getId());
             }
             clearBasket();
 
@@ -120,11 +124,8 @@ public class OrderSceneController implements Initializable {
     }
 
     /**
-<<<<<<< HEAD
      * Calculate the total amount of dishRestaurants.
-=======
      * Calculate total number of items in basket.
->>>>>>> development
      * @return
      */
     public static long calculateTotal() {

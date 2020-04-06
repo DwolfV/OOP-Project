@@ -42,7 +42,7 @@ public class MenuSceneController implements Initializable {
      * @param restaurant An object of type restaurant to load the order scene
      * @return A VBox with a table inside
      */
-    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant, RoomReservation roomReservation) {
+    public static VBox loadOrderMenu(Pane pane, long restaurantId, Restaurant restaurant) {
         screenBounds = Screen.getPrimary().getBounds();
         tableView = new TableView<Dish>();
         tableView.getStyleClass().setAll("restaurant-menu");
@@ -100,7 +100,6 @@ public class MenuSceneController implements Initializable {
                                     }
                                 }
                                 OrderSceneController.addToBasket(restaurantDish);
-                                hamburgerMenuSceneController.openOrder();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -142,7 +141,6 @@ public class MenuSceneController implements Initializable {
                                     }
                                 }
                                 OrderSceneController.removeFromBasket(restaurantDish);
-                                hamburgerMenuSceneController.openOrder();
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
