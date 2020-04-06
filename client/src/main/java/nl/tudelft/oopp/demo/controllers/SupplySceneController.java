@@ -10,7 +10,17 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
@@ -230,7 +240,7 @@ public class SupplySceneController implements Initializable {
             }
             // load the accordion into the scene
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-            ac.setPrefWidth(screenBounds.getWidth()-460);
+            ac.setPrefWidth(screenBounds.getWidth() - 460);
             ac.setPadding(new Insets(0,0,20,0));
 
             ScrollPane scrollPane = new ScrollPane(ac);

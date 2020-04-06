@@ -315,6 +315,16 @@
   -fx-spacing: 10;
 }
 
+.scroll-pane {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
+.scroll-pane > .viewport {
+  -fx-background-color: transparent;
+  -fx-border-width: 0 0 0 0;
+}
+
 .admin-scroll-pane {
   -fx-background-color: #F5F5F5;
   -fx-border-width: 0 0 0 0;

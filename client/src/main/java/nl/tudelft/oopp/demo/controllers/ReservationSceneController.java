@@ -21,8 +21,18 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.BuildingCommunication;
@@ -46,7 +56,7 @@ public class ReservationSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        borderPane.setPrefWidth(screenBounds.getWidth()-400);
+        borderPane.setPrefWidth(screenBounds.getWidth() - 400);
     }
 
     /**
@@ -222,23 +232,6 @@ public class ReservationSceneController implements Initializable {
                     grid.add(cbb, 3, j);
                     grid.add(button1, 4, j);
 
-//                    horizBox.setHgrow(label1, Priority.ALWAYS);
-//                    horizBox.setHgrow(label2, Priority.ALWAYS);
-//                    horizBox.setHgrow(cb, Priority.ALWAYS);
-//                    horizBox.setHgrow(cbb, Priority.ALWAYS);
-//                    horizBox.setHgrow(button1, Priority.ALWAYS);
-//                    label1.setMinWidth(70);
-//                    label2.setMinWidth(100);
-//                    cb.setMinWidth(70);
-//                    cbb.setMinWidth(70);
-//                    button1.setMinWidth(70);
-//
-//                    horizBox.getChildren().addAll(label1, label2, cb, cbb, button1);
-//                    horizBox.setSpacing(150);
-//                    horizBox.setStyle("-fx-padding: 8;" + "-fx-border-style: solid inside;"
-//                        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-//                        + "-fx-border-radius: 5;" + "-fx-border-color: lightgrey;");
-
                     SplitPane splitPane = new SplitPane();
                     splitPane.getStyleClass().add("restaurant-split-pane");
 
@@ -259,7 +252,7 @@ public class ReservationSceneController implements Initializable {
             } else {
                 // load the accordion into the scene if there are available rooms
                 Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-                ac.setPrefWidth(screenBounds.getWidth()-460);
+                ac.setPrefWidth(screenBounds.getWidth() - 460);
                 ac.setPadding(new Insets(0,0,20,0));
 
                 ScrollPane scrollPane = new ScrollPane(ac);
