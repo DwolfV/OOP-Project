@@ -43,11 +43,12 @@ public class AdminRoomPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
-        if (RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(),
-            room.getBuilding().getId()).equals("Successful")) {
+        String success = RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(),
+            room.getBuilding().getId());
+        if (success.equals("Successful")) {
             alert.hide();
         } else {
-            alert.setContentText(RoomCommunication.updateRoom(room.getId(), room.getName(), room.getCapacity(), room.getBuilding().getId()));
+            alert.setContentText(success);
             alert.showAndWait();
         }
     }
@@ -183,10 +184,11 @@ public class AdminRoomPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            if (RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText())).equals("Successful")) {
+            String success = RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText()));
+            if (success.equals("Successful")) {
                 alert.hide();
             } else {
-                alert.setContentText(RoomCommunication.addRoom(roomName1, capacity1, Long.parseLong(buildingField.getText())));
+                alert.setContentText(success);
                 alert.showAndWait();
             }
 
