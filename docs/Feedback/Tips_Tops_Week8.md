@@ -9,9 +9,9 @@
 - **Tip:** 
 
 ### Atanas
-- **Top:** 
+- **Top:** We worked really hard in the last week of the project. We also talked a lot and debugged each other's code and definitely learned a lot about java and javafx, but more importantly about working in a team and what to expect in the future. 
 
-- **Tip:** 
+- **Tip:** We need to improve our use of gitlab (like issue board, merge request communication, commit messages, etc.) and need to divide our work better. because we worked all over the place, on different branches and features and it got really confusing by the end. 
 
 ### Daniel 
 - **Top:** everyone worked really hard on making the application work, there was a lot of testing and the group really put all their effort into fixing any small issues.  Moreover, the group met "online" a lot which helped us with making sure we are on track 
