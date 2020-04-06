@@ -47,14 +47,13 @@ $el-grey: #F5F5F5;
 }
 
 .friends-list {
-    -fx-background-color: transparent;
     -fx-background-insets: 0 0 0 0;
-    -fx-border-width: 0 0 2 20;
-    -fx-border-color: black black mix($l-grey, $d-grey) $l-blue;
-    -fx-padding: 10 10 10 20;
-    -fx-text-fill: $el-grey;
+    -fx-border-width: 2 0 2 20;
+    -fx-border-color: mix($l-grey, $d-grey) black mix($l-grey, $d-grey) $l-blue;
+    -fx-padding: 5 5 5 10;
+    -fx-text-fill: $d-grey;
     -fx-text-weight: bold;
-    -fx-font: 14pt "Candara";
+    -fx-font: 11pt "Candara";
 }
 
 // Buttons
@@ -90,6 +89,14 @@ $el-grey: #F5F5F5;
     -fx-background-insets: 0, 0 0 0 0;
 }
 
+.menu-button:hover {
+    -fx-background-color: $l-blue;
+}
+
+.menu-button:focused {
+    -fx-background-color: $l-blue;
+}
+
 .menu-button-splitter {
     -fx-fill: $d-grey;
 }
@@ -110,7 +117,7 @@ $el-grey: #F5F5F5;
 }
 
 .restaurant-menu-button {
-    -fx-background-color: $l-grey;
+    -fx-background-color: $l-blue;
     -fx-background-radius: 0;
     -fx-background-insets: 0 0 0 0;
     -fx-font: 12pt "Candara";
@@ -119,38 +126,42 @@ $el-grey: #F5F5F5;
 }
 
 .restaurant-menu-button:hover {
-    -fx-background-color: white;
+    -fx-background-color: $b-blue;
 }
 
 .restaurant-split-pane {
-    -fx-background-color: mix($l-grey, $d-grey);
+    -fx-background-color: $l-grey;
 }
 
-.text-field{
+.text-field {
     -fx-font: 11pt "Candara";
     -fx-background-radius: 0;
 }
 
-.text-field-table-cell{
-    -fx-text-fill: $l-grey;
+.text-field-table-cell {
+    -fx-text-fill: black;
     -fx-font: 11pt "Candara";
 }
 
-.text-field-table-cell:selected{
+.text-field-table-cell:selected {
     -fx-text-fill: black;
 }
 
 .restaurant-menu {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-border-width: 0 0 0 0;
-    -fx-text-fill: $el-grey;
+    -fx-text-fill: black;
     -fx-font: 11pt "Candara";
 
 }
 
+.restaurant-menu > .label {
+    -fx-text-fill: black;
+}
+
 .restaurant-menu .column-header {
-    -fx-background-color: transparent;
+    -fx-background-color: $l-blue;
     -fx-background-insets: 0 0 0 0;
     -fx-border-width: 0 0 2 0;
     -fx-border-color: black black mix($l-grey, $d-grey) black;
@@ -239,9 +250,12 @@ $el-grey: #F5F5F5;
 }
 
 .titled-pane > .content {
-    -fx-text-fill: $el-grey;
-    -fx-background-color: transparent;
+    -fx-background-color: mix($l-grey, $d-grey);
     -fx-border-width: 0 0 0 0;
+}
+
+.titled-pane > .content > .label {
+    -fx-text-fill: black;
 }
 
 .titled-pane > .title {
@@ -256,6 +270,11 @@ $el-grey: #F5F5F5;
 }
 
 .titled-pane > .title:hover {
+    -fx-background-color: $b-blue;
+    -fx-border-color: black black $b-blue $b-blue;
+}
+
+.titled-pane:focused > .title {
     -fx-background-color: $b-blue;
     -fx-border-color: black black $b-blue $b-blue;
 }
@@ -284,4 +303,70 @@ $el-grey: #F5F5F5;
 .titled-pane:focused > .title > .arrow-button .arrow{
     -fx-effect: null;
     -fx-background-color: $el-grey;
+}
+
+//Admin
+// Panes
+.admin-main-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.admin-border-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.center {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-padding: 3.0em;
+}
+
+.right {
+    -fx-background-color: transparent;
+    -fx-pref-width: 250;
+    -fx-padding: 3.0em;
+}
+
+.bottom {
+    -fx-background-color: transparent;
+    -fx-padding: 1.0em 1.0em 4.0em 3.0em;
+    -fx-spacing: 10;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+}
+
+.admin-scroll-pane {
+    -fx-background-color: $el-grey;
+    -fx-border-width: 0 0 0 0;
+}
+
+.admin-scroll-pane > .viewport {
+    -fx-background-color: $el-grey;
+    -fx-border-width: 0 0 0 0;
+}
+
+.admin-v-boxes {
+    -fx-background-color: transparent;
+}
+
+.admin-titles {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-color: white;
+    -fx-padding: 0.5em 3em 0em 3em;
+}
+
+.label-black {
+    -fx-font: 11pt "Candara";
+    -fx-text-color: black;
 }

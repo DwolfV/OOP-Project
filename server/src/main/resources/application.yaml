@@ -1,0 +1,2 @@
+server.jsp-servlet.init-parameters.development: false
+spring.devtools.add-properties: false

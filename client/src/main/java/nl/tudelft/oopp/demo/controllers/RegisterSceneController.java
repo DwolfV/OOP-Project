@@ -31,7 +31,6 @@ public class RegisterSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("RegisterSceneController initialize");
 
         Platform.runLater(() -> {
             firstNameField.requestFocus();
@@ -46,7 +45,6 @@ public class RegisterSceneController implements Initializable {
      */
     public void setControllers(StartupSceneController startupSceneController, SignInSceneController signInSceneController) {
         this.startupSceneController = startupSceneController;
-        System.out.println("RegisterSceneController -> " + startupSceneController);
         this.signInSceneController = signInSceneController;
     }
 
@@ -57,7 +55,6 @@ public class RegisterSceneController implements Initializable {
      */
     @FXML
     public void selectUI(MouseEvent event) {
-        System.out.println("RegisterSceneController -> selectUI");
 
         FXMLLoader signInLoader = new FXMLLoader(getClass().getResource("/Scenes/signInScene.fxml"));
         try {
@@ -82,6 +79,12 @@ public class RegisterSceneController implements Initializable {
             // the two passwords do not match
             passwordConfirmField.clear();
             passwordConfirmField.requestFocus();
+            return;
+        }
+        if (usernameField.getText() == null || passwordField.getText() == null || firstNameField.getText() == null
+            || lastNameField.getText() == null || usernameField.getText().equals("") || usernameField.getText().contains(" ")) {
+            usernameField.clear();
+            usernameField.requestFocus();
             return;
         }
         if (UserCommunication.createNewUser(user, usernameField.getText(), passwordField.getText())) {

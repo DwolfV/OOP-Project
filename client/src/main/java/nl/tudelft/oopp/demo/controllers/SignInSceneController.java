@@ -39,7 +39,6 @@ public class SignInSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("SignInSceneController initialize");
 
         Platform.runLater(() -> {
             usernameField.requestFocus();
@@ -54,7 +53,6 @@ public class SignInSceneController implements Initializable {
      */
     public void setControllers(StartupSceneController startupSceneController, RegisterSceneController registerSceneController) {
         this.startupSceneController = startupSceneController;
-        System.out.println("SignInSceneController -> " + startupSceneController);
         this.registerSceneController = registerSceneController;
     }
 
@@ -64,7 +62,6 @@ public class SignInSceneController implements Initializable {
      */
     @FXML
     public void selectUI(MouseEvent event) {
-        System.out.println("SignInSceneController -> selectUI");
 
         FXMLLoader signInLoader = new FXMLLoader(getClass().getResource("/Scenes/registerScene.fxml"));
         try {
@@ -82,7 +79,6 @@ public class SignInSceneController implements Initializable {
      */
     @FXML
     public void handleLoginButton() {
-        System.out.println("handel");
         String username = usernameField.getText();
         String password = passwordField.getText();
 

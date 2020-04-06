@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane maxWidth="200.0" prefWidth="200.0" styleClass="secondary-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.SidebarSceneController">
+<AnchorPane maxWidth="200.0" prefWidth="200.0" styleClass="side-pane" stylesheets="@/Styles/mainstyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.SidebarSceneController">
    <children>
    
        <VBox prefWidth="200.0">

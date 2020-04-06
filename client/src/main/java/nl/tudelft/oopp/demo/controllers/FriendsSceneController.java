@@ -16,18 +16,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import nl.tudelft.oopp.demo.communication.Authenticator;
 import nl.tudelft.oopp.demo.communication.FriendCommunication;
 import nl.tudelft.oopp.demo.communication.InvitationCommunication;
@@ -66,11 +69,12 @@ public class FriendsSceneController implements Initializable {
      */
     public void addFriends() {
         Button addButton = new Button("Add a friend");
+        addButton.getStyleClass().setAll("restaurant-menu-button");
         TextField newFriendTextField = new TextField();
         newFriendTextField.setPromptText("username");
 
         hoBoxAddFriend = new HBox();
-        hoBoxAddFriend.getChildren().addAll(addButton, newFriendTextField);
+        hoBoxAddFriend.getChildren().addAll(newFriendTextField, addButton);
         hoBoxAddFriend.setAlignment(Pos.CENTER);
         hoBoxAddFriend.setSpacing(10);
 
@@ -185,24 +189,16 @@ public class FriendsSceneController implements Initializable {
                 friendList();
             });
 
-            HBox.setHgrow(inviteFriendsButton, Priority.ALWAYS);
-            HBox.setHgrow(removeFriendsButton, Priority.ALWAYS);
-            HBox.setHgrow(friendsLabel, Priority.ALWAYS);
-            inviteFriendsButton.setMinWidth(70);
-            removeFriendsButton.setMinWidth(70);
-            friendsLabel.setMinWidth(100);
-            comboBoxReservedRooms.setMinWidth(75);
-
             // Grid inside list
             GridPane grid = new GridPane();
             ColumnConstraints constraint1 = new ColumnConstraints();
-            constraint1.setPercentWidth(100 / 4);
+            constraint1.setPercentWidth(100 / 5);
             ColumnConstraints constraint2 = new ColumnConstraints();
-            constraint2.setPercentWidth(100 / 4);
+            constraint2.setPercentWidth(100 / 2.5);
             ColumnConstraints constraint3 = new ColumnConstraints();
-            constraint3.setPercentWidth(100 / 4);
+            constraint3.setPercentWidth(100 / 5);
             ColumnConstraints constraint4 = new ColumnConstraints();
-            constraint4.setPercentWidth(100 / 4);
+            constraint4.setPercentWidth(100 / 5);
             grid.getColumnConstraints().setAll(
                     constraint1,
                     constraint2,
@@ -210,7 +206,8 @@ public class FriendsSceneController implements Initializable {
                     constraint4
             );
 
-            grid.setVgap(10);
+            grid.setVgap(15);
+            grid.setHgap(15);
             grid.add(friendsLabel, 0, c);
             grid.add(comboBoxReservedRooms, 1, c);
             grid.add(inviteFriendsButton, 2, c);
@@ -222,9 +219,17 @@ public class FriendsSceneController implements Initializable {
             grid.getStyleClass().setAll("friends-list");
 
             veBoxTpAndAdd.getChildren().add(grid);
-            veBoxTpAndAdd.setPadding(new Insets(20, 0, 50, 0));
+            veBoxTpAndAdd.setSpacing(20);
         }
-        vbox.getChildren().add(hoBoxAddFriend);
-        vbox.getChildren().add(veBoxTpAndAdd);
+        SplitPane splitPane1 = new SplitPane();
+        SplitPane splitPane2 = new SplitPane();
+        hoBoxAddFriend.setPadding(new Insets(20, 20, 20, 20));
+        veBoxTpAndAdd.setPadding(new Insets(20, 20, 20, 20));
+
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        veBoxTpAndAdd.setPrefWidth(screenBounds.getWidth() - 460);
+        ScrollPane scrollPane = new ScrollPane(veBoxTpAndAdd);
+        scrollPane.setMaxHeight(600);
+        vbox.getChildren().setAll(splitPane1, hoBoxAddFriend, splitPane2, scrollPane);
     }
 }

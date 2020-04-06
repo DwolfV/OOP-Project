@@ -29,6 +29,6 @@
 - **Tip:** start working on filtering, do code review
 
 ###Steph
-- **Top:**
+- **Top:** Branching is improving a lot.
 
-- **Tip:**
+- **Tip:** We could still work on committing.
