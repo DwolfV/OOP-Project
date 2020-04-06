@@ -38,31 +38,31 @@ public class Building {
     private long id;
 
     @NotBlank(message = "This field cannot be blank")
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @NotBlank(message = "This field cannot be blank")
-    @Column(name = "street_name")
+    @Column(name = "street_name", nullable = false)
     private String streetName;
 
     @NotBlank(message = "This field cannot be blank")
-    @Column(name = "street_number")
+    @Column(name = "street_number", nullable = false)
     private String streetNumber;
 
     @NotBlank(message = "This field cannot be blank")
-    @Column(name = "zip_code")
+    @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
     @NotBlank(message = "This field cannot be blank")
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
     @NotNull
-    @Column(name = "open_time")
+    @Column(name = "open_time", nullable = false)
     private LocalTime openTime;
 
     @NotNull
-    @Column(name = "close_time")
+    @Column(name = "close_time", nullable = false)
     private LocalTime closeTime;
 
     @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)

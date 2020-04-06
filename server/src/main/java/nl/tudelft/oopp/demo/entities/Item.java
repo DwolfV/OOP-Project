@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table (name = "Item")
@@ -27,6 +28,7 @@ public class Item {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @Nullable
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Equipment> equipment = new ArrayList<>();
 

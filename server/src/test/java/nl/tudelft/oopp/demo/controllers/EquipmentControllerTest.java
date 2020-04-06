@@ -50,7 +50,7 @@ class EquipmentControllerTest {
     public void save() {
         //constructor long id, Room room, String name, int amount for building
         //constructor long id, String name, Integer capacity, Building building) for room
-        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
 
         r1 = new Room("name", 11, b1);
 
@@ -74,7 +74,7 @@ class EquipmentControllerTest {
 
     @Test
     void testGetEquipment() {
-        List<Equipment> expectedList = new ArrayList<Equipment>(List.of(e1,e2,e3));
+        List<Equipment> expectedList = new ArrayList<Equipment>(List.of(e1, e2, e3));
         when(equipmentRepository.findAll()).thenReturn(expectedList);
         List<Equipment> actualList = equipmentController.getEquipment();
 
@@ -96,9 +96,9 @@ class EquipmentControllerTest {
         ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
 
         Mockito.when(equipmentRepository.findByItemName(
-                "e1")).thenAnswer(invocationOnMock -> List.of(e1));
+            "e1")).thenAnswer(invocationOnMock -> List.of(e1));
         assertEquals(List.of(entity.getBody()),
-                equipmentController.getEquipmentByName("e1").getBody());
+            equipmentController.getEquipmentByName("e1").getBody());
     }
 
     @Test
@@ -107,15 +107,15 @@ class EquipmentControllerTest {
         ResponseEntity<Equipment> entity = ResponseEntity.of(optionalEquipment);
 
         Mockito.when(equipmentRepository.findByRoomId(
-                r1.getId())).thenAnswer(invocationOnMock -> List.of(e1));
+            r1.getId())).thenAnswer(invocationOnMock -> List.of(e1));
         assertEquals(List.of(entity.getBody()),
-                equipmentController.getEquipmentByRoomId(r1.getId()).getBody());
+            equipmentController.getEquipmentByRoomId(r1.getId()).getBody());
     }
 
     @Test
     void testAddNewEquipment() {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
-        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("name", 11, b1);
         Equipment equipment = new Equipment(r1, i1, 15);
         Optional<Equipment> optionalEquipment = Optional.of(equipment);
@@ -124,12 +124,12 @@ class EquipmentControllerTest {
         when(equipmentRepository.save(equipment)).thenReturn(equipment);
 
         assertEquals(equipment,
-                equipmentController.addNewEquipment(equipment, uriComponentsBuilder).getBody());
+            equipmentController.addNewEquipment(equipment, uriComponentsBuilder).getBody());
     }
 
     @Test
     void testReplaceEquipment() {
-        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"),"s1", "sNo1", "z1", "c1");
+        Building b1 = new Building("b1", LocalTime.parse("08:00"), LocalTime.parse("20:00"), "s1", "sNo1", "z1", "c1");
         Room r1 = new Room("name", 11, b1);
         Equipment equipment = new Equipment(r1, i1, 15);
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
@@ -142,14 +142,14 @@ class EquipmentControllerTest {
         when(equipmentRepository.save(equipment)).thenReturn(equipment);
         when(equipmentRepository.findById(e1.getId())).thenReturn(optionalEquipment);
 
-        assertEquals(responseEntity.getBody(),equipmentController.replaceEquipment(
-                equipment, e1.getId(), uriComponentsBuilder).getBody());
+        assertEquals(responseEntity.getBody(), equipmentController.replaceEquipment(
+            equipment, e1.getId()).getBody());
     }
 
     @Test
     void testDeleteEquipment() {
-        List<Equipment> actualList = new ArrayList<Equipment>(List.of(e1,e3));
-        List<Equipment> expectedList = new ArrayList<Equipment>(List.of(e1,e2,e3));
+        List<Equipment> actualList = new ArrayList<Equipment>(List.of(e1, e3));
+        List<Equipment> expectedList = new ArrayList<Equipment>(List.of(e1, e2, e3));
 
         Optional<Equipment> optionalEquipment = Optional.of(e2);
         ResponseEntity<Equipment> equipmentResponseEntity = ResponseEntity.of(optionalEquipment);

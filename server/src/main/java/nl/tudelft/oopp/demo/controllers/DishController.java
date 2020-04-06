@@ -61,11 +61,17 @@ public class DishController {
      * @return message
      */
 
+
     @PostMapping(value = "/dish", consumes = {"application/json"})
     public ResponseEntity<Dish> newDish(@Valid @RequestBody Dish dish, UriComponentsBuilder uriComponentsBuilder) {
-        dishRepository.save(dish);
+        try {
+            dishRepository.save(dish);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uri = uriComponentsBuilder.path("/dish/{id}").buildAndExpand(dish.getId());
         return ResponseEntity.created(uri.toUri()).body(dish);
+
     }
 
     /**
@@ -83,7 +89,15 @@ public class DishController {
             dish.setPrice(newDish.getPrice());
             dish.setType(newDish.getType());
 
-            return new ResponseEntity<Dish>(dishRepository.save(dish), HttpStatus.OK);
+            Dish dishToReturn;
+            try {
+                dishToReturn = dishRepository.save(dish);
+            } catch (Exception e) {
+                return new ResponseEntity<Dish>(HttpStatus.CONFLICT);
+
+            }
+            return new ResponseEntity<>(dishToReturn, HttpStatus.OK);
+
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

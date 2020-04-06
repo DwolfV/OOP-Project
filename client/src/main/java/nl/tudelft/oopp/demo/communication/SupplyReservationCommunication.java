@@ -117,13 +117,13 @@ public class SupplyReservationCommunication {
             e.printStackTrace();
         }
 
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
         } else {
             //update the stock for the supply
             SupplyCommunication.updateSupply(supply.getId(), supply.getBuilding().getId(), supply.getName(), stock - amount);
         }
-        return "The item has been saved successfully";
+        return "Successful";
     }
 
     /**

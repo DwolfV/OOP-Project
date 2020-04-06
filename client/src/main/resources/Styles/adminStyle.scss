@@ -10,12 +10,12 @@ $l-grey: #BBBBBB;
 $el-grey: #F5F5F5;
 
 // Panes
-.main-pane {
+.admin-main-pane {
     -fx-border-width: 0 2 0 2;
     -fx-border-color: $l-grey;
 }
 
-.border-pane {
+.admin-border-pane {
     -fx-background-color: $el-grey;
 }
 
@@ -35,38 +35,23 @@ $el-grey: #F5F5F5;
     -fx-spacing: 10;
 }
 
-.scroll-pane {
+.admin-scroll-pane {
     -fx-border-width: 0 2 0 2;
     -fx-border-color: $l-grey;
 }
 
-.v-boxes {
+.admin-v-boxes {
     -fx-background-color: $el-grey;
 }
 
-.titles {
+.admin-titles {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-padding: 0.5em 3em 0em 3em;
 }
 
-// Scroll bar
-.scroll-bar:horizontal  {
-    -fx-border-width: 0 0 0 0;
-}
-
-.scroll-bar > .increment-button,
-.scroll-bar > .decrement-button {
-}
-
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
-    -fx-background-color: $l-blue;
-    -fx-background-radius: 0;
-}
-
 // Actions
-.button {
+.admin-button {
     -fx-background-color: $d-blue;
     -fx-effect: dropShadow(gaussian, rgba(0,0,0,0.2), 0, 0, 2, 2);
     -fx-font-weight: bold;
@@ -77,11 +62,11 @@ $el-grey: #F5F5F5;
     -fx-background-radius: 0;
 }
 
-.button:hover {
+.admin-button:hover {
     -fx-background-color: $b-blue;
 }
 
-.choice-box {
+.admin-choice-box {
     -fx-background-color: white;
     -fx-background-radius: 1;
     -fx-mark-color: $d-blue;
@@ -92,13 +77,13 @@ $el-grey: #F5F5F5;
     -fx-pref-height: 30;
 }
 
-.choice-box .context-menu {
+.admin-choice-box .context-menu {
     -fx-pref-width: 180;
     -fx-pref-height: 200;
 }
 
 // The table inside the titled panes in admin scene
-.table-view {
+.admin-table-view {
     -fx-background-color: $el-grey;
     -fx-background-insets: 0, 0 0 0 0;
     -fx-border-width: 0 0 0 0;
@@ -148,10 +133,6 @@ $el-grey: #F5F5F5;
     -fx-background-color: $l-grey;
 }
 
-.titled-pane {
-    -fx-text-fill: black;
-}
-
 .titled-pane > .title{
     -fx-background-color: $l-grey;
     -fx-border-width: 0 0 2 0;
@@ -191,13 +172,13 @@ $el-grey: #F5F5F5;
     -fx-rotate: -90;
 }
 
+.titled-pane:focused > .title > .arrow-button .arrow{
+    -fx-background-color: white;
+}
+
 .titled-pane > *.content {
     //-fx-background-color:
     //-fx-box-border,
     //linear-gradient(to bottom, derive(-fx-color,-02%), derive(-fx-color,65%) 12%, derive(-fx-color,23%) 88%, derive(-fx-color,50%) 99%, -fx-box-border);
     -fx-padding: 0.167em;
  }
-
-.titled-pane:focused > .title > .arrow-button .arrow{
-    -fx-background-color: white;
-}

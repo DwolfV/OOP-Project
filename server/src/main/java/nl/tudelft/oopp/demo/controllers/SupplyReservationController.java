@@ -72,7 +72,11 @@ public class SupplyReservationController {
 
     @PostMapping(value = "/add", consumes = {"application/json"})
     public ResponseEntity<SupplyReservation> newSupplyReservation(@Valid @RequestBody SupplyReservation newSupplyReservation, UriComponentsBuilder b) {
-        supplyReservationRepository.save(newSupplyReservation);
+        try {
+            supplyReservationRepository.save(newSupplyReservation);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         UriComponents uriComponents = b.path("supply_reservations/reservation/{id}").buildAndExpand(newSupplyReservation.getId());
         return ResponseEntity.created(uriComponents.toUri()).body(newSupplyReservation);
     }
@@ -90,19 +94,21 @@ public class SupplyReservationController {
                                                                       @PathVariable(value = "supply_reservation_id") long supplyReservationId,
                                                                       UriComponentsBuilder b) {
         UriComponents uriComponents = b.path("supply_reservation/{supply_reservation_id}").buildAndExpand(supplyReservationId);
-        SupplyReservation updated = supplyReservationRepository.findById(supplyReservationId).map(supplyReservation -> {
+        return supplyReservationRepository.findById(supplyReservationId).map(supplyReservation -> {
             supplyReservation.setAmount(newSupplyReservation.getAmount());
             supplyReservation.setDate(newSupplyReservation.getDate());
             supplyReservation.setSupply(newSupplyReservation.getSupply());
             supplyReservation.setUser(newSupplyReservation.getUser());
 
-            return supplyReservationRepository.save(supplyReservation);
-        }).orElseGet(() -> {
-            newSupplyReservation.setId(supplyReservationId);
-            return supplyReservationRepository.save(newSupplyReservation);
-        });
+            SupplyReservation supplyReservationReturn;
+            try {
+                supplyReservationReturn = supplyReservationRepository.save(supplyReservation);
+            } catch (Exception e) {
+                return new ResponseEntity<SupplyReservation>(HttpStatus.CONFLICT);
+            }
 
-        return ResponseEntity.created(uriComponents.toUri()).body(updated);
+            return new ResponseEntity<>(supplyReservationReturn, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

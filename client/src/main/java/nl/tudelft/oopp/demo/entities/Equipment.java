@@ -2,9 +2,14 @@ package nl.tudelft.oopp.demo.entities;
 
 public class Equipment {
 
+    private long id;
     private Room room;
     private Item item;
     private int amount;
+
+    public Equipment() {
+
+    }
 
     /**
      * Creates an instance of a new equipment object.
@@ -17,6 +22,14 @@ public class Equipment {
         this.room = room;
         this.item = item;
         this.amount = amount;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Room getRoom() {

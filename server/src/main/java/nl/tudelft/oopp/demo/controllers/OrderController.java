@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * NB.
+ * This entity does not have any uniqueness constraints
  * The order should be created automatically when the user clicks the Order button
  * Thus, the important methods here are:
  *  - get the order by a room reservation id
@@ -80,8 +81,13 @@ public class OrderController {
         if (authentication.getName().equals(newOrder.getRoomReservation().getUser().getUsername())
                 && !users.findByUsername(authentication.getName()).isEmpty()
                 && newOrder.getRoomReservation().getUser().getId() == users.findByUsername(authentication.getName()).get().getId()) {
+            Order savedOrder = null;
+            try {
+                savedOrder = repository.save(newOrder);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
 
-            Order savedOrder = repository.save(newOrder);
             UriComponents uri = b.path("/order/{id}").buildAndExpand(savedOrder.getId());
             return ResponseEntity
                     .created(uri.toUri())
@@ -111,7 +117,14 @@ public class OrderController {
             order.setDishOrders(newOrder.getDishOrders());
             order.setRoomReservation(newOrder.getRoomReservation());
 
-            return ResponseEntity.created(uri.toUri()).body(repository.save(order));
+            Order orderToReturn;
+            try {
+                orderToReturn = repository.save(order);
+            } catch (Exception e) {
+                return new ResponseEntity<Order>(HttpStatus.CONFLICT);
+            }
+
+            return ResponseEntity.created(uri.toUri()).body(orderToReturn);
         }).orElseGet(() -> {
             newOrder.setId(id);
             return ResponseEntity.created(uri.toUri()).body(repository.save(newOrder));
