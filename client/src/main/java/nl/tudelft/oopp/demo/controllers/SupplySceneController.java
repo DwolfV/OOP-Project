@@ -25,9 +25,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.tudelft.oopp.demo.communication.*;
-import nl.tudelft.oopp.demo.entities.Building;
-import nl.tudelft.oopp.demo.entities.Supply;
-import nl.tudelft.oopp.demo.entities.SupplyReservation;
+import nl.tudelft.oopp.demo.entities.*;
+import nl.tudelft.oopp.demo.helperclasses.BuildingToStringConverter;
+import nl.tudelft.oopp.demo.helperclasses.RoomBuildingNameToStringConverter;
+import nl.tudelft.oopp.demo.helperclasses.SupplyReservationRoomToStringConverter;
 import nl.tudelft.oopp.demo.helperclasses.SupplyToStringConverter;
 
 public class SupplySceneController implements Initializable {
@@ -65,6 +66,7 @@ public class SupplySceneController implements Initializable {
         supplyNameCol.setCellValueFactory(
             new PropertyValueFactory<>("supply"));
         supplyNameCol.setCellFactory(TextFieldTableCell.forTableColumn(new SupplyToStringConverter()));
+        supplyNameCol.setEditable(false);
 
         TableColumn<SupplyReservation, Integer> amountCol =
             new TableColumn<>("Amount");
@@ -78,9 +80,17 @@ public class SupplySceneController implements Initializable {
         dateCol.setCellValueFactory(
             new PropertyValueFactory<>("date"));
 
+        TableColumn<SupplyReservation, Supply> buildingRoomCol =
+            new TableColumn<>("Building Name");
+        buildingRoomCol.setMinWidth(100);
+        buildingRoomCol.setCellValueFactory(
+            new PropertyValueFactory<>("supply"));
+        buildingRoomCol.setCellFactory(TextFieldTableCell.forTableColumn(new SupplyReservationRoomToStringConverter()));
+        buildingRoomCol.setEditable(false);
+
         ObservableList<SupplyReservation> reservedSupplies = FXCollections.observableList(SupplyReservationCommunication.getSupplyReservationByUserId(Authenticator.ID));
         tableReservedSupplies.setItems(reservedSupplies);
-        tableReservedSupplies.getColumns().addAll(supplyNameCol, amountCol, dateCol);
+        tableReservedSupplies.getColumns().addAll(supplyNameCol, amountCol, dateCol, buildingRoomCol);
         tableReservedSupplies.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableReservedSupplies.setPrefHeight(200);
         tableReservedSupplies.setPlaceholder(new Label("Currently you have made no supply reservations"));
@@ -96,7 +106,9 @@ public class SupplySceneController implements Initializable {
             allReservedSupplies.remove(supplyReservation);
             SupplyReservationCommunication.removeSupplyReservation(supplyReservation.getId());
 
+            ac.getPanes().clear();
             loadSuppliesAccordion();
+            loadReservedSupply();
         });
 
         veBoxDeleteAndTable = new VBox();
@@ -171,6 +183,8 @@ public class SupplySceneController implements Initializable {
                         textFieldItem.setText(null);
 
                         loadReservedSupply();
+                        ac.getPanes().clear();
+                        loadSuppliesAccordion();
                     });
 
                     HBox.setHgrow(labelItem, Priority.ALWAYS);

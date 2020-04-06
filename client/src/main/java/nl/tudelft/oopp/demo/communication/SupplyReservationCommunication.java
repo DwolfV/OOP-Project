@@ -117,7 +117,7 @@ public class SupplyReservationCommunication {
             e.printStackTrace();
         }
 
-        if (response.statusCode() != 200) {
+        if (response.statusCode() != 201) {
             System.out.println("Status: " + response.statusCode());
         } else {
             //update the stock for the supply

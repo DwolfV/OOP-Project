@@ -238,7 +238,6 @@ public class AdminItemsPane {
             (TableColumn.CellEditEvent<Equipment, Integer> t) -> t.getTableView().getItems().get(
                 t.getTablePosition().getRow()).setAmount(t.getNewValue()));
 
-
         ObservableList<Equipment> equipmentData = FXCollections.observableList(EquipmentCommunication.getAllEquipment());
         tableEquipments.setItems(equipmentData);
         tableEquipments.getColumns().addAll(idColEquipment, itemCol, amountCol, idColRoom);
