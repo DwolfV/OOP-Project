@@ -93,6 +93,8 @@ public class AdminItemsPane {
         deleteItemsButton.setOnAction(e -> {
             try {
                 deleteItemsButtonClicked();
+                AdminSceneController.loadItemsTP(ac);
+                ac.setExpandedPane(AdminSceneController.itemsTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -178,6 +180,7 @@ public class AdminItemsPane {
         } else {
             alert.showAndWait();
         }
+
     }
 
     /**
@@ -240,6 +243,8 @@ public class AdminItemsPane {
         deleteEquipmentButton.setOnAction(e -> {
             try {
                 deleteEquipmentsButtonClicked();
+                AdminSceneController.loadItemsTP(ac);
+                ac.setExpandedPane(AdminSceneController.itemsTP);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
