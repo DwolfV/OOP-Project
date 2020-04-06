@@ -1,12 +1,9 @@
 package nl.tudelft.oopp.demo.helperclasses;
 
+import java.util.List;
 import javafx.util.StringConverter;
 import nl.tudelft.oopp.demo.communication.ItemCommunication;
-import nl.tudelft.oopp.demo.communication.RoomCommunication;
 import nl.tudelft.oopp.demo.entities.Item;
-import nl.tudelft.oopp.demo.entities.Room;
-
-import java.util.List;
 
 public class ItemToStringConverter extends StringConverter {
 

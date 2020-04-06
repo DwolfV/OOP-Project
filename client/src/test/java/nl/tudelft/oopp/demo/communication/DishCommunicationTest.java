@@ -1,18 +1,19 @@
 package nl.tudelft.oopp.demo.communication;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import nl.tudelft.oopp.demo.entities.Dish;
-import org.junit.jupiter.api.*;
-import org.mockserver.integration.ClientAndServer;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.ArrayList;
+import java.util.List;
+import nl.tudelft.oopp.demo.entities.Dish;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockserver.integration.ClientAndServer;
 
 
 public class DishCommunicationTest {
@@ -25,8 +26,9 @@ public class DishCommunicationTest {
 
     private List<Dish> dishes;
 
-
-
+    /**
+     * Start mock server before each test.
+     */
     @BeforeEach
     public void startMockServer() {
         mockServer = startClientAndServer(8080);
@@ -37,6 +39,9 @@ public class DishCommunicationTest {
         dishes = new ArrayList<>(List.of(dish, dish2));
     }
 
+    /**
+     * Stop mock server after each test.
+     */
     @AfterEach
     public void stopMockServer() {
         mockServer.stop();
@@ -52,8 +57,12 @@ public class DishCommunicationTest {
                         .withBody(body));
 
         List<Dish> dishList = DishCommunication.getDishes();
-        for(Dish dish : dishes) System.out.println(dish.toString());
-        for(Dish dish : dishList) System.out.println(dish.toString());
+        for (Dish dish : dishes) {
+            System.out.println(dish.toString());
+        }
+        for (Dish dish : dishList) {
+            System.out.println(dish.toString());
+        }
         assertEquals(dishes, dishList);
     }
 

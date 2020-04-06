@@ -51,7 +51,7 @@ public class ItemCommunication {
     }
 
     /**
-     * Get an item by it's name
+     * Get an item by it's name.
      *
      * @param name - the name of the item
      * @return an item with the given namme

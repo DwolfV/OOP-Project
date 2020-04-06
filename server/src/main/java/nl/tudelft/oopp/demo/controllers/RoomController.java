@@ -106,7 +106,7 @@ public class RoomController {
                     System.out.print(reservation.getRoom());
                     //if the room has already been reserved this week
                     List<Room> roomsToRemove = rooms.findByBuildingId(reservation.getRoom().getBuilding().getId());
-                    if(roomsToRemove != null) {
+                    if (roomsToRemove != null) {
                         for (Room room : roomsToRemove) {
                             if (roomList.contains(room)) {
                                 // we remove the room from the result

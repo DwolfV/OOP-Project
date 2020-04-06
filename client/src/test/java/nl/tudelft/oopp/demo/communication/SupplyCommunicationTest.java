@@ -1,5 +1,10 @@
 package nl.tudelft.oopp.demo.communication;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -12,12 +17,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockserver.integration.ClientAndServer;
-
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
-
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SupplyCommunicationTest {
 
@@ -52,7 +51,7 @@ class SupplyCommunicationTest {
         s3 = new Supply(b3, "s3", 52);
         s4 = new Supply(b4, "s4", 77);
 
-        supplies=new ArrayList<>(List.of(s1,s2,s3,s4));
+        supplies = new ArrayList<>(List.of(s1,s2,s3,s4));
     }
 
     @AfterEach

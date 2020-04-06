@@ -1,5 +1,9 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +23,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class EquipmentControllerTest {

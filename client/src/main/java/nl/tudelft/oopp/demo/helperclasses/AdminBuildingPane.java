@@ -433,7 +433,7 @@ public class AdminBuildingPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            String success  =OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText,
+            String success = OccasionCommunication.addOccasion(dayInputText, openHolidayTimeInputText, closeHolidayTimeInputText,
                 Long.parseLong(buildingInput.getText()));
             if (success.equals("Successful")) {
                 alert.hide();

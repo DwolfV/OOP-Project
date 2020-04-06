@@ -164,14 +164,14 @@ public class HamburgerMenuSceneController implements Initializable {
     }
 
     /**
-     * Open basket page
+     * Open basket page.
      */
     public void openOrder() {
         mainSceneController.borderPane.setRight(orderRoot);
     }
 
     /**
-     * Clears any previous pane on the right hand side
+     * Clears any previous pane on the right hand side.
      */
     public void clearRight() {
         mainSceneController.borderPane.setRight(mainSceneController.emptySidebarRightRoot);
