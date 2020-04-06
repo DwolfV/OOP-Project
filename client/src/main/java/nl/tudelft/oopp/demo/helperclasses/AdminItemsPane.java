@@ -217,12 +217,14 @@ public class AdminItemsPane {
         idColRoom.setMinWidth(100);
         idColRoom.setCellValueFactory(
             new PropertyValueFactory<>("room"));
+        idColRoom.setCellFactory(TextFieldTableCell.forTableColumn(new RoomBuildingNameToStringConverter()));
 
         TableColumn<Equipment, Item> itemCol =
             new TableColumn<>("Item Name");
         itemCol.setMinWidth(100);
         itemCol.setCellValueFactory(
             new PropertyValueFactory<>("item"));
+        itemCol.setCellFactory(TextFieldTableCell.forTableColumn(new ItemToStringConverter()));
 
         TableColumn<Equipment, Integer> amountCol =
             new TableColumn<>("Amount");
@@ -237,7 +239,7 @@ public class AdminItemsPane {
 
         ObservableList<Equipment> equipmentData = FXCollections.observableList(EquipmentCommunication.getAllEquipment());
         tableEquipments.setItems(equipmentData);
-        tableEquipments.getColumns().addAll(idColEquipment, itemCol, amountCol);
+        tableEquipments.getColumns().addAll(idColEquipment, itemCol, amountCol, idColRoom);
 
         //delete button
         deleteEquipmentButton.setOnAction(e -> {
@@ -346,7 +348,8 @@ public class AdminItemsPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            String success = EquipmentCommunication.addEquipmentToRoom(room, ItemCommunication.getItemByName(pickedItem), Integer.parseInt(quantityFieldText));
+            String success = EquipmentCommunication.addEquipmentToRoom(room, ItemCommunication.getItemByName(pickedItem),
+                Integer.parseInt(quantityFieldText));
             if (success.equals("Successful")) {
                 alert.hide();
             } else {
