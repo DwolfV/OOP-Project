@@ -163,10 +163,6 @@ public class SupplySceneController implements Initializable {
                 VBox vertBox = new VBox();
                 tps[c] = new TitledPane();
 
-                for (Supply supplies1 : supplies) {
-                    System.out.println(buildings.get(i).getName() + " " + supplies1.getName());
-                }
-
                 for (int j = 0; j < showSupplies.size(); j++) {
                     HBox horizBox = new HBox();
 

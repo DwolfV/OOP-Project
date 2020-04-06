@@ -205,7 +205,6 @@ public class ReservationSceneController implements Initializable {
                     // An action for a reserve button
                     button1.setOnAction(e -> {
                         RoomReservationCommunication.addRoomReservation(date, stt[0], ett[0], roomId);
-                        System.out.println(date + " " + stt[0] + " " + ett[0] + " " + roomId);
                     });
 
                     GridPane grid = new GridPane();

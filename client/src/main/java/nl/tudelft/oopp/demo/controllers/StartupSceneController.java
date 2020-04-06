@@ -24,7 +24,6 @@ public class StartupSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("initialize StartupScene");
         FXMLLoader signInLoader = new FXMLLoader(getClass().getResource("/Scenes/signInScene.fxml"));
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/Scenes/registerScene.fxml"));
         try {
